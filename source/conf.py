@@ -79,6 +79,7 @@ try:
     import sphinx_rtd_theme
     html_theme = "sphinx_rtd_theme"
 except ImportError:
+    print("sphinx_rtd_theme not found. Use default theme instead.")
     html_theme = "alabaster"
 
 # Theme options are theme-specific and customize the look and feel of a theme
