@@ -21,10 +21,12 @@ Welcome to Dronedoc's documentation!
    :caption: Appendix
    :numbered:
 
+   appendix/bash_commands/bash_commands.rst
    appendix/ros/ros.rst
    appendix/addmodel/addmodel.rst
    appendix/git/git.rst
    appendix/github/github.rst
+   appendix/terms/terms.rst
 
 
 Indices and tables
