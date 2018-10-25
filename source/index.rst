@@ -13,7 +13,8 @@ Welcome to Dronedoc's documentation!
 
    introduction/introduction.rst
    px4sim/px4sim.rst
-   runnode/runnode.rst
+   runnode/runnodecpp.rst
+   runnode/runnodepy.rst
    slam/slam.rst
 
 .. toctree::
