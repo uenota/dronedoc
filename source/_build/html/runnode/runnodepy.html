@@ -83,7 +83,18 @@
 <li class="toctree-l1"><a class="reference internal" href="../introduction/introduction.html">1. はじめに</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../px4sim/px4sim.html">2. PX4 SITLシミュレーション</a></li>
 <li class="toctree-l1"><a class="reference internal" href="runnodecpp.html">3. 自作ノードを実行する（C++）</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">4. 自作ノードを実行する（Python）</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">4. 自作ノードを実行する（Python）</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#ros">4.1. ROSパッケージを作る</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">4.2. ノードを書く</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">4.2.1. コードの解説</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">4.2.2. ビルドする</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">4.2.3. 実行権限の付与</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">4.3. ノードの起動</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id9">4.4. 参考</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../slam/slam.html">5. 自律飛行とSLAM</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Appendix</span></p>
@@ -160,6 +171,407 @@
             
   <div class="section" id="python">
 <h1>4. 自作ノードを実行する（Python）<a class="headerlink" href="#python" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>この章ではシミュレーション上のドローンを操作するROSノードをPythonで作成します。</p>
+<div class="section" id="ros">
+<h2>4.1. ROSパッケージを作る<a class="headerlink" href="#ros" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>はじめに、自作ノードを格納するためのROSパッケージを作ります。
+パッケージ名はpx4_sim_pkgとします。
+また、rospy、geometry_msgs、mavros_msgsパッケージを使用するので依存パッケージに追加しておきます。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> ~/catkin_ws/src
+catkin_create_pkg px4_sim_pkg rospy geometry_msgs mavros_msgs
+</pre></div>
+</div>
+</div>
+<div class="section" id="id1">
+<h2>4.2. ノードを書く<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>それでは実際にノードを書いてみましょう。
+今回は、ドローンを2m上空に離陸させるノードを書きます。</p>
+<p>このコードを <code class="docutils literal notranslate"><span class="pre">offboard_sample.py</span></code> という名前で、 <code class="docutils literal notranslate"><span class="pre">px4_sim_pkg/script</span></code> に保存してください。</p>
+<div class="literal-block-wrapper container" id="id11">
+<div class="code-block-caption"><span class="caption-text">offboard_sample.py</span><a class="headerlink" href="#id11" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="kn">import</span> <span class="nn">rospy</span>
+
+<span class="kn">from</span> <span class="nn">geometry_msgs.msg</span> <span class="kn">import</span> <span class="n">PoseStamped</span>
+<span class="kn">from</span> <span class="nn">mavros_msgs.msg</span> <span class="kn">import</span> <span class="n">State</span>
+<span class="kn">from</span> <span class="nn">mavros_msgs.srv</span> <span class="kn">import</span> <span class="n">CommandBool</span><span class="p">,</span> <span class="n">CommandBoolRequest</span>
+<span class="kn">from</span> <span class="nn">mavros_msgs.srv</span> <span class="kn">import</span> <span class="n">SetMode</span><span class="p">,</span> <span class="n">SetModeRequest</span>
+
+<span class="n">current_state</span> <span class="o">=</span> <span class="n">State</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">state_cb</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+    <span class="k">global</span> <span class="n">current_state</span>
+    <span class="n">current_state</span> <span class="o">=</span> <span class="n">msg</span>
+
+<span class="k">def</span> <span class="nf">offboard_node</span><span class="p">():</span>
+
+    <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="s2">&quot;offb_node&quot;</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Rate</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+
+    <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="s2">&quot;mavros/state&quot;</span><span class="p">,</span> <span class="n">State</span><span class="p">,</span> <span class="n">state_cb</span><span class="p">)</span>
+    <span class="n">local_pos_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="s2">&quot;mavros/setpoint_position/local&quot;</span><span class="p">,</span>
+                                     <span class="n">PoseStamped</span><span class="p">,</span>
+                                     <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">arming_client</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span><span class="s2">&quot;mavros/cmd/arming&quot;</span><span class="p">,</span> <span class="n">CommandBool</span><span class="p">)</span>
+    <span class="n">set_mode_client</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span><span class="s2">&quot;mavros/set_mode&quot;</span><span class="p">,</span> <span class="n">SetMode</span><span class="p">)</span>
+
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">rospy</span><span class="o">.</span><span class="n">is_shutdown</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">current_state</span><span class="o">.</span><span class="n">connected</span><span class="p">:</span>
+        <span class="n">r</span><span class="o">.</span><span class="n">sleep</span><span class="p">()</span>
+
+    <span class="n">pose</span> <span class="o">=</span> <span class="n">PoseStamped</span><span class="p">()</span>
+    <span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="mi">2</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+        <span class="n">local_pos_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">pose</span><span class="p">)</span>
+        <span class="n">r</span><span class="o">.</span><span class="n">sleep</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">rospy</span><span class="o">.</span><span class="n">is_shutdown</span><span class="p">():</span>
+            <span class="k">break</span>
+
+    <span class="n">offb_set_mode</span> <span class="o">=</span> <span class="n">SetModeRequest</span><span class="p">()</span>
+    <span class="n">offb_set_mode</span><span class="o">.</span><span class="n">custom_mode</span> <span class="o">=</span> <span class="s2">&quot;OFFBOARD&quot;</span>
+
+    <span class="n">arm_cmd</span> <span class="o">=</span> <span class="n">CommandBoolRequest</span><span class="p">()</span>
+    <span class="n">arm_cmd</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="bp">True</span>
+
+    <span class="n">last_request</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">rospy</span><span class="o">.</span><span class="n">is_shutdown</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">current_state</span><span class="o">.</span><span class="n">mode</span> <span class="o">!=</span> <span class="s2">&quot;OFFBOARD&quot;</span> \
+              <span class="ow">and</span> <span class="p">(</span><span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">last_request</span> <span class="o">&gt;</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mi">5</span><span class="p">)):</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">offb_set_mode_resp</span> <span class="o">=</span> <span class="n">set_mode_client</span><span class="p">(</span><span class="n">offb_set_mode</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">offb_set_mode_resp</span><span class="o">.</span><span class="n">mode_sent</span><span class="p">:</span>
+                    <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Offboard enabled&quot;</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+
+            <span class="n">last_request</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+
+        <span class="k">else</span><span class="p">:</span>
+          <span class="k">if</span> <span class="ow">not</span> <span class="n">current_state</span><span class="o">.</span><span class="n">armed</span> \
+                <span class="ow">and</span> <span class="p">(</span><span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">last_request</span> <span class="o">&gt;</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mi">5</span><span class="p">)):</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">arm_cmd_resp</span> <span class="o">=</span> <span class="n">arming_client</span><span class="p">(</span><span class="n">arm_cmd</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">arm_cmd_resp</span><span class="o">.</span><span class="n">success</span><span class="p">:</span>
+                    <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Vehicle armed&quot;</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+
+            <span class="n">last_request</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+
+        <span class="n">local_pos_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">pose</span><span class="p">)</span>
+        <span class="n">r</span><span class="o">.</span><span class="n">sleep</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">offboard_node</span><span class="p">()</span>
+    <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ROSInterruptException</span><span class="p">:</span>
+        <span class="k">pass</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="id2">
+<h3>4.2.1. コードの解説<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+</pre></div>
+</div>
+<p>ROSノードとして実行するPythonプログラムには一行目にこの宣言が必要です。
+詳細は以下のリンクを参照してください。</p>
+<ul class="simple">
+<li><a class="reference external" href="https://qiita.com/sesame/items/47d2694616eadb35d4bc#python%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%83%88%E3%81%AE%E5%AE%9F%E8%A1%8C">Python初歩からの学習メモ1</a></li>
+<li><a class="reference external" href="https://qiita.com/mohira/items/566ca75d704072bcb26f">#!/bin/sh は ただのコメントじゃないよ！ Shebangだよ！</a></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">rospy</span>
+
+<span class="kn">from</span> <span class="nn">geometry_msgs.msg</span> <span class="kn">import</span> <span class="n">PoseStamped</span>
+<span class="kn">from</span> <span class="nn">mavros_msgs.msg</span> <span class="kn">import</span> <span class="n">State</span>
+<span class="kn">from</span> <span class="nn">mavros_msgs.srv</span> <span class="kn">import</span> <span class="n">CommandBool</span><span class="p">,</span> <span class="n">CommandBoolRequest</span>
+<span class="kn">from</span> <span class="nn">mavros_msgs.srv</span> <span class="kn">import</span> <span class="n">SetMode</span><span class="p">,</span> <span class="n">SetModeRequest</span>
+</pre></div>
+</div>
+<p>mavrosパッケージで提供されるトピックやサービスを使うためのメッセージは <code class="docutils literal notranslate"><span class="pre">mavros_msgs</span></code> パッケージで定義されています。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="s2">&quot;offb_node&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>ROSノードを <code class="docutils literal notranslate"><span class="pre">offb_node</span></code> という名前で初期化しています。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">r</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Rate</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Offboardコマンドのタイムアウト時間は500msなので、2Hz以上の周波数で機体にコマンドを送る必要があります。
+また、Offboardコマンドがタイムアウトした場合は、その直前の飛行モードに切り替わるので、PositionモードからOffboardモードに切り替えるようにしておけば、Offboardモードへの移行が失敗してもその場にとどまってくれます。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="s2">&quot;mavros/state&quot;</span><span class="p">,</span> <span class="n">State</span><span class="p">,</span> <span class="n">state_cb</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">mavros/state</span></code> トピックにパブリッシュされる、 <code class="docutils literal notranslate"><span class="pre">State</span></code> 型のメッセージをサブスクライブするためのサブスクライバを初期化しています。
+第二引数は受け取ったメッセージを保持しておくキューのサイズです。
+第三引数の <code class="docutils literal notranslate"><span class="pre">state_cb</span></code> は受け取ったメッセージを処理するためのコールバック関数です。
+<code class="docutils literal notranslate"><span class="pre">state_cb</span></code> は次のように定義されています。</p>
+<p><code class="docutils literal notranslate"><span class="pre">State</span></code> 型のメッセージには、機体の接続状況やモータの動作状況などが格納されています。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">current_state</span> <span class="o">=</span> <span class="n">State</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">state_cb</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+    <span class="k">global</span> <span class="n">current_state</span>
+    <span class="n">current_state</span> <span class="o">=</span> <span class="n">msg</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">state_cb</span></code> は <code class="docutils literal notranslate"><span class="pre">State</span></code> 型の変数を受け取り、それをグローバル変数 <code class="docutils literal notranslate"><span class="pre">current_state</span></code> に格納する関数です。
+受け取ったメッセージをローカル変数ではなく、グローバル変数に格納するために <code class="docutils literal notranslate"><span class="pre">global</span></code> キーワードを使っています。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">local_pos_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="s2">&quot;mavros/setpoint_position/local&quot;</span><span class="p">,</span>
+                                 <span class="n">PoseStamped</span><span class="p">,</span>
+                                 <span class="n">queue_size</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">mavros/setpoint_position/local</span></code> トピックに <code class="docutils literal notranslate"><span class="pre">PoseStamped</span></code> 型のメッセージをパブリッシュするパブリッシャを初期化しています。
+第三引数は受け取ったメッセージを保持しておくキューのサイズです。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">arming_client</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span><span class="s2">&quot;mavros/cmd/arming&quot;</span><span class="p">,</span> <span class="n">CommandBool</span><span class="p">)</span>
+<span class="n">set_mode_client</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span><span class="s2">&quot;mavros/set_mode&quot;</span><span class="p">,</span> <span class="n">SetMode</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>モータの起動に用いる <code class="docutils literal notranslate"><span class="pre">mavros/cmd/arming</span></code> と モードの変更に用いる <code class="docutils literal notranslate"><span class="pre">mavros/set_mode</span></code> サービスのクライアントを初期化しています。
+それぞれ、 <code class="docutils literal notranslate"><span class="pre">CommandBool</span></code> 型と <code class="docutils literal notranslate"><span class="pre">SetMode</span></code> 型のメッセージを使います。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">while</span> <span class="ow">not</span> <span class="n">rospy</span><span class="o">.</span><span class="n">is_shutdown</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">current_state</span><span class="o">.</span><span class="n">connected</span><span class="p">:</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sleep</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>FCUと接続するまで待ちます。
+<code class="docutils literal notranslate"><span class="pre">current_state.connected</span></code> はFCUと接続されているときに <code class="docutils literal notranslate"><span class="pre">true</span></code> になるので、接続されるとwhileループから抜けます。
+また、 <code class="docutils literal notranslate"><span class="pre">rate.sleep()</span></code> は、このノードが20Hzで動作するように必要な時間だけノードを停止します。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pose</span> <span class="o">=</span> <span class="n">PoseStamped</span><span class="p">()</span>
+<span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="mi">2</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+    <span class="n">local_pos_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">pose</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sleep</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">rospy</span><span class="o">.</span><span class="n">is_shutdown</span><span class="p">():</span>
+        <span class="k">break</span>
+</pre></div>
+</div>
+<p>あらかじめ移動先の位置をパブリッシュしておきます。
+移動先の位置をパブリッシュしておかないとOffboardモードへの移行がリジェクトされます。
+ここでは、移動先の位置は上方向に2mとなっています。
+<code class="docutils literal notranslate"><span class="pre">PoseStamped</span></code> の各フィールドについては <a class="reference external" href="http://docs.ros.org/lunar/api/geometry_msgs/html/msg/PoseStamped.html">ここ</a> を見てください。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">offb_set_mode</span> <span class="o">=</span> <span class="n">SetModeRequest</span><span class="p">()</span>
+<span class="n">offb_set_mode</span><span class="o">.</span><span class="n">custom_mode</span> <span class="o">=</span> <span class="s2">&quot;OFFBOARD&quot;</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">SetMode</span></code> メッセージの <code class="docutils literal notranslate"><span class="pre">custom_mode</span></code> フィールドを <code class="docutils literal notranslate"><span class="pre">OFFBOARD</span></code> にします。
+このメッセージをサービスサーバに送信することでモードの切り替えをおこないます。
+<code class="docutils literal notranslate"><span class="pre">SetMode</span></code> メッセージの定義は <a class="reference external" href="http://docs.ros.org/api/mavros_msgs/html/srv/SetMode.html">ここ</a> から見れます。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">arm_cmd</span> <span class="o">=</span> <span class="n">CommandBoolRequest</span><span class="p">()</span>
+<span class="n">arm_cmd</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="bp">True</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">/mavros/cmd/arming</span></code> サービスへ送信するためのメッセージを作成します。
+<code class="docutils literal notranslate"><span class="pre">CommandBool</span></code> メッセージの定義は <a class="reference external" href="http://docs.ros.org/api/mavros_msgs/html/srv/CommandBool.html">ここ</a> にあります。
+mavrosパッケージで使用するメッセージの定義は、 <a class="reference external" href="http://wiki.ros.org/mavros#Plugins">mavrosのROS wikiページ</a> から見ることができます。</p>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">last_request</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+
+<span class="k">while</span> <span class="ow">not</span> <span class="n">rospy</span><span class="o">.</span><span class="n">is_shutdown</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">current_state</span><span class="o">.</span><span class="n">mode</span> <span class="o">!=</span> <span class="s2">&quot;OFFBOARD&quot;</span> \
+          <span class="ow">and</span> <span class="p">(</span><span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">last_request</span> <span class="o">&gt;</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mi">5</span><span class="p">)):</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">offb_set_mode_resp</span> <span class="o">=</span> <span class="n">set_mode_client</span><span class="p">(</span><span class="n">offb_set_mode</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">offb_set_mode_resp</span><span class="o">.</span><span class="n">mode_sent</span><span class="p">:</span>
+                <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Offboard enabled&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+
+        <span class="n">last_request</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">if</span> <span class="ow">not</span> <span class="n">current_state</span><span class="o">.</span><span class="n">armed</span> \
+            <span class="ow">and</span> <span class="p">(</span><span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">last_request</span> <span class="o">&gt;</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mi">5</span><span class="p">)):</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">arm_cmd_resp</span> <span class="o">=</span> <span class="n">arming_client</span><span class="p">(</span><span class="n">arm_cmd</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">arm_cmd_resp</span><span class="o">.</span><span class="n">success</span><span class="p">:</span>
+                <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Vehicle armed&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+
+        <span class="n">last_request</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+
+    <span class="n">local_pos_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">pose</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sleep</span><span class="p">()</span><span class="n">ate</span><span class="o">.</span><span class="n">sleep</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+<p>最初のif節は現在のモードが <code class="docutils literal notranslate"><span class="pre">OFFBOARD</span></code> かつ、モード切替が行われたのが5秒以上前であるときに実行されます。
+最後のモード切替からの経過時間は <code class="docutils literal notranslate"><span class="pre">last_request</span></code> 変数を使って判断しています。</p>
+<p><code class="docutils literal notranslate"><span class="pre">set_mode_client(offb_set_mode)</span></code> で、 <code class="docutils literal notranslate"><span class="pre">offb_set_mode</span></code> 変数のメッセージを使って <code class="docutils literal notranslate"><span class="pre">mavros/set_mode</span></code> サービスをコールしています。
+サービスにはリクエストのフィールド（サービスコールの際に必要な情報を与えるために使う）と、レスポンスのフィールド（処理結果等を格納するのに使う）があり、サービスコールが成功するとレスポンスが帰ってきます。
+今回はレスポンスの <code class="docutils literal notranslate"><span class="pre">mode_sent</span></code> を調べることでモード切り替えの命令がきちんと認識され、送信されたかを判断しています。</p>
+<p>サービスコールが失敗した場合には例外が送出されるので、try-except節で例外をキャッチする必要があります。</p>
+<p>モードが <code class="docutils literal notranslate"><span class="pre">OFFBOARD</span></code> の時は機体にモータを起動するように命令を送っています。
+この部分の処理はOffboardコマンドを送るところとほぼ同じです。</p>
+<p>最後に、ループ毎に目標位置をパブリッシュしています。</p>
+</div>
+<div class="section" id="id6">
+<h3>4.2.2. ビルドする<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">offboard_sample.py</span></code> が使用するメッセージが確実に生成されているようにするためにビルドします。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> ~/catkin_ws
+catkin_make
+</pre></div>
+</div>
+</div>
+<div class="section" id="id7">
+<h3>4.2.3. 実行権限の付与<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>PythonプログラムをROSノードとして実行するには実行権限を与える必要があります。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>chmod +x offboard_sample.py
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id8">
+<h2>4.3. ノードの起動<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>はじめにシミュレータを起動します。
+ROSノードとの通信を行うためにはmavrosが必要なので、 <code class="docutils literal notranslate"><span class="pre">mavros_posix_sitl.launch</span></code> を使います。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch px4 mavros_posix_sitl.launch
+</pre></div>
+</div>
+<p>次に先ほど作成したノードを起動します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rosrun px4_sim_pkg offboard_sample.py
+</pre></div>
+</div>
+<img alt="../_images/runningnode_py.png" src="../_images/runningnode_py.png" />
+</div>
+<div class="section" id="id9">
+<h2>4.4. 参考<a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<dl class="docutils">
+<dt><a class="reference external" href="http://wiki.ros.org/mavros">mavros - ROS Wiki</a></dt>
+<dd>mavrosのROS Wikiページ</dd>
+<dt><a class="reference external" href="https://uxmilk.jp/12505">Pythonでのグローバル（global）変数の宣言方法</a></dt>
+<dd>グローバル変数について</dd>
+<dt><a class="reference external" href="http://wiki.ros.org/ja/ROS/Tutorials/WritingPublisherSubscriber%28python%29">シンプルな配信者(Publisher)と購読者(Subscriber)を書く(Python)</a></dt>
+<dd>ROS Wikiのパブリッシャとサブスクライバを書くチュートリアル</dd>
+<dt><a class="reference external" href="http://wiki.ros.org/ja/ROS/Tutorials/WritingServiceClient%28python%29">シンプルなサービスとクライアントを書く (Python)</a></dt>
+<dd>ROS Wikiのサービスとクライアントを書くチュートリアル</dd>
+<dt><a class="reference external" href="http://wiki.ros.org/rospy/Overview/Services">rospy/Overview/Services</a></dt>
+<dd>Overview of rospy Service</dd>
+<dt><a class="reference external" href="http://docs.ros.org/api/rospy/html/rospy.impl.tcpros_service.ServiceProxy-class.html">Class ServiceProxy</a></dt>
+<dd>Service Proxy API Reference</dd>
+</dl>
+</div>
 </div>
 
 
