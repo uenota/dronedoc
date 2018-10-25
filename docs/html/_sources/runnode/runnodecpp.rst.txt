@@ -1,6 +1,6 @@
---------------------
-自作ノードを実行する
---------------------
+------------------------------
+自作ノードを実行する（C++）
+------------------------------
 
 この章ではシミュレーション上のドローンを操作するROSノードを作成します。
 
@@ -146,6 +146,7 @@ FCUと接続するまで待ちます。
 mavrosパッケージで使用するメッセージの定義は、 `mavrosのROS wikiページ <http://wiki.ros.org/mavros#Plugins>`_ から見ることができます。
 
 .. code-block:: cpp
+    :linenos:
 
     ros::Time last_request = ros::Time::now();
 
@@ -175,7 +176,17 @@ mavrosパッケージで使用するメッセージの定義は、 `mavrosのROS
         rate.sleep();
     }
 
+最初のif節は現在のモードが ``OFFBOARD`` かつ、モード切替が行われたのが5秒以上前であるときに実行されます。
+最後のモード切替からの経過時間は ``last_request`` 変数を使って判断しています。
 
+``set_mode_client.call(offb_set_mode)`` で、 ``offb_set_mode`` 変数のメッセージを使って ``mavros/set_mode`` サービスをコールしています。
+サービスをコールした場合、サービスコールが成功すると ``true`` が帰ってきて、失敗すると ``false`` が帰ってきます。なので、戻り値を調べることでサービスコールが成功したかを知ることができます。
+また、サービスにはリクエストのフィールド（サービスコールの際に必要な情報を与えるために使う）と、レスポンスのフィールド（処理結果等を格納するのに使う）があり、今回はレスポンスの ``mode_sent`` を調べることでモード切り替えの命令がきちんと認識され、送信されたかを判断しています。
+
+モードが ``OFFBOARD`` の時は機体にモータを起動するように命令を送っています。
+この部分の処理はOffboardコマンドを送るところとほぼ同じです。
+
+最後に、ループ毎に目標位置をパブリッシュしています。
 
 CMakeLists.txtの編集
 --------------------
@@ -210,8 +221,11 @@ ROSノードとの通信を行うためにはmavrosが必要なので、 ``mavro
 
     rosrun px4_sim_pkg offboard_sample
 
+.. image:: imgs/runningnode.png
 
 参考
 =====
 `Callbacks and Spinning - ROS Wiki <http://wiki.ros.org/roscpp/Overview/Callbacks%20and%20Spinning>`_
     ros::spinOnce()について
+`mavros - ROS Wiki <http://wiki.ros.org/mavros>`_
+    mavrosのROS Wikiページ
