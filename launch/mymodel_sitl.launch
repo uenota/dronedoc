@@ -1,0 +1,9 @@
+<launch>
+
+    <arg name="sdf" default="$(find dronedoc)/models/iris_2d_lidar/model.sdf" />
+
+    <include file="$(find px4)/launch/mavros_posix_sitl.launch" >
+        <arg name="sdf" value="$(arg sdf)" />
+    </include>
+
+</launch>

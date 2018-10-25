@@ -15,6 +15,7 @@ PX4 SITL Tutorial
    px4sim/px4sim.rst
    runnode/runnodecpp.rst
    runnode/runnodepy.rst
+   addmodel/addmodel.rst
    slam/slam.rst
 
 .. toctree::
@@ -24,11 +25,14 @@ PX4 SITL Tutorial
 
    appendix/bash_commands/bash_commands.rst
    appendix/ros/ros.rst
-   appendix/addmodel/addmodel.rst
    appendix/git/git.rst
    appendix/github/github.rst
    appendix/terms/terms.rst
 
+Issues
+============
+内容に問題があれば気軽にお知らせください。  
+https://github.com/uenota/dronedoc/issues
 
 Indices and tables
 ==================
@@ -36,7 +40,3 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-
-Issues
-============
-- `GitHub <https://github.com/uenota/dronedoc/issues>`_
