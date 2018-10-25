@@ -20,7 +20,7 @@ def offboard_node():
     rospy.Subscriber("mavros/state", State, state_cb)
     local_pos_pub = rospy.Publisher("mavros/setpoint_position/local",
                                      PoseStamped,
-                                     queue_size=1000)
+                                     queue_size=10)
     arming_client = rospy.ServiceProxy("mavros/cmd/arming", CommandBool)
     set_mode_client = rospy.ServiceProxy("mavros/set_mode", SetMode)
 
