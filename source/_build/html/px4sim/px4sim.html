@@ -1,8 +1,8 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="ja" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ja" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
   
@@ -11,6 +11,8 @@
   <title>2. PX4 SITLシミュレーション &mdash; Dronedoc 1.0.0 ドキュメント</title>
   
 
+  
+  
   
   
 
@@ -22,28 +24,21 @@
 
   
 
-  
-  
-    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-        <link rel="index" title="索引"
-              href="../genindex.html"/>
-        <link rel="search" title="検索" href="../search.html"/>
-    <link rel="top" title="Dronedoc 1.0.0 ドキュメント" href="../index.html"/>
-        <link rel="next" title="3. 自作ノードを実行する" href="../runnode/runnode.html"/>
-        <link rel="prev" title="1. はじめに" href="../introduction/introduction.html"/> 
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="3. 自作ノードを実行する（C++）" href="../runnode/runnodecpp.html" />
+    <link rel="prev" title="1. はじめに" href="../introduction/introduction.html" /> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -80,7 +75,10 @@
           
             
             
-                <p class="caption"><span class="caption-text">Contents</span></p>
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../introduction/introduction.html">1. はじめに</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">2. PX4 SITLシミュレーション</a><ul>
@@ -109,8 +107,9 @@
 <li class="toctree-l2"><a class="reference internal" href="#id11">2.6. 参考</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../runnode/runnode.html">3. 自作ノードを実行する</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../slam/slam.html">4. 自律飛行とSLAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../runnode/runnodecpp.html">3. 自作ノードを実行する（C++）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../runnode/runnodepy.html">4. 自作ノードを実行する（Python）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/slam.html">5. 自律飛行とSLAM</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Appendix</span></p>
 <ul>
@@ -131,34 +130,54 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../index.html">Dronedoc</a>
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Dronedoc</a>
+        
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="../index.html">Docs</a> &raquo;</li>
-      
-    <li>2. PX4 SITLシミュレーション</li>
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>2. PX4 SITLシミュレーション</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
+            
             <a href="../_sources/px4sim/px4sim.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -178,7 +197,7 @@
 <h3>2.2.1. 事前準備<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>シリアルデバイスとの通信を行えるようにするためには、ユーザを <code class="docutils literal notranslate"><span class="pre">dialout</span></code> グループのメンバーにする必要があります。
 ユーザを <code class="docutils literal notranslate"><span class="pre">dialout</span></code> のメンバーにするには以下のコマンドを実行します。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre>sudo usermod -a -G dialout $USER
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo usermod -a -G dialout <span class="nv">$USER</span>
 </pre></div>
 </div>
 <p>コマンドを実行したら、設定を有効にするために一旦ログアウトしてから再度ログインします。</p>
@@ -188,7 +207,7 @@
 <p>シミュレーション環境はスクリプトを使うことで簡単に構築できます。
 はじめに、 <a class="reference external" href="https://raw.githubusercontent.com/PX4/Devguide/master/build_scripts/ubuntu_sim_ros_gazebo.sh">ubuntu_sim_ros_gazebo.sh</a> をダウンロードします。
 ダウンロードができたら、<code class="docutils literal notranslate"><span class="pre">ubuntu_sim_ros_gazebo.sh</span></code> のあるディレクトリで以下のコマンドを実行します。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span class="nb">source</span> ubuntu_sim_ros_gazebo.sh
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> ubuntu_sim_ros_gazebo.sh
 </pre></div>
 </div>
 <p>コマンドを実行すれば自動でインストールされます。
@@ -199,7 +218,7 @@ ROSがインストールされていない場合は、ROSもインストール�
 <div class="section" id="gazebo">
 <span id="gazebo-sim"></span><h2>2.3. Gazeboシミュレーション<a class="headerlink" href="#gazebo" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Gazeboを使ってシミュレーションを行うには、 <code class="docutils literal notranslate"><span class="pre">~/src/Firmware</span></code> 以下で次のコマンドを実行します。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre>make posix_sitl_default gazebo
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make posix_sitl_default gazebo
 </pre></div>
 </div>
 <p>初回実行の場合はしばらく時間がかかります。
@@ -209,7 +228,7 @@ ROSがインストールされていない場合は、ROSもインストール�
 <p>他にも様々な機体のシミュレーションを行うことができます。
 興味があれば <a class="reference external" href="https://dev.px4.io/en/simulation/gazebo.html#quadrotor">ここ</a> を参考にしてください。</p>
 <p>シミュレータのターミナル内で以下のコマンドを実行すれば機体を離陸させることができます。</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre>commander takeoff
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>commander takeoff
 </pre></div>
 </div>
 <img alt="../_images/commander.png" src="../_images/commander.png" />
@@ -232,17 +251,17 @@ ROSがインストールされていない場合は、ROSもインストール�
 シミュレータの起動は <a class="reference internal" href="#gazebo-sim"><span class="std std-ref">Gazeboシミュレーション</span></a> で説明したとおりです。</p>
 <p>シミュレータを起動したら、以下のコマンドでmavrosを起動します。
 fcu_urlパラメータについては、 <a class="reference internal" href="#fcu-url"><span class="std std-ref">補足: mavrosのfcu_url引数について</span></a> で解説しています。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre>roslaunch mavros px4.launch fcu_url:<span class="o">=</span><span class="s2">&quot;udp://:14540@127.0.0.1:14557&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch mavros px4.launch fcu_url:<span class="o">=</span><span class="s2">&quot;udp://:14540@127.0.0.1:14557&quot;</span>
 </pre></div>
 </div>
 <p>起動できたら別のターミナル内で、</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre>rostopic list
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rostopic list
 </pre></div>
 </div>
 <p>を実行してみましょう。 <code class="docutils literal notranslate"><span class="pre">/mavros/...</span></code> のようなトピックが現れていれば通信が出来ています。</p>
 <p>試しにサービスを使ってみましょう。
 <code class="docutils literal notranslate"><span class="pre">/mavros/cmd/arming</span></code> サービスに対して、メッセージ&quot;value: true&quot;を送信することでドローンのモータを起動することができます。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre>rosservice call /mavros/cmd/arming <span class="s2">&quot;value: true&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rosservice call /mavros/cmd/arming <span class="s2">&quot;value: true&quot;</span>
 </pre></div>
 </div>
 <p>他にも離陸用のサービスなどがあるので試してみると良いでしょう。
@@ -252,7 +271,7 @@ fcu_urlパラメータについては、 <a class="reference internal" href="#fc
 <p>また、サービス名を入力し終わったあとにタブ補完を使うと必要なメッセージが自動で入力されます。
 メッセージのそれぞれの値はデフォルト値が入力されているので必要な値に変えましょう。
 上記のコマンドでモータを起動したあとに以下のコマンドを実行すればドローンを5m上空へ離陸させることができます。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre>rosservice call /mavros/cmd/takeoff <span class="s2">&quot;{min_pitch: 0.0, yaw: 0.0, latitude: 47.3977506, longitude: 8.5456074, altitude: 5}&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rosservice call /mavros/cmd/takeoff <span class="s2">&quot;{min_pitch: 0.0, yaw: 0.0, latitude: 47.3977506, longitude: 8.5456074, altitude: 5}&quot;</span>
 </pre></div>
 </div>
 <img alt="../_images/service_takeoff.png" src="../_images/service_takeoff.png" />
@@ -275,42 +294,42 @@ fcu_urlパラメータについては、 <a class="reference internal" href="#fc
 <h4>2.4.3.1. 事前準備<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>これらのlaunchファイルからシミュレータを起動するには、ROSの環境変数の設定が必要です。
 はじめに <code class="docutils literal notranslate"><span class="pre">~/src/Firmware</span></code> ディレクトリに移動します。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span class="nb">cd</span> ~/src/Firmware
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> ~/src/Firmware
 </pre></div>
 </div>
 <p><a class="reference internal" href="#gazebo-sim"><span class="std std-ref">Gazeboシミュレーション</span></a> の内容を実行していない場合は次のコマンドを実行してください。
 これによってシミュレーションに必要なファイルが作成されます。
 以下のコマンドはすべて <code class="docutils literal notranslate"><span class="pre">~/src/Firmware</span></code> ディレクトリで実行する必要があります。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre>make posix_sitl_default gazebo
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make posix_sitl_default gazebo
 </pre></div>
 </div>
 <p>次に、必要な設定スクリプトを実行します。
 ROSの設定ができている場合は一行目は実行しなくても構いません。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span class="nb">source</span> ~/catkin_ws/devel/setup.bash
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> ~/catkin_ws/devel/setup.bash
 <span class="nb">source</span> Tools/setup_gazebo.bash <span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span> <span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/build/posix_sitl_default
 </pre></div>
 </div>
 <p>次に、環境変数を設定します。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span class="nb">export</span> <span class="nv">ROS_PACKAGE_PATH</span><span class="o">=</span>$ROS_PACKAGE_PATH:<span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>
-<span class="nb">export</span> <span class="nv">ROS_PACKAGE_PATH</span><span class="o">=</span>$ROS_PACKAGE_PATH:<span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/Tools/sitl_gazebo
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">ROS_PACKAGE_PATH</span><span class="o">=</span><span class="nv">$ROS_PACKAGE_PATH</span>:<span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>
+<span class="nb">export</span> <span class="nv">ROS_PACKAGE_PATH</span><span class="o">=</span><span class="nv">$ROS_PACKAGE_PATH</span>:<span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/Tools/sitl_gazebo
 </pre></div>
 </div>
 <p>これらのコマンドは毎回実行しなければなりません。
 面倒な場合は <code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code> に以下の内容を書き込んでおくと、毎回この内容が設定されます。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span class="nb">source</span> $HOME/src/Firmware/Tools/setup_gazebo.bash $HOME/src/Firmware $HOME/src/Firmware/build/posix_sitl_default &gt; /dev/null
-<span class="nb">export</span> <span class="nv">ROS_PACKAGE_PATH</span><span class="o">=</span>$ROS_PACKAGE_PATH:$HOME/src/Firmware
-<span class="nb">export</span> <span class="nv">ROS_PACKAGE_PATH</span><span class="o">=</span>$ROS_PACKAGE_PATH:$HOME/src/Firmware/Tools/sitl_gazebo
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> <span class="nv">$HOME</span>/src/Firmware/Tools/setup_gazebo.bash <span class="nv">$HOME</span>/src/Firmware <span class="nv">$HOME</span>/src/Firmware/build/posix_sitl_default &gt; /dev/null
+<span class="nb">export</span> <span class="nv">ROS_PACKAGE_PATH</span><span class="o">=</span><span class="nv">$ROS_PACKAGE_PATH</span>:<span class="nv">$HOME</span>/src/Firmware
+<span class="nb">export</span> <span class="nv">ROS_PACKAGE_PATH</span><span class="o">=</span><span class="nv">$ROS_PACKAGE_PATH</span>:<span class="nv">$HOME</span>/src/Firmware/Tools/sitl_gazebo
 </pre></div>
 </div>
 </div>
 <div class="section" id="id9">
 <h4>2.4.3.2. シミュレータを起動する<a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>以下のコマンドを実行すればシミュレータが起動します。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre>roslaunch px4 posix_sitl.launch
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch px4 posix_sitl.launch
 </pre></div>
 </div>
 <p>mavrosも同時に起動したい場合には <code class="docutils literal notranslate"><span class="pre">mavros_posix_sitl.launch</span></code> を使います。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre>roslaunch px4 mavros_posix_sitl.launch
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch px4 mavros_posix_sitl.launch
 </pre></div>
 </div>
 </div>
@@ -321,11 +340,11 @@ ROSの設定ができている場合は一行目は実行しなくても構い�
 <div class="section" id="roslaunch">
 <h3>2.5.1. roslaunchコマンドの説明<a class="headerlink" href="#roslaunch" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>ROSでは、以下の形式を使うことでlaunchファイル内の変数に値を設定することができます。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre>roslaunch package file.launch arg:<span class="o">=</span>value
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch package file.launch arg:<span class="o">=</span>value
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">px4.launch</span></code> ファイルの内容は以下のようになっており、 <code class="docutils literal notranslate"><span class="pre">roslaunch</span> <span class="pre">mavros</span> <span class="pre">px4.launch</span> <span class="pre">fcu_url:=&quot;udp://:14540&#64;127.0.0.1:14557&quot;</span></code> とすることで <code class="docutils literal notranslate"><span class="pre">fcu_url</span></code> 引数の内容を変更することができます。</p>
-<div class="highlight-xml notranslate"><div class="highlight"><pre><span class="nt">&lt;launch&gt;</span>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;launch&gt;</span>
 <span class="c">&lt;!-- vim: set ft=xml noet : --&gt;</span>
 <span class="c">&lt;!-- example launch script for PX4 based FCU&#39;s --&gt;</span>
 
@@ -360,7 +379,7 @@ ROSの設定ができている場合は一行目は実行しなくても構い�
 コロンの後ろの数字はボーレート（baudrate）です。</p>
 <p>シミュレーションの場合はUDPを使って通信します。
 UDPを使って通信する場合は次のような形式に従ってfcu_urlを指定します。</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre>udp://[bind_host][:port]@[remote_host][:port]
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>udp://[bind_host][:port]@[remote_host][:port]
 </pre></div>
 </div>
 <ul class="simple">
@@ -370,7 +389,7 @@ UDPを使って通信する場合は次のような形式に従ってfcu_urlを�
 <li>次にある <code class="docutils literal notranslate"><span class="pre">port</span></code> はFCU側の待受ポート（ <code class="docutils literal notranslate"><span class="pre">14557</span></code> ）を指定します。</li>
 </ul>
 <p>それぞれの部分に数値を当てはめると <code class="docutils literal notranslate"><span class="pre">fcu_url</span></code> は次のようになります。</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre>udp://:14540@127.0.0.1:14557
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>udp://:14540@127.0.0.1:14557
 </pre></div>
 </div>
 <p>ポートの設定については <a class="reference external" href="https://dev.px4.io/en/simulation/ros_interface.html">ROS with Gazebo Simulation - PX4 Developer Guide</a> を、 <code class="docutils literal notranslate"><span class="pre">fcu_url</span></code> の詳細については <a class="reference external" href="http://wiki.ros.org/mavros#Connection_URL">mavros - ROS Wiki</a> を参考にしてください。</p>
@@ -395,15 +414,16 @@ UDPを使って通信する場合は次のような形式に従ってfcu_urlを�
 
 
            </div>
+           
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../runnode/runnode.html" class="btn btn-neutral float-right" title="3. 自作ノードを実行する" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../runnode/runnodecpp.html" class="btn btn-neutral float-right" title="3. 自作ノードを実行する（C++）" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../introduction/introduction.html" class="btn btn-neutral" title="1. はじめに" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../introduction/introduction.html" class="btn btn-neutral" title="1. はじめに" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -416,7 +436,7 @@ UDPを使って通信する場合は次のような形式に従ってfcu_urlを�
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -435,9 +455,11 @@ UDPを使って通信する場合は次のような形式に従ってfcu_urlを�
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
             VERSION:'1.0.0',
+            LANGUAGE:'ja',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -448,19 +470,13 @@ UDPを使って通信する場合は次のような形式に従ってfcu_urlを�
 
   
 
-  
-  
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-   
+  </script> 
 
 </body>
 </html>

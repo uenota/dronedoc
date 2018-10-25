@@ -1,3 +1,34 @@
 --------------------
 自作ノードを実行する
 --------------------
+
+この章ではシミュレーション上のドローンを操作するROSノードを作成します。
+
+ROSパッケージを作る
+==================
+はじめに、自作ノードを格納するためのROSパッケージを作ります。
+パッケージ名はpx4_sim_pkgとします。
+また、roscpp、geometry_msgs、mavros_msgsパッケージを使用するので依存パッケージに追加しておきます。
+
+.. code-block:: bash
+
+    cd ~/catkin_ws/src
+    catkin_create_pkg px4_sim_pkg roscpp geometry_msgs mavros_msgs
+
+ノードを書く
+============
+
+.. literalinclude:: ../../src/offboard_sample.cpp
+    :language: cpp
+    :linenos:
+
+CMakeLists.txtの編集
+--------------------
+
+
+コードの解説
+------------
+
+
+ノードの起動
+============
