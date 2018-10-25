@@ -91,7 +91,8 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#id7">3.3. ノードの起動</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id8">3.4. 参考</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#launch">3.4. launchファイルを書く</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">3.5. 参考</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="runnodepy.html">4. 自作ノードを実行する（Python）</a></li>
@@ -541,8 +542,25 @@ ROSノードとの通信を行うためにはmavrosが必要なので、 <code c
 </div>
 <img alt="../_images/runningnode_cpp.png" src="../_images/runningnode_cpp.png" />
 </div>
+<div class="section" id="launch">
+<h2>3.4. launchファイルを書く<a class="headerlink" href="#launch" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>シミュレータとOffboardノードを別々に起動するのは面倒なので、launchファイルにまとめて一つのコマンドで起動できるようにしましょう。</p>
+<p><code class="docutils literal notranslate"><span class="pre">px4_sim_pkg/launch</span></code> 以下に <code class="docutils literal notranslate"><span class="pre">cpp_offb_sample.launch</span></code> という名前で以下の内容を保存してください。</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;launch&gt;</span>
+
+    <span class="nt">&lt;include</span> <span class="na">file=</span><span class="s">&quot;$(find px4)/launch/mavros_posix_sitl.launch&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;node</span> <span class="na">name=</span><span class="s">&quot;offb_node&quot;</span> <span class="na">pkg=</span><span class="s">&quot;px4_sim_pkg&quot;</span> <span class="na">type=</span><span class="s">&quot;offboard_sample&quot;</span> <span class="nt">/&gt;</span>
+
+<span class="nt">&lt;/launch&gt;</span>
+</pre></div>
+</div>
+<p>以下のコマンドを使ってこのlaunchファイルからシミュレータとOffboardノードを起動できます。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch px4_sim_pkg cpp_offb_sample.launch
+</pre></div>
+</div>
+</div>
 <div class="section" id="id8">
-<h2>3.4. 参考<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>3.5. 参考<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <dl class="docutils">
 <dt><a class="reference external" href="http://wiki.ros.org/roscpp/Overview/Callbacks%20and%20Spinning">Callbacks and Spinning - ROS Wiki</a></dt>
 <dd>ros::spinOnce()について</dd>
