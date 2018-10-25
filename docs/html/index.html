@@ -83,16 +83,16 @@
 <li class="toctree-l1"><a class="reference internal" href="px4sim/px4sim.html">2. PX4 SITLシミュレーション</a></li>
 <li class="toctree-l1"><a class="reference internal" href="runnode/runnodecpp.html">3. 自作ノードを実行する（C++）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="runnode/runnodepy.html">4. 自作ノードを実行する（Python）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="slam/slam.html">5. 自律飛行とSLAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="addmodel/addmodel.html">5. 新しいモデルを追加する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slam/slam.html">6. 自律飛行とSLAM</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Appendix</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="appendix/bash_commands/bash_commands.html">1. 基本的なBashコマンド</a></li>
 <li class="toctree-l1"><a class="reference internal" href="appendix/ros/ros.html">2. ROSの基本</a></li>
-<li class="toctree-l1"><a class="reference internal" href="appendix/addmodel/addmodel.html">3. 新しいモデルを追加する</a></li>
-<li class="toctree-l1"><a class="reference internal" href="appendix/git/git.html">4. Git</a></li>
-<li class="toctree-l1"><a class="reference internal" href="appendix/github/github.html">5. GitHub</a></li>
-<li class="toctree-l1"><a class="reference internal" href="appendix/terms/terms.html">6. 用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/git/git.html">3. Git</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/github/github.html">4. GitHub</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/terms/terms.html">5. 用語集</a></li>
 </ul>
 
             
@@ -193,7 +193,16 @@
 <li class="toctree-l2"><a class="reference internal" href="runnode/runnodepy.html#id9">4.5. 参考</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="slam/slam.html">5. 自律飛行とSLAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="addmodel/addmodel.html">5. 新しいモデルを追加する</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="addmodel/addmodel.html#sdf">5.1. SDFファイルを作る</a></li>
+<li class="toctree-l2"><a class="reference internal" href="addmodel/addmodel.html#config">5.2. configファイルを作る</a></li>
+<li class="toctree-l2"><a class="reference internal" href="addmodel/addmodel.html#id7">5.3. パスを設定する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="addmodel/addmodel.html#id8">5.4. モデルを確認する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="addmodel/addmodel.html#sitl">5.5. SITLシミュレーションでモデルを使う</a></li>
+<li class="toctree-l2"><a class="reference internal" href="addmodel/addmodel.html#id9">5.6. 参考</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="slam/slam.html">6. 自律飛行とSLAM</a></li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
@@ -209,22 +218,26 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="appendix/ros/ros.html">2. ROSの基本</a></li>
-<li class="toctree-l1"><a class="reference internal" href="appendix/addmodel/addmodel.html">3. 新しいモデルを追加する</a></li>
-<li class="toctree-l1"><a class="reference internal" href="appendix/git/git.html">4. Git</a></li>
-<li class="toctree-l1"><a class="reference internal" href="appendix/github/github.html">5. GitHub</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="appendix/github/github.html#id1">5.1. GitHubとは</a></li>
-<li class="toctree-l2"><a class="reference internal" href="appendix/github/github.html#id2">5.2. GitHub上のコードを利用する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/git/git.html">3. Git</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/github/github.html">4. GitHub</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="appendix/github/github.html#id1">4.1. GitHubとは</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix/github/github.html#id2">4.2. GitHub上のコードを利用する</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="appendix/terms/terms.html">6. 用語集</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="appendix/terms/terms.html#id2">6.1. ドローン関連</a></li>
-<li class="toctree-l2"><a class="reference internal" href="appendix/terms/terms.html#id3">6.2. ファイルシステム関連</a></li>
-<li class="toctree-l2"><a class="reference internal" href="appendix/terms/terms.html#makecmake">6.3. makeとかcmakeとか関連</a></li>
-<li class="toctree-l2"><a class="reference internal" href="appendix/terms/terms.html#todo-name">6.4. TODO:name</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/terms/terms.html">5. 用語集</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="appendix/terms/terms.html#id2">5.1. ドローン関連</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix/terms/terms.html#id3">5.2. ファイルシステム関連</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix/terms/terms.html#makecmake">5.3. makeとかcmakeとか関連</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix/terms/terms.html#todo-name">5.4. TODO:name</a></li>
 </ul>
 </li>
 </ul>
 </div>
+</div>
+<div class="section" id="issues">
+<h1>Issues<a class="headerlink" href="#issues" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>内容に問題があれば気軽にお知らせください。
+<a class="reference external" href="https://github.com/uenota/dronedoc/issues">https://github.com/uenota/dronedoc/issues</a></p>
 </div>
 <div class="section" id="indices-and-tables">
 <h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="このヘッドラインへのパーマリンク">¶</a></h1>
@@ -232,12 +245,6 @@
 <li><a class="reference internal" href="genindex.html"><span class="std std-ref">索引</span></a></li>
 <li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">モジュール索引</span></a></li>
 <li><a class="reference internal" href="search.html"><span class="std std-ref">検索ページ</span></a></li>
-</ul>
-</div>
-<div class="section" id="issues">
-<h1>Issues<a class="headerlink" href="#issues" title="このヘッドラインへのパーマリンク">¶</a></h1>
-<ul class="simple">
-<li><a class="reference external" href="https://github.com/uenota/dronedoc/issues">GitHub</a></li>
 </ul>
 </div>
 
