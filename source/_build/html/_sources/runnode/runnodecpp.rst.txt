@@ -223,6 +223,27 @@ ROSノードとの通信を行うためにはmavrosが必要なので、 ``mavro
 
 .. image:: imgs/runningnode_cpp.png
 
+launchファイルを書く
+===================
+シミュレータとOffboardノードを別々に起動するのは面倒なので、launchファイルにまとめて一つのコマンドで起動できるようにしましょう。
+
+``px4_sim_pkg/launch`` 以下に ``cpp_offb_sample.launch`` という名前で以下の内容を保存してください。
+
+.. code-block:: xml
+
+    <launch>
+
+        <include file="$(find px4)/launch/mavros_posix_sitl.launch" />
+        <node name="offb_node" pkg="px4_sim_pkg" type="offboard_sample" />
+
+    </launch>
+
+以下のコマンドを使ってこのlaunchファイルからシミュレータとOffboardノードを起動できます。
+
+.. code-block:: bash
+
+    roslaunch px4_sim_pkg cpp_offb_sample.launch
+
 参考
 =====
 `Callbacks and Spinning - ROS Wiki <http://wiki.ros.org/roscpp/Overview/Callbacks%20and%20Spinning>`_
