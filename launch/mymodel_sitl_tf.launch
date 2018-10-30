@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="sdf" default="$(find dronedoc)/models/iris_2d_lidar/model.sdf" />
+
+    <include file="$(find px4_simulation_stack)/launch/iris/iris_sitl_remote_server.launch" >
+        <arg name="sdf" value="$(arg sdf)" />
+    </include>
+    <include file="$(find px4_simulation_stack)/launch/gazebo/gzclient.launch" />
+
+</launch>
