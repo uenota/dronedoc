@@ -98,14 +98,14 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../addmodel/addmodel.html">5. 新しいモデルを追加する</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../slam/slam.html">6. 自律飛行とSLAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../octomap/octomap.html">7. Octomapを使って3Dマップを作る</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Appendix</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/bash_commands/bash_commands.html">1. 基本的なBashコマンド</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/bash_commands/bash_commands.html">1. 基本的なBashの使い方</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/ros/ros.html">2. ROSの基本</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/git/git.html">3. Git</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/github/github.html">4. GitHub</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/terms/terms.html">5. 用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/terms/terms.html">3. 用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/archive/archive.html">4. 読書案内</a></li>
 </ul>
 
             
@@ -178,7 +178,7 @@
 <p>はじめに、自作ノードを格納するためのROSパッケージを作ります。
 パッケージ名はpx4_sim_pkgとします。
 また、rospy、geometry_msgs、mavros_msgsパッケージを使用するので依存パッケージに追加しておきます。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> ~/catkin_ws/src
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span class="nb">cd</span> ~/catkin_ws/src
 catkin_create_pkg px4_sim_pkg rospy geometry_msgs mavros_msgs
 </pre></div>
 </div>
@@ -272,7 +272,7 @@ catkin_create_pkg px4_sim_pkg rospy geometry_msgs mavros_msgs
 80
 81
 82
-83</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+83</pre></div></td><td class="code"><div class="highlight"><pre><span class="ch">#!/usr/bin/env python</span>
 
 <span class="kn">import</span> <span class="nn">rospy</span>
 
@@ -350,7 +350,7 @@ catkin_create_pkg px4_sim_pkg rospy geometry_msgs mavros_msgs
         <span class="n">local_pos_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">pose</span><span class="p">)</span>
         <span class="n">r</span><span class="o">.</span><span class="n">sleep</span><span class="p">()</span>
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">offboard_node</span><span class="p">()</span>
     <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ROSInterruptException</span><span class="p">:</span>
@@ -360,7 +360,7 @@ catkin_create_pkg px4_sim_pkg rospy geometry_msgs mavros_msgs
 </div>
 <div class="section" id="id2">
 <h3>4.2.1. コードの解説<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span class="ch">#!/usr/bin/env python</span>
 </pre></div>
 </div>
 <p>ROSノードとして実行するPythonプログラムには一行目にこの宣言が必要です。
@@ -369,7 +369,7 @@ catkin_create_pkg px4_sim_pkg rospy geometry_msgs mavros_msgs
 <li><a class="reference external" href="https://qiita.com/sesame/items/47d2694616eadb35d4bc#python%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%83%88%E3%81%AE%E5%AE%9F%E8%A1%8C">Python初歩からの学習メモ1</a></li>
 <li><a class="reference external" href="https://qiita.com/mohira/items/566ca75d704072bcb26f">#!/bin/sh は ただのコメントじゃないよ！ Shebangだよ！</a></li>
 </ul>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">rospy</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">rospy</span>
 
 <span class="kn">from</span> <span class="nn">geometry_msgs.msg</span> <span class="kn">import</span> <span class="n">PoseStamped</span>
 <span class="kn">from</span> <span class="nn">mavros_msgs.msg</span> <span class="kn">import</span> <span class="n">State</span>
@@ -378,16 +378,16 @@ catkin_create_pkg px4_sim_pkg rospy geometry_msgs mavros_msgs
 </pre></div>
 </div>
 <p>mavrosパッケージで提供されるトピックやサービスを使うためのメッセージは <code class="docutils literal notranslate"><span class="pre">mavros_msgs</span></code> パッケージで定義されています。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="s2">&quot;offb_node&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="s2">&quot;offb_node&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>ROSノードを <code class="docutils literal notranslate"><span class="pre">offb_node</span></code> という名前で初期化しています。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">r</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Rate</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span class="n">r</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Rate</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Offboardコマンドのタイムアウト時間は500msなので、2Hz以上の周波数で機体にコマンドを送る必要があります。
 また、Offboardコマンドがタイムアウトした場合は、その直前の飛行モードに切り替わるので、PositionモードからOffboardモードに切り替えるようにしておけば、Offboardモードへの移行が失敗してもその場にとどまってくれます。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="s2">&quot;mavros/state&quot;</span><span class="p">,</span> <span class="n">State</span><span class="p">,</span> <span class="n">state_cb</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="s2">&quot;mavros/state&quot;</span><span class="p">,</span> <span class="n">State</span><span class="p">,</span> <span class="n">state_cb</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">mavros/state</span></code> トピックにパブリッシュされる、 <code class="docutils literal notranslate"><span class="pre">State</span></code> 型のメッセージをサブスクライブするためのサブスクライバを初期化しています。
@@ -395,7 +395,7 @@ catkin_create_pkg px4_sim_pkg rospy geometry_msgs mavros_msgs
 第三引数の <code class="docutils literal notranslate"><span class="pre">state_cb</span></code> は受け取ったメッセージを処理するためのコールバック関数です。
 <code class="docutils literal notranslate"><span class="pre">state_cb</span></code> は次のように定義されています。</p>
 <p><code class="docutils literal notranslate"><span class="pre">State</span></code> 型のメッセージには、機体の接続状況やモータの動作状況などが格納されています。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">current_state</span> <span class="o">=</span> <span class="n">State</span><span class="p">()</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span class="n">current_state</span> <span class="o">=</span> <span class="n">State</span><span class="p">()</span>
 <span class="k">def</span> <span class="nf">state_cb</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
     <span class="k">global</span> <span class="n">current_state</span>
     <span class="n">current_state</span> <span class="o">=</span> <span class="n">msg</span>
@@ -403,27 +403,27 @@ catkin_create_pkg px4_sim_pkg rospy geometry_msgs mavros_msgs
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">state_cb</span></code> は <code class="docutils literal notranslate"><span class="pre">State</span></code> 型の変数を受け取り、それをグローバル変数 <code class="docutils literal notranslate"><span class="pre">current_state</span></code> に格納する関数です。
 受け取ったメッセージをローカル変数ではなく、グローバル変数に格納するために <code class="docutils literal notranslate"><span class="pre">global</span></code> キーワードを使っています。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">local_pos_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="s2">&quot;mavros/setpoint_position/local&quot;</span><span class="p">,</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span class="n">local_pos_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="s2">&quot;mavros/setpoint_position/local&quot;</span><span class="p">,</span>
                                  <span class="n">PoseStamped</span><span class="p">,</span>
                                  <span class="n">queue_size</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">mavros/setpoint_position/local</span></code> トピックに <code class="docutils literal notranslate"><span class="pre">PoseStamped</span></code> 型のメッセージをパブリッシュするパブリッシャを初期化しています。
 第三引数は受け取ったメッセージを保持しておくキューのサイズです。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">arming_client</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span><span class="s2">&quot;mavros/cmd/arming&quot;</span><span class="p">,</span> <span class="n">CommandBool</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span class="n">arming_client</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span><span class="s2">&quot;mavros/cmd/arming&quot;</span><span class="p">,</span> <span class="n">CommandBool</span><span class="p">)</span>
 <span class="n">set_mode_client</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span><span class="s2">&quot;mavros/set_mode&quot;</span><span class="p">,</span> <span class="n">SetMode</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>モータの起動に用いる <code class="docutils literal notranslate"><span class="pre">mavros/cmd/arming</span></code> と モードの変更に用いる <code class="docutils literal notranslate"><span class="pre">mavros/set_mode</span></code> サービスのクライアントを初期化しています。
 それぞれ、 <code class="docutils literal notranslate"><span class="pre">CommandBool</span></code> 型と <code class="docutils literal notranslate"><span class="pre">SetMode</span></code> 型のメッセージを使います。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">while</span> <span class="ow">not</span> <span class="n">rospy</span><span class="o">.</span><span class="n">is_shutdown</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">current_state</span><span class="o">.</span><span class="n">connected</span><span class="p">:</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span class="k">while</span> <span class="ow">not</span> <span class="n">rospy</span><span class="o">.</span><span class="n">is_shutdown</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">current_state</span><span class="o">.</span><span class="n">connected</span><span class="p">:</span>
     <span class="n">r</span><span class="o">.</span><span class="n">sleep</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>FCUと接続するまで待ちます。
 <code class="docutils literal notranslate"><span class="pre">current_state.connected</span></code> はFCUと接続されているときに <code class="docutils literal notranslate"><span class="pre">true</span></code> になるので、接続されるとwhileループから抜けます。
 また、 <code class="docutils literal notranslate"><span class="pre">rate.sleep()</span></code> は、このノードが20Hzで動作するように必要な時間だけノードを停止します。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pose</span> <span class="o">=</span> <span class="n">PoseStamped</span><span class="p">()</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span class="n">pose</span> <span class="o">=</span> <span class="n">PoseStamped</span><span class="p">()</span>
 <span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="mi">2</span>
@@ -440,14 +440,14 @@ catkin_create_pkg px4_sim_pkg rospy geometry_msgs mavros_msgs
 移動先の位置をパブリッシュしておかないとOffboardモードへの移行がリジェクトされます。
 ここでは、移動先の位置は上方向に2mとなっています。
 <code class="docutils literal notranslate"><span class="pre">PoseStamped</span></code> の各フィールドについては <a class="reference external" href="http://docs.ros.org/lunar/api/geometry_msgs/html/msg/PoseStamped.html">ここ</a> を見てください。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">offb_set_mode</span> <span class="o">=</span> <span class="n">SetModeRequest</span><span class="p">()</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span class="n">offb_set_mode</span> <span class="o">=</span> <span class="n">SetModeRequest</span><span class="p">()</span>
 <span class="n">offb_set_mode</span><span class="o">.</span><span class="n">custom_mode</span> <span class="o">=</span> <span class="s2">&quot;OFFBOARD&quot;</span>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">SetMode</span></code> メッセージの <code class="docutils literal notranslate"><span class="pre">custom_mode</span></code> フィールドを <code class="docutils literal notranslate"><span class="pre">OFFBOARD</span></code> にします。
 このメッセージをサービスサーバに送信することでモードの切り替えをおこないます。
 <code class="docutils literal notranslate"><span class="pre">SetMode</span></code> メッセージの定義は <a class="reference external" href="http://docs.ros.org/api/mavros_msgs/html/srv/SetMode.html">ここ</a> から見れます。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">arm_cmd</span> <span class="o">=</span> <span class="n">CommandBoolRequest</span><span class="p">()</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span class="n">arm_cmd</span> <span class="o">=</span> <span class="n">CommandBoolRequest</span><span class="p">()</span>
 <span class="n">arm_cmd</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
@@ -484,7 +484,7 @@ mavrosパッケージで使用するメッセージの定義は、 <a class="ref
 28
 29
 30
-31</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">last_request</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+31</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">last_request</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
 
 <span class="k">while</span> <span class="ow">not</span> <span class="n">rospy</span><span class="o">.</span><span class="n">is_shutdown</span><span class="p">():</span>
     <span class="k">if</span> <span class="n">current_state</span><span class="o">.</span><span class="n">mode</span> <span class="o">!=</span> <span class="s2">&quot;OFFBOARD&quot;</span> \
@@ -530,7 +530,7 @@ mavrosパッケージで使用するメッセージの定義は、 <a class="ref
 <div class="section" id="id6">
 <h3>4.2.2. ビルドする<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">offboard_sample.py</span></code> が使用するメッセージが確実に生成されているようにするためにビルドします。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> ~/catkin_ws
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span class="nb">cd</span> ~/catkin_ws
 catkin_make
 </pre></div>
 </div>
@@ -538,7 +538,7 @@ catkin_make
 <div class="section" id="id7">
 <h3>4.2.3. 実行権限の付与<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>PythonプログラムをROSノードとして実行するには実行権限を与える必要があります。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>chmod +x offboard_sample.py
+<div class="highlight-bash notranslate"><div class="highlight"><pre>chmod +x offboard_sample.py
 </pre></div>
 </div>
 </div>
@@ -547,11 +547,11 @@ catkin_make
 <h2>4.3. ノードの起動<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>はじめにシミュレータを起動します。
 ROSノードとの通信を行うためにはmavrosが必要なので、 <code class="docutils literal notranslate"><span class="pre">mavros_posix_sitl.launch</span></code> を使います。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch px4 mavros_posix_sitl.launch
+<div class="highlight-bash notranslate"><div class="highlight"><pre>roslaunch px4 mavros_posix_sitl.launch
 </pre></div>
 </div>
 <p>次に先ほど作成したノードを起動します。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rosrun px4_sim_pkg offboard_sample.py
+<div class="highlight-bash notranslate"><div class="highlight"><pre>rosrun px4_sim_pkg offboard_sample.py
 </pre></div>
 </div>
 <img alt="../_images/runningnode_py.png" src="../_images/runningnode_py.png" />
@@ -560,7 +560,7 @@ ROSノードとの通信を行うためにはmavrosが必要なので、 <code c
 <h2>4.4. launchファイルを書く<a class="headerlink" href="#launch" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>シミュレータとOffboardノードを別々に起動するのは面倒なので、launchファイルにまとめて一つのコマンドで起動できるようにしましょう。</p>
 <p><code class="docutils literal notranslate"><span class="pre">px4_sim_pkg/launch</span></code> 以下に <code class="docutils literal notranslate"><span class="pre">py_offb_sample.launch</span></code> という名前で以下の内容を保存してください。</p>
-<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;launch&gt;</span>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span class="nt">&lt;launch&gt;</span>
 
     <span class="nt">&lt;include</span> <span class="na">file=</span><span class="s">&quot;$(find px4)/launch/mavros_posix_sitl.launch&quot;</span> <span class="nt">/&gt;</span>
     <span class="nt">&lt;node</span> <span class="na">name=</span><span class="s">&quot;offb_node&quot;</span> <span class="na">pkg=</span><span class="s">&quot;px4_sim_pkg&quot;</span> <span class="na">type=</span><span class="s">&quot;offboard_sample.py&quot;</span> <span class="nt">/&gt;</span>
@@ -569,7 +569,7 @@ ROSノードとの通信を行うためにはmavrosが必要なので、 <code c
 </pre></div>
 </div>
 <p>以下のコマンドを使ってこのlaunchファイルからシミュレータとOffboardノードを起動できます。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch px4_sim_pkg py_offb_sample.launch
+<div class="highlight-bash notranslate"><div class="highlight"><pre>roslaunch px4_sim_pkg py_offb_sample.launch
 </pre></div>
 </div>
 </div>
@@ -612,7 +612,7 @@ ROSノードとの通信を行うためにはmavrosが必要なので、 <code c
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Takaki Ueno.
+        &copy; Copyright 2018, Takaki Ueno
 
     </p>
   </div>
@@ -631,22 +631,15 @@ ROSノードとの通信を行うためにはmavrosが必要なので、 <code c
 
   
 
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'1.0.0',
-            LANGUAGE:'ja',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="../_static/translations.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
 
   
 

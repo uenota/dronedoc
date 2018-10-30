@@ -28,7 +28,7 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <link rel="next" title="1. 基本的なBashコマンド" href="../appendix/bash_commands/bash_commands.html" />
+    <link rel="next" title="7. Octomapを使って3Dマップを作る" href="../octomap/octomap.html" />
     <link rel="prev" title="5. 新しいモデルを追加する" href="../addmodel/addmodel.html" /> 
 
   
@@ -85,15 +85,28 @@
 <li class="toctree-l1"><a class="reference internal" href="../runnode/runnodecpp.html">3. 自作ノードを実行する（C++）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../runnode/runnodepy.html">4. 自作ノードを実行する（Python）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../addmodel/addmodel.html">5. 新しいモデルを追加する</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">6. 自律飛行とSLAM</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">6. 自律飛行とSLAM</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">6.1. はじめに</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gps">6.2. GPSを用いた自律飛行</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#tf">6.2.1. tfの設定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">6.2.2. センサ情報の設定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">6.2.3. オドメトリ情報の設定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">6.2.4. 移動制御の設定</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#lidaramcl">6.3. LiDARとAMCLを用いた自己位置推定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lidarslam">6.4. LiDARを用いたSLAM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">6.5. 参考</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../octomap/octomap.html">7. Octomapを使って3Dマップを作る</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Appendix</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/bash_commands/bash_commands.html">1. 基本的なBashコマンド</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/bash_commands/bash_commands.html">1. 基本的なBashの使い方</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/ros/ros.html">2. ROSの基本</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/git/git.html">3. Git</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/github/github.html">4. GitHub</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/terms/terms.html">5. 用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/terms/terms.html">3. 用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/archive/archive.html">4. 読書案内</a></li>
 </ul>
 
             
@@ -160,6 +173,61 @@
             
   <div class="section" id="slam">
 <h1>6. 自律飛行とSLAM<a class="headerlink" href="#slam" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>このチュートリアルでは、<a class="reference external" href="http://wiki.ros.org/navigation">navigation stack</a> パッケージを使ってSLAMを行います。</p>
+<p>はじめにGPSを用いた自律飛行、次に2D LiDARのみを用いた自己位置推定と自律飛行、最後に2D LiDARのみを用いたSLAM（Simultaneous Localization and Mapping）を行います。</p>
+<div class="section" id="id1">
+<h2>6.1. はじめに<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="figure" id="id6">
+<img alt="../_images/overview_tf.png" src="../_images/overview_tf.png" />
+<p class="caption"><span class="caption-text">出典: <a class="reference external" href="http://wiki.ros.org/navigation/Tutorials/RobotSetup">http://wiki.ros.org/navigation/Tutorials/RobotSetup</a></span></p>
+</div>
+<p>Navigation stackは、ロボットの自律移動を行うために以下のようなサブパッケージを提供しています。</p>
+<dl class="docutils">
+<dt><a class="reference external" href="http://wiki.ros.org/move_base">move_base</a></dt>
+<dd>ロボットの経路計画に用いられる</dd>
+<dt><a class="reference external" href="http://wiki.ros.org/amcl">amcl</a></dt>
+<dd>ロボットの自己位置推定を行う</dd>
+</dl>
+</div>
+<div class="section" id="gps">
+<h2>6.2. GPSを用いた自律飛行<a class="headerlink" href="#gps" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="tf">
+<h3>6.2.1. tfの設定<a class="headerlink" href="#tf" title="このヘッドラインへのパーマリンク">¶</a></h3>
+</div>
+<div class="section" id="id2">
+<h3>6.2.2. センサ情報の設定<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h3>
+</div>
+<div class="section" id="id3">
+<h3>6.2.3. オドメトリ情報の設定<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h3>
+</div>
+<div class="section" id="id4">
+<h3>6.2.4. 移動制御の設定<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h3>
+</div>
+</div>
+<div class="section" id="lidaramcl">
+<h2>6.3. LiDARとAMCLを用いた自己位置推定<a class="headerlink" href="#lidaramcl" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="lidarslam">
+<h2>6.4. LiDARを用いたSLAM<a class="headerlink" href="#lidarslam" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>今回は <a class="reference external" href="http://wiki.ros.org/gmapping">gmapping</a> パッケージを使って地図生成を行います。</p>
+</div>
+<div class="section" id="id5">
+<h2>6.5. 参考<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<dl class="docutils">
+<dt><a class="reference external" href="http://wiki.ros.org/navigation#Tutorials">Navigation stack tutorial</a></dt>
+<dd>navigation stackパッケージのチュートリアル</dd>
+<dt><a class="reference external" href="http://wiki.ros.org/move_base">move_base - ROS Wiki</a></dt>
+<dd>move_baseパッケージ</dd>
+<dt><a class="reference external" href="https://www.wilselby.com/research/ros-integration/2d-mapping-navigation/">2D Mapping &amp; Navigation</a></dt>
+<dd>Navigation Stackを使ってSLAMをしている例</dd>
+<dt><a class="reference external" href="http://wiki.ros.org/slam_gmapping/Tutorials/MappingFromLoggedData">How to Build a Map Using Logged Data - ROS Wiki</a></dt>
+<dd>gmappingを使って自己位置推定用の地図を作る</dd>
+<dt><a class="reference external" href="https://qiita.com/nnn112358/items/814c0fb0d2075eb71da0">ROSのLidarSLAMまとめ - Qiita</a></dt>
+<dd>ROSで使えるLiDAR SLAM一覧</dd>
+<dt><a class="reference external" href="https://qiita.com/MoriKen/items/0b75ab291ab0d95c37c2P">Navigation Stack を理解する - 1. 導入 - Qiita</a></dt>
+<dd>Navigation Stackを使ってみる</dd>
+</dl>
+</div>
 </div>
 
 
@@ -170,7 +238,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../appendix/bash_commands/bash_commands.html" class="btn btn-neutral float-right" title="1. 基本的なBashコマンド" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../octomap/octomap.html" class="btn btn-neutral float-right" title="7. Octomapを使って3Dマップを作る" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="../addmodel/addmodel.html" class="btn btn-neutral" title="5. 新しいモデルを追加する" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -182,7 +250,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Takaki Ueno.
+        &copy; Copyright 2018, Takaki Ueno
 
     </p>
   </div>
@@ -201,22 +269,15 @@
 
   
 
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'1.0.0',
-            LANGUAGE:'ja',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="../_static/translations.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
 
   
 

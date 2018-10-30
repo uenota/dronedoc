@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>1. 基本的なBashコマンド &mdash; Dronedoc 1.0.0 ドキュメント</title>
+  <title>1. 基本的なBashの使い方 &mdash; Dronedoc 1.0.0 ドキュメント</title>
   
 
   
@@ -29,7 +29,7 @@
     <link rel="index" title="索引" href="../../genindex.html" />
     <link rel="search" title="検索" href="../../search.html" />
     <link rel="next" title="2. ROSの基本" href="../ros/ros.html" />
-    <link rel="prev" title="6. 自律飛行とSLAM" href="../../slam/slam.html" /> 
+    <link rel="prev" title="7. Octomapを使って3Dマップを作る" href="../../octomap/octomap.html" /> 
 
   
   <script src="../../_static/js/modernizr.min.js"></script>
@@ -86,50 +86,49 @@
 <li class="toctree-l1"><a class="reference internal" href="../../runnode/runnodepy.html">4. 自作ノードを実行する（Python）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../addmodel/addmodel.html">5. 新しいモデルを追加する</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../slam/slam.html">6. 自律飛行とSLAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../octomap/octomap.html">7. Octomapを使って3Dマップを作る</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Appendix</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">1. 基本的なBashコマンド</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">1. 基本的なBashの使い方</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#id1">1.1. はじめに</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id2">1.2. Bashって?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id3">1.3. 基本的なコマンド</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#ls">1.3.1. ls</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id4">1.3.1.1. 使い方</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">1.2. 基本的なコマンド</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ls">1.2.1. ls</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id3">1.2.1.1. 使い方</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#cd">1.3.2. cd</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#touch">1.3.3. touch</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#mkdir">1.3.4. mkdir</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#echo">1.3.5. echo</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#rm">1.3.6. rm</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#cp">1.3.7. cp</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#mv">1.3.8. mv</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#ssh">1.3.9. ssh</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#scp">1.3.10. scp</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#wget">1.3.11. wget</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#curl">1.3.12. curl</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#source">1.3.13. source</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#export">1.3.14. export</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#cat">1.3.15. cat</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#less">1.3.16. less</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cd">1.2.2. cd</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#touch">1.2.3. touch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mkdir">1.2.4. mkdir</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#echo">1.2.5. echo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rm">1.2.6. rm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cp">1.2.7. cp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mv">1.2.8. mv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ssh">1.2.9. ssh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#scp">1.2.10. scp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#wget">1.2.11. wget</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#curl">1.2.12. curl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#source">1.2.13. source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#export">1.2.14. export</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cat">1.2.15. cat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#less">1.2.16. less</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id5">1.4. リダイレクト</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#bashrc">1.5. .bashrc</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#tips">1.5.1. Tips</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#set-o-noclobber">1.5.1.1. set -o noclobber</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#alias">1.5.1.2. alias</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">1.3. リダイレクト</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bashrc">1.4. .bashrc</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#tips">1.4.1. Tips</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#set-o-noclobber">1.4.1.1. set -o noclobber</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#alias">1.4.1.2. alias</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id6">1.6. 参考</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">1.5. 参考</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../ros/ros.html">2. ROSの基本</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../git/git.html">3. Git</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../github/github.html">4. GitHub</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../terms/terms.html">5. 用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../terms/terms.html">3. 用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../archive/archive.html">4. 読書案内</a></li>
 </ul>
 
             
@@ -175,7 +174,7 @@
     
       <li><a href="../../index.html">Docs</a> &raquo;</li>
         
-      <li>1. 基本的なBashコマンド</li>
+      <li>1. 基本的なBashの使い方</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -195,128 +194,126 @@
            <div itemprop="articleBody">
             
   <div class="section" id="bash">
-<h1>1. 基本的なBashコマンド<a class="headerlink" href="#bash" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<h1>1. 基本的なBashの使い方<a class="headerlink" href="#bash" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <div class="section" id="id1">
 <h2>1.1. はじめに<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>ここでは基本的なbashコマンドとbash関連の設定等を解説します。</p>
+<p>大抵の場合 <code class="docutils literal notranslate"><span class="pre">コマンド名</span> <span class="pre">linux</span></code> で検索すると出てきます。
+ここに書いていないコマンドがあった場合は調べながら試してみるとよいでしょう。
+Linuxコマンドに関しては調べながら試してみるのが一番だと思います。</p>
 </div>
 <div class="section" id="id2">
-<h2>1.2. Bashって?<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>TODO</p>
-</div>
-<div class="section" id="id3">
-<h2>1.3. 基本的なコマンド<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>1.2. 基本的なコマンド<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>TODO: コマンドを分類する</p>
 <div class="section" id="ls">
-<h3>1.3.1. ls<a class="headerlink" href="#ls" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>1.2.1. ls<a class="headerlink" href="#ls" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">ls</span></code> はファイルやディレクトリの内容を表示するコマンドです。</p>
-<div class="section" id="id4">
-<h4>1.3.1.1. 使い方<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<div class="section" id="id3">
+<h4>1.2.1.1. 使い方<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p><code class="docutils literal notranslate"><span class="pre">ls</span></code> コマンド単体で実行するとカレントディレクトリの内容を表示します。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ls
+<div class="highlight-bash notranslate"><div class="highlight"><pre>ls
 </pre></div>
 </div>
 <p>特定のパスを指定するとそのディレクトリの内容を表示します。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ls ~/catkin_ws/src
+<div class="highlight-bash notranslate"><div class="highlight"><pre>ls ~/catkin_ws/src
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">-a</span></code> オプションをつけると対象のディレクトリのすべてのフォルダ、ファイル（隠しフォルダ等を含む）を表示します。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ls -a
+<div class="highlight-bash notranslate"><div class="highlight"><pre>ls -a
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">-l</span></code> オプションをつけると対象のディレクトリの内容をより詳細に表示することができます。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ls -l
+<div class="highlight-bash notranslate"><div class="highlight"><pre>ls -l
 </pre></div>
 </div>
 <p>これらのオプションは同時に指定することもできます。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ls -la
+<div class="highlight-bash notranslate"><div class="highlight"><pre>ls -la
 </pre></div>
 </div>
 </div>
 </div>
 <div class="section" id="cd">
-<h3>1.3.2. cd<a class="headerlink" href="#cd" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>1.2.2. cd<a class="headerlink" href="#cd" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>TODO</p>
 </div>
 <div class="section" id="touch">
-<h3>1.3.3. touch<a class="headerlink" href="#touch" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>1.2.3. touch<a class="headerlink" href="#touch" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>TODO</p>
 </div>
 <div class="section" id="mkdir">
-<h3>1.3.4. mkdir<a class="headerlink" href="#mkdir" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>1.2.4. mkdir<a class="headerlink" href="#mkdir" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>TODO</p>
 </div>
 <div class="section" id="echo">
-<h3>1.3.5. echo<a class="headerlink" href="#echo" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>1.2.5. echo<a class="headerlink" href="#echo" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>TODO</p>
 </div>
 <div class="section" id="rm">
-<h3>1.3.6. rm<a class="headerlink" href="#rm" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>1.2.6. rm<a class="headerlink" href="#rm" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>TODO</p>
 </div>
 <div class="section" id="cp">
-<h3>1.3.7. cp<a class="headerlink" href="#cp" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>1.2.7. cp<a class="headerlink" href="#cp" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>TODO</p>
 </div>
 <div class="section" id="mv">
-<h3>1.3.8. mv<a class="headerlink" href="#mv" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>1.2.8. mv<a class="headerlink" href="#mv" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>TODO</p>
 </div>
 <div class="section" id="ssh">
-<h3>1.3.9. ssh<a class="headerlink" href="#ssh" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>1.2.9. ssh<a class="headerlink" href="#ssh" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>TODO</p>
 </div>
 <div class="section" id="scp">
-<h3>1.3.10. scp<a class="headerlink" href="#scp" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>1.2.10. scp<a class="headerlink" href="#scp" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>TODO</p>
 </div>
 <div class="section" id="wget">
-<h3>1.3.11. wget<a class="headerlink" href="#wget" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>1.2.11. wget<a class="headerlink" href="#wget" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>TODO</p>
 </div>
 <div class="section" id="curl">
-<h3>1.3.12. curl<a class="headerlink" href="#curl" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>1.2.12. curl<a class="headerlink" href="#curl" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>TODO</p>
 </div>
 <div class="section" id="source">
-<h3>1.3.13. source<a class="headerlink" href="#source" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>1.2.13. source<a class="headerlink" href="#source" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>TODO</p>
 </div>
 <div class="section" id="export">
-<h3>1.3.14. export<a class="headerlink" href="#export" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>1.2.14. export<a class="headerlink" href="#export" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>TODO</p>
 </div>
 <div class="section" id="cat">
-<h3>1.3.15. cat<a class="headerlink" href="#cat" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>1.2.15. cat<a class="headerlink" href="#cat" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>TODO</p>
 </div>
 <div class="section" id="less">
-<h3>1.3.16. less<a class="headerlink" href="#less" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>1.2.16. less<a class="headerlink" href="#less" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>TODO</p>
 </div>
 </div>
-<div class="section" id="id5">
-<h2>1.4. リダイレクト<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id4">
+<h2>1.3. リダイレクト<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>TODO</p>
 </div>
 <div class="section" id="bashrc">
-<h2>1.5. .bashrc<a class="headerlink" href="#bashrc" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>1.4. .bashrc<a class="headerlink" href="#bashrc" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>.bashrcはBashの設定スクリプトです。</p>
 <div class="section" id="tips">
-<h3>1.5.1. Tips<a class="headerlink" href="#tips" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>1.4.1. Tips<a class="headerlink" href="#tips" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <div class="section" id="set-o-noclobber">
-<h4>1.5.1.1. set -o noclobber<a class="headerlink" href="#set-o-noclobber" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h4>1.4.1.1. set -o noclobber<a class="headerlink" href="#set-o-noclobber" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>TODO</p>
 </div>
 <div class="section" id="alias">
-<h4>1.5.1.2. alias<a class="headerlink" href="#alias" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h4>1.4.1.2. alias<a class="headerlink" href="#alias" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>TODO</p>
 </div>
 </div>
 </div>
-<div class="section" id="id6">
-<h2>1.6. 参考<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>linuxのあれ（TODO）</p>
+<div class="section" id="id5">
+<h2>1.5. 参考<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
 </div>
 </div>
 
@@ -331,7 +328,7 @@
         <a href="../ros/ros.html" class="btn btn-neutral float-right" title="2. ROSの基本" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../../slam/slam.html" class="btn btn-neutral" title="6. 自律飛行とSLAM" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../../octomap/octomap.html" class="btn btn-neutral" title="7. Octomapを使って3Dマップを作る" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -340,7 +337,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Takaki Ueno.
+        &copy; Copyright 2018, Takaki Ueno
 
     </p>
   </div>
@@ -359,22 +356,15 @@
 
   
 
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../../',
-            VERSION:'1.0.0',
-            LANGUAGE:'ja',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../../_static/jquery.js"></script>
-      <script type="text/javascript" src="../../_static/underscore.js"></script>
-      <script type="text/javascript" src="../../_static/doctools.js"></script>
-      <script type="text/javascript" src="../../_static/translations.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/translations.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
 
   
 

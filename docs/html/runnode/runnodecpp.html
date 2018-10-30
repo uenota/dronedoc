@@ -96,16 +96,16 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="runnodepy.html">4. 自作ノードを実行する（Python）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../slam/slam.html">5. 自律飛行とSLAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../addmodel/addmodel.html">5. 新しいモデルを追加する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/slam.html">6. 自律飛行とSLAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../octomap/octomap.html">7. Octomapを使って3Dマップを作る</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Appendix</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/bash_commands/bash_commands.html">1. 基本的なBashコマンド</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/bash_commands/bash_commands.html">1. 基本的なBashの使い方</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/ros/ros.html">2. ROSの基本</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/addmodel/addmodel.html">3. 新しいモデルを追加する</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/git/git.html">4. Git</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/github/github.html">5. GitHub</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/terms/terms.html">6. 用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/terms/terms.html">3. 用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/archive/archive.html">4. 読書案内</a></li>
 </ul>
 
             
@@ -178,7 +178,7 @@
 <p>はじめに、自作ノードを格納するためのROSパッケージを作ります。
 パッケージ名はpx4_sim_pkgとします。
 また、roscpp、geometry_msgs、mavros_msgsパッケージを使用するので依存パッケージに追加しておきます。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> ~/catkin_ws/src
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span class="nb">cd</span> ~/catkin_ws/src
 catkin_create_pkg px4_sim_pkg roscpp geometry_msgs mavros_msgs
 </pre></div>
 </div>
@@ -271,7 +271,7 @@ catkin_create_pkg px4_sim_pkg roscpp geometry_msgs mavros_msgs
 78
 79
 80
-81</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;ros/ros.h&gt;</span><span class="cp"></span>
+81</pre></div></td><td class="code"><div class="highlight"><pre><span class="cp">#include</span> <span class="cpf">&lt;ros/ros.h&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;geometry_msgs/PoseStamped.h&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;mavros_msgs/CommandBool.h&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;mavros_msgs/SetMode.h&gt;</span><span class="cp"></span>
@@ -357,7 +357,7 @@ catkin_create_pkg px4_sim_pkg roscpp geometry_msgs mavros_msgs
 </div>
 <div class="section" id="id2">
 <h3>3.2.1. コードの解説<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;ros/ros.h&gt;</span><span class="cp"></span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span class="cp">#include</span> <span class="cpf">&lt;ros/ros.h&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;geometry_msgs/PoseStamped.h&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;mavros_msgs/CommandBool.h&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;mavros_msgs/SetMode.h&gt;</span><span class="cp"></span>
@@ -365,12 +365,12 @@ catkin_create_pkg px4_sim_pkg roscpp geometry_msgs mavros_msgs
 </pre></div>
 </div>
 <p>mavrosパッケージで提供されるトピックやサービスを使うためのメッセージは <code class="docutils literal notranslate"><span class="pre">mavros_msgs</span></code> パッケージで定義されています。</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ros</span><span class="o">::</span><span class="n">init</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">,</span> <span class="s">&quot;offb_node&quot;</span><span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span class="n">ros</span><span class="o">::</span><span class="n">init</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">,</span> <span class="s">&quot;offb_node&quot;</span><span class="p">);</span>
 <span class="n">ros</span><span class="o">::</span><span class="n">NodeHandle</span> <span class="n">nh</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>ROSノードを <code class="docutils literal notranslate"><span class="pre">offb_node</span></code> という名前で初期化しています。</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ros</span><span class="o">::</span><span class="n">Subscriber</span> <span class="n">state_sub</span> <span class="o">=</span> <span class="n">nh</span><span class="p">.</span><span class="n">subscribe</span><span class="o">&lt;</span><span class="n">mavros_msgs</span><span class="o">::</span><span class="n">State</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span class="n">ros</span><span class="o">::</span><span class="n">Subscriber</span> <span class="n">state_sub</span> <span class="o">=</span> <span class="n">nh</span><span class="p">.</span><span class="n">subscribe</span><span class="o">&lt;</span><span class="n">mavros_msgs</span><span class="o">::</span><span class="n">State</span><span class="o">&gt;</span>
         <span class="p">(</span><span class="s">&quot;mavros/state&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">state_cb</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -379,7 +379,7 @@ catkin_create_pkg px4_sim_pkg roscpp geometry_msgs mavros_msgs
 第三引数の <code class="docutils literal notranslate"><span class="pre">state_cb</span></code> は受け取ったメッセージを処理するためのコールバック関数です。
 <code class="docutils literal notranslate"><span class="pre">state_cb</span></code> は次のように定義されています。</p>
 <p><code class="docutils literal notranslate"><span class="pre">mavros_msgs::State</span></code> 型のメッセージには、機体の接続状況やモータの動作状況などが格納されています。</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">mavros_msgs</span><span class="o">::</span><span class="n">State</span> <span class="n">current_state</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span class="n">mavros_msgs</span><span class="o">::</span><span class="n">State</span> <span class="n">current_state</span><span class="p">;</span>
 <span class="kt">void</span> <span class="nf">state_cb</span><span class="p">(</span><span class="k">const</span> <span class="n">mavros_msgs</span><span class="o">::</span><span class="n">State</span><span class="o">::</span><span class="n">ConstPtr</span><span class="o">&amp;</span> <span class="n">msg</span><span class="p">){</span>
     <span class="n">current_state</span> <span class="o">=</span> <span class="o">*</span><span class="n">msg</span><span class="p">;</span>
 <span class="p">}</span>
@@ -388,13 +388,13 @@ catkin_create_pkg px4_sim_pkg roscpp geometry_msgs mavros_msgs
 <p><code class="docutils literal notranslate"><span class="pre">state_cb</span></code> は <code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">mavros_msgs::State::ConstPtr&amp;</span></code> 型の変数を受け取り、それを <code class="docutils literal notranslate"><span class="pre">mavros_msgs::State</span></code> 型のグローバル変数 <code class="docutils literal notranslate"><span class="pre">current_state</span></code> に格納する関数です。
 コールバック関数では、 <code class="docutils literal notranslate"><span class="pre">パッケージ名::メッセージ型::ConstPtr&amp;</span></code> のような型の変数を受け取るようにするのが一般的です。
 細かいことはC++の本で勉強しましょう。</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ros</span><span class="o">::</span><span class="n">Publisher</span> <span class="n">local_pos_pub</span> <span class="o">=</span> <span class="n">nh</span><span class="p">.</span><span class="n">advertise</span><span class="o">&lt;</span><span class="n">geometry_msgs</span><span class="o">::</span><span class="n">PoseStamped</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span class="n">ros</span><span class="o">::</span><span class="n">Publisher</span> <span class="n">local_pos_pub</span> <span class="o">=</span> <span class="n">nh</span><span class="p">.</span><span class="n">advertise</span><span class="o">&lt;</span><span class="n">geometry_msgs</span><span class="o">::</span><span class="n">PoseStamped</span><span class="o">&gt;</span>
         <span class="p">(</span><span class="s">&quot;mavros/setpoint_position/local&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">mavros/setpoint_position/local</span></code> トピックに <code class="docutils literal notranslate"><span class="pre">geometry_msgs::PoseStamped</span></code> 型のメッセージをパブリッシュするパブリッシャを初期化しています。
 第二引数は受け取ったメッセージを保持しておくキューのサイズです。</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ros</span><span class="o">::</span><span class="n">ServiceClient</span> <span class="n">arming_client</span> <span class="o">=</span> <span class="n">nh</span><span class="p">.</span><span class="n">serviceClient</span><span class="o">&lt;</span><span class="n">mavros_msgs</span><span class="o">::</span><span class="n">CommandBool</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span class="n">ros</span><span class="o">::</span><span class="n">ServiceClient</span> <span class="n">arming_client</span> <span class="o">=</span> <span class="n">nh</span><span class="p">.</span><span class="n">serviceClient</span><span class="o">&lt;</span><span class="n">mavros_msgs</span><span class="o">::</span><span class="n">CommandBool</span><span class="o">&gt;</span>
         <span class="p">(</span><span class="s">&quot;mavros/cmd/arming&quot;</span><span class="p">);</span>
 <span class="n">ros</span><span class="o">::</span><span class="n">ServiceClient</span> <span class="n">set_mode_client</span> <span class="o">=</span> <span class="n">nh</span><span class="p">.</span><span class="n">serviceClient</span><span class="o">&lt;</span><span class="n">mavros_msgs</span><span class="o">::</span><span class="n">SetMode</span><span class="o">&gt;</span>
         <span class="p">(</span><span class="s">&quot;mavros/set_mode&quot;</span><span class="p">);</span>
@@ -402,12 +402,12 @@ catkin_create_pkg px4_sim_pkg roscpp geometry_msgs mavros_msgs
 </div>
 <p>モータの起動に用いる <code class="docutils literal notranslate"><span class="pre">mavros/cmd/arming</span></code> と モードの変更に用いる <code class="docutils literal notranslate"><span class="pre">mavros/set_mode</span></code> サービスのクライアントを初期化しています。
 それぞれ、 <code class="docutils literal notranslate"><span class="pre">mavros_msgs::CommandBool</span></code> 型と <code class="docutils literal notranslate"><span class="pre">mavros_msgs::SetMode</span></code> 型のメッセージを使います。</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ros</span><span class="o">::</span><span class="n">Rate</span> <span class="n">rate</span><span class="p">(</span><span class="mf">20.0</span><span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span class="n">ros</span><span class="o">::</span><span class="n">Rate</span> <span class="n">rate</span><span class="p">(</span><span class="mf">20.0</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Offboardコマンドのタイムアウト時間は500msなので、2Hz以上の周波数で機体にコマンドを送る必要があります。
 また、Offboardコマンドがタイムアウトした場合は、その直前の飛行モードに切り替わるので、PositionモードからOffboardモードに切り替えるようにしておけば、Offboardモードへの移行が失敗してもその場にとどまってくれます。</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">while</span><span class="p">(</span><span class="n">ros</span><span class="o">::</span><span class="n">ok</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">current_state</span><span class="p">.</span><span class="n">connected</span><span class="p">){</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span class="k">while</span><span class="p">(</span><span class="n">ros</span><span class="o">::</span><span class="n">ok</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">current_state</span><span class="p">.</span><span class="n">connected</span><span class="p">){</span>
     <span class="n">ros</span><span class="o">::</span><span class="n">spinOnce</span><span class="p">();</span>
     <span class="n">rate</span><span class="p">.</span><span class="n">sleep</span><span class="p">();</span>
 <span class="p">}</span>
@@ -417,7 +417,7 @@ catkin_create_pkg px4_sim_pkg roscpp geometry_msgs mavros_msgs
 <code class="docutils literal notranslate"><span class="pre">current_state.connected</span></code> はFCUと接続されているときに <code class="docutils literal notranslate"><span class="pre">true</span></code> になるので、接続されるとwhileループから抜けます。
 <code class="docutils literal notranslate"><span class="pre">ros::spinOnce()</span></code> を使ってループ中でもコールバック関数がきちんと呼ばれるようにします。
 また、 <code class="docutils literal notranslate"><span class="pre">rate.sleep()</span></code> は、このノードが20Hzで動作するように必要な時間だけノードを停止します。</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">geometry_msgs</span><span class="o">::</span><span class="n">PoseStamped</span> <span class="n">pose</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span class="n">geometry_msgs</span><span class="o">::</span><span class="n">PoseStamped</span> <span class="n">pose</span><span class="p">;</span>
 <span class="n">pose</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 <span class="n">pose</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 <span class="n">pose</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">z</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
@@ -434,14 +434,14 @@ catkin_create_pkg px4_sim_pkg roscpp geometry_msgs mavros_msgs
 移動先の位置をパブリッシュしておかないとOffboardモードへの移行がリジェクトされます。
 ここでは、移動先の位置は上方向に2mとなっています。
 <code class="docutils literal notranslate"><span class="pre">geometry_msgs::PoseStamped</span></code> の各フィールドについては <a class="reference external" href="http://docs.ros.org/lunar/api/geometry_msgs/html/msg/PoseStamped.html">ここ</a> を見てください。</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">mavros_msgs</span><span class="o">::</span><span class="n">SetMode</span> <span class="n">offb_set_mode</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span class="n">mavros_msgs</span><span class="o">::</span><span class="n">SetMode</span> <span class="n">offb_set_mode</span><span class="p">;</span>
 <span class="n">offb_set_mode</span><span class="p">.</span><span class="n">request</span><span class="p">.</span><span class="n">custom_mode</span> <span class="o">=</span> <span class="s">&quot;OFFBOARD&quot;</span><span class="p">;</span>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">SetMode</span></code> メッセージの <code class="docutils literal notranslate"><span class="pre">custom_mode</span></code> フィールドを <code class="docutils literal notranslate"><span class="pre">OFFBOARD</span></code> にします。
 このメッセージをサービスサーバに送信することでモードの切り替えをおこないます。
 <code class="docutils literal notranslate"><span class="pre">mavros_msgs::SetMode</span></code> メッセージの定義は <a class="reference external" href="http://docs.ros.org/api/mavros_msgs/html/srv/SetMode.html">ここ</a> から見れます。</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">mavros_msgs</span><span class="o">::</span><span class="n">CommandBool</span> <span class="n">arm_cmd</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span class="n">mavros_msgs</span><span class="o">::</span><span class="n">CommandBool</span> <span class="n">arm_cmd</span><span class="p">;</span>
 <span class="n">arm_cmd</span><span class="p">.</span><span class="n">request</span><span class="p">.</span><span class="n">value</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
 </pre></div>
 </div>
@@ -474,7 +474,7 @@ mavrosパッケージで使用するメッセージの定義は、 <a class="ref
 24
 25
 26
-27</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">ros</span><span class="o">::</span><span class="n">Time</span> <span class="n">last_request</span> <span class="o">=</span> <span class="n">ros</span><span class="o">::</span><span class="n">Time</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+27</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">ros</span><span class="o">::</span><span class="n">Time</span> <span class="n">last_request</span> <span class="o">=</span> <span class="n">ros</span><span class="o">::</span><span class="n">Time</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
 
 <span class="k">while</span><span class="p">(</span><span class="n">ros</span><span class="o">::</span><span class="n">ok</span><span class="p">()){</span>
     <span class="k">if</span><span class="p">(</span> <span class="n">current_state</span><span class="p">.</span><span class="n">mode</span> <span class="o">!=</span> <span class="s">&quot;OFFBOARD&quot;</span> <span class="o">&amp;&amp;</span>
@@ -516,14 +516,14 @@ mavrosパッケージで使用するメッセージの定義は、 <a class="ref
 <h3>3.2.2. CMakeLists.txtの編集<a class="headerlink" href="#cmakelists-txt" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>次にCMakeLists.txtの編集をおこないます。
 CMakeLists.txtの末尾に以下の行を追加します。</p>
-<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">add_executable</span><span class="p">(</span><span class="s">offboard_sample</span> <span class="s">src/offboard_sample.cpp</span><span class="p">)</span>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span class="nb">add_executable</span><span class="p">(</span><span class="s">offboard_sample</span> <span class="s">src/offboard_sample.cpp</span><span class="p">)</span>
 <span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">offboard_sample</span> <span class="o">${</span><span class="nv">catkin_LIBRARIES</span><span class="o">}</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="id6">
 <h3>3.2.3. ビルドする<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> ~/catkin_ws
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span class="nb">cd</span> ~/catkin_ws
 catkin_make
 </pre></div>
 </div>
@@ -533,11 +533,11 @@ catkin_make
 <h2>3.3. ノードの起動<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>はじめにシミュレータを起動します。
 ROSノードとの通信を行うためにはmavrosが必要なので、 <code class="docutils literal notranslate"><span class="pre">mavros_posix_sitl.launch</span></code> を使います。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch px4 mavros_posix_sitl.launch
+<div class="highlight-bash notranslate"><div class="highlight"><pre>roslaunch px4 mavros_posix_sitl.launch
 </pre></div>
 </div>
 <p>次に先ほど作成したノードを起動します。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rosrun px4_sim_pkg offboard_sample
+<div class="highlight-bash notranslate"><div class="highlight"><pre>rosrun px4_sim_pkg offboard_sample
 </pre></div>
 </div>
 <img alt="../_images/runningnode_cpp.png" src="../_images/runningnode_cpp.png" />
@@ -546,7 +546,7 @@ ROSノードとの通信を行うためにはmavrosが必要なので、 <code c
 <h2>3.4. launchファイルを書く<a class="headerlink" href="#launch" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>シミュレータとOffboardノードを別々に起動するのは面倒なので、launchファイルにまとめて一つのコマンドで起動できるようにしましょう。</p>
 <p><code class="docutils literal notranslate"><span class="pre">px4_sim_pkg/launch</span></code> 以下に <code class="docutils literal notranslate"><span class="pre">cpp_offb_sample.launch</span></code> という名前で以下の内容を保存してください。</p>
-<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;launch&gt;</span>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span class="nt">&lt;launch&gt;</span>
 
     <span class="nt">&lt;include</span> <span class="na">file=</span><span class="s">&quot;$(find px4)/launch/mavros_posix_sitl.launch&quot;</span> <span class="nt">/&gt;</span>
     <span class="nt">&lt;node</span> <span class="na">name=</span><span class="s">&quot;offb_node&quot;</span> <span class="na">pkg=</span><span class="s">&quot;px4_sim_pkg&quot;</span> <span class="na">type=</span><span class="s">&quot;offboard_sample&quot;</span> <span class="nt">/&gt;</span>
@@ -555,7 +555,7 @@ ROSノードとの通信を行うためにはmavrosが必要なので、 <code c
 </pre></div>
 </div>
 <p>以下のコマンドを使ってこのlaunchファイルからシミュレータとOffboardノードを起動できます。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch px4_sim_pkg cpp_offb_sample.launch
+<div class="highlight-bash notranslate"><div class="highlight"><pre>roslaunch px4_sim_pkg cpp_offb_sample.launch
 </pre></div>
 </div>
 </div>
@@ -590,7 +590,7 @@ ROSノードとの通信を行うためにはmavrosが必要なので、 <code c
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Takaki Ueno.
+        &copy; Copyright 2018, Takaki Ueno
 
     </p>
   </div>
@@ -609,22 +609,15 @@ ROSノードとの通信を行うためにはmavrosが必要なので、 <code c
 
   
 
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'1.0.0',
-            LANGUAGE:'ja',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="../_static/translations.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
 
   
 

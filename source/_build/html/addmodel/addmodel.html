@@ -104,14 +104,14 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../slam/slam.html">6. 自律飛行とSLAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../octomap/octomap.html">7. Octomapを使って3Dマップを作る</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Appendix</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/bash_commands/bash_commands.html">1. 基本的なBashコマンド</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/bash_commands/bash_commands.html">1. 基本的なBashの使い方</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/ros/ros.html">2. ROSの基本</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/git/git.html">3. Git</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/github/github.html">4. GitHub</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/terms/terms.html">5. 用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/terms/terms.html">3. 用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/archive/archive.html">4. 読書案内</a></li>
 </ul>
 
             
@@ -181,7 +181,7 @@
 <p>この章では、次の章で使用する、2D Lidar付きのIrisのモデルを作成します。</p>
 <p>はじめに、Irisのモデルを格納するディレクトリを作成します。
 今回は、iris_2d_lidarというフォルダに格納することにします。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> ~/catkin_ws/src/px4_sim_pkg
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span class="nb">cd</span> ~/catkin_ws/src/px4_sim_pkg
 mkdir -p models/iris_2d_lidar
 </pre></div>
 </div>
@@ -203,7 +203,7 @@ SDFとURDFの関係については <a class="reference external" href="https://q
 以下のように記述することで既存のモデルをインクルードできます。</p>
 <div class="highlight-xml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nt">&lt;include&gt;</span>
+3</pre></div></td><td class="code"><div class="highlight"><pre><span class="nt">&lt;include&gt;</span>
   <span class="nt">&lt;uri&gt;</span>model://iris<span class="nt">&lt;/uri&gt;</span>
 <span class="nt">&lt;/include&gt;</span>
 </pre></div>
@@ -211,7 +211,7 @@ SDFとURDFの関係については <a class="reference external" href="https://q
 <p>今回はPX4 Firmwareにあるirisのモデルを使用します。
 このようにインクルードする場合には、 <code class="docutils literal notranslate"><span class="pre">GAZEBO_MODEL_PATH</span></code> に使用するモデルのパスが設定されていないといけません。
 このチュートリアル通りに環境構築をしている場合にはすでにモデルのパスが設定されているはずですが、必要な場合は以下のコマンドを実行してください。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">GAZEBO_MODEL_PATH</span><span class="o">=</span><span class="nv">$HOME</span>/src/Firmware/Tools/sitl_gazebo/models:<span class="nv">$GAZEBO_MODEL_PATH</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span class="nb">export</span> <span class="nv">GAZEBO_MODEL_PATH</span><span class="o">=</span>$HOME/src/Firmware/Tools/sitl_gazebo/models:$GAZEBO_MODEL_PATH
 </pre></div>
 </div>
 </div>
@@ -282,7 +282,7 @@ SDFとURDFの関係については <a class="reference external" href="https://q
 60
 61
 62
-63</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nt">&lt;link</span> <span class="na">name=</span><span class="s">&quot;lidar_link&quot;</span><span class="nt">&gt;</span>
+63</pre></div></td><td class="code"><div class="highlight"><pre><span class="nt">&lt;link</span> <span class="na">name=</span><span class="s">&quot;lidar_link&quot;</span><span class="nt">&gt;</span>
   <span class="nt">&lt;pose&gt;</span>0 0 0.07 0 0 3.14<span class="nt">&lt;/pose&gt;</span>
 
   <span class="nt">&lt;inertial&gt;</span>
@@ -377,7 +377,7 @@ irisのbase_linkのような、インクルードしたモデルのリンクを�
  8
  9
 10
-11</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nt">&lt;joint</span> <span class="na">name=</span><span class="s">&quot;lidar_joint&quot;</span> <span class="na">type=</span><span class="s">&quot;fixed&quot;</span><span class="nt">&gt;</span>
+11</pre></div></td><td class="code"><div class="highlight"><pre><span class="nt">&lt;joint</span> <span class="na">name=</span><span class="s">&quot;lidar_joint&quot;</span> <span class="na">type=</span><span class="s">&quot;fixed&quot;</span><span class="nt">&gt;</span>
   <span class="nt">&lt;child&gt;</span>lidar_link<span class="nt">&lt;/child&gt;</span>
   <span class="nt">&lt;parent&gt;</span>iris::base_link<span class="nt">&lt;/parent&gt;</span>
   <span class="nt">&lt;axis&gt;</span>
@@ -482,7 +482,7 @@ irisのbase_linkのような、インクルードしたモデルのリンクを�
 83
 84
 85
-86</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&#39;1.0&#39;?&gt;</span>
+86</pre></div></td><td class="code"><div class="highlight"><pre><span class="cp">&lt;?xml version=&#39;1.0&#39;?&gt;</span>
 <span class="nt">&lt;sdf</span> <span class="na">version=</span><span class="s">&#39;1.6&#39;</span><span class="nt">&gt;</span>
   <span class="nt">&lt;model</span> <span class="na">name=</span><span class="s">&#39;iris_2d_lidar&#39;</span><span class="nt">&gt;</span>
 
@@ -603,7 +603,7 @@ irisのbase_linkのような、インクルードしたモデルのリンクを�
 24
 25
 26
-27</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&#39;1.0&#39;?&gt;</span>
+27</pre></div></td><td class="code"><div class="highlight"><pre><span class="cp">&lt;?xml version=&#39;1.0&#39;?&gt;</span>
 <span class="nt">&lt;sdf</span> <span class="na">version=</span><span class="s">&#39;1.6&#39;</span><span class="nt">&gt;</span>
 <span class="nt">&lt;model</span> <span class="na">name=</span><span class="s">&#39;iris_2d_lidar&#39;</span><span class="nt">&gt;</span>
 
@@ -656,7 +656,7 @@ irisのbase_linkのような、インクルードしたモデルのリンクを�
 12
 13
 14
-15</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot;?&gt;</span>
+15</pre></div></td><td class="code"><div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot;?&gt;</span>
 <span class="nt">&lt;model&gt;</span>
   <span class="nt">&lt;name&gt;</span>iris_2d_lidar<span class="nt">&lt;/name&gt;</span>
   <span class="nt">&lt;version&gt;</span>1.0<span class="nt">&lt;/version&gt;</span>
@@ -679,7 +679,7 @@ irisのbase_linkのような、インクルードしたモデルのリンクを�
 <h2>5.3. パスを設定する<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>GazeboのGUIからモデルを追加したり、SDFファイルからインクルードするためには、作成したモデルのパスが通っていないといけません。
 モデルのパスは <code class="docutils literal notranslate"><span class="pre">~/catkin_ws/src/px4_sim_pkg/models</span></code> なので、次のコマンドを実行してモデルのパスを設定します。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">GAZEBO_MODEL_PATH</span><span class="o">=</span><span class="nv">$HOME</span>/catkin_ws/src/px4_sim_pkg/models:<span class="nv">$GAZEBO_MODEL_PATH</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span class="nb">export</span> <span class="nv">GAZEBO_MODEL_PATH</span><span class="o">=</span>$HOME/catkin_ws/src/px4_sim_pkg/models:$GAZEBO_MODEL_PATH
 </pre></div>
 </div>
 <p>もしくは、上のコマンドをそのまま <code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code> に書いても構いません。</p>
@@ -687,7 +687,7 @@ irisのbase_linkのような、インクルードしたモデルのリンクを�
 <div class="section" id="id8">
 <h2>5.4. モデルを確認する<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>GazeboのGUIからモデルを読み込んで確認してみましょう。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gazebo
+<div class="highlight-bash notranslate"><div class="highlight"><pre>gazebo
 </pre></div>
 </div>
 <img alt="../_images/model1.png" src="../_images/model1.png" />
@@ -699,11 +699,11 @@ irisのbase_linkのような、インクルードしたモデルのリンクを�
 <h2>5.5. SITLシミュレーションでモデルを使う<a class="headerlink" href="#sitl" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>次のコマンドを実行すると今回作成したモデルをSITLシミュレーションで使うことができます。
 コマンドラインからlaunchファイルに引数を与える方法については、 <a class="reference external" href="http://wiki.ros.org/roslaunch/XML/arg#Passing_an_argument_via_the_command-line">ROS Wiki</a> を見てください。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch px4 posix_sitl.launch sdf:<span class="o">=</span>~/catkin_ws/src/px4_sim_pkg/models/iris_2d_lidar/model.sdf
+<div class="highlight-bash notranslate"><div class="highlight"><pre>roslaunch px4 posix_sitl.launch sdf:<span class="o">=</span>~/catkin_ws/src/px4_sim_pkg/models/iris_2d_lidar/model.sdf
 </pre></div>
 </div>
 <p>mavros_posix_sitl.launchを使う場合には以下のようにします。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch px4 mavros_posix_sitl.launch sdf:<span class="o">=</span>~/catkin_ws/src/px4_sim_pkg/models/iris_2d_lidar/model.sdf
+<div class="highlight-bash notranslate"><div class="highlight"><pre>roslaunch px4 mavros_posix_sitl.launch sdf:<span class="o">=</span>~/catkin_ws/src/px4_sim_pkg/models/iris_2d_lidar/model.sdf
 </pre></div>
 </div>
 <img alt="../_images/sitl.png" src="../_images/sitl.png" />
@@ -716,7 +716,7 @@ irisのbase_linkのような、インクルードしたモデルのリンクを�
 6
 7
 8
-9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nt">&lt;launch&gt;</span>
+9</pre></div></td><td class="code"><div class="highlight"><pre><span class="nt">&lt;launch&gt;</span>
 
     <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;sdf&quot;</span> <span class="na">default=</span><span class="s">&quot;$(find dronedoc)/models/iris_2d_lidar/model.sdf&quot;</span> <span class="nt">/&gt;</span>
 
@@ -761,7 +761,7 @@ irisのbase_linkのような、インクルードしたモデルのリンクを�
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Takaki Ueno.
+        &copy; Copyright 2018, Takaki Ueno
 
     </p>
   </div>
@@ -780,22 +780,15 @@ irisのbase_linkのような、インクルードしたモデルのリンクを�
 
   
 
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'1.0.0',
-            LANGUAGE:'ja',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="../_static/translations.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
 
   
 

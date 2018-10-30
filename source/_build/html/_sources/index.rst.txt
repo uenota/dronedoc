@@ -17,6 +17,7 @@ PX4 SITL Tutorial
    runnode/runnodepy.rst
    addmodel/addmodel.rst
    slam/slam.rst
+   octomap/octomap.rst
 
 .. toctree::
    :maxdepth: 2
@@ -25,9 +26,8 @@ PX4 SITL Tutorial
 
    appendix/bash_commands/bash_commands.rst
    appendix/ros/ros.rst
-   appendix/git/git.rst
-   appendix/github/github.rst
    appendix/terms/terms.rst
+   appendix/archive/archive.rst
 
 Issues
 ============
