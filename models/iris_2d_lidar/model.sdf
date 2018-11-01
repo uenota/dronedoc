@@ -60,9 +60,8 @@
           </noise>
         </ray>
         <plugin name="LaserPlugin" filename="libgazebo_ros_laser.so">
-          <robotNamespace></robotNamespace>
 	        <topicName>/laser/scan</topicName>
-	        <frameName>lidar_link</frameName>
+	        <frameName>/lidar_link</frameName>
 	      </plugin>
         <always_on>1</always_on>
         <update_rate>40</update_rate>

@@ -110,10 +110,9 @@ model.sdfファイル内では、以下のようにLiDARのリンクを定義し
           </noise>
         </ray>
         <plugin name="LaserPlugin" filename="libgazebo_ros_laser.so">
-          <robotNamespace></robotNamespace>
 	        <topicName>/laser/scan</topicName>
-	        <frameName>lidar_link</frameName>
-	      </plugin>
+	        <frameName>/lidar_link</frameName>
+	    </plugin>
         <always_on>1</always_on>
         <update_rate>40</update_rate>
         <visualize>true</visualize>
