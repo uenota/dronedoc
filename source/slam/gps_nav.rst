@@ -20,7 +20,14 @@ GPSを用いた自律飛行
 
 TF
 =====================================
-ロボットの座標系間の関係はSDFファイル（model.sdfなど）で定義されており、これらの間のTFはシミュレーションでは自動でパブリッシュされます。
+今回はLiDARを使用するので、ロボットのベースフレーム（ ``base_link`` ）からLiDARのフレーム（ ``lidar_link`` ）へのTFを定義してあげる必要があります。
+静的なTFをパブリッシュするにはtfパッケージの `static_transform_publisher <http://wiki.ros.org/tf#static_transform_publisher>`_ を使います。
+そのために、mymodel_sitl.launchをコピーして新しくmymodel_sitl_tf.launchというファイルを作って、以下の内容を追加してください。
+
+.. code-block:: xml
+
+  <node pkg="tf" name="base2lidar" type="static_transform_publisher" args="0 0 0.07 0 0 3.14 base_link lidar_link 100"/>
+
 
 TODO: frame.pdfの画像
 
@@ -35,7 +42,6 @@ LiDARの点群データは ``/laser/scan`` トピックにパブリッシュさ�
 .. code-block:: xml
 
   <plugin name="LaserPlugin" filename="libgazebo_ros_laser.so">
-    <robotNamespace></robotNamespace>
     <topicName>/laser/scan</topicName>
     <frameName>lidar_link</frameName>
   </plugin>
@@ -55,11 +61,26 @@ TFがパブリッシュされるようにするには、 ``/mavros/local_positio
 
 また、以降でmove_baseを使うための設定として、 ``/mavros/local_position/tf/frame_id`` と、 ``/mavros/local_position/tf/frame_id`` のパラメータの値を ``odom`` にしておきます。
 
+以下の内容をmymodel_sitl_tf.launchの最後に追加してください。
+
+.. code-block:: xml
+
+  <param name="/mavros/local_position/tf/send" type="bool" value="true" />
+  <param name="/mavros/local_position/frame_id" type="str" value="odom" />
+  <param name="/mavros/local_position/tf/frame_id" type="str" value="odom" />
+
+  <param name="/mavros/global_position/tf/send" type="bool" value="true" />
+
+
+最終的なmymodel_sitl_tf.launchは以下のようになります。
+
 .. code-block:: xml
   :linenos:
   :caption: mymodel_sitl_tf.launch
 
   <launch>
+
+      <node pkg="tf" name="base2lidar" type="static_transform_publisher" args="0 0 0.07 0 0 3.14 base_link lidar_link 100"/>
 
       <arg name="sdf" default="$(find px4_sim_pkg)/models/iris_2d_lidar/model.sdf" />
 
@@ -434,6 +455,7 @@ TODO: gazebo画像
 -------------------------------------
 TODO: Rvizからゴールを送信する
 
+TODO: 障害物回避
 
 参考
 =====================================
