@@ -31,10 +31,12 @@ PX4 SITL Tutorial
    appendix/ros/ros.rst
    appendix/terms/terms.rst
    appendix/archive/archive.rst
+   appendix/trouble_shooting/trouble_shooting.rst
 
 Issues
 ============
-内容に問題があれば気軽にお知らせください。  
+内容に問題があれば気軽にお知らせください。
+
 https://github.com/uenota/dronedoc/issues
 
 Indices and tables
