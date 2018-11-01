@@ -1,0 +1,8 @@
+sh /etc/init.d/rc.mc_defaults
+
+param set FW_P_LIM_MAX 10.0
+param set FW_P_LIM_MIN -10.0
+param set FW_R_LIM 40.0
+param set COM_RC_IN_MODE 1
+
+set MIXER quad_w
