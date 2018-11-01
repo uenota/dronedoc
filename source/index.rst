@@ -17,6 +17,9 @@ PX4 SITL Tutorial
    runnode/runnodepy.rst
    addmodel/addmodel.rst
    slam/slam.rst
+   slam/gps_nav.rst
+   slam/lidar_localization.rst
+   slam/localization_and_mapping.rst
    octomap/octomap.rst
 
 .. toctree::
