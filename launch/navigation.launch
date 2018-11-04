@@ -2,6 +2,8 @@
 
   <node pkg="dronedoc" type="odom_publisher" name="odom_publisher"/>
 
+  <remap from="/cmd_vel" to="/mavros/setpoint_velocity/cmd_vel_unstamped" />
+
   <node pkg="move_base" type="move_base" name="move_base" respawn="false" output="screen">
 
     <!-- Common params for costmap -->
