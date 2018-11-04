@@ -11,7 +11,7 @@
 
 .. figure:: imgs/overview_tf.png
 
-    出典: http://wiki.ros.org/navigation/Tutorials/RobotSetup
+    From `ROS Wiki <http://wiki.ros.org/navigation/Tutorials/RobotSetup>`_ (`CC BY 3.0 <https://creativecommons.org/licenses/by/3.0/>`_)
 
 Navigation stackは、ロボットの自律移動を行うために以下のようなサブパッケージを提供しています。
 
