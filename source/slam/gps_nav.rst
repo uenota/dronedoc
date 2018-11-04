@@ -16,11 +16,11 @@ GPSを用いた自律飛行
 
 .. figure:: imgs/overview_tf_gps.png
 
-  出典: http://wiki.ros.org/navigation/Tutorials/RobotSetup
+  From `ROS Wiki <http://wiki.ros.org/navigation/Tutorials/RobotSetup>`_ (`CC BY 3.0 <https://creativecommons.org/licenses/by/3.0/>`_)
 
 TF
 =====================================
-今回はLiDARを使用するので、ロボットのベースフレーム（ ``base_link`` ）からLiDARのフレーム（ ``lidar_link`` ）へのTFを定義してあげる必要があります。
+今回はLiDARを使用するので、LiDARとロボットの位置関係がわかるように、ロボットのベースフレーム（ ``base_link`` ）からLiDARのフレーム（ ``lidar_link`` ）へのTFを定義してあげる必要があります。
 静的なTFをパブリッシュするにはtfパッケージの `static_transform_publisher <http://wiki.ros.org/tf#static_transform_publisher>`_ を使います。
 そのために、mymodel_sitl.launchをコピーして新しくmymodel_sitl_tf.launchというファイルを作って、以下の内容を追加してください。
 
@@ -28,10 +28,6 @@ TF
 
   <node pkg="tf" name="base2lidar" type="static_transform_publisher" args="0 0 0.07 0 0 3.14 base_link lidar_link 100"/>
 
-
-TODO: frame.pdfの画像
-
-TODO: RvizでTF表示した画像
 
 センサ情報
 =====================================
@@ -54,10 +50,24 @@ LiDARの点群データは ``/laser/scan`` トピックにパブリッシュさ�
 =====================================
 TFをパブリッシュする
 -------------------------------------
+move_baseでは、障害物回避と経路計画のためにグローバルとローカルの２つのコストマップを使っています。
+今回の設定ではローカルコストマップは ``odom`` フレームを参照し、グローバルコストマップは ``map`` フレームを参照するようになっているので、それぞれのフレームからの ``base_link`` へのTFを定義する必要があります。
+
+``odom`` フレームは一般的にロボットのローカル座標系として使用され、 ``map`` フレームは一般的にグローバル座標系として使用されます。
+今回もその慣習に従って、ローカル座標系のTFを ``odom`` フレーム内で、グローバル座標系のTFを ``map`` フレーム内でブロードキャストすることにします。
+
+フレームについての詳細は `REP105 -- Coordinate Frames for Mobile Platforms <http://www.ros.org/reps/rep-0105.html>`_ に記述されています。
+
+.. figure:: imgs/coordsystems_img.png
+
+From `ROS Wiki <http://wiki.ros.org/hector_slam/Tutorials/SettingUpForYourRobot>`_ (`CC BY 3.0 <https://creativecommons.org/licenses/by/3.0/>`_)
+
+odom->base_link
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 PX4 SITLシミュレーションでは、mavrosを使って機体のTFをパブリッシュすることができます。
 しかし、mavros_posix_sitl.launchを使った場合は、デフォルトではTFがパブリッシュされません。
 
-TFがパブリッシュされるようにするには、 ``/mavros/local_position/tf/send`` と ``/mavros/global_position/tf/send`` パラメータの値を ``true`` にする必要があります。
+TFがパブリッシュされるようにするには、 ``/mavros/local_position/tf/send`` パラメータの値を ``true`` にする必要があります。
 
 また、以降でmove_baseを使うための設定として、 ``/mavros/local_position/tf/frame_id`` と、 ``/mavros/local_position/tf/frame_id`` のパラメータの値を ``odom`` にしておきます。
 
@@ -69,32 +79,19 @@ TFがパブリッシュされるようにするには、 ``/mavros/local_positio
   <param name="/mavros/local_position/frame_id" type="str" value="odom" />
   <param name="/mavros/local_position/tf/frame_id" type="str" value="odom" />
 
-  <param name="/mavros/global_position/tf/send" type="bool" value="true" />
-
-
-最終的なmymodel_sitl_tf.launchは以下のようになります。
+map->odom
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+本来、 ``odom`` フレームからのTFはホイールオドメトリなどを用いて計算し、 ``map`` フレームからのTFはGPSやLiDARなどのセンサ情報を用いて更新されるのですが、今回はどちらもGPSを用いている上に基点も同じなので、次のようにして ``map`` から ``odom`` へのTFをブロードキャストすることにします。
+以下の内容をmymodel_sitl_tf.launchに追加してください。
 
 .. code-block:: xml
-  :linenos:
-  :caption: mymodel_sitl_tf.launch
 
-  <launch>
+  <node pkg="tf" name="map2odom" type="static_transform_publisher" args="0 0 0 0 0 0 map odom 100"/>
 
-      <node pkg="tf" name="base2lidar" type="static_transform_publisher" args="0 0 0.07 0 0 3.14 base_link lidar_link 100"/>
 
-      <arg name="sdf" default="$(find px4_sim_pkg)/models/iris_2d_lidar/model.sdf" />
+最終的には、 ``map`` から ``lidar_link`` までのTFは下図のようになります。
 
-      <include file="$(find px4)/launch/mavros_posix_sitl.launch" >
-          <arg name="sdf" value="$(arg sdf)" />
-      </include>
-
-      <param name="/mavros/local_position/tf/send" type="bool" value="true" />
-      <param name="/mavros/local_position/frame_id" type="str" value="odom" />
-      <param name="/mavros/local_position/tf/frame_id" type="str" value="odom" />
-
-      <param name="/mavros/global_position/tf/send" type="bool" value="true" />
-
-  </launch>
+.. figure:: imgs/frames.png
 
 nav_msgs/Odometryをパブリッシュする
 -------------------------------------
@@ -188,7 +185,16 @@ z軸周りの回転（Yaw）からTFのクォータニオンを生成して、�
 
 速度指令
 =====================================
-PX4 SITLシミュレーションでは、 ``/mavros/setpoint_velocity/cmd_vel`` トピックに速度指令を送信することでドローンを移動させることができます。
+PX4 SITLシミュレーションでは、 ``/mavros/setpoint_velocity/cmd_vel_unstamped`` トピックに速度指令を送信することでドローンを移動させることができます。
+
+move_baseは ``/cmd_vel`` トピックに速度指令をパブリッシュするようになっているので、Launchファイル内で次のようにリマップすることでmove_baseからの速度指令がドローンに送られるようにします。
+
+Launchファイルについては、後述の :ref:`navigation_launch` の項を参照してください。
+
+.. code-block:: xml
+
+  <remap from="/cmd_vel" to="/mavros/setpoint_velocity/cmd_vel_unstamped" />
+
 
 設定ファイルを書く
 =====================================
@@ -263,7 +269,14 @@ PX4 SITLシミュレーションでは、 ``/mavros/setpoint_velocity/cmd_vel`` 
 ``static_map``
   ``true`` にすると、既存のマップもしくはmap_severから提供されるマップを使ってコストマップを初期化されます。
   マップを使わずに初期化する際には ``false`` にします。
-
+``rolling_window``
+  ``true`` にすると、ロボットが移動しても局所的コストマップの中心がロボットに追従するようになります。 ``static_map`` パラメータをfalseにした際には ``true`` にする必要があります。
+``width``
+  コストマップの幅（m）
+``height``
+  コストマップの高さ（m）
+``resolution``
+  コストマップの解像度（cell/m）
 
 局所的コストマップの設定
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -272,18 +285,11 @@ PX4 SITLシミュレーションでは、 ``/mavros/setpoint_velocity/cmd_vel`` 
   :caption: local_costmap_params.yaml
   :linenos:
 
-``global_frame`` , ``robot_base_frame`` , ``update_frequency`` , ``static_map`` については大域的コストマップの設定と同じです。
+ほとんどの内容は大域的コストマップの設定と同じです。
 
 ``publish_frequency``
   コストマップを表示するためのデータをパブリッシュする周波数（Hz）です
-``rolling_window``
-  ``true`` にすると、ロボットが移動しても局所的コストマップの中心がロボットに追従するようになります。
-``width``
-  コストマップの幅（m）
-``height``
-  コストマップの高さ（m）
-``resolution``
-  コストマップの解像度（cell/m）
+
 
 ローカルプランナーの設定
 -------------------------------------
@@ -302,44 +308,15 @@ PX4 SITLシミュレーションでは、 ``/mavros/setpoint_velocity/cmd_vel`` 
   :caption: base_local_planner_params.yaml
   :linenos:
 
-Launchファイルを書く
-=====================================
-このLaunchファイルでは、上記の設定ファイルをすべて ``px4_sim_pkg/config`` 以下に保存していることを想定しています。
 
-以下の内容を、 ``px4_sim_pkg/launch`` 以下に、navigation.launchとして保存してください。
-
-.. code-block:: xml
-  :caption: navigation.launch
-  :linenos:
-
-  <launch>
-
-    <node pkg="px4_sim_pkg" type="odom_publisher" name="odom_publisher"/>
-
-    <node pkg="move_base" type="move_base" name="move_base" respawn="false" output="screen">
-
-      <!-- Common params for costmap -->
-      <rosparam command="load" ns="global_costmap" file="$(find px4_sim_pkg)/config/costmap_common_params.yaml"/>
-      <rosparam command="load" ns="local_costmap" file="$(find px4_sim_pkg)/config/costmap_common_params.yaml"/>
-
-      <!-- Params for global costmap -->
-      <rosparam command="load" file="$(find px4_sim_pkg)/config/global_costmap_params.yaml"/>
-
-      <!-- Params for local costmap -->
-      <rosparam command="load" file="$(find px4_sim_pkg)/config/local_costmap_params.yaml"/>
-
-      <!-- Params for local planner -->
-      <rosparam command="load" file="$(find px4_sim_pkg)/config/base_local_planner_params.yaml"/>
-    </node>
-
-  </launch>
 
 ドローンのパラメータの変更
 =====================================
 二次元の自己位置推定やマッピングの精度を高めるためには、できるだけセンサを水平に保つ必要があります。
 ドローンのパラメータを設定してピッチ角とロール角が一定以上にならないようにしましょう。
 
-また、デフォルトではRCとの接続が切れた場合に自動でホームポジションに戻るようになっているので、RC信号のチェックをしないようにすることで、その設定も解除しておきます。
+また、デフォルトではGCS（Ground Control Station）との接続が切れた場合に自動でホームポジションに戻るようになっているので、フェイルセーフを無効化しておきます。
+実機でフェイルセーフを解除する場合には十分に注意して行いましょう。
 
 以下のパラメータの設定を変更します。
 利用可能なパラメータ一覧は `Parameter Reference <https://docs.px4.io/en/advanced_config/parameter_reference.html>`_ を参照してください。
@@ -350,7 +327,7 @@ Launchファイルを書く
   FW_P_LIM_MAX, 0.0 > 60.0 (0.5), 45.0, deg
   FW_P_LIM_MIN, -60.0 > 0.0 (0.5), -45.0, deg
   FW_R_LIM, 35.0 > 65.0 (0.5), 50.0, deg
-  COM_RC_IN_MODE, 0 > 2, 0,
+  NAV_DLL_ACT, 0 > 6, 0,
 
 パラメータを設定する方法は以下の2種類があります。
 
@@ -371,7 +348,7 @@ PX4シミュレータが起動したら、以下のコマンドを実行しま�
   param set FW_P_LIM_MAX 10.0
   param set FW_P_LIM_MIN -10.0
   param set FW_R_LIM 40.0
-  param set COM_RC_IN_MODE 1
+  param set NAV_DLL_ACT 0
 
 コマンドが成功したら次のように表示されます。
 以下はFW_R_LIMの例です。
@@ -398,6 +375,8 @@ PX4シミュレーションの起動は、起動スクリプト（ ``~/.ros/etc/
 この節では設定スクリプトの作成とCMakeLists.txtへの記述の追加を行います。
 
 以下のような内容の設定スクリプトを ``px4_sim_pkg/posix_airframes`` 以下に、 ``70010_iris_2d_lidar`` という名前で保存します。
+説明されていないパラメータについてはパラメーラ一覧を見てください。
+設定スクリプトについては、 `Adding a New Airframe Configuration - PX4 Developer Guide <https://dev.px4.io/en/airframes/adding_a_new_frame.html>`_ に説明があります。
 
 .. literalinclude:: ../../posix_airframes/70010_iris_2d_lidar
   :linenos:
@@ -414,11 +393,97 @@ PX4シミュレーションの起動は、起動スクリプト（ ``~/.ros/etc/
   set(PACK_AIRFRAME_DIR ${CMAKE_CURRENT_SOURCE_DIR}/posix_airframes)
   set(LOCAL_AIRFRAME_DIR $ENV{HOME}/.ros/etc/init.d-posix)
 
-  if(NOT EXISTS ${LOCAL_AIRFRAME_DIR}/70010_iris_2d_lidar)
-    add_custom_target(iris_2d_lidar
-                      ALL ln -s ${PACK_ROMFS_DIR}/70010_iris_2d_lidar $ {LOCAL_AIRFRAME_DIR}/)
-  endif()
+  add_custom_target(iris_2d_lidar
+                    ALL ln -s -b ${PACK_ROMFS_DIR}/70010_iris_2d_lidar $ {LOCAL_AIRFRAME_DIR}/)
 
+また、mymodel_sitl.launchの以下の部分を
+
+.. code-block:: xml
+
+  <arg name="sdf" default="$(find px4_sim_pkg)/models/iris_2d_lidar/model.sdf" />
+
+  <include file="$(find px4)/launch/mavros_posix_sitl.launch" >
+      <arg name="sdf" value="$(arg sdf)" />
+  </include>
+
+次のように変更してください。
+
+.. code-block:: xml
+
+  <arg name="vehicle" default="iris_2d_lidar"/>
+  <arg name="sdf" default="$(find px4_sim_pkg)/models/iris_2d_lidar/model.sdf" />
+
+  <include file="$(find px4)/launch/mavros_posix_sitl.launch" >
+      <arg name="sdf" value="$(arg sdf)" />
+      <arg name="vehicle" value="$(arg vehicle)" />
+  </include>
+
+``vehicle`` に指定された機体名と一致する設定スクリプトがPX4 SITLによって読み込まれます。
+
+
+Launchファイルを書く
+=====================================
+
+.. _navigation_launch:
+
+navigation.launch
+-------------------------------------
+このLaunchファイルでは、コストマップ等の設定ファイルをすべて ``px4_sim_pkg/config`` 以下に保存していることを想定しています。
+
+以下の内容を、 ``px4_sim_pkg/launch`` 以下に、navigation.launchとして保存してください。
+
+.. code-block:: xml
+  :caption: navigation.launch
+  :linenos:
+
+  <launch>
+
+    <node pkg="px4_sim_pkg" type="odom_publisher" name="odom_publisher"/>
+
+    <remap from="/cmd_vel" to="/mavros/setpoint_velocity/cmd_vel_unstamped" />
+    <node pkg="move_base" type="move_base" name="move_base" respawn="false" output="screen">
+
+      <!-- Common params for costmap -->
+      <rosparam command="load" ns="global_costmap" file="$(find px4_sim_pkg)/config/costmap_common_params.yaml"/>
+      <rosparam command="load" ns="local_costmap" file="$(find px4_sim_pkg)/config/costmap_common_params.yaml"/>
+
+      <!-- Params for global costmap -->
+      <rosparam command="load" file="$(find px4_sim_pkg)/config/global_costmap_params.yaml"/>
+
+      <!-- Params for local costmap -->
+      <rosparam command="load" file="$(find px4_sim_pkg)/config/local_costmap_params.yaml"/>
+
+      <!-- Params for local planner -->
+      <rosparam command="load" file="$(find px4_sim_pkg)/config/base_local_planner_params.yaml"/>
+    </node>
+
+  </launch>
+
+mymodel_sitl_tf.launch
+------------------------------------------
+最終的な mymodel_sitl_tf.launchは以下のようになります。
+
+.. code-block:: xml
+  :linenos:
+
+  <launch>
+
+      <node pkg="tf" name="base2lidar" type="static_transform_publisher" args="0 0 0.1 0 0 0 base_link lidar_link 100"/>
+      <node pkg="tf" name="map2odom" type="static_transform_publisher" args="0 0 0 0 0 0 map odom 100"/>
+
+      <arg name="vehicle" default="iris_2d_lidar"/>
+      <arg name="sdf" default="$(find px4_sim_pkg)/models/iris_2d_lidar/model.sdf" />
+
+      <include file="$(find px4)/launch/mavros_posix_sitl.launch" >
+          <arg name="sdf" value="$(arg sdf)" />
+          <arg name="vehicle" value="$(arg vehicle)" />
+      </include>
+
+      <param name="/mavros/local_position/tf/send" type="bool" value="true" />
+      <param name="/mavros/local_position/frame_id" type="str" value="odom" />
+      <param name="/mavros/local_position/tf/frame_id" type="str" value="odom" />
+
+  </launch>
 
 実行してみる
 =====================================
@@ -426,6 +491,12 @@ PX4シミュレーションの起動は、起動スクリプト（ ``~/.ros/etc/
 ビルドする
 -------------------------------------
 オドメトリをパブリッシュするためのノードをビルドします。
+
+.. code-block:: bash
+
+  cd ~/catkin_ws
+  catkin_make
+
 CMakeLists.txtに以下の内容を追加するのを忘れないようにしましょう。
 
 .. code-block:: cmake
@@ -437,8 +508,7 @@ Pythonノードを使う場合には忘れずに実行権限を与えておき�
 
 .. code-block:: bash
 
-  cd ~/catkin_ws
-  catkin_make
+  chmod +x odom_publisher.py
 
 ノードを起動する
 -------------------------------------
@@ -449,10 +519,38 @@ Pythonノードを使う場合には忘れずに実行権限を与えておき�
   roslaunch px4_sim_pkg mymodel_sitl.launch
   roslaunch px4_sim_pkg navigation.launch
 
-TODO: gazebo画像
+.. image:: imgs/gazebomymodel.png
 
 ゴールを送信する
 -------------------------------------
+ドローンを離陸させる
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ゴールを送信する前にドローンを離陸させます。
+シミュレーションのノードを起動しているターミナルで以下のコマンドを実行すると離陸します。
+
+.. code-block:: none
+
+  commander takeoff
+
+ROSサービスを利用しても構いません。
+
+.. code-block:: bash
+
+    rosservice call /mavros/cmd/takeoff "{min_pitch: 0.0, yaw: 0.0, latitude: 47.3977506, longitude: 8.5456074, altitude: 5}"
+
+Offboardモードにする
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+また、Offboardモードになっていないと ``cmd_vel`` トピックを使って操作できないので、Offboardモードにします。
+以下のコマンドを使えばドローンの飛行モードがOffboardになります。
+
+.. code-block:: bash
+
+  rosservice call /mavros/set_mode "base_mode: 0 custom_mode: 'OFFBOARD'"
+
+Rvizを使ってゴールを送信する
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``move_base/goal`` トピックに ``move_base_msgs/MoveBaseActionGoal`` 型のメッセージを送ってもゴールを設定することができるのですが、Rvizを使ったほうが簡単なので今回はRvizを使用してゴールを送信します。
+
 TODO: Rvizからゴールを送信する
 
 TODO: 障害物回避
@@ -461,10 +559,11 @@ TODO: 障害物回避
 =====================================
 `move_base - ROS Wiki <http://wiki.ros.org/move_base>`_
   move_baseパッケージ
-
 `Publishing Odometry Information over ROS <http://wiki.ros.org/navigation/Tutorials/RobotSetup/Odom>`_
   オドメトリをパブリッシュするノードを書く（ROS Wiki）
 `ROS Navigation Stack について2 ~ Odometry生成ノードの作成 ~ <http://daily-tech.hatenablog.com/entry/2017/02/11/182916>`_
   オドメトリをパブリッシュするノードを書く
 `obstacle_range & raytrace_range - precise explanation? <https://answers.ros.org/question/72265/obstacle_range-raytrace_range-precise-explanation/>`_
   obstacle_rangeとraytrace_rangeの意味について
+`costmap_2d - ROS Wiki <http://wiki.ros.org/costmap_2d#Map_Types>`_
+  static_mapパラメータとrolling_windowパラメータについて
