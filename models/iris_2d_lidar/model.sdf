@@ -7,7 +7,7 @@
     </include>
 
     <link name="lidar_link">
-      <pose>0 0 0.07 0 0 3.14</pose>
+      <pose>0 0 0.1 0 0 3.14</pose>
 
       <inertial>
         <pose>0 0 0 0 -0 0</pose>
@@ -25,8 +25,8 @@
       <visual name="lidar_visual">
         <geometry>
           <cylinder>
-            <radius>0.006</radius>
-            <length>0.05</length>
+            <radius>0.01</radius>
+            <length>0.2</length>
           </cylinder>
         </geometry>
         <material>
@@ -38,7 +38,7 @@
       </visual>
 
       <sensor name="laser" type="ray">
-        <pose>0 0 0 0 0 0</pose>
+        <pose>0 0 0.1 0 0 0</pose>
         <ray>
           <scan>
             <horizontal>
@@ -72,13 +72,6 @@
     <joint name="lidar_joint" type="fixed">
       <child>lidar_link</child>
       <parent>iris::base_link</parent>
-      <axis>
-        <xyz>0 0 1</xyz>
-        <limit>
-          <upper>0</upper>
-          <lower>0</lower>
-        </limit>
-      </axis>
     </joint>
 
   </model>
