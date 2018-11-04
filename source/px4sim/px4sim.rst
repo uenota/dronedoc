@@ -194,7 +194,7 @@ mavrosも同時に起動したい場合には ``mavros_posix_sitl.launch`` を�
 
 .. code-block:: bash
 
-    roslaunch px4 mavros_posix_sitl.launch 
+    roslaunch px4 mavros_posix_sitl.launch
 
 .. _fcu_url:
 
@@ -214,8 +214,8 @@ ROSでは、以下の形式を使うことでlaunchファイル内の変数に�
 .. code-block:: xml
 
     <launch>
-    <!-- vim: set ft=xml noet : --> 
-    <!-- example launch script for PX4 based FCU's --> 
+    <!-- vim: set ft=xml noet : -->
+    <!-- example launch script for PX4 based FCU's -->
 
     <arg name="fcu_url" default="/dev/ttyACM0:57600" />
     <arg name="gcs_url" default="" />
