@@ -34,7 +34,5 @@ target_link_libraries(odom_publisher ${catkin_LIBRARIES})
 set(PACK_AIRFRAME_DIR ${CMAKE_CURRENT_SOURCE_DIR}/posix_airframes)
 set(LOCAL_AIRFRAME_DIR $ENV{HOME}/.ros/etc/init.d-posix)
 
-if(NOT EXISTS ${LOCAL_AIRFRAME_DIR}/70010_iris_2d_lidar)
-  add_custom_target(iris_2d_lidar
-                    ALL ln -s ${PACK_AIRFRAME_DIR}/70010_iris_2d_lidar ${LOCAL_AIRFRAME_DIR}/)
-endif()
+add_custom_target(iris_2d_lidar
+                  ALL ln -s -b ${PACK_AIRFRAME_DIR}/70010_iris_2d_lidar ${LOCAL_AIRFRAME_DIR}/)
