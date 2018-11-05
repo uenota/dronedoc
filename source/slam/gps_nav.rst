@@ -64,7 +64,7 @@ From `ROS Wiki <http://wiki.ros.org/hector_slam/Tutorials/SettingUpForYourRobot>
 
 odom->base_link
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-PX4 SITLシミュレーションでは、mavrosを使って機体のTFをパブリッシュすることができます。
+機体のTFはmavrosを使ってパブリッシュすることができます。
 しかし、mavros_posix_sitl.launchを使った場合は、デフォルトではTFがパブリッシュされません。
 
 TFがパブリッシュされるようにするには、 ``/mavros/local_position/tf/send`` パラメータの値を ``true`` にする必要があります。
@@ -318,6 +318,8 @@ Launchファイルについては、後述の :ref:`navigation_launch` の項を
 また、デフォルトではGCS（Ground Control Station）との接続が切れた場合に自動でホームポジションに戻るようになっているので、フェイルセーフを無効化しておきます。
 実機でフェイルセーフを解除する場合には十分に注意して行いましょう。
 
+さらに、Offboradモードのタイムアウト時間とタイムアウト時の動作についても変更しておきます。
+
 以下のパラメータの設定を変更します。
 利用可能なパラメータ一覧は `Parameter Reference <https://docs.px4.io/en/advanced_config/parameter_reference.html>`_ を参照してください。
 
@@ -328,6 +330,8 @@ Launchファイルについては、後述の :ref:`navigation_launch` の項を
   FW_P_LIM_MIN, -60.0 > 0.0 (0.5), -45.0, deg
   FW_R_LIM, 35.0 > 65.0 (0.5), 50.0, deg
   NAV_DLL_ACT, 0 > 6, 0,
+  COM_OF_LOSS_T, 0 > 60 (1), 0.0, s
+  COM_OBL_ACT, 0 > 2, 0, 
 
 パラメータを設定する方法は以下の2種類があります。
 
@@ -349,6 +353,8 @@ PX4シミュレータが起動したら、以下のコマンドを実行しま�
   param set FW_P_LIM_MIN -10.0
   param set FW_R_LIM 40.0
   param set NAV_DLL_ACT 0
+  param set COM_OF_LOSS_T 60
+  param set COM_OBL_ACT 1
 
 コマンドが成功したら次のように表示されます。
 以下はFW_R_LIMの例です。
@@ -538,20 +544,21 @@ ROSサービスを利用しても構いません。
 
     rosservice call /mavros/cmd/takeoff "{min_pitch: 0.0, yaw: 0.0, latitude: 47.3977506, longitude: 8.5456074, altitude: 5}"
 
-Offboardモードにする
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-また、Offboardモードになっていないと ``cmd_vel`` トピックを使って操作できないので、Offboardモードにします。
-以下のコマンドを使えばドローンの飛行モードがOffboardになります。
-
-.. code-block:: bash
-
-  rosservice call /mavros/set_mode "base_mode: 0 custom_mode: 'OFFBOARD'"
-
 Rvizを使ってゴールを送信する
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ``move_base/goal`` トピックに ``move_base_msgs/MoveBaseActionGoal`` 型のメッセージを送ってもゴールを設定することができるのですが、Rvizを使ったほうが簡単なので今回はRvizを使用してゴールを送信します。
 
 TODO: Rvizからゴールを送信する
+
+Offboardモードにする
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+また、Offboardモードになっていないと ``cmd_vel`` トピックを使って操作できないので、Offboardモードにします。
+以下のコマンドを使えばドローンの飛行モードがOffboardになります。
+Offboardモードにしてから一定の時間操作が無いとモードが切り替わるので、ゴールを指示してからOffboardモードにしたほうがスムーズに動作します。
+
+.. code-block:: bash
+
+  rosservice call /mavros/set_mode "base_mode: 0 custom_mode: 'OFFBOARD'"
 
 TODO: 障害物回避
 
