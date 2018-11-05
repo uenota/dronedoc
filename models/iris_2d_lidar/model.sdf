@@ -7,7 +7,7 @@
     </include>
 
     <link name="lidar_link">
-      <pose>0 0 0.1 0 0 3.14</pose>
+      <pose>0 0 0.1 0 0 0</pose>
 
       <inertial>
         <pose>0 0 0 0 -0 0</pose>
