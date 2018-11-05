@@ -1,5 +1,4 @@
 cmake_minimum_required(VERSION 2.8.3)
-cmake_policy(SET CMP0054 NEW)
 
 project(dronedoc)
 
@@ -33,6 +32,10 @@ target_link_libraries(odom_publisher ${catkin_LIBRARIES})
 
 set(PACK_AIRFRAME_DIR ${CMAKE_CURRENT_SOURCE_DIR}/posix_airframes)
 set(LOCAL_AIRFRAME_DIR $ENV{HOME}/.ros/etc/init.d-posix)
+
+if(NOT EXISTS ${LOCAL_AIRFRAME_DIR})
+  message(FATAL_ERROR "PX4 Firmware is REQUIRED.\nInstall and run 'make posix_sitl_default gazebo'.\nIf this persists after installation, make symbolic link from Firmware/ROMFS/px4fmu_common to ~/.ros/etc")
+endif()
 
 add_custom_target(iris_2d_lidar
                   ALL ln -s -b ${PACK_AIRFRAME_DIR}/70010_iris_2d_lidar ${LOCAL_AIRFRAME_DIR}/)
