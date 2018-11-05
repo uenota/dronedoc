@@ -53,71 +53,10 @@ LiDARのリンクを定義する
 
 model.sdfファイル内では、以下のようにLiDARのリンクを定義しています。
 
-.. code-block:: xml
+.. literalinclude:: ../../models/iris_2d_lidar/model.sdf
     :linenos:
-
-    <link name="lidar_link">
-      <pose>0 0 0.07 0 0 3.14</pose>
-
-      <inertial>
-        <pose>0 0 0 0 -0 0</pose>
-        <mass>0.01</mass>
-        <inertia>
-          <ixx>2.1733e-6</ixx>
-          <ixy>0</ixy>
-          <ixz>0</ixz>
-          <iyy>2.1733e-6</iyy>
-          <iyz>0</iyz>
-          <izz>1.8e-7</izz>
-        </inertia>
-      </inertial>
-
-      <visual name="lidar_visual">
-        <geometry>
-          <cylinder>
-            <radius>0.006</radius>
-            <length>0.05</length>
-          </cylinder>
-        </geometry>
-        <material>
-          <script>
-            <name>Gazebo/DarkGrey</name>
-            <uri>file://media/materials/scripts/gazebo.material</uri>
-          </script>
-        </material>
-      </visual>
-
-      <sensor name="laser" type="ray">
-        <pose>0 0 0 0 0 0</pose>
-        <ray>
-          <scan>
-            <horizontal>
-              <samples>720</samples>
-              <resolution>1</resolution>
-              <min_angle>-2.0944</min_angle>
-              <max_angle>2.0944</max_angle>
-            </horizontal>
-          </scan>
-          <range>
-            <min>0.1</min>
-            <max>15</max>
-            <resolution>0.01</resolution>
-          </range>
-          <noise>
-            <type>gaussian</type>
-            <mean>0.0</mean>
-            <stddev>0.01</stddev>
-          </noise>
-        </ray>
-        <plugin name="LaserPlugin" filename="libgazebo_ros_laser.so">
-	        <topicName>/laser/scan</topicName>
-	        <frameName>/lidar_link</frameName>
-	    </plugin>
-        <always_on>1</always_on>
-        <update_rate>40</update_rate>
-        <visualize>true</visualize>
-      </sensor>
-    </link>
+    :language: xml
+    :lines: 9-62
 
 それぞれの要素について見ていきましょう。
 
@@ -140,20 +79,10 @@ LiDARとbase_linkのジョイントを定義する
 ``<child>`` タグで子リンクを指定し、 ``<parent>`` タグで親リンクを指定しています。
 irisのbase_linkのような、インクルードしたモデルのリンクを指定する際には、 ``iris::base_link`` のように、どのモデルのリンクであるかを指定してやる必要があります。
 
-.. code-block:: xml
+.. literalinclude:: ../../models/iris_2d_lidar/model.sdf
+    :language: xml
     :linenos:
-
-    <joint name="lidar_joint" type="fixed">
-      <child>lidar_link</child>
-      <parent>iris::base_link</parent>
-      <axis>
-        <xyz>0 0 1</xyz>
-        <limit>
-          <upper>0</upper>
-          <lower>0</lower>
-        </limit>
-      </axis>
-    </joint>
+    :lines: 72-75
 
 今回は固定関節を使っていますが、他にも回転関節や直動関節などが使えます。
 
