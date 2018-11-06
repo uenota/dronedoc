@@ -547,7 +547,7 @@ Rvizを使ってゴールを送信する
 赤枠内の2D Nav Goalをクリックして選択したあとに、目標位置をクリックして決定します。
 クリックしたままマウスカーソルを移動させると目標位置の向きも指定することができます。
 
-.. image:: imgs/rviz_goal_pub.png
+.. image:: imgs/rviz_goal.gif
 
 Offboardモードにする
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -559,7 +559,62 @@ Offboardモードにしてから一定の時間操作が無いとモードが切
 
   rosservice call /mavros/set_mode "base_mode: 0 custom_mode: 'OFFBOARD'"
 
-TODO: 障害物回避
+実行結果
+-------------------------------------
+上記の手順を踏んで実行した結果が以下の動画です。
+ゴールを指定するとゴールに向かって飛行していることがわかります。
+
+.. image:: imgs/nav_gps.gif
+
+この動画内のRvizではTF以外に、以下のトピックにパブリッシュされているメッセージを表示しています。
+
+``/move_base/current_goal``
+  現在の目標姿勢
+``/move_base/local_costmap/footprint``
+  ロボットの外形
+``/move_base/local_costmap/costmap``
+  局所的コストマップ
+``/move_base/TrajectoryPlannerROS/local_plan``
+  ローカルパス
+``/move_base/TrajectoryPlannerROS/global_plan``
+  グローバルパス
+
+これらのメッセージは、"Add"ボタンで表示されるメッセージの追加ウィンドウの、"By Topic"タブからも追加できます。
+
+.. image:: imgs/choose_topic.png
+
+障害物回避
+-------------------------------------
+ドローンの進路に障害物をおいた場合には迂回する経路が生成されます。
+
+.. image:: imgs/obstacle.gif
+
+この例では更に以下のメッセージをRvizで可視化しています。
+
+``/move_base/global_costmap/costmap``
+  大域的コストマップ
+``/laser/scan``
+  LiDARの計測データ
+
+この動画では、コストマップのカラースキームを、"map"から、"costmap"に変更してあります。
+
+.. image:: imgs/color_scheme.png
+
+経路の障害物からの距離や、コストマップのサイズ、解像度などはコンフィグファイル内のパラメータを変更することで調節できます。
+また、他のパラメータについては、costmap_2dパッケージや、base_local_plannerパッケージのWikiページを参照してください。
+
+課題
+=====================================
+お疲れ様でした。
+以上までで、ドローンに目標位置を指定して、障害物を考慮した経路計画を実行し、経路上を移動して目標位置まで移動させることができました。
+
+しかし、まだ以下のような問題があります。
+
+- 経路への追従が不十分である
+- ドローン自身がLiDARに干渉している
+- 高度の制御がなされていない
+
+これらの問題には :doc:`improve_nav` で取り組みます。
 
 参考
 =====================================
