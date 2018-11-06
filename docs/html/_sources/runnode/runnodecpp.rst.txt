@@ -1,11 +1,11 @@
-------------------------------
+----------------------------------------------------------------
 自作ノードを実行する（C++）
-------------------------------
+----------------------------------------------------------------
 
 この章ではシミュレーション上のドローンを操作するROSノードをC++で作成します。
 
 ROSパッケージを作る
-===========================
+================================================================
 はじめに、自作ノードを格納するためのROSパッケージを作ります。
 パッケージ名はpx4_sim_pkgとします。
 また、roscpp、geometry_msgs、mavros_msgsパッケージを使用するので依存パッケージに追加しておきます。
@@ -16,7 +16,7 @@ ROSパッケージを作る
     catkin_create_pkg px4_sim_pkg roscpp geometry_msgs mavros_msgs
 
 ノードを書く
-============
+================================================================
 それでは実際にノードを書いてみましょう。
 今回は、ドローンを2m上空に離陸させるノードを書きます。
 以下のコードは、 `MAVROS Offboard control example - PX4 Developer Guide <https://dev.px4.io/en/ros/mavros_offboard.html>`_ にあるのと同じものです。
@@ -29,7 +29,7 @@ ROSパッケージを作る
     :caption: offboard_sample.cpp
 
 コードの解説
-------------
+----------------------------------------------------------------
 
 .. code-block:: cpp
 
@@ -125,7 +125,7 @@ FCUと接続するまで待ちます。
 あらかじめ移動先の位置をパブリッシュしておきます。
 移動先の位置をパブリッシュしておかないとOffboardモードへの移行がリジェクトされます。
 ここでは、移動先の位置は上方向に2mとなっています。
-``geometry_msgs::PoseStamped`` の各フィールドについては `ここ <http://docs.ros.org/lunar/api/geometry_msgs/html/msg/PoseStamped.html>`_ を見てください。
+``geometry_msgs::PoseStamped`` の各フィールドについては `geometry_msgs/PoseStamped Message <http://docs.ros.org/lunar/api/geometry_msgs/html/msg/PoseStamped.html>`_ を見てください。
 
 .. code-block:: cpp
 
@@ -134,7 +134,7 @@ FCUと接続するまで待ちます。
 
 ``SetMode`` メッセージの ``custom_mode`` フィールドを ``OFFBOARD`` にします。
 このメッセージをサービスサーバに送信することでモードの切り替えをおこないます。
-``mavros_msgs::SetMode`` メッセージの定義は `ここ <http://docs.ros.org/api/mavros_msgs/html/srv/SetMode.html>`_ から見れます。
+``mavros_msgs::SetMode`` メッセージの定義は `mavros_msgs/SetMode Service <http://docs.ros.org/api/mavros_msgs/html/srv/SetMode.html>`_ から見れます。
 
 .. code-block:: cpp
 
@@ -142,7 +142,7 @@ FCUと接続するまで待ちます。
     arm_cmd.request.value = true;
 
 ``/mavros/cmd/arming`` サービスへ送信するためのメッセージを作成します。
-``mavros_msgs::CommandBool`` メッセージの定義は `ここ <http://docs.ros.org/api/mavros_msgs/html/srv/CommandBool.html>`_ にあります。
+``mavros_msgs::CommandBool`` メッセージの定義は `mavros_msgs/CommandBool Service <http://docs.ros.org/api/mavros_msgs/html/srv/CommandBool.html>`_ にあります。
 mavrosパッケージで使用するメッセージの定義は、 `mavrosのROS wikiページ <http://wiki.ros.org/mavros#Plugins>`_ から見ることができます。
 
 .. code-block:: cpp
@@ -189,7 +189,7 @@ mavrosパッケージで使用するメッセージの定義は、 `mavrosのROS
 最後に、ループ毎に目標位置をパブリッシュしています。
 
 CMakeLists.txtの編集
---------------------
+-----------------------------------------------------------------
 次にCMakeLists.txtの編集をおこないます。
 CMakeLists.txtの末尾に以下の行を追加します。
 
@@ -199,7 +199,7 @@ CMakeLists.txtの末尾に以下の行を追加します。
     target_link_libraries(offboard_sample ${catkin_LIBRARIES})
 
 ビルドする
-----------------
+-----------------------------------------------------------------
 
 .. code-block:: bash
 
@@ -207,7 +207,7 @@ CMakeLists.txtの末尾に以下の行を追加します。
     catkin_make
 
 ノードの起動
-============
+=================================================================
 はじめにシミュレータを起動します。
 ROSノードとの通信を行うためにはmavrosが必要なので、 ``mavros_posix_sitl.launch`` を使います。
 
@@ -224,7 +224,7 @@ ROSノードとの通信を行うためにはmavrosが必要なので、 ``mavro
 .. image:: imgs/runningnode_cpp.png
 
 launchファイルを書く
-===================
+================================================================
 シミュレータとOffboardノードを別々に起動するのは面倒なので、launchファイルにまとめて一つのコマンドで起動できるようにしましょう。
 
 ``px4_sim_pkg/launch`` 以下に ``cpp_offb_sample.launch`` という名前で以下の内容を保存してください。
@@ -245,7 +245,7 @@ launchファイルを書く
     roslaunch px4_sim_pkg cpp_offb_sample.launch
 
 参考
-=====
+================================================================
 `Callbacks and Spinning - ROS Wiki <http://wiki.ros.org/roscpp/Overview/Callbacks%20and%20Spinning>`_
     ros::spinOnce()について
 `mavros - ROS Wiki <http://wiki.ros.org/mavros>`_

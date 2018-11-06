@@ -91,23 +91,24 @@
 <li class="toctree-l4"><a class="reference internal" href="#id3">5.1.2.1. 既存のモデルをインクルードする</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#lidar">5.1.2.2. LiDARのリンクを定義する</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#lidarbase-link">5.1.2.3. LiDARとbase_linkのジョイントを定義する</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id5">5.1.2.4. model.sdf</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">5.1.2.4. model.sdf</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#config">5.2. configファイルを作る</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id7">5.3. パスを設定する</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id8">5.4. モデルを確認する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">5.3. パスを設定する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">5.4. モデルを確認する</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#sitl">5.5. SITLシミュレーションでモデルを使う</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id9">5.6. 参考</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">5.6. 参考</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../slam/slam.html">6. 自律飛行とSLAM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../slam/gps_nav.html">7. GPSを用いた自律飛行</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../slam/lidar_localization.html">8. LiDARとAMCLを用いた自己位置推定</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../slam/localization_and_mapping.html">9. LiDARを用いたSLAM</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../octomap/octomap.html">10. Octomapを使って3Dマップを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/improve_nav.html">8. ナビゲーションを改善する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/lidar_localization.html">9. LiDARとAMCLを用いた自己位置推定</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/localization_and_mapping.html">10. LiDARを用いたSLAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../octomap/octomap.html">11. Octomapを使って3Dマップを作る</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Appendix</span></p>
 <ul>
@@ -115,7 +116,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../appendix/ros/ros.html">2. ROSの基本</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/terms/terms.html">3. 用語集</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/archive/archive.html">4. 読書案内</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/trouble_shooting/trouble_shooting.html">5. トラブルシューティング実例集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/trouble_shooting/trouble_shooting.html">5. トラブルシューティング</a></li>
 </ul>
 
             
@@ -344,7 +345,7 @@ SDFとURDFの関係については <a class="reference external" href="https://q
 <dt>collision</dt>
 <dd>接触判定に使われるリンクの形状を指定します。 <code class="docutils literal notranslate"><span class="pre">visual</span></code> タグと同様にシンプルな形状の他にメッシュを指定することもできます。複雑なコリジョンの指定はパフォーマンスに影響を与えるので、円柱や直方体など、できるだけシンプルな形にしましょう。シミュレーション内のセンサの値が狂う場合もあります。今回のモデルでは使われていません。</dd>
 <dt>plugin</dt>
-<dd>センサの動作をシミュレートするためのものです。今回はレーザのプラグインを使っています。詳細は <a class="reference external" href="http://gazebosim.org/tutorials?tut=ros_gzplugins#GPULaser">ここ</a> を見てください。</dd>
+<dd>センサの動作をシミュレートするためのものです。今回はレーザのプラグインを使っています。詳細は <a class="reference external" href="http://gazebosim.org/tutorials?tut=ros_gzplugins#GPULaser">Tutorial: Using Gazebo plugins with ROS</a> を見てください。</dd>
 </dl>
 </div>
 <div class="section" id="lidarbase-link">
@@ -364,11 +365,11 @@ irisのbase_linkのような、インクルードしたモデルのリンクを�
 </td></tr></table></div>
 <p>今回は固定関節を使っていますが、他にも回転関節や直動関節などが使えます。</p>
 </div>
-<div class="section" id="id5">
-<h4>5.1.2.4. model.sdf<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<div class="section" id="id4">
+<h4>5.1.2.4. model.sdf<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>最終的なmodel.sdfファイルは以下のようになります。</p>
-<div class="literal-block-wrapper container" id="id11">
-<div class="code-block-caption"><span class="caption-text">model.sdf</span><a class="headerlink" href="#id11" title="このコードへのパーマリンク">¶</a></div>
+<div class="literal-block-wrapper container" id="id10">
+<div class="code-block-caption"><span class="caption-text">model.sdf</span><a class="headerlink" href="#id10" title="このコードへのパーマリンク">¶</a></div>
 <div class="highlight-xml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -596,8 +597,8 @@ irisのbase_linkのような、インクルードしたモデルのリンクを�
 <p>モデルには、名前や作成者などのモデルの情報を記したmodel.configファイルが必要です。
 基本的には以下のような形になります。
 タグの詳細については <a class="reference external" href="http://gazebosim.org/tutorials?tut=model_structure">Model structure and requirements</a> で確認してください。</p>
-<div class="literal-block-wrapper container" id="id12">
-<div class="code-block-caption"><span class="caption-text">model.config</span><a class="headerlink" href="#id12" title="このコードへのパーマリンク">¶</a></div>
+<div class="literal-block-wrapper container" id="id11">
+<div class="code-block-caption"><span class="caption-text">model.config</span><a class="headerlink" href="#id11" title="このコードへのパーマリンク">¶</a></div>
 <div class="highlight-xml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -631,8 +632,8 @@ irisのbase_linkのような、インクルードしたモデルのリンクを�
 </td></tr></table></div>
 </div>
 </div>
-<div class="section" id="id7">
-<h2>5.3. パスを設定する<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id6">
+<h2>5.3. パスを設定する<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>GazeboのGUIからモデルを追加したり、SDFファイルからインクルードするためには、作成したモデルのパスが通っていないといけません。
 モデルのパスは <code class="docutils literal notranslate"><span class="pre">~/catkin_ws/src/px4_sim_pkg/models</span></code> なので、次のコマンドを実行してモデルのパスを設定します。</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span class="nb">export</span> <span class="nv">GAZEBO_MODEL_PATH</span><span class="o">=</span>$HOME/catkin_ws/src/px4_sim_pkg/models:$GAZEBO_MODEL_PATH
@@ -640,8 +641,8 @@ irisのbase_linkのような、インクルードしたモデルのリンクを�
 </div>
 <p>もしくは、上のコマンドをそのまま <code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code> に書いても構いません。</p>
 </div>
-<div class="section" id="id8">
-<h2>5.4. モデルを確認する<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id7">
+<h2>5.4. モデルを確認する<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>GazeboのGUIからモデルを読み込んで確認してみましょう。</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre>gazebo
 </pre></div>
@@ -655,11 +656,11 @@ irisのbase_linkのような、インクルードしたモデルのリンクを�
 <h2>5.5. SITLシミュレーションでモデルを使う<a class="headerlink" href="#sitl" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>次のコマンドを実行すると今回作成したモデルをSITLシミュレーションで使うことができます。
 コマンドラインからlaunchファイルに引数を与える方法については、 <a class="reference external" href="http://wiki.ros.org/roslaunch/XML/arg#Passing_an_argument_via_the_command-line">ROS Wiki</a> を見てください。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre>roslaunch px4 posix_sitl.launch sdf:<span class="o">=</span>~/catkin_ws/src/px4_sim_pkg/models/iris_2d_lidar/model.sdf
+<div class="highlight-bash notranslate"><div class="highlight"><pre>roslaunch px4 posix_sitl.launch sdf:<span class="o">=</span>$HOME/catkin_ws/src/px4_sim_pkg/models/iris_2d_lidar/model.sdf
 </pre></div>
 </div>
 <p>mavros_posix_sitl.launchを使う場合には以下のようにします。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre>roslaunch px4 mavros_posix_sitl.launch sdf:<span class="o">=</span>~/catkin_ws/src/px4_sim_pkg/models/iris_2d_lidar/model.sdf
+<div class="highlight-bash notranslate"><div class="highlight"><pre>roslaunch px4 mavros_posix_sitl.launch sdf:<span class="o">=</span>$HOME/catkin_ws/src/px4_sim_pkg/models/iris_2d_lidar/model.sdf
 </pre></div>
 </div>
 <img alt="../_images/sitl.png" src="../_images/sitl.png" />
@@ -684,8 +685,8 @@ irisのbase_linkのような、インクルードしたモデルのリンクを�
 </pre></div>
 </td></tr></table></div>
 </div>
-<div class="section" id="id9">
-<h2>5.6. 参考<a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id8">
+<h2>5.6. 参考<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <dl class="docutils">
 <dt><a class="reference external" href="http://gazebosim.org/tutorials?tut=build_model">Make a Model</a></dt>
 <dd>Gazeboモデルの作成について</dd>
