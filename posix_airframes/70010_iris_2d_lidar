@@ -10,7 +10,6 @@ param set FW_P_LIM_MAX 10.0
 param set FW_P_LIM_MIN -10.0
 param set FW_R_LIM 35.0
 param set NAV_DLL_ACT 0
-param set COM_OF_LOSS_T 60
-param set COM_OBL_ACT 1
+param set NAV_RCL_ACT 0
 
 set MIXER quad_w
