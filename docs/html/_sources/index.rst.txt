@@ -18,6 +18,7 @@ PX4 SITL Tutorial
    addmodel/addmodel.rst
    slam/slam.rst
    slam/gps_nav.rst
+   slam/improve_nav.rst
    slam/lidar_localization.rst
    slam/localization_and_mapping.rst
    octomap/octomap.rst
