@@ -17,6 +17,10 @@ PX4 SITL Tutorial
    runnode/runnodepy.rst
    addmodel/addmodel.rst
    slam/slam.rst
+   slam/gps_nav.rst
+   slam/lidar_localization.rst
+   slam/localization_and_mapping.rst
+   octomap/octomap.rst
 
 .. toctree::
    :maxdepth: 2
@@ -25,13 +29,14 @@ PX4 SITL Tutorial
 
    appendix/bash_commands/bash_commands.rst
    appendix/ros/ros.rst
-   appendix/git/git.rst
-   appendix/github/github.rst
    appendix/terms/terms.rst
+   appendix/archive/archive.rst
+   appendix/trouble_shooting/trouble_shooting.rst
 
 Issues
 ============
-内容に問題があれば気軽にお知らせください。  
+内容に問題があれば気軽にお知らせください。
+
 https://github.com/uenota/dronedoc/issues
 
 Indices and tables
