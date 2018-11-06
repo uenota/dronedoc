@@ -1,11 +1,11 @@
-------------------------------
+----------------------------------------------------------------
 自作ノードを実行する（Python）
-------------------------------
+----------------------------------------------------------------
 
 この章ではシミュレーション上のドローンを操作するROSノードをPythonで作成します。
 
 ROSパッケージを作る
-============================
+================================================================
 はじめに、自作ノードを格納するためのROSパッケージを作ります。
 パッケージ名はpx4_sim_pkgとします。
 また、rospy、geometry_msgs、mavros_msgsパッケージを使用するので依存パッケージに追加しておきます。
@@ -16,7 +16,7 @@ ROSパッケージを作る
     catkin_create_pkg px4_sim_pkg rospy geometry_msgs mavros_msgs
 
 ノードを書く
-============
+================================================================
 それでは実際にノードを書いてみましょう。
 今回は、ドローンを2m上空に離陸させるノードを書きます。
 
@@ -28,7 +28,7 @@ ROSパッケージを作る
     :caption: offboard_sample.py
 
 コードの解説
-------------
+----------------------------------------------------------------
 .. code-block:: python
 
     #!/usr/bin/env python
@@ -127,7 +127,7 @@ FCUと接続するまで待ちます。
 あらかじめ移動先の位置をパブリッシュしておきます。
 移動先の位置をパブリッシュしておかないとOffboardモードへの移行がリジェクトされます。
 ここでは、移動先の位置は上方向に2mとなっています。
-``PoseStamped`` の各フィールドについては `ここ <http://docs.ros.org/lunar/api/geometry_msgs/html/msg/PoseStamped.html>`_ を見てください。
+``PoseStamped`` の各フィールドについては `geometry_msgs/PoseStamped Message <http://docs.ros.org/lunar/api/geometry_msgs/html/msg/PoseStamped.html>`_ を見てください。
 
 .. code-block:: python
 
@@ -136,7 +136,7 @@ FCUと接続するまで待ちます。
 
 ``SetMode`` メッセージの ``custom_mode`` フィールドを ``OFFBOARD`` にします。
 このメッセージをサービスサーバに送信することでモードの切り替えをおこないます。
-``SetMode`` メッセージの定義は `ここ <http://docs.ros.org/api/mavros_msgs/html/srv/SetMode.html>`_ から見れます。
+``SetMode`` メッセージの定義は `mavros_msgs/SetMode Service <http://docs.ros.org/api/mavros_msgs/html/srv/SetMode.html>`_ から見れます。
 
 .. code-block:: python
 
@@ -144,7 +144,7 @@ FCUと接続するまで待ちます。
     arm_cmd.value = True
 
 ``/mavros/cmd/arming`` サービスへ送信するためのメッセージを作成します。
-``CommandBool`` メッセージの定義は `ここ <http://docs.ros.org/api/mavros_msgs/html/srv/CommandBool.html>`_ にあります。
+``CommandBool`` メッセージの定義は `mavros_msgs/CommandBool Service <http://docs.ros.org/api/mavros_msgs/html/srv/CommandBool.html>`_ にあります。
 mavrosパッケージで使用するメッセージの定義は、 `mavrosのROS wikiページ <http://wiki.ros.org/mavros#Plugins>`_ から見ることができます。
 
 .. code-block:: python
@@ -198,7 +198,7 @@ mavrosパッケージで使用するメッセージの定義は、 `mavrosのROS
 
 
 ビルドする
-----------------
+----------------------------------------------------------------
 ``offboard_sample.py`` が使用するメッセージが確実に生成されているようにするためにビルドします。
 
 .. code-block:: bash
@@ -207,7 +207,7 @@ mavrosパッケージで使用するメッセージの定義は、 `mavrosのROS
     catkin_make
 
 実行権限の付与
----------------
+----------------------------------------------------------------
 PythonプログラムをROSノードとして実行するには実行権限を与える必要があります。
 
 .. code-block:: bash
@@ -215,7 +215,7 @@ PythonプログラムをROSノードとして実行するには実行権限を�
     chmod +x offboard_sample.py
 
 ノードの起動
-============
+================================================================
 はじめにシミュレータを起動します。
 ROSノードとの通信を行うためにはmavrosが必要なので、 ``mavros_posix_sitl.launch`` を使います。
 
@@ -232,7 +232,7 @@ ROSノードとの通信を行うためにはmavrosが必要なので、 ``mavro
 .. image:: imgs/runningnode_py.png
 
 launchファイルを書く
-===================
+================================================================
 シミュレータとOffboardノードを別々に起動するのは面倒なので、launchファイルにまとめて一つのコマンドで起動できるようにしましょう。
 
 ``px4_sim_pkg/launch`` 以下に ``py_offb_sample.launch`` という名前で以下の内容を保存してください。
@@ -253,7 +253,7 @@ launchファイルを書く
     roslaunch px4_sim_pkg py_offb_sample.launch
 
 参考
-=====
+================================================================
 `mavros - ROS Wiki <http://wiki.ros.org/mavros>`_
     mavrosのROS Wikiページ
 `Pythonでのグローバル（global）変数の宣言方法 <https://uxmilk.jp/12505>`_
