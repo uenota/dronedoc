@@ -1,6 +1,6 @@
 <launch>
 
-  <node pkg="dronedoc" type="odom_publisher" name="odom_publisher"/>
+  <node pkg="dronedoc" type="odom_publisher" name="odom_publisher" respawn="false" output="screen" />
 
   <remap from="/cmd_vel" to="/mavros/setpoint_velocity/cmd_vel_unstamped" />
 
