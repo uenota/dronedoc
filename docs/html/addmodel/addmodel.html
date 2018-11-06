@@ -104,7 +104,10 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../slam/slam.html">6. 自律飛行とSLAM</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../octomap/octomap.html">7. Octomapを使って3Dマップを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/gps_nav.html">7. GPSを用いた自律飛行</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/lidar_localization.html">8. LiDARとAMCLを用いた自己位置推定</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/localization_and_mapping.html">9. LiDARを用いたSLAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../octomap/octomap.html">10. Octomapを使って3Dマップを作る</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Appendix</span></p>
 <ul>
@@ -112,6 +115,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../appendix/ros/ros.html">2. ROSの基本</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/terms/terms.html">3. 用語集</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/archive/archive.html">4. 読書案内</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/trouble_shooting/trouble_shooting.html">5. トラブルシューティング実例集</a></li>
 </ul>
 
             
@@ -273,78 +277,60 @@ SDFとURDFの関係については <a class="reference external" href="https://q
 51
 52
 53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63</pre></div></td><td class="code"><div class="highlight"><pre><span class="nt">&lt;link</span> <span class="na">name=</span><span class="s">&quot;lidar_link&quot;</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;pose&gt;</span>0 0 0.07 0 0 3.14<span class="nt">&lt;/pose&gt;</span>
+54</pre></div></td><td class="code"><div class="highlight"><pre>    <span class="nt">&lt;link</span> <span class="na">name=</span><span class="s">&quot;lidar_link&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;pose&gt;</span>0 0 0.1 0 0 0<span class="nt">&lt;/pose&gt;</span>
 
-  <span class="nt">&lt;inertial&gt;</span>
-    <span class="nt">&lt;pose&gt;</span>0 0 0 0 -0 0<span class="nt">&lt;/pose&gt;</span>
-    <span class="nt">&lt;mass&gt;</span>0.01<span class="nt">&lt;/mass&gt;</span>
-    <span class="nt">&lt;inertia&gt;</span>
-      <span class="nt">&lt;ixx&gt;</span>2.1733e-6<span class="nt">&lt;/ixx&gt;</span>
-      <span class="nt">&lt;ixy&gt;</span>0<span class="nt">&lt;/ixy&gt;</span>
-      <span class="nt">&lt;ixz&gt;</span>0<span class="nt">&lt;/ixz&gt;</span>
-      <span class="nt">&lt;iyy&gt;</span>2.1733e-6<span class="nt">&lt;/iyy&gt;</span>
-      <span class="nt">&lt;iyz&gt;</span>0<span class="nt">&lt;/iyz&gt;</span>
-      <span class="nt">&lt;izz&gt;</span>1.8e-7<span class="nt">&lt;/izz&gt;</span>
-    <span class="nt">&lt;/inertia&gt;</span>
-  <span class="nt">&lt;/inertial&gt;</span>
+      <span class="nt">&lt;inertial&gt;</span>
+        <span class="nt">&lt;pose&gt;</span>0 0 0 0 -0 0<span class="nt">&lt;/pose&gt;</span>
+        <span class="nt">&lt;mass&gt;</span>0.01<span class="nt">&lt;/mass&gt;</span>
+        <span class="nt">&lt;inertia&gt;</span>
+          <span class="nt">&lt;ixx&gt;</span>2.1733e-6<span class="nt">&lt;/ixx&gt;</span>
+          <span class="nt">&lt;ixy&gt;</span>0<span class="nt">&lt;/ixy&gt;</span>
+          <span class="nt">&lt;ixz&gt;</span>0<span class="nt">&lt;/ixz&gt;</span>
+          <span class="nt">&lt;iyy&gt;</span>2.1733e-6<span class="nt">&lt;/iyy&gt;</span>
+          <span class="nt">&lt;iyz&gt;</span>0<span class="nt">&lt;/iyz&gt;</span>
+          <span class="nt">&lt;izz&gt;</span>1.8e-7<span class="nt">&lt;/izz&gt;</span>
+        <span class="nt">&lt;/inertia&gt;</span>
+      <span class="nt">&lt;/inertial&gt;</span>
 
-  <span class="nt">&lt;visual</span> <span class="na">name=</span><span class="s">&quot;lidar_visual&quot;</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;geometry&gt;</span>
-      <span class="nt">&lt;cylinder&gt;</span>
-        <span class="nt">&lt;radius&gt;</span>0.006<span class="nt">&lt;/radius&gt;</span>
-        <span class="nt">&lt;length&gt;</span>0.05<span class="nt">&lt;/length&gt;</span>
-      <span class="nt">&lt;/cylinder&gt;</span>
-    <span class="nt">&lt;/geometry&gt;</span>
-    <span class="nt">&lt;material&gt;</span>
-      <span class="nt">&lt;script&gt;</span>
-        <span class="nt">&lt;name&gt;</span>Gazebo/DarkGrey<span class="nt">&lt;/name&gt;</span>
-        <span class="nt">&lt;uri&gt;</span>file://media/materials/scripts/gazebo.material<span class="nt">&lt;/uri&gt;</span>
-      <span class="nt">&lt;/script&gt;</span>
-    <span class="nt">&lt;/material&gt;</span>
-  <span class="nt">&lt;/visual&gt;</span>
+      <span class="nt">&lt;visual</span> <span class="na">name=</span><span class="s">&quot;lidar_visual&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;geometry&gt;</span>
+          <span class="nt">&lt;cylinder&gt;</span>
+            <span class="nt">&lt;radius&gt;</span>0.01<span class="nt">&lt;/radius&gt;</span>
+            <span class="nt">&lt;length&gt;</span>0.2<span class="nt">&lt;/length&gt;</span>
+          <span class="nt">&lt;/cylinder&gt;</span>
+        <span class="nt">&lt;/geometry&gt;</span>
+        <span class="nt">&lt;material&gt;</span>
+          <span class="nt">&lt;script&gt;</span>
+            <span class="nt">&lt;name&gt;</span>Gazebo/DarkGrey<span class="nt">&lt;/name&gt;</span>
+            <span class="nt">&lt;uri&gt;</span>file://media/materials/scripts/gazebo.material<span class="nt">&lt;/uri&gt;</span>
+          <span class="nt">&lt;/script&gt;</span>
+        <span class="nt">&lt;/material&gt;</span>
+      <span class="nt">&lt;/visual&gt;</span>
 
-  <span class="nt">&lt;sensor</span> <span class="na">name=</span><span class="s">&quot;laser&quot;</span> <span class="na">type=</span><span class="s">&quot;ray&quot;</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;pose&gt;</span>0 0 0 0 0 0<span class="nt">&lt;/pose&gt;</span>
-    <span class="nt">&lt;ray&gt;</span>
-      <span class="nt">&lt;scan&gt;</span>
-        <span class="nt">&lt;horizontal&gt;</span>
-          <span class="nt">&lt;samples&gt;</span>720<span class="nt">&lt;/samples&gt;</span>
-          <span class="nt">&lt;resolution&gt;</span>1<span class="nt">&lt;/resolution&gt;</span>
-          <span class="nt">&lt;min_angle&gt;</span>-2.0944<span class="nt">&lt;/min_angle&gt;</span>
-          <span class="nt">&lt;max_angle&gt;</span>2.0944<span class="nt">&lt;/max_angle&gt;</span>
-        <span class="nt">&lt;/horizontal&gt;</span>
-      <span class="nt">&lt;/scan&gt;</span>
-      <span class="nt">&lt;range&gt;</span>
-        <span class="nt">&lt;min&gt;</span>0.1<span class="nt">&lt;/min&gt;</span>
-        <span class="nt">&lt;max&gt;</span>15<span class="nt">&lt;/max&gt;</span>
-        <span class="nt">&lt;resolution&gt;</span>0.01<span class="nt">&lt;/resolution&gt;</span>
-      <span class="nt">&lt;/range&gt;</span>
-      <span class="nt">&lt;noise&gt;</span>
-        <span class="nt">&lt;type&gt;</span>gaussian<span class="nt">&lt;/type&gt;</span>
-        <span class="nt">&lt;mean&gt;</span>0.0<span class="nt">&lt;/mean&gt;</span>
-        <span class="nt">&lt;stddev&gt;</span>0.01<span class="nt">&lt;/stddev&gt;</span>
-      <span class="nt">&lt;/noise&gt;</span>
-    <span class="nt">&lt;/ray&gt;</span>
-    <span class="nt">&lt;plugin</span> <span class="na">name=</span><span class="s">&quot;LaserPlugin&quot;</span> <span class="na">filename=</span><span class="s">&quot;libgazebo_ros_laser.so&quot;</span><span class="nt">&gt;</span>
-      <span class="nt">&lt;robotNamespace&gt;&lt;/robotNamespace&gt;</span>
-            <span class="nt">&lt;topicName&gt;</span>/laser/scan<span class="nt">&lt;/topicName&gt;</span>
-            <span class="nt">&lt;frameName&gt;</span>lidar_link<span class="nt">&lt;/frameName&gt;</span>
-          <span class="nt">&lt;/plugin&gt;</span>
-    <span class="nt">&lt;always_on&gt;</span>1<span class="nt">&lt;/always_on&gt;</span>
-    <span class="nt">&lt;update_rate&gt;</span>40<span class="nt">&lt;/update_rate&gt;</span>
-    <span class="nt">&lt;visualize&gt;</span>true<span class="nt">&lt;/visualize&gt;</span>
-  <span class="nt">&lt;/sensor&gt;</span>
-<span class="nt">&lt;/link&gt;</span>
+      <span class="nt">&lt;sensor</span> <span class="na">name=</span><span class="s">&quot;laser&quot;</span> <span class="na">type=</span><span class="s">&quot;ray&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;pose&gt;</span>0 0 0.1 0 0 0<span class="nt">&lt;/pose&gt;</span>
+        <span class="nt">&lt;ray&gt;</span>
+          <span class="nt">&lt;scan&gt;</span>
+            <span class="nt">&lt;horizontal&gt;</span>
+              <span class="nt">&lt;samples&gt;</span>720<span class="nt">&lt;/samples&gt;</span>
+              <span class="nt">&lt;resolution&gt;</span>1<span class="nt">&lt;/resolution&gt;</span>
+              <span class="nt">&lt;min_angle&gt;</span>-2.0944<span class="nt">&lt;/min_angle&gt;</span>
+              <span class="nt">&lt;max_angle&gt;</span>2.0944<span class="nt">&lt;/max_angle&gt;</span>
+            <span class="nt">&lt;/horizontal&gt;</span>
+          <span class="nt">&lt;/scan&gt;</span>
+          <span class="nt">&lt;range&gt;</span>
+            <span class="nt">&lt;min&gt;</span>0.1<span class="nt">&lt;/min&gt;</span>
+            <span class="nt">&lt;max&gt;</span>15<span class="nt">&lt;/max&gt;</span>
+            <span class="nt">&lt;resolution&gt;</span>0.01<span class="nt">&lt;/resolution&gt;</span>
+          <span class="nt">&lt;/range&gt;</span>
+          <span class="nt">&lt;noise&gt;</span>
+            <span class="nt">&lt;type&gt;</span>gaussian<span class="nt">&lt;/type&gt;</span>
+            <span class="nt">&lt;mean&gt;</span>0.0<span class="nt">&lt;/mean&gt;</span>
+            <span class="nt">&lt;stddev&gt;</span>0.01<span class="nt">&lt;/stddev&gt;</span>
+          <span class="nt">&lt;/noise&gt;</span>
+        <span class="nt">&lt;/ray&gt;</span>
+        <span class="nt">&lt;plugin</span> <span class="na">name=</span><span class="s">&quot;LaserPlugin&quot;</span> <span class="na">filename=</span><span class="s">&quot;libgazebo_ros_laser.so&quot;</span><span class="nt">&gt;</span>
 </pre></div>
 </td></tr></table></div>
 <p>それぞれの要素について見ていきましょう。</p>
@@ -367,27 +353,13 @@ SDFとURDFの関係については <a class="reference external" href="https://q
 今回はirisのbase_linkリンクとLiDARのlidar_linkリンクを接続します。</p>
 <p><code class="docutils literal notranslate"><span class="pre">&lt;child&gt;</span></code> タグで子リンクを指定し、 <code class="docutils literal notranslate"><span class="pre">&lt;parent&gt;</span></code> タグで親リンクを指定しています。
 irisのbase_linkのような、インクルードしたモデルのリンクを指定する際には、 <code class="docutils literal notranslate"><span class="pre">iris::base_link</span></code> のように、どのモデルのリンクであるかを指定してやる必要があります。</p>
-<div class="highlight-xml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11</pre></div></td><td class="code"><div class="highlight"><pre><span class="nt">&lt;joint</span> <span class="na">name=</span><span class="s">&quot;lidar_joint&quot;</span> <span class="na">type=</span><span class="s">&quot;fixed&quot;</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;child&gt;</span>lidar_link<span class="nt">&lt;/child&gt;</span>
-  <span class="nt">&lt;parent&gt;</span>iris::base_link<span class="nt">&lt;/parent&gt;</span>
-  <span class="nt">&lt;axis&gt;</span>
-    <span class="nt">&lt;xyz&gt;</span>0 0 1<span class="nt">&lt;/xyz&gt;</span>
-    <span class="nt">&lt;limit&gt;</span>
-      <span class="nt">&lt;upper&gt;</span>0<span class="nt">&lt;/upper&gt;</span>
-      <span class="nt">&lt;lower&gt;</span>0<span class="nt">&lt;/lower&gt;</span>
-    <span class="nt">&lt;/limit&gt;</span>
-  <span class="nt">&lt;/axis&gt;</span>
-<span class="nt">&lt;/joint&gt;</span>
+<div class="highlight-xml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre>    <span class="nt">&lt;joint</span> <span class="na">name=</span><span class="s">&quot;lidar_joint&quot;</span> <span class="na">type=</span><span class="s">&quot;fixed&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;child&gt;</span>lidar_link<span class="nt">&lt;/child&gt;</span>
+      <span class="nt">&lt;parent&gt;</span>iris::base_link<span class="nt">&lt;/parent&gt;</span>
+    <span class="nt">&lt;/joint&gt;</span>
 </pre></div>
 </td></tr></table></div>
 <p>今回は固定関節を使っていますが、他にも回転関節や直動関節などが使えます。</p>
@@ -474,15 +446,7 @@ irisのbase_linkのような、インクルードしたモデルのリンクを�
 75
 76
 77
-78
-79
-80
-81
-82
-83
-84
-85
-86</pre></div></td><td class="code"><div class="highlight"><pre><span class="cp">&lt;?xml version=&#39;1.0&#39;?&gt;</span>
+78</pre></div></td><td class="code"><div class="highlight"><pre><span class="cp">&lt;?xml version=&#39;1.0&#39;?&gt;</span>
 <span class="nt">&lt;sdf</span> <span class="na">version=</span><span class="s">&#39;1.6&#39;</span><span class="nt">&gt;</span>
   <span class="nt">&lt;model</span> <span class="na">name=</span><span class="s">&#39;iris_2d_lidar&#39;</span><span class="nt">&gt;</span>
 
@@ -491,7 +455,7 @@ irisのbase_linkのような、インクルードしたモデルのリンクを�
     <span class="nt">&lt;/include&gt;</span>
 
     <span class="nt">&lt;link</span> <span class="na">name=</span><span class="s">&quot;lidar_link&quot;</span><span class="nt">&gt;</span>
-      <span class="nt">&lt;pose&gt;</span>0 0 0.07 0 0 3.14<span class="nt">&lt;/pose&gt;</span>
+      <span class="nt">&lt;pose&gt;</span>0 0 0.1 0 0 0<span class="nt">&lt;/pose&gt;</span>
 
       <span class="nt">&lt;inertial&gt;</span>
         <span class="nt">&lt;pose&gt;</span>0 0 0 0 -0 0<span class="nt">&lt;/pose&gt;</span>
@@ -509,8 +473,8 @@ irisのbase_linkのような、インクルードしたモデルのリンクを�
       <span class="nt">&lt;visual</span> <span class="na">name=</span><span class="s">&quot;lidar_visual&quot;</span><span class="nt">&gt;</span>
         <span class="nt">&lt;geometry&gt;</span>
           <span class="nt">&lt;cylinder&gt;</span>
-            <span class="nt">&lt;radius&gt;</span>0.006<span class="nt">&lt;/radius&gt;</span>
-            <span class="nt">&lt;length&gt;</span>0.05<span class="nt">&lt;/length&gt;</span>
+            <span class="nt">&lt;radius&gt;</span>0.01<span class="nt">&lt;/radius&gt;</span>
+            <span class="nt">&lt;length&gt;</span>0.2<span class="nt">&lt;/length&gt;</span>
           <span class="nt">&lt;/cylinder&gt;</span>
         <span class="nt">&lt;/geometry&gt;</span>
         <span class="nt">&lt;material&gt;</span>
@@ -522,7 +486,7 @@ irisのbase_linkのような、インクルードしたモデルのリンクを�
       <span class="nt">&lt;/visual&gt;</span>
 
       <span class="nt">&lt;sensor</span> <span class="na">name=</span><span class="s">&quot;laser&quot;</span> <span class="na">type=</span><span class="s">&quot;ray&quot;</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;pose&gt;</span>0 0 0 0 0 0<span class="nt">&lt;/pose&gt;</span>
+        <span class="nt">&lt;pose&gt;</span>0 0 0.1 0 0 0<span class="nt">&lt;/pose&gt;</span>
         <span class="nt">&lt;ray&gt;</span>
           <span class="nt">&lt;scan&gt;</span>
             <span class="nt">&lt;horizontal&gt;</span>
@@ -544,9 +508,8 @@ irisのbase_linkのような、インクルードしたモデルのリンクを�
           <span class="nt">&lt;/noise&gt;</span>
         <span class="nt">&lt;/ray&gt;</span>
         <span class="nt">&lt;plugin</span> <span class="na">name=</span><span class="s">&quot;LaserPlugin&quot;</span> <span class="na">filename=</span><span class="s">&quot;libgazebo_ros_laser.so&quot;</span><span class="nt">&gt;</span>
-          <span class="nt">&lt;robotNamespace&gt;&lt;/robotNamespace&gt;</span>
 	        <span class="nt">&lt;topicName&gt;</span>/laser/scan<span class="nt">&lt;/topicName&gt;</span>
-	        <span class="nt">&lt;frameName&gt;</span>lidar_link<span class="nt">&lt;/frameName&gt;</span>
+	        <span class="nt">&lt;frameName&gt;</span>/lidar_link<span class="nt">&lt;/frameName&gt;</span>
 	      <span class="nt">&lt;/plugin&gt;</span>
         <span class="nt">&lt;always_on&gt;</span>1<span class="nt">&lt;/always_on&gt;</span>
         <span class="nt">&lt;update_rate&gt;</span>40<span class="nt">&lt;/update_rate&gt;</span>
@@ -557,13 +520,6 @@ irisのbase_linkのような、インクルードしたモデルのリンクを�
     <span class="nt">&lt;joint</span> <span class="na">name=</span><span class="s">&quot;lidar_joint&quot;</span> <span class="na">type=</span><span class="s">&quot;fixed&quot;</span><span class="nt">&gt;</span>
       <span class="nt">&lt;child&gt;</span>lidar_link<span class="nt">&lt;/child&gt;</span>
       <span class="nt">&lt;parent&gt;</span>iris::base_link<span class="nt">&lt;/parent&gt;</span>
-      <span class="nt">&lt;axis&gt;</span>
-        <span class="nt">&lt;xyz&gt;</span>0 0 1<span class="nt">&lt;/xyz&gt;</span>
-        <span class="nt">&lt;limit&gt;</span>
-          <span class="nt">&lt;upper&gt;</span>0<span class="nt">&lt;/upper&gt;</span>
-          <span class="nt">&lt;lower&gt;</span>0<span class="nt">&lt;/lower&gt;</span>
-        <span class="nt">&lt;/limit&gt;</span>
-      <span class="nt">&lt;/axis&gt;</span>
     <span class="nt">&lt;/joint&gt;</span>
 
   <span class="nt">&lt;/model&gt;</span>

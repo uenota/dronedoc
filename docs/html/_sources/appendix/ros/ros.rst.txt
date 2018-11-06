@@ -14,6 +14,37 @@ TODO
 ====================================
 TODO
 
-tf
+TF
 ====================================
-TODO
+`tf/Tutorial - ROS Wiki http://wiki.ros.org/ja/tf/Tutorials>`_
+
+パラメータ
+====================================
+ROSノードは、再利用性を高めるためにパラメータを用いてその動作を変更できるようにしてあります。
+
+ノード内でパラメータを利用する方法については、 `roscpp <http://wiki.ros.org/roscpp/Overview/Parameter%20Server>`_ と `rospy <http://wiki.ros.org/rospy/Overview/Parameter%20Server>`_ のドキュメンテーションを参考にしてください。
+
+``rosparam`` コマンド
+------------------------------------
+ノードのパラメータは ``rosparam`` コマンドを使って確認したり設定したりすることができます。
+rosparamコマンドについては `rosparam - ROS Wiki <http://wiki.ros.org/rosparam>`_ を見てください。
+
+また、Launchファイルからノードを起動した時は、以下のようにパラメータ一覧が表示されます。
+
+.. image:: imgs/param_launch.png
+
+参考
+------------------------------------
+`Parameter Server - ROS Wiki <http://wiki.ros.org/ja/Parameter%20Server>`_
+
+各種ファイルの書き方
+====================================
+
+Launchファイル
+------------------------------------
+
+package.xml
+------------------------------------
+
+CMakeLists.txt
+------------------------------------

@@ -28,7 +28,7 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <link rel="next" title="7. Octomapを使って3Dマップを作る" href="../octomap/octomap.html" />
+    <link rel="next" title="7. GPSを用いた自律飛行" href="gps_nav.html" />
     <link rel="prev" title="5. 新しいモデルを追加する" href="../addmodel/addmodel.html" /> 
 
   
@@ -86,20 +86,17 @@
 <li class="toctree-l1"><a class="reference internal" href="../runnode/runnodepy.html">4. 自作ノードを実行する（Python）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../addmodel/addmodel.html">5. 新しいモデルを追加する</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">6. 自律飛行とSLAM</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id1">6.1. はじめに</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#gps">6.2. GPSを用いた自律飛行</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#tf">6.2.1. tfの設定</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id2">6.2.2. センサ情報の設定</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id3">6.2.3. オドメトリ情報の設定</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id4">6.2.4. 移動制御の設定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">6.1. はじめに</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">6.1.1. navigation stackのインストール</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#lidaramcl">6.3. LiDARとAMCLを用いた自己位置推定</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#lidarslam">6.4. LiDARを用いたSLAM</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id5">6.5. 参考</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">6.2. 参考</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../octomap/octomap.html">7. Octomapを使って3Dマップを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gps_nav.html">7. GPSを用いた自律飛行</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lidar_localization.html">8. LiDARとAMCLを用いた自己位置推定</a></li>
+<li class="toctree-l1"><a class="reference internal" href="localization_and_mapping.html">9. LiDARを用いたSLAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../octomap/octomap.html">10. Octomapを使って3Dマップを作る</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Appendix</span></p>
 <ul>
@@ -107,6 +104,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../appendix/ros/ros.html">2. ROSの基本</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/terms/terms.html">3. 用語集</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/archive/archive.html">4. 読書案内</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/trouble_shooting/trouble_shooting.html">5. トラブルシューティング実例集</a></li>
 </ul>
 
             
@@ -177,9 +175,9 @@
 <p>はじめにGPSを用いた自律飛行、次に2D LiDARのみを用いた自己位置推定と自律飛行、最後に2D LiDARのみを用いたSLAM（Simultaneous Localization and Mapping）を行います。</p>
 <div class="section" id="id1">
 <h2>6.1. はじめに<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="figure" id="id6">
+<div class="figure" id="id4">
 <img alt="../_images/overview_tf.png" src="../_images/overview_tf.png" />
-<p class="caption"><span class="caption-text">出典: <a class="reference external" href="http://wiki.ros.org/navigation/Tutorials/RobotSetup">http://wiki.ros.org/navigation/Tutorials/RobotSetup</a></span></p>
+<p class="caption"><span class="caption-text">From <a class="reference external" href="http://wiki.ros.org/navigation/Tutorials/RobotSetup">ROS Wiki</a> (<a class="reference external" href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>)</span></p>
 </div>
 <p>Navigation stackは、ロボットの自律移動を行うために以下のようなサブパッケージを提供しています。</p>
 <dl class="docutils">
@@ -188,42 +186,35 @@
 <dt><a class="reference external" href="http://wiki.ros.org/amcl">amcl</a></dt>
 <dd>ロボットの自己位置推定を行う</dd>
 </dl>
-</div>
-<div class="section" id="gps">
-<h2>6.2. GPSを用いた自律飛行<a class="headerlink" href="#gps" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="tf">
-<h3>6.2.1. tfの設定<a class="headerlink" href="#tf" title="このヘッドラインへのパーマリンク">¶</a></h3>
-</div>
 <div class="section" id="id2">
-<h3>6.2.2. センサ情報の設定<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>6.1.1. navigation stackのインストール<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre>sudo apt install ros-kinetic-amcl <span class="se">\</span>
+                 ros-kinetic-base-local-planner <span class="se">\</span>
+                 ros-kinetic-carrot-planner <span class="se">\</span>
+                 ros-kinetic-clear-costmap-recovery <span class="se">\</span>
+                 ros-kinetic-costmap-2d <span class="se">\</span>
+                 ros-kinetic-dwa-local-planner <span class="se">\</span>
+                 ros-kinetic-fake-localization <span class="se">\</span>
+                 ros-kinetic-global-planner <span class="se">\</span>
+                 ros-kinetic-map-server <span class="se">\</span>
+                 ros-kinetic-move-base <span class="se">\</span>
+                 ros-kinetic-move-base-msgs <span class="se">\</span>
+                 ros-kinetic-move-slow-and-clear <span class="se">\</span>
+                 ros-kinetic-nav-core <span class="se">\</span>
+                 ros-kinetic-navfn <span class="se">\</span>
+                 ros-kinetic-rotate-recovery <span class="se">\</span>
+                 ros-kinetic-voxel-grid
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="id3">
-<h3>6.2.3. オドメトリ情報の設定<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h3>
-</div>
-<div class="section" id="id4">
-<h3>6.2.4. 移動制御の設定<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h3>
-</div>
-</div>
-<div class="section" id="lidaramcl">
-<h2>6.3. LiDARとAMCLを用いた自己位置推定<a class="headerlink" href="#lidaramcl" title="このヘッドラインへのパーマリンク">¶</a></h2>
-</div>
-<div class="section" id="lidarslam">
-<h2>6.4. LiDARを用いたSLAM<a class="headerlink" href="#lidarslam" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>今回は <a class="reference external" href="http://wiki.ros.org/gmapping">gmapping</a> パッケージを使って地図生成を行います。</p>
-</div>
-<div class="section" id="id5">
-<h2>6.5. 参考<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>6.2. 参考<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <dl class="docutils">
 <dt><a class="reference external" href="http://wiki.ros.org/navigation#Tutorials">Navigation stack tutorial</a></dt>
 <dd>navigation stackパッケージのチュートリアル</dd>
-<dt><a class="reference external" href="http://wiki.ros.org/move_base">move_base - ROS Wiki</a></dt>
-<dd>move_baseパッケージ</dd>
 <dt><a class="reference external" href="https://www.wilselby.com/research/ros-integration/2d-mapping-navigation/">2D Mapping &amp; Navigation</a></dt>
 <dd>Navigation Stackを使ってSLAMをしている例</dd>
-<dt><a class="reference external" href="http://wiki.ros.org/slam_gmapping/Tutorials/MappingFromLoggedData">How to Build a Map Using Logged Data - ROS Wiki</a></dt>
-<dd>gmappingを使って自己位置推定用の地図を作る</dd>
-<dt><a class="reference external" href="https://qiita.com/nnn112358/items/814c0fb0d2075eb71da0">ROSのLidarSLAMまとめ - Qiita</a></dt>
-<dd>ROSで使えるLiDAR SLAM一覧</dd>
 <dt><a class="reference external" href="https://qiita.com/MoriKen/items/0b75ab291ab0d95c37c2P">Navigation Stack を理解する - 1. 導入 - Qiita</a></dt>
 <dd>Navigation Stackを使ってみる</dd>
 </dl>
@@ -238,7 +229,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../octomap/octomap.html" class="btn btn-neutral float-right" title="7. Octomapを使って3Dマップを作る" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="gps_nav.html" class="btn btn-neutral float-right" title="7. GPSを用いた自律飛行" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="../addmodel/addmodel.html" class="btn btn-neutral" title="5. 新しいモデルを追加する" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
