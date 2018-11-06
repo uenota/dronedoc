@@ -87,21 +87,22 @@
 <li class="toctree-l2"><a class="reference internal" href="#ros">4.1. ROSパッケージを作る</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id1">4.2. ノードを書く</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id2">4.2.1. コードの解説</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id6">4.2.2. ビルドする</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id7">4.2.3. 実行権限の付与</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">4.2.2. ビルドする</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">4.2.3. 実行権限の付与</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id8">4.3. ノードの起動</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">4.3. ノードの起動</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#launch">4.4. launchファイルを書く</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id9">4.5. 参考</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">4.5. 参考</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../addmodel/addmodel.html">5. 新しいモデルを追加する</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../slam/slam.html">6. 自律飛行とSLAM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../slam/gps_nav.html">7. GPSを用いた自律飛行</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../slam/lidar_localization.html">8. LiDARとAMCLを用いた自己位置推定</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../slam/localization_and_mapping.html">9. LiDARを用いたSLAM</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../octomap/octomap.html">10. Octomapを使って3Dマップを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/improve_nav.html">8. ナビゲーションを改善する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/lidar_localization.html">9. LiDARとAMCLを用いた自己位置推定</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/localization_and_mapping.html">10. LiDARを用いたSLAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../octomap/octomap.html">11. Octomapを使って3Dマップを作る</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Appendix</span></p>
 <ul>
@@ -109,7 +110,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../appendix/ros/ros.html">2. ROSの基本</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/terms/terms.html">3. 用語集</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/archive/archive.html">4. 読書案内</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/trouble_shooting/trouble_shooting.html">5. トラブルシューティング実例集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/trouble_shooting/trouble_shooting.html">5. トラブルシューティング</a></li>
 </ul>
 
             
@@ -192,8 +193,8 @@ catkin_create_pkg px4_sim_pkg rospy geometry_msgs mavros_msgs
 <p>それでは実際にノードを書いてみましょう。
 今回は、ドローンを2m上空に離陸させるノードを書きます。</p>
 <p>このコードを <code class="docutils literal notranslate"><span class="pre">offboard_sample.py</span></code> という名前で、 <code class="docutils literal notranslate"><span class="pre">px4_sim_pkg/script</span></code> に保存してください。</p>
-<div class="literal-block-wrapper container" id="id11">
-<div class="code-block-caption"><span class="caption-text">offboard_sample.py</span><a class="headerlink" href="#id11" title="このコードへのパーマリンク">¶</a></div>
+<div class="literal-block-wrapper container" id="id8">
+<div class="code-block-caption"><span class="caption-text">offboard_sample.py</span><a class="headerlink" href="#id8" title="このコードへのパーマリンク">¶</a></div>
 <div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -443,20 +444,20 @@ catkin_create_pkg px4_sim_pkg rospy geometry_msgs mavros_msgs
 <p>あらかじめ移動先の位置をパブリッシュしておきます。
 移動先の位置をパブリッシュしておかないとOffboardモードへの移行がリジェクトされます。
 ここでは、移動先の位置は上方向に2mとなっています。
-<code class="docutils literal notranslate"><span class="pre">PoseStamped</span></code> の各フィールドについては <a class="reference external" href="http://docs.ros.org/lunar/api/geometry_msgs/html/msg/PoseStamped.html">ここ</a> を見てください。</p>
+<code class="docutils literal notranslate"><span class="pre">PoseStamped</span></code> の各フィールドについては <a class="reference external" href="http://docs.ros.org/lunar/api/geometry_msgs/html/msg/PoseStamped.html">geometry_msgs/PoseStamped Message</a> を見てください。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span class="n">offb_set_mode</span> <span class="o">=</span> <span class="n">SetModeRequest</span><span class="p">()</span>
 <span class="n">offb_set_mode</span><span class="o">.</span><span class="n">custom_mode</span> <span class="o">=</span> <span class="s2">&quot;OFFBOARD&quot;</span>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">SetMode</span></code> メッセージの <code class="docutils literal notranslate"><span class="pre">custom_mode</span></code> フィールドを <code class="docutils literal notranslate"><span class="pre">OFFBOARD</span></code> にします。
 このメッセージをサービスサーバに送信することでモードの切り替えをおこないます。
-<code class="docutils literal notranslate"><span class="pre">SetMode</span></code> メッセージの定義は <a class="reference external" href="http://docs.ros.org/api/mavros_msgs/html/srv/SetMode.html">ここ</a> から見れます。</p>
+<code class="docutils literal notranslate"><span class="pre">SetMode</span></code> メッセージの定義は <a class="reference external" href="http://docs.ros.org/api/mavros_msgs/html/srv/SetMode.html">mavros_msgs/SetMode Service</a> から見れます。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span class="n">arm_cmd</span> <span class="o">=</span> <span class="n">CommandBoolRequest</span><span class="p">()</span>
 <span class="n">arm_cmd</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">/mavros/cmd/arming</span></code> サービスへ送信するためのメッセージを作成します。
-<code class="docutils literal notranslate"><span class="pre">CommandBool</span></code> メッセージの定義は <a class="reference external" href="http://docs.ros.org/api/mavros_msgs/html/srv/CommandBool.html">ここ</a> にあります。
+<code class="docutils literal notranslate"><span class="pre">CommandBool</span></code> メッセージの定義は <a class="reference external" href="http://docs.ros.org/api/mavros_msgs/html/srv/CommandBool.html">mavros_msgs/CommandBool Service</a> にあります。
 mavrosパッケージで使用するメッセージの定義は、 <a class="reference external" href="http://wiki.ros.org/mavros#Plugins">mavrosのROS wikiページ</a> から見ることができます。</p>
 <div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -531,24 +532,24 @@ mavrosパッケージで使用するメッセージの定義は、 <a class="ref
 この部分の処理はOffboardコマンドを送るところとほぼ同じです。</p>
 <p>最後に、ループ毎に目標位置をパブリッシュしています。</p>
 </div>
-<div class="section" id="id6">
-<h3>4.2.2. ビルドする<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id3">
+<h3>4.2.2. ビルドする<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">offboard_sample.py</span></code> が使用するメッセージが確実に生成されているようにするためにビルドします。</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span class="nb">cd</span> ~/catkin_ws
 catkin_make
 </pre></div>
 </div>
 </div>
-<div class="section" id="id7">
-<h3>4.2.3. 実行権限の付与<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id4">
+<h3>4.2.3. 実行権限の付与<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>PythonプログラムをROSノードとして実行するには実行権限を与える必要があります。</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre>chmod +x offboard_sample.py
 </pre></div>
 </div>
 </div>
 </div>
-<div class="section" id="id8">
-<h2>4.3. ノードの起動<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id5">
+<h2>4.3. ノードの起動<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>はじめにシミュレータを起動します。
 ROSノードとの通信を行うためにはmavrosが必要なので、 <code class="docutils literal notranslate"><span class="pre">mavros_posix_sitl.launch</span></code> を使います。</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre>roslaunch px4 mavros_posix_sitl.launch
@@ -577,8 +578,8 @@ ROSノードとの通信を行うためにはmavrosが必要なので、 <code c
 </pre></div>
 </div>
 </div>
-<div class="section" id="id9">
-<h2>4.5. 参考<a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id6">
+<h2>4.5. 参考<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <dl class="docutils">
 <dt><a class="reference external" href="http://wiki.ros.org/mavros">mavros - ROS Wiki</a></dt>
 <dd>mavrosのROS Wikiページ</dd>
