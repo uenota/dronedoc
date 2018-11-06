@@ -28,7 +28,7 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <link rel="next" title="8. LiDARとAMCLを用いた自己位置推定" href="lidar_localization.html" />
+    <link rel="next" title="8. ナビゲーションを改善する" href="improve_nav.html" />
     <link rel="prev" title="6. 自律飛行とSLAM" href="slam.html" /> 
 
   
@@ -140,9 +140,10 @@
 <li class="toctree-l2"><a class="reference internal" href="#id29">7.10. 参考</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="lidar_localization.html">8. LiDARとAMCLを用いた自己位置推定</a></li>
-<li class="toctree-l1"><a class="reference internal" href="localization_and_mapping.html">9. LiDARを用いたSLAM</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../octomap/octomap.html">10. Octomapを使って3Dマップを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="improve_nav.html">8. ナビゲーションを改善する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lidar_localization.html">9. LiDARとAMCLを用いた自己位置推定</a></li>
+<li class="toctree-l1"><a class="reference internal" href="localization_and_mapping.html">10. LiDARを用いたSLAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../octomap/octomap.html">11. Octomapを使って3Dマップを作る</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Appendix</span></p>
 <ul>
@@ -1118,7 +1119,10 @@ Offboardモードにしてから一定の時間操作が無いとモードが切
 以上までで、ドローンに目標位置を指定して、障害物を考慮した経路計画を実行し、経路上を移動して目標位置まで移動させることができました。</p>
 <p>しかし、まだ以下のような問題があります。</p>
 <ul class="simple">
-<li>経路への追従が不十分である</li>
+<li>経路への追従が不十分である<ul>
+<li>蛇行したり、ゴールを過ぎてしまったりしている</li>
+</ul>
+</li>
 <li>ドローン自身がLiDARに干渉している</li>
 <li>高度の制御がなされていない</li>
 </ul>
@@ -1149,7 +1153,7 @@ Offboardモードにしてから一定の時間操作が無いとモードが切
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="lidar_localization.html" class="btn btn-neutral float-right" title="8. LiDARとAMCLを用いた自己位置推定" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="improve_nav.html" class="btn btn-neutral float-right" title="8. ナビゲーションを改善する" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="slam.html" class="btn btn-neutral" title="6. 自律飛行とSLAM" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
