@@ -26,7 +26,7 @@ TF
 
 .. code-block:: xml
 
-  <node pkg="tf" name="base2lidar" type="static_transform_publisher" args="0 0 0.07 0 0 3.14 base_link lidar_link 100"/>
+  <node pkg="tf" name="base2lidar" type="static_transform_publisher" args="0 0 0.1 0 0 0 base_link lidar_link 100"/>
 
 
 センサ情報
@@ -315,10 +315,8 @@ Launchファイルについては、後述の :ref:`navigation_launch` の項を
 二次元の自己位置推定やマッピングの精度を高めるためには、できるだけセンサを水平に保つ必要があります。
 ドローンのパラメータを設定してピッチ角とロール角が一定以上にならないようにしましょう。
 
-また、デフォルトではGCS（Ground Control Station）との接続が切れた場合に自動でホームポジションに戻るようになっているので、フェイルセーフを無効化しておきます。
+また、デフォルトではGCS（Ground Control Station）とRCの接続が切れた場合に自動でホームポジションに戻るようになっているので、フェイルセーフを無効化しておきます。
 実機でフェイルセーフを解除する場合には十分に注意して行いましょう。
-
-さらに、Offboradモードのタイムアウト時間とタイムアウト時の動作についても変更しておきます。
 
 以下のパラメータの設定を変更します。
 利用可能なパラメータ一覧は `Parameter Reference <https://docs.px4.io/en/advanced_config/parameter_reference.html>`_ を参照してください。
@@ -330,8 +328,7 @@ Launchファイルについては、後述の :ref:`navigation_launch` の項を
   FW_P_LIM_MIN, -60.0 > 0.0 (0.5), -45.0, deg
   FW_R_LIM, 35.0 > 65.0 (0.5), 50.0, deg
   NAV_DLL_ACT, 0 > 6, 0,
-  COM_OF_LOSS_T, 0 > 60 (1), 0.0, s
-  COM_OBL_ACT, 0 > 2, 0, 
+  NAV_RCL_ACT, 0 > 6, 2,
 
 パラメータを設定する方法は以下の2種類があります。
 
@@ -353,8 +350,7 @@ PX4シミュレータが起動したら、以下のコマンドを実行しま�
   param set FW_P_LIM_MIN -10.0
   param set FW_R_LIM 40.0
   param set NAV_DLL_ACT 0
-  param set COM_OF_LOSS_T 60
-  param set COM_OBL_ACT 1
+  param set NAV_RCL_ACT 0
 
 コマンドが成功したら次のように表示されます。
 以下はFW_R_LIMの例です。
@@ -391,16 +387,15 @@ PX4シミュレーションの起動は、起動スクリプト（ ``~/.ros/etc/
 また、以下の内容をCMakeLists.txtに追加します。
 以下では、 ``add_custom_target`` を使って、 ``iris_2d_lidar`` という、シンボリックリンクを作成するターゲットを作成しています。
 
+PX4 Firmwareがインストールされていないとエラーが出るので、PX4 Firmwareがインストールされていて、シミュレーションが起動することを確認してからビルドしてください。
+
 .. code-block:: cmake
   :linenos:
 
-  cmake_policy(SET CMP0054 NEW)
-
   set(PACK_AIRFRAME_DIR ${CMAKE_CURRENT_SOURCE_DIR}/posix_airframes)
   set(LOCAL_AIRFRAME_DIR $ENV{HOME}/.ros/etc/init.d-posix)
-
   add_custom_target(iris_2d_lidar
-                    ALL ln -s -b ${PACK_ROMFS_DIR}/70010_iris_2d_lidar $ {LOCAL_AIRFRAME_DIR}/)
+                    ALL ln -s -b ${PACK_AIRFRAME_DIR}/70010_iris_2d_lidar ${LOCAL_AIRFRAME_DIR}/)
 
 また、mymodel_sitl.launchの以下の部分を
 
@@ -548,7 +543,11 @@ Rvizを使ってゴールを送信する
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ``move_base/goal`` トピックに ``move_base_msgs/MoveBaseActionGoal`` 型のメッセージを送ってもゴールを設定することができるのですが、Rvizを使ったほうが簡単なので今回はRvizを使用してゴールを送信します。
 
-TODO: Rvizからゴールを送信する
+以下の画像のように、Rvizを使ってmove_baseのゴールを設定することができます。
+赤枠内の2D Nav Goalをクリックして選択したあとに、目標位置をクリックして決定します。
+クリックしたままマウスカーソルを移動させると目標位置の向きも指定することができます。
+
+.. image:: imgs/rviz_goal_pub.png
 
 Offboardモードにする
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
