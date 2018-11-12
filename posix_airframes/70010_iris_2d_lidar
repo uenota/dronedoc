@@ -1,4 +1,4 @@
-sh /etc/init.d/rc.mc_defaults
+sh /etc/init.d-posix/10016_iris
 
 param set MAV_TYPE 2
 
@@ -11,5 +11,3 @@ param set FW_P_LIM_MIN -10.0
 param set FW_R_LIM 35.0
 param set NAV_DLL_ACT 0
 param set NAV_RCL_ACT 0
-
-set MIXER quad_w
