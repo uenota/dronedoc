@@ -56,7 +56,7 @@ model.sdfファイル内では、以下のようにLiDARのリンクを定義し
 .. literalinclude:: ../../models/iris_2d_lidar/model.sdf
     :linenos:
     :language: xml
-    :lines: 9-62
+    :lines: 9-70
 
 それぞれの要素について見ていきましょう。
 
@@ -102,7 +102,6 @@ LiDARのモデルも別のファイルで記述してインクルードすると
 ジョイントはリンク同士の接続を定義しているので、そのままにします。
 
 例えばこんな感じです。
-この例ではLiDARはlidar_2dというモデルに分離しています。
 
 .. code-block:: xml
     :linenos:
@@ -134,6 +133,17 @@ LiDARのモデルも別のファイルで記述してインクルードすると
 
     </model>
     </sdf>
+
+この例ではLiDARはlidar_2dというモデルに分離しています。
+別のファイルにモデルを分割する場合は、 ``GAZEBO_MODEL_PATH`` にモデルがあるパスを追加することを忘れないでください。
+例えば、 ``px4_sim_pkg/models`` 以下にlidar_2dモデルを置いた場合には、以下のコマンドを実行して設定を行います。
+
+.. code-block:: bash
+
+    export GAZEBO_MODEL_PATH=$HOME/catkin_ws/src/px4_sim_pkg/models:$GAZEBO_MODEL_PATH
+
+ターミナルからコマンドを実行して設定を行った場合は毎回設定する必要がありますが、.bashrcにこの内容を記述しておけば、ターミナルを起動した時に自動で設定されます。
+
 
 configファイルを作る
 ======================================================================
@@ -214,3 +224,5 @@ mavros_posix_sitl.launchを使う場合には以下のようにします。
     モバイルロボットの作成について
 `Model structure and requirements <http://gazebosim.org/tutorials?tut=model_structure>`_
     モデルのファイル構成について
+`Gazebo Components <http://gazebosim.org/tutorials?tut=components#EnvironmentVariables>`_
+    GAZEBO_MODEL_PATHについて
