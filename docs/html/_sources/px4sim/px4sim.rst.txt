@@ -278,3 +278,5 @@ UDPを使って通信する場合は次のような形式に従ってfcu_urlを�
     ROSとGazeboを使ってシミュレーションを行う
 `Linuxシステムの仕組みと運用、管理 <https://manual.atmark-techno.com/armadillo-guide/armadillo-guide-2_ja-2.1.0/ch03.html#sec_terminal>`_
     シリアル端末について
+`Understanding ROS Services and Parameters <http://wiki.ros.org/ROS/Tutorials/UnderstandingServicesParams#Using_rosparam>`_
+    ROSサービスについて

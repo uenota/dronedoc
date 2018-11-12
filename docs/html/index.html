@@ -86,10 +86,15 @@
 <li class="toctree-l1"><a class="reference internal" href="addmodel/addmodel.html">5. 新しいモデルを追加する</a></li>
 <li class="toctree-l1"><a class="reference internal" href="slam/slam.html">6. 自律飛行とSLAM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="slam/gps_nav.html">7. GPSを用いた自律飛行</a></li>
-<li class="toctree-l1"><a class="reference internal" href="slam/improve_nav.html">8. ナビゲーションを改善する</a></li>
-<li class="toctree-l1"><a class="reference internal" href="slam/lidar_localization.html">9. LiDARとAMCLを用いた自己位置推定</a></li>
-<li class="toctree-l1"><a class="reference internal" href="slam/localization_and_mapping.html">10. LiDARを用いたSLAM</a></li>
-<li class="toctree-l1"><a class="reference internal" href="octomap/octomap.html">11. Octomapを使って3Dマップを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slam/lidar_localization.html">8. LiDARとAMCLを用いた自己位置推定</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slam/localization_and_mapping.html">9. LiDARを用いたSLAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="octomap/octomap.html">10. Octomapを使って3Dマップを作る</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Tips</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tips/control_alt/control_alt.html">1. 地上からの距離を一定にする</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tips/filter_lidar/filter_lidar.html">2. LiDARのデータをフィルタリングする</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tips/improve_nav/improve_nav.html">3. ナビゲーションを改善する</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Appendix</span></p>
 <ul>
@@ -167,119 +172,34 @@
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Contents</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="introduction/introduction.html">1. はじめに</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="introduction/introduction.html#id2">1.1. このテキストについて</a></li>
-<li class="toctree-l2"><a class="reference internal" href="introduction/introduction.html#id3">1.2. 対象読者</a></li>
-<li class="toctree-l2"><a class="reference internal" href="introduction/introduction.html#id4">1.3. 環境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="introduction/introduction.html">1. はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="px4sim/px4sim.html">2. PX4 SITLシミュレーション</a></li>
+<li class="toctree-l1"><a class="reference internal" href="runnode/runnodecpp.html">3. 自作ノードを実行する（C++）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="runnode/runnodepy.html">4. 自作ノードを実行する（Python）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="addmodel/addmodel.html">5. 新しいモデルを追加する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slam/slam.html">6. 自律飛行とSLAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slam/gps_nav.html">7. GPSを用いた自律飛行</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slam/lidar_localization.html">8. LiDARとAMCLを用いた自己位置推定</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slam/localization_and_mapping.html">9. LiDARを用いたSLAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="octomap/octomap.html">10. Octomapを使って3Dマップを作る</a></li>
 </ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="px4sim/px4sim.html">2. PX4 SITLシミュレーション</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="px4sim/px4sim.html#px4">2.1. PX4とは</a></li>
-<li class="toctree-l2"><a class="reference internal" href="px4sim/px4sim.html#id1">2.2. 環境構築</a></li>
-<li class="toctree-l2"><a class="reference internal" href="px4sim/px4sim.html#gazebo">2.3. Gazeboシミュレーション</a></li>
-<li class="toctree-l2"><a class="reference internal" href="px4sim/px4sim.html#rosgazebo">2.4. ROSを使ってGazeboシミュレーションを行う</a></li>
-<li class="toctree-l2"><a class="reference internal" href="px4sim/px4sim.html#mavrosfcu-url">2.5. 補足: mavrosのfcu_url引数について</a></li>
-<li class="toctree-l2"><a class="reference internal" href="px4sim/px4sim.html#id11">2.6. 参考</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="runnode/runnodecpp.html">3. 自作ノードを実行する（C++）</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="runnode/runnodecpp.html#ros">3.1. ROSパッケージを作る</a></li>
-<li class="toctree-l2"><a class="reference internal" href="runnode/runnodecpp.html#id1">3.2. ノードを書く</a></li>
-<li class="toctree-l2"><a class="reference internal" href="runnode/runnodecpp.html#id4">3.3. ノードの起動</a></li>
-<li class="toctree-l2"><a class="reference internal" href="runnode/runnodecpp.html#launch">3.4. launchファイルを書く</a></li>
-<li class="toctree-l2"><a class="reference internal" href="runnode/runnodecpp.html#id5">3.5. 参考</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="runnode/runnodepy.html">4. 自作ノードを実行する（Python）</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="runnode/runnodepy.html#ros">4.1. ROSパッケージを作る</a></li>
-<li class="toctree-l2"><a class="reference internal" href="runnode/runnodepy.html#id1">4.2. ノードを書く</a></li>
-<li class="toctree-l2"><a class="reference internal" href="runnode/runnodepy.html#id5">4.3. ノードの起動</a></li>
-<li class="toctree-l2"><a class="reference internal" href="runnode/runnodepy.html#launch">4.4. launchファイルを書く</a></li>
-<li class="toctree-l2"><a class="reference internal" href="runnode/runnodepy.html#id6">4.5. 参考</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="addmodel/addmodel.html">5. 新しいモデルを追加する</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="addmodel/addmodel.html#sdf">5.1. SDFファイルを作る</a></li>
-<li class="toctree-l2"><a class="reference internal" href="addmodel/addmodel.html#config">5.2. configファイルを作る</a></li>
-<li class="toctree-l2"><a class="reference internal" href="addmodel/addmodel.html#id6">5.3. パスを設定する</a></li>
-<li class="toctree-l2"><a class="reference internal" href="addmodel/addmodel.html#id7">5.4. モデルを確認する</a></li>
-<li class="toctree-l2"><a class="reference internal" href="addmodel/addmodel.html#sitl">5.5. SITLシミュレーションでモデルを使う</a></li>
-<li class="toctree-l2"><a class="reference internal" href="addmodel/addmodel.html#id8">5.6. 参考</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="slam/slam.html">6. 自律飛行とSLAM</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="slam/slam.html#id1">6.1. はじめに</a></li>
-<li class="toctree-l2"><a class="reference internal" href="slam/slam.html#id3">6.2. 参考</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="slam/gps_nav.html">7. GPSを用いた自律飛行</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="slam/gps_nav.html#tf">7.1. TF</a></li>
-<li class="toctree-l2"><a class="reference internal" href="slam/gps_nav.html#id1">7.2. センサ情報</a></li>
-<li class="toctree-l2"><a class="reference internal" href="slam/gps_nav.html#id2">7.3. オドメトリ情報</a></li>
-<li class="toctree-l2"><a class="reference internal" href="slam/gps_nav.html#id8">7.4. 速度指令</a></li>
-<li class="toctree-l2"><a class="reference internal" href="slam/gps_nav.html#id10">7.5. 設定ファイルを書く</a></li>
-<li class="toctree-l2"><a class="reference internal" href="slam/gps_nav.html#id18">7.6. ドローンのパラメータの変更</a></li>
-<li class="toctree-l2"><a class="reference internal" href="slam/gps_nav.html#launch">7.7. Launchファイルを書く</a></li>
-<li class="toctree-l2"><a class="reference internal" href="slam/gps_nav.html#id22">7.8. 実行してみる</a></li>
-<li class="toctree-l2"><a class="reference internal" href="slam/gps_nav.html#id29">7.9. 課題</a></li>
-<li class="toctree-l2"><a class="reference internal" href="slam/gps_nav.html#id30">7.10. 参考</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="slam/improve_nav.html">8. ナビゲーションを改善する</a></li>
-<li class="toctree-l1"><a class="reference internal" href="slam/lidar_localization.html">9. LiDARとAMCLを用いた自己位置推定</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="slam/lidar_localization.html#id1">9.1. 参考</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="slam/localization_and_mapping.html">10. LiDARを用いたSLAM</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="slam/localization_and_mapping.html#id1">10.1. 参考</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="octomap/octomap.html">11. Octomapを使って3Dマップを作る</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="octomap/octomap.html#rotors-simulator">11.1. Rotors Simulatorを準備する</a></li>
-</ul>
-</li>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Tips</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tips/control_alt/control_alt.html">1. 地上からの距離を一定にする</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tips/filter_lidar/filter_lidar.html">2. LiDARのデータをフィルタリングする</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tips/improve_nav/improve_nav.html">3. ナビゲーションを改善する</a></li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Appendix</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="appendix/bash_commands/bash_commands.html">1. 基本的なBashの使い方</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="appendix/bash_commands/bash_commands.html#id1">1.1. はじめに</a></li>
-<li class="toctree-l2"><a class="reference internal" href="appendix/bash_commands/bash_commands.html#id2">1.2. 基本的なコマンド</a></li>
-<li class="toctree-l2"><a class="reference internal" href="appendix/bash_commands/bash_commands.html#id4">1.3. リダイレクト</a></li>
-<li class="toctree-l2"><a class="reference internal" href="appendix/bash_commands/bash_commands.html#bashrc">1.4. .bashrc</a></li>
-<li class="toctree-l2"><a class="reference internal" href="appendix/bash_commands/bash_commands.html#id5">1.5. 参考</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="appendix/ros/ros.html">2. ROSの基本</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="appendix/ros/ros.html#id1">2.1. ROSコマンド</a></li>
-<li class="toctree-l2"><a class="reference internal" href="appendix/ros/ros.html#id2">2.2. パブリッシャとサブスクライバ</a></li>
-<li class="toctree-l2"><a class="reference internal" href="appendix/ros/ros.html#id3">2.3. サーバとクライアント</a></li>
-<li class="toctree-l2"><a class="reference internal" href="appendix/ros/ros.html#tf">2.4. TF</a></li>
-<li class="toctree-l2"><a class="reference internal" href="appendix/ros/ros.html#id4">2.5. パラメータ</a></li>
-<li class="toctree-l2"><a class="reference internal" href="appendix/ros/ros.html#id6">2.6. 各種ファイルの書き方</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="appendix/terms/terms.html">3. 用語集</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="appendix/terms/terms.html#id2">3.1. ドローン関連</a></li>
-<li class="toctree-l2"><a class="reference internal" href="appendix/terms/terms.html#id3">3.2. ファイルシステム関連</a></li>
-<li class="toctree-l2"><a class="reference internal" href="appendix/terms/terms.html#makecmake">3.3. makeとかcmakeとか関連</a></li>
-<li class="toctree-l2"><a class="reference internal" href="appendix/terms/terms.html#todo-name">3.4. TODO:name</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="appendix/archive/archive.html">4. 読書案内</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="appendix/archive/archive.html#linux">4.1. Linux</a></li>
-<li class="toctree-l2"><a class="reference internal" href="appendix/archive/archive.html#git">4.2. Git</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="appendix/trouble_shooting/trouble_shooting.html">5. トラブルシューティング</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="appendix/trouble_shooting/trouble_shooting.html#ros">5.1. ROS関連</a></li>
-<li class="toctree-l2"><a class="reference internal" href="appendix/trouble_shooting/trouble_shooting.html#cmake">5.2. CMake関連</a></li>
-<li class="toctree-l2"><a class="reference internal" href="appendix/trouble_shooting/trouble_shooting.html#python">5.3. Python関連</a></li>
-<li class="toctree-l2"><a class="reference internal" href="appendix/trouble_shooting/trouble_shooting.html#c">5.4. C++関連</a></li>
-<li class="toctree-l2"><a class="reference internal" href="appendix/trouble_shooting/trouble_shooting.html#id14">5.5. その他</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/bash_commands/bash_commands.html">1. 基本的なBashの使い方</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/ros/ros.html">2. ROSの基本</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/terms/terms.html">3. 用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/archive/archive.html">4. 読書案内</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/trouble_shooting/trouble_shooting.html">5. トラブルシューティング</a></li>
 </ul>
 </div>
 </div>

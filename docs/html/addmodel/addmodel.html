@@ -105,10 +105,15 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../slam/slam.html">6. 自律飛行とSLAM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../slam/gps_nav.html">7. GPSを用いた自律飛行</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../slam/improve_nav.html">8. ナビゲーションを改善する</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../slam/lidar_localization.html">9. LiDARとAMCLを用いた自己位置推定</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../slam/localization_and_mapping.html">10. LiDARを用いたSLAM</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../octomap/octomap.html">11. Octomapを使って3Dマップを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/lidar_localization.html">8. LiDARとAMCLを用いた自己位置推定</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/localization_and_mapping.html">9. LiDARを用いたSLAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../octomap/octomap.html">10. Octomapを使って3Dマップを作る</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Tips</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tips/control_alt/control_alt.html">1. 地上からの距離を一定にする</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tips/filter_lidar/filter_lidar.html">2. LiDARのデータをフィルタリングする</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tips/improve_nav/improve_nav.html">3. ナビゲーションを改善する</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Appendix</span></p>
 <ul>
@@ -278,7 +283,15 @@ SDFとURDFの関係については <a class="reference external" href="https://q
 51
 52
 53
-54</pre></div></td><td class="code"><div class="highlight"><pre>    <span class="nt">&lt;link</span> <span class="na">name=</span><span class="s">&quot;lidar_link&quot;</span><span class="nt">&gt;</span>
+54
+55
+56
+57
+58
+59
+60
+61
+62</pre></div></td><td class="code"><div class="highlight"><pre>    <span class="nt">&lt;link</span> <span class="na">name=</span><span class="s">&quot;lidar_link&quot;</span><span class="nt">&gt;</span>
       <span class="nt">&lt;pose&gt;</span>0 0 0.1 0 0 0<span class="nt">&lt;/pose&gt;</span>
 
       <span class="nt">&lt;inertial&gt;</span>
@@ -332,6 +345,14 @@ SDFとURDFの関係については <a class="reference external" href="https://q
           <span class="nt">&lt;/noise&gt;</span>
         <span class="nt">&lt;/ray&gt;</span>
         <span class="nt">&lt;plugin</span> <span class="na">name=</span><span class="s">&quot;LaserPlugin&quot;</span> <span class="na">filename=</span><span class="s">&quot;libgazebo_ros_laser.so&quot;</span><span class="nt">&gt;</span>
+	        <span class="nt">&lt;topicName&gt;</span>/laser/scan<span class="nt">&lt;/topicName&gt;</span>
+	        <span class="nt">&lt;frameName&gt;</span>/lidar_link<span class="nt">&lt;/frameName&gt;</span>
+	      <span class="nt">&lt;/plugin&gt;</span>
+        <span class="nt">&lt;always_on&gt;</span>1<span class="nt">&lt;/always_on&gt;</span>
+        <span class="nt">&lt;update_rate&gt;</span>40<span class="nt">&lt;/update_rate&gt;</span>
+        <span class="nt">&lt;visualize&gt;</span>true<span class="nt">&lt;/visualize&gt;</span>
+      <span class="nt">&lt;/sensor&gt;</span>
+    <span class="nt">&lt;/link&gt;</span>
 </pre></div>
 </td></tr></table></div>
 <p>それぞれの要素について見ていきましょう。</p>
@@ -532,8 +553,7 @@ irisのbase_linkのような、インクルードしたモデルのリンクを�
 <p>LiDARのモデルも別のファイルで記述してインクルードするという形にすると、モデルの記述がすっきりしていいかもしれません。
 その場合は、 <code class="docutils literal notranslate"><span class="pre">&lt;link</span> <span class="pre">name=&quot;lidar_link&gt;..&lt;/link&gt;</span></code> で囲まれている部分を別のモデルに分離して、インクルードするという形になります。
 ジョイントはリンク同士の接続を定義しているので、そのままにします。</p>
-<p>例えばこんな感じです。
-この例ではLiDARはlidar_2dというモデルに分離しています。</p>
+<p>例えばこんな感じです。</p>
 <div class="highlight-xml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -589,6 +609,13 @@ irisのbase_linkのような、インクルードしたモデルのリンクを�
 <span class="nt">&lt;/sdf&gt;</span>
 </pre></div>
 </td></tr></table></div>
+<p>この例ではLiDARはlidar_2dというモデルに分離しています。
+別のファイルにモデルを分割する場合は、 <code class="docutils literal notranslate"><span class="pre">GAZEBO_MODEL_PATH</span></code> にモデルがあるパスを追加することを忘れないでください。
+例えば、 <code class="docutils literal notranslate"><span class="pre">px4_sim_pkg/models</span></code> 以下にlidar_2dモデルを置いた場合には、以下のコマンドを実行して設定を行います。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span class="nb">export</span> <span class="nv">GAZEBO_MODEL_PATH</span><span class="o">=</span>$HOME/catkin_ws/src/px4_sim_pkg/models:$GAZEBO_MODEL_PATH
+</pre></div>
+</div>
+<p>ターミナルからコマンドを実行して設定を行った場合は毎回設定する必要がありますが、.bashrcにこの内容を記述しておけば、ターミナルを起動した時に自動で設定されます。</p>
 </div>
 </div>
 </div>
@@ -694,6 +721,8 @@ irisのbase_linkのような、インクルードしたモデルのリンクを�
 <dd>モバイルロボットの作成について</dd>
 <dt><a class="reference external" href="http://gazebosim.org/tutorials?tut=model_structure">Model structure and requirements</a></dt>
 <dd>モデルのファイル構成について</dd>
+<dt><a class="reference external" href="http://gazebosim.org/tutorials?tut=components#EnvironmentVariables">Gazebo Components</a></dt>
+<dd>GAZEBO_MODEL_PATHについて</dd>
 </dl>
 </div>
 </div>

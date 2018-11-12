@@ -7,7 +7,7 @@ PX4 SITL Tutorial
 ====================================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Contents
    :numbered:
 
@@ -18,13 +18,21 @@ PX4 SITL Tutorial
    addmodel/addmodel.rst
    slam/slam.rst
    slam/gps_nav.rst
-   slam/improve_nav.rst
    slam/lidar_localization.rst
    slam/localization_and_mapping.rst
    octomap/octomap.rst
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
+   :caption: Tips
+   :numbered:
+
+   tips/control_alt/control_alt.rst
+   tips/filter_lidar/filter_lidar.rst
+   tips/improve_nav/improve_nav.rst
+
+.. toctree::
+   :maxdepth: 1
    :caption: Appendix
    :numbered:
 
