@@ -559,7 +559,8 @@ Offboardモードにしてから一定の時間操作が無いとモードが切
 
 .. code-block:: bash
 
-  rosservice call /mavros/set_mode "base_mode: 0 custom_mode: 'OFFBOARD'"
+  rosservice call /mavros/set_mode "base_mode: 0
+  custom_mode: 'OFFBOARD'"
 
 実行結果
 -------------------------------------
