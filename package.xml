@@ -20,7 +20,7 @@
   <depend>nav_msgs</depend>
   <depend>tf</depend>
 
-  <run_depend>geometry_msgs</run_depend>
+  <exec_depend>laser_filters</exec_depend>
   <exec_depend>gazebo_ros</exec_depend>
 
   <export>
