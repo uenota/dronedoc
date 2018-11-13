@@ -28,7 +28,7 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <link rel="next" title="8. ナビゲーションを改善する" href="improve_nav.html" />
+    <link rel="next" title="8. LiDARとAMCLを用いた自己位置推定" href="lidar_localization.html" />
     <link rel="prev" title="6. 自律飛行とSLAM" href="slam.html" /> 
 
   
@@ -140,10 +140,15 @@
 <li class="toctree-l2"><a class="reference internal" href="#id30">7.10. 参考</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="improve_nav.html">8. ナビゲーションを改善する</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lidar_localization.html">9. LiDARとAMCLを用いた自己位置推定</a></li>
-<li class="toctree-l1"><a class="reference internal" href="localization_and_mapping.html">10. LiDARを用いたSLAM</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../octomap/octomap.html">11. Octomapを使って3Dマップを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lidar_localization.html">8. LiDARとAMCLを用いた自己位置推定</a></li>
+<li class="toctree-l1"><a class="reference internal" href="localization_and_mapping.html">9. LiDARを用いたSLAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../octomap/octomap.html">10. Octomapを使って3Dマップを作る</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Tips</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tips/control_alt/control_alt.html">1. 地上からの距離を一定にする</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tips/filter_lidar/filter_lidar.html">2. LiDARのデータをフィルタリングする</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tips/improve_nav/improve_nav.html">3. ナビゲーションを改善する</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Appendix</span></p>
 <ul>
@@ -867,9 +872,7 @@ param set NAV_RCL_ACT 0
 10
 11
 12
-13
-14
-15</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">sh</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">rc</span><span class="o">.</span><span class="n">mc_defaults</span>
+13</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">sh</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="o">.</span><span class="n">d</span><span class="o">-</span><span class="n">posix</span><span class="o">/</span><span class="mi">10016</span><span class="n">_iris</span>
 
 <span class="n">param</span> <span class="nb">set</span> <span class="n">MAV_TYPE</span> <span class="mi">2</span>
 
@@ -882,8 +885,6 @@ param set NAV_RCL_ACT 0
 <span class="n">param</span> <span class="nb">set</span> <span class="n">FW_R_LIM</span> <span class="mf">35.0</span>
 <span class="n">param</span> <span class="nb">set</span> <span class="n">NAV_DLL_ACT</span> <span class="mi">0</span>
 <span class="n">param</span> <span class="nb">set</span> <span class="n">NAV_RCL_ACT</span> <span class="mi">0</span>
-
-<span class="nb">set</span> <span class="n">MIXER</span> <span class="n">quad_w</span>
 </pre></div>
 </td></tr></table></div>
 </div>
@@ -1072,7 +1073,8 @@ roslaunch px4_sim_pkg navigation.launch
 <p>また、Offboardモードになっていないと <code class="docutils literal notranslate"><span class="pre">cmd_vel</span></code> トピックを使って操作できないので、Offboardモードにします。
 以下のコマンドを使えばドローンの飛行モードがOffboardになります。
 Offboardモードにしてから一定の時間操作が無いとモードが切り替わるので、ゴールを指示してからOffboardモードにしたほうがスムーズに動作します。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre>rosservice call /mavros/set_mode <span class="s2">&quot;base_mode: 0 custom_mode: &#39;OFFBOARD&#39;&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre>rosservice call /mavros/set_mode <span class="s2">&quot;base_mode: 0</span>
+<span class="s2">custom_mode: &#39;OFFBOARD&#39;&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -1119,16 +1121,6 @@ Offboardモードにしてから一定の時間操作が無いとモードが切
 <h2>7.9. 課題<a class="headerlink" href="#id29" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>お疲れ様でした。
 以上までで、ドローンに目標位置を指定して、障害物を考慮した経路計画を実行し、経路上を移動して目標位置まで移動させることができました。</p>
-<p>しかし、まだ以下のような問題があります。</p>
-<ul class="simple">
-<li>経路への追従が不十分である<ul>
-<li>蛇行したり、ゴールを過ぎてしまったりしている</li>
-</ul>
-</li>
-<li>ドローン自身がLiDARに干渉している</li>
-<li>高度の制御がなされていない</li>
-</ul>
-<p>これらの問題には <a class="reference internal" href="improve_nav.html"><span class="doc">ナビゲーションを改善する</span></a> で取り組みます。</p>
 </div>
 <div class="section" id="id30">
 <h2>7.10. 参考<a class="headerlink" href="#id30" title="このヘッドラインへのパーマリンク">¶</a></h2>
@@ -1155,7 +1147,7 @@ Offboardモードにしてから一定の時間操作が無いとモードが切
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="improve_nav.html" class="btn btn-neutral float-right" title="8. ナビゲーションを改善する" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="lidar_localization.html" class="btn btn-neutral float-right" title="8. LiDARとAMCLを用いた自己位置推定" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="slam.html" class="btn btn-neutral" title="6. 自律飛行とSLAM" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

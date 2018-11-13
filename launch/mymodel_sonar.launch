@@ -1,0 +1,10 @@
+<launch>
+
+    <node pkg="tf" name="base2sonar" type="static_transform_publisher" args="0 0 0 0 -1.57 0 base_link sonar_model::link 100"/>
+
+    <include file="$(find dronedoc)/launch/mymodel_sitl_tf.launch" >
+        <arg name="vehicle" value="iris_2d_lidar"/>
+        <arg name="sdf" value="$(find dronedoc)/models/iris_sonar/model.sdf" />
+    </include>
+
+</launch>

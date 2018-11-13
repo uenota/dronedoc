@@ -5,10 +5,14 @@
 
     <arg name="vehicle" default="iris_2d_lidar"/>
     <arg name="sdf" default="$(find dronedoc)/models/iris_2d_lidar/model.sdf" />
+    <arg name="verbose" default="false"/>
+    <arg name="debug" default="false"/>
 
     <include file="$(find px4)/launch/mavros_posix_sitl.launch" >
         <arg name="sdf" value="$(arg sdf)" />
         <arg name="vehicle" value="$(arg vehicle)" />
+        <arg name="verbose" value="$(arg verbose)" />
+        <arg name="debug" value="$(arg debug)" />
     </include>
 
     <param name="/mavros/local_position/tf/send" type="bool" value="true" />
