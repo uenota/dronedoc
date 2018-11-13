@@ -4,7 +4,7 @@ LiDARのデータをフィルタリングする
 
 はじめに
 ==========================================================
-ロボットがLiDARの光線に鑑賞すると、ロボットの一部がスキャンデータに含まれてしまい、マッピングや自己位置推定の精度に影響を与える可能性があります。
+ロボットがLiDARの光線に干渉すると、ロボットの一部がスキャンデータに含まれてしまい、マッピングや自己位置推定の精度に影響を与える可能性があります。
 このページでは、LiDARのデータをフィルタリングすることでロボットとの干渉を排除する方法を学びます。
 
 LiDARのデータをフィルタリングするには、`laser_filters <http://wiki.ros.org/laser_filters>`_ パッケージを使います。
@@ -20,7 +20,7 @@ laser_filtersパッケージでは様々なタイプのフィルターが用意�
 
 以下の内容を、 config/laser_filter.yamlに保存します。
 
-.. literalinclude:: ../../config/laser_filter.yaml
+.. literalinclude:: ../../../config/laser_filter.yaml
     :language: yaml
     :linenos:
     :caption: laser_filter.yaml
