@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>5.3. Gazeboシミュレーションで加速度の値がおかしい &mdash; Dronedoc 1.0.0 ドキュメント</title>
+  <title>5.4. Gazeboシミュレーションで加速度の値がおかしい &mdash; Dronedoc 1.0.0 ドキュメント</title>
   
 
   
@@ -28,8 +28,8 @@
   <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
     <link rel="index" title="索引" href="../../../../genindex.html" />
     <link rel="search" title="検索" href="../../../../search.html" />
-    <link rel="next" title="5.4. Pythonノードを実行したらimport: not authorized `rospy&#39; @ error/constitute.c/WriteImage/1028.のエラーが出る" href="../python/forget_shebang.html" />
-    <link rel="prev" title="5.2. URDF(xacro)を使った時にセンサーの姿勢が反映されない" href="sensor_pose_not_updated_urdf.html" /> 
+    <link rel="next" title="5.5. Pythonノードを実行したらimport: not authorized `rospy&#39; @ error/constitute.c/WriteImage/1028.のエラーが出る" href="../python/forget_shebang.html" />
+    <link rel="prev" title="5.3. URDF(xacro)を使った時にセンサーの姿勢が反映されない" href="sensor_pose_not_updated_urdf.html" /> 
 
   
   <script src="../../../../_static/js/modernizr.min.js"></script>
@@ -104,14 +104,15 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../terms/terms.html">3. 用語集</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../archive/archive.html">4. 読書案内</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../../index.html">5. トラブルシューティング</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="reversed_tf.html">5.1. TFの向きが反対になっている</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sensor_pose_not_updated_urdf.html">5.2. URDF(xacro)を使った時にセンサーの姿勢が反映されない</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">5.3. Gazeboシミュレーションで加速度の値がおかしい</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id1">5.3.1. 症状</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id2">5.3.2. もしかして？</a></li>
+<li class="toctree-l2"><a class="reference internal" href="iginition_math_inertial_not_found.html">5.1. make posix_sitl_default gazeboでignition/math/Inertial.hhが見つからない</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reversed_tf.html">5.2. TFの向きが反対になっている</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sensor_pose_not_updated_urdf.html">5.3. URDF(xacro)を使った時にセンサーの姿勢が反映されない</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">5.4. Gazeboシミュレーションで加速度の値がおかしい</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">5.4.1. 症状</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">5.4.2. もしかして？</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../python/forget_shebang.html">5.4. Pythonノードを実行したらimport: not authorized `rospy' &#64; error/constitute.c/WriteImage/1028.のエラーが出る</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../python/forget_shebang.html">5.5. Pythonノードを実行したらimport: not authorized `rospy' &#64; error/constitute.c/WriteImage/1028.のエラーが出る</a></li>
 </ul>
 </li>
 </ul>
@@ -161,7 +162,7 @@
         
           <li><a href="../../index.html">5. トラブルシューティング</a> &raquo;</li>
         
-      <li>5.3. Gazeboシミュレーションで加速度の値がおかしい</li>
+      <li>5.4. Gazeboシミュレーションで加速度の値がおかしい</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -181,16 +182,16 @@
            <div itemprop="articleBody">
             
   <div class="section" id="gazebo">
-<h1>5.3. Gazeboシミュレーションで加速度の値がおかしい<a class="headerlink" href="#gazebo" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<h1>5.4. Gazeboシミュレーションで加速度の値がおかしい<a class="headerlink" href="#gazebo" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <div class="section" id="id1">
-<h2>5.3.1. 症状<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>5.4.1. 症状<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <ul class="simple">
 <li>動いていないのに加速度の値が激しく変化する</li>
 <li>動いていないのにz方向の加速度が重力加速度の値から著しく外れている</li>
 </ul>
 </div>
 <div class="section" id="id2">
-<h2>5.3.2. もしかして？<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>5.4.2. もしかして？<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>collision要素にメッシュを指定していませんか？</p>
 <p>複雑なcollision要素の指定はこうした問題を引き起こすことがあります。</p>
 <p>特に必要でなければ直方体や円柱などシンプルな形状を指定しましょう。</p>
@@ -205,10 +206,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../python/forget_shebang.html" class="btn btn-neutral float-right" title="5.4. Pythonノードを実行したらimport: not authorized `rospy&#39; @ error/constitute.c/WriteImage/1028.のエラーが出る" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../python/forget_shebang.html" class="btn btn-neutral float-right" title="5.5. Pythonノードを実行したらimport: not authorized `rospy&#39; @ error/constitute.c/WriteImage/1028.のエラーが出る" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="sensor_pose_not_updated_urdf.html" class="btn btn-neutral" title="5.2. URDF(xacro)を使った時にセンサーの姿勢が反映されない" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="sensor_pose_not_updated_urdf.html" class="btn btn-neutral" title="5.3. URDF(xacro)を使った時にセンサーの姿勢が反映されない" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
