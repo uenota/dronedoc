@@ -136,7 +136,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#id28">7.8.5. 障害物回避</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id29">7.9. 課題</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id29">7.9. まとめ</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id30">7.10. 参考</a></li>
 </ul>
 </li>
@@ -148,7 +148,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../tips/control_alt/control_alt.html">1. 地上からの距離を一定にする</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tips/filter_lidar/filter_lidar.html">2. LiDARのデータをフィルタリングする</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tips/improve_nav/improve_nav.html">3. ナビゲーションを改善する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tips/change_local_planner/change_local_planner.html">3. move_baseのローカルプランナーを変更する</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Appendix</span></p>
 <ul>
@@ -156,7 +156,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../appendix/ros/ros.html">2. ROSの基本</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/terms/terms.html">3. 用語集</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/archive/archive.html">4. 読書案内</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/trouble_shooting/trouble_shooting.html">5. トラブルシューティング</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/trouble_shooting/index.html">5. トラブルシューティング</a></li>
 </ul>
 
             
@@ -234,7 +234,7 @@
 </ol>
 <p>が必要です。
 以降ではそれぞれの設定について見ていきます。</p>
-<div class="figure" id="id31">
+<div class="figure" id="id32">
 <img alt="../_images/overview_tf_gps.png" src="../_images/overview_tf_gps.png" />
 <p class="caption"><span class="caption-text">From <a class="reference external" href="http://wiki.ros.org/navigation/Tutorials/RobotSetup">ROS Wiki</a> (<a class="reference external" href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>)</span></p>
 </div>
@@ -306,9 +306,9 @@ LiDARの点群データは <code class="docutils literal notranslate"><span clas
 <p>nav_msgs/Odometryメッセージがパブリッシュされるトピックはmavrosには用意されていないので、自分で用意する必要があります。</p>
 <p><a class="reference external" href="http://wiki.ros.org/navigation/Tutorials/RobotSetup/Odom">ROS Wikiのチュートリアル</a> を参考にしてノードを作成しましょう。</p>
 <p><code class="docutils literal notranslate"><span class="pre">map</span></code> から <code class="docutils literal notranslate"><span class="pre">base_link</span></code> へのTFはすでにパブリッシュされているので、今回は <code class="docutils literal notranslate"><span class="pre">nav_msgs::Odometry</span></code> メッセージのパブリッシャを書くだけで構いません。</p>
-<p>Pythonのコード例は、 <a class="reference internal" href="odom_pub_py.html"><span class="doc">odom_publisher.py</span></a> を参考にしてください。</p>
-<div class="literal-block-wrapper container" id="id32">
-<div class="code-block-caption"><span class="caption-text">odom_publisher.cpp</span><a class="headerlink" href="#id32" title="このコードへのパーマリンク">¶</a></div>
+<p>Pythonのコード例は、<a class="reference internal" href="odom_pub_py.html"><span class="doc">odom_publisher.py</span></a> を参考にしてください。</p>
+<div class="literal-block-wrapper container" id="id33">
+<div class="code-block-caption"><span class="caption-text">odom_publisher.cpp</span><a class="headerlink" href="#id33" title="このコードへのパーマリンク">¶</a></div>
 <div class="highlight-cpp notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -579,8 +579,8 @@ move_baseは <code class="docutils literal notranslate"><span class="pre">Twist<
 他の設定やコストマップの詳細については <a class="reference external" href="http://wiki.ros.org/costmap_2d">costmap_2dのROS Wikiページ</a> を見てください。</p>
 <div class="section" id="id14">
 <h4>7.5.2.1. 共通設定<a class="headerlink" href="#id14" title="このヘッドラインへのパーマリンク">¶</a></h4>
-<div class="literal-block-wrapper container" id="id33">
-<div class="code-block-caption"><span class="caption-text">costmap_common_params.yaml</span><a class="headerlink" href="#id33" title="このコードへのパーマリンク">¶</a></div>
+<div class="literal-block-wrapper container" id="id34">
+<div class="code-block-caption"><span class="caption-text">costmap_common_params.yaml</span><a class="headerlink" href="#id34" title="このコードへのパーマリンク">¶</a></div>
 <div class="highlight-yaml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -640,8 +640,8 @@ move_baseは <code class="docutils literal notranslate"><span class="pre">Twist<
 </div>
 <div class="section" id="id15">
 <h4>7.5.2.2. 大域的コストマップの設定<a class="headerlink" href="#id15" title="このヘッドラインへのパーマリンク">¶</a></h4>
-<div class="literal-block-wrapper container" id="id34">
-<div class="code-block-caption"><span class="caption-text">global_costmap_params.yaml</span><a class="headerlink" href="#id34" title="このコードへのパーマリンク">¶</a></div>
+<div class="literal-block-wrapper container" id="id35">
+<div class="code-block-caption"><span class="caption-text">global_costmap_params.yaml</span><a class="headerlink" href="#id35" title="このコードへのパーマリンク">¶</a></div>
 <div class="highlight-yaml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -684,8 +684,8 @@ move_baseは <code class="docutils literal notranslate"><span class="pre">Twist<
 </div>
 <div class="section" id="id16">
 <h4>7.5.2.3. 局所的コストマップの設定<a class="headerlink" href="#id16" title="このヘッドラインへのパーマリンク">¶</a></h4>
-<div class="literal-block-wrapper container" id="id35">
-<div class="code-block-caption"><span class="caption-text">local_costmap_params.yaml</span><a class="headerlink" href="#id35" title="このコードへのパーマリンク">¶</a></div>
+<div class="literal-block-wrapper container" id="id36">
+<div class="code-block-caption"><span class="caption-text">local_costmap_params.yaml</span><a class="headerlink" href="#id36" title="このコードへのパーマリンク">¶</a></div>
 <div class="highlight-yaml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -698,8 +698,8 @@ move_baseは <code class="docutils literal notranslate"><span class="pre">Twist<
 10</pre></div></td><td class="code"><div class="highlight"><pre><span class="l l-Scalar l-Scalar-Plain">local_costmap</span><span class="p p-Indicator">:</span>
   <span class="l l-Scalar l-Scalar-Plain">global_frame</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">odom</span>
   <span class="l l-Scalar l-Scalar-Plain">robot_base_frame</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">base_link</span>
-  <span class="l l-Scalar l-Scalar-Plain">update_frequency</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">5.0</span>
-  <span class="l l-Scalar l-Scalar-Plain">publish_frequency</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">2.0</span>
+  <span class="l l-Scalar l-Scalar-Plain">update_frequency</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">10.0</span>
+  <span class="l l-Scalar l-Scalar-Plain">publish_frequency</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">5.0</span>
   <span class="l l-Scalar l-Scalar-Plain">static_map</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
   <span class="l l-Scalar l-Scalar-Plain">rolling_window</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
   <span class="l l-Scalar l-Scalar-Plain">width</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">6.0</span>
@@ -724,8 +724,8 @@ move_baseは <code class="docutils literal notranslate"><span class="pre">Twist<
 ロボットの制御可能な自由度が全体の自由度と等しい場合にはホロノミックであるといい、そうでない場合はノンホロノミック（もしくは非ホロノミック）であるといいます。
 例えば、自動車は全体の自由度が3（x, y, yaw）ですが、制御可能な自由度は2（x, yaw）であり、ノンホロノミックなシステムであるといえます。
 ドローンの場合は制御可能な自由度（x, y, z, roll, pitch, yaw）が全体の自由度と等しいのでホロノミックなシステムです。</p>
-<div class="literal-block-wrapper container" id="id36">
-<div class="code-block-caption"><span class="caption-text">base_local_planner_params.yaml</span><a class="headerlink" href="#id36" title="このコードへのパーマリンク">¶</a></div>
+<div class="literal-block-wrapper container" id="id37">
+<div class="code-block-caption"><span class="caption-text">base_local_planner_params.yaml</span><a class="headerlink" href="#id37" title="このコードへのパーマリンク">¶</a></div>
 <div class="highlight-yaml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -744,7 +744,10 @@ move_baseは <code class="docutils literal notranslate"><span class="pre">Twist<
 16
 17
 18
-19</pre></div></td><td class="code"><div class="highlight"><pre><span class="l l-Scalar l-Scalar-Plain">TrajectoryPlannerROS</span><span class="p p-Indicator">:</span>
+19
+20
+21
+22</pre></div></td><td class="code"><div class="highlight"><pre><span class="l l-Scalar l-Scalar-Plain">TrajectoryPlannerROS</span><span class="p p-Indicator">:</span>
   <span class="l l-Scalar l-Scalar-Plain">max_vel_x</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0.2</span>
   <span class="l l-Scalar l-Scalar-Plain">min_vel_x</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">-0.2</span>
   <span class="l l-Scalar l-Scalar-Plain">max_vel_theta</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1.0</span>
@@ -756,6 +759,9 @@ move_baseは <code class="docutils literal notranslate"><span class="pre">Twist<
   <span class="l l-Scalar l-Scalar-Plain">acc_lim_theta</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">3.2</span>
   <span class="l l-Scalar l-Scalar-Plain">acc_lim_x</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">2.5</span>
   <span class="l l-Scalar l-Scalar-Plain">acc_lim_y</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">2.5</span>
+
+  <span class="l l-Scalar l-Scalar-Plain">pdist_scale</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1.0</span>
+  <span class="l l-Scalar l-Scalar-Plain">gdist_scale</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0.5</span>
 
   <span class="l l-Scalar l-Scalar-Plain">holonomic_robot</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
 
@@ -772,7 +778,7 @@ move_baseは <code class="docutils literal notranslate"><span class="pre">Twist<
 <h2>7.6. ドローンのパラメータの変更<a class="headerlink" href="#id18" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>二次元の自己位置推定やマッピングの精度を高めるためには、できるだけセンサを水平に保つ必要があります。
 ドローンのパラメータを設定してピッチ角とロール角が一定以上にならないようにしましょう。</p>
-<p>また、デフォルトではGCS（Ground Control Station）及びRCとの接続が切れた場合に自動でホームポジションに戻るようになっているので、フェイルセーフを無効化しておきます。
+<p>また、デフォルトではGCS（Ground Control Station）及びRCとの接続が切れた場合と、OFFBOARDコントロールが切れた場合に自動でホームポジションに戻るようになっているので、フェイルセーフを無効化しておきます。
 実機でフェイルセーフを解除する場合には十分に注意して行いましょう。</p>
 <p>以下のパラメータの設定を変更します。
 利用可能なパラメータ一覧は <a class="reference external" href="https://docs.px4.io/en/advanced_config/parameter_reference.html">Parameter Reference</a> を参照してください。</p>
@@ -816,6 +822,11 @@ move_baseは <code class="docutils literal notranslate"><span class="pre">Twist<
 <td>2</td>
 <td>&#160;</td>
 </tr>
+<tr class="row-odd"><td>COM_OBL_ACT</td>
+<td>0 &gt; 2</td>
+<td>0</td>
+<td>&#160;</td>
+</tr>
 </tbody>
 </table>
 <p>パラメータを設定する方法は以下の2種類があります。</p>
@@ -835,6 +846,7 @@ param set FW_P_LIM_MIN -10.0
 param set FW_R_LIM 40.0
 param set NAV_DLL_ACT 0
 param set NAV_RCL_ACT 0
+param set COM_OBL_ACT 0
 </pre></div>
 </div>
 <p>コマンドが成功したら次のように表示されます。
@@ -858,8 +870,8 @@ param set NAV_RCL_ACT 0
 <p>以下のような内容の設定スクリプトを <code class="docutils literal notranslate"><span class="pre">px4_sim_pkg/posix_airframes</span></code> 以下に、 <code class="docutils literal notranslate"><span class="pre">70010_iris_2d_lidar</span></code> という名前で保存します。
 説明されていないパラメータについてはパラメータ一覧を見てください。
 設定スクリプトについては、 <a class="reference external" href="https://dev.px4.io/en/airframes/adding_a_new_frame.html">Adding a New Airframe Configuration - PX4 Developer Guide</a> に説明があります。</p>
-<div class="literal-block-wrapper container" id="id37">
-<div class="code-block-caption"><span class="caption-text">70010_iris_2d_lidar</span><a class="headerlink" href="#id37" title="このコードへのパーマリンク">¶</a></div>
+<div class="literal-block-wrapper container" id="id38">
+<div class="code-block-caption"><span class="caption-text">70010_iris_2d_lidar</span><a class="headerlink" href="#id38" title="このコードへのパーマリンク">¶</a></div>
 <div class="highlight-default notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -872,19 +884,35 @@ param set NAV_RCL_ACT 0
 10
 11
 12
-13</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">sh</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="o">.</span><span class="n">d</span><span class="o">-</span><span class="n">posix</span><span class="o">/</span><span class="mi">10016</span><span class="n">_iris</span>
+13
+14
+15
+16
+17
+18
+19
+20
+21</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1"># For detail of parameters,</span>
+<span class="c1"># see https://dev.px4.io/en/advanced/parameter_reference.html</span>
 
+<span class="n">sh</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="o">.</span><span class="n">d</span><span class="o">-</span><span class="n">posix</span><span class="o">/</span><span class="mi">10016</span><span class="n">_iris</span>
+
+<span class="c1"># Setting MAVLink airframe type</span>
 <span class="n">param</span> <span class="nb">set</span> <span class="n">MAV_TYPE</span> <span class="mi">2</span>
 
 <span class="n">param</span> <span class="nb">set</span> <span class="n">SYS_AUTOSTART</span> <span class="mi">70010</span>
 <span class="n">param</span> <span class="nb">set</span> <span class="n">SYS_RESTART_TYPE</span> <span class="mi">2</span>
 <span class="n">param</span> <span class="nb">set</span> <span class="n">BAT_N_CELLS</span> <span class="mi">3</span>
 
+<span class="c1"># Setting tilt angle limit</span>
 <span class="n">param</span> <span class="nb">set</span> <span class="n">FW_P_LIM_MAX</span> <span class="mf">10.0</span>
 <span class="n">param</span> <span class="nb">set</span> <span class="n">FW_P_LIM_MIN</span> <span class="o">-</span><span class="mf">10.0</span>
 <span class="n">param</span> <span class="nb">set</span> <span class="n">FW_R_LIM</span> <span class="mf">35.0</span>
+
+<span class="c1"># Setting failsafe action</span>
 <span class="n">param</span> <span class="nb">set</span> <span class="n">NAV_DLL_ACT</span> <span class="mi">0</span>
 <span class="n">param</span> <span class="nb">set</span> <span class="n">NAV_RCL_ACT</span> <span class="mi">0</span>
+<span class="n">param</span> <span class="nb">set</span> <span class="n">COM_OBL_ACT</span> <span class="mi">1</span>
 </pre></div>
 </td></tr></table></div>
 </div>
@@ -927,8 +955,8 @@ param set NAV_RCL_ACT 0
 <span id="id21"></span><h3>7.7.1. navigation.launch<a class="headerlink" href="#navigation-launch" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>このLaunchファイルでは、コストマップ等の設定ファイルをすべて <code class="docutils literal notranslate"><span class="pre">px4_sim_pkg/config</span></code> 以下に保存していることを想定しています。</p>
 <p>以下の内容を、 <code class="docutils literal notranslate"><span class="pre">px4_sim_pkg/launch</span></code> 以下に、navigation.launchとして保存してください。</p>
-<div class="literal-block-wrapper container" id="id38">
-<div class="code-block-caption"><span class="caption-text">navigation.launch</span><a class="headerlink" href="#id38" title="このコードへのパーマリンク">¶</a></div>
+<div class="literal-block-wrapper container" id="id39">
+<div class="code-block-caption"><span class="caption-text">navigation.launch</span><a class="headerlink" href="#id39" title="このコードへのパーマリンク">¶</a></div>
 <div class="highlight-xml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -1118,9 +1146,16 @@ Offboardモードにしてから一定の時間操作が無いとモードが切
 </div>
 </div>
 <div class="section" id="id29">
-<h2>7.9. 課題<a class="headerlink" href="#id29" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>7.9. まとめ<a class="headerlink" href="#id29" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>お疲れ様でした。
 以上までで、ドローンに目標位置を指定して、障害物を考慮した経路計画を実行し、経路上を移動して目標位置まで移動させることができました。</p>
+<p>以下のページを参考にしてパラメータをチューニングしたり、別のローカルプランナーを使用してナビゲーションの性能を向上させてもよいでしょう。</p>
+<ul class="simple">
+<li><a class="reference external" href="http://wiki.ros.org/costmap_2d">costmap_2d - ROS Wiki</a></li>
+<li><a class="reference external" href="http://wiki.ros.org/base_local_planner">base_local_planner - ROS Wiki</a></li>
+<li><a class="reference external" href="wiki.ros.org/global_planner">global_planner - ROS Wiki</a></li>
+</ul>
+<p>別のローカルプランナー使う方法については、 <a class="reference internal" href="../tips/change_local_planner/change_local_planner.html"><span class="doc">move_baseのローカルプランナーを変更する</span></a> を参考にしてください。</p>
 </div>
 <div class="section" id="id30">
 <h2>7.10. 参考<a class="headerlink" href="#id30" title="このヘッドラインへのパーマリンク">¶</a></h2>

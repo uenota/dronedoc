@@ -99,10 +99,15 @@
 <li class="toctree-l1"><a class="reference internal" href="../addmodel/addmodel.html">5. 新しいモデルを追加する</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../slam/slam.html">6. 自律飛行とSLAM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../slam/gps_nav.html">7. GPSを用いた自律飛行</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../slam/improve_nav.html">8. ナビゲーションを改善する</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../slam/lidar_localization.html">9. LiDARとAMCLを用いた自己位置推定</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../slam/localization_and_mapping.html">10. LiDARを用いたSLAM</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../octomap/octomap.html">11. Octomapを使って3Dマップを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/lidar_localization.html">8. LiDARとAMCLを用いた自己位置推定</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/localization_and_mapping.html">9. LiDARを用いたSLAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../octomap/octomap.html">10. Octomapを使って3Dマップを作る</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Tips</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tips/control_alt/control_alt.html">1. 地上からの距離を一定にする</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tips/filter_lidar/filter_lidar.html">2. LiDARのデータをフィルタリングする</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tips/change_local_planner/change_local_planner.html">3. move_baseのローカルプランナーを変更する</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Appendix</span></p>
 <ul>
@@ -110,7 +115,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../appendix/ros/ros.html">2. ROSの基本</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/terms/terms.html">3. 用語集</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/archive/archive.html">4. 読書案内</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/trouble_shooting/trouble_shooting.html">5. トラブルシューティング</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/trouble_shooting/index.html">5. トラブルシューティング</a></li>
 </ul>
 
             
@@ -195,7 +200,7 @@ catkin_create_pkg px4_sim_pkg roscpp geometry_msgs mavros_msgs
 以下のコードは、 <a class="reference external" href="https://dev.px4.io/en/ros/mavros_offboard.html">MAVROS Offboard control example - PX4 Developer Guide</a> にあるのと同じものです。</p>
 <p>このコードを <code class="docutils literal notranslate"><span class="pre">offboard_sample.cpp</span></code> という名前で、 <code class="docutils literal notranslate"><span class="pre">px4_sim_pkg/src</span></code> に保存してください。</p>
 <div class="literal-block-wrapper container" id="id6">
-<div class="code-block-caption"><span class="caption-text">offboard_sample.cpp</span><a class="headerlink" href="#id6" title="このコードへのパーマリンク">¶</a></div>
+<div class="code-block-caption"><span class="caption-text">From <a class="reference external" href="https://dev.px4.io/en/ros/mavros_offboard.html">PX4 Developer Guide</a> (<a class="reference external" href="https://creativecommons.org/licenses/by/4.0/deed">CC BY 4.0</a>)</span><a class="headerlink" href="#id6" title="このコードへのパーマリンク">¶</a></div>
 <div class="highlight-cpp notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -282,13 +287,7 @@ catkin_create_pkg px4_sim_pkg roscpp geometry_msgs mavros_msgs
 84
 85
 86
-87
-88
-89
-90</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1">// From https://dev.px4.io/en/ros/mavros_offboard.html (CC BY 4.0)</span>
-<span class="c1">// License: https://creativecommons.org/licenses/by/4.0/deed</span>
-
-<span class="cm">/**</span>
+87</pre></div></td><td class="code"><div class="highlight"><pre><span class="cm">/**</span>
 <span class="cm"> * @file offb_node.cpp</span>
 <span class="cm"> * @brief Offboard control example node, written with MAVROS version 0.19.x, PX4 Pro Flight</span>
 <span class="cm"> * Stack and tested in Gazebo SITL</span>
