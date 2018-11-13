@@ -179,7 +179,7 @@
 <h1>2. LiDARのデータをフィルタリングする<a class="headerlink" href="#lidar" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <div class="section" id="id1">
 <h2>2.1. はじめに<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>ロボットがLiDARの光線に鑑賞すると、ロボットの一部がスキャンデータに含まれてしまい、マッピングや自己位置推定の精度に影響を与える可能性があります。
+<p>ロボットがLiDARの光線に干渉すると、ロボットの一部がスキャンデータに含まれてしまい、マッピングや自己位置推定の精度に影響を与える可能性があります。
 このページでは、LiDARのデータをフィルタリングすることでロボットとの干渉を排除する方法を学びます。</p>
 <p>LiDARのデータをフィルタリングするには、<a class="reference external" href="http://wiki.ros.org/laser_filters">laser_filters</a> パッケージを使います。
 laser_filtersパッケージでは様々なタイプのフィルターが用意されており、これらを用いることで特定の距離の範囲のスキャンデータだけを抽出したり、特定の角度のスキャンデータだけを抽出したりできます。
@@ -191,6 +191,28 @@ laser_filtersパッケージでは様々なタイプのフィルターが用意�
 <p><cite>LaserScanRangeFilter</cite> は距離を元にフィルタリングを行うフィルタです。
 ここでは、yamlファイル内に設定を記述して、Launchファイル内でそれをロードすることでROSのパラメータを設定します。</p>
 <p>以下の内容を、 config/laser_filter.yamlに保存します。</p>
+<div class="literal-block-wrapper container" id="id5">
+<div class="code-block-caption"><span class="caption-text">laser_filter.yaml</span><a class="headerlink" href="#id5" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-yaml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre><span class="l l-Scalar l-Scalar-Plain">scan_filter_chain</span><span class="p p-Indicator">:</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">range</span>
+  <span class="l l-Scalar l-Scalar-Plain">type</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">LaserScanRangeFilter</span>
+  <span class="l l-Scalar l-Scalar-Plain">params</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">use_message_range_limits</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+    <span class="l l-Scalar l-Scalar-Plain">lower_threshold</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0.5</span>
+    <span class="l l-Scalar l-Scalar-Plain">upper_threshold</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">.inf</span>
+    <span class="l l-Scalar l-Scalar-Plain">lower_replacement_value</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">-.inf</span>
+    <span class="l l-Scalar l-Scalar-Plain">upper_replacement_value</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">.inf</span>
+</pre></div>
+</td></tr></table></div>
+</div>
 <p>それぞれのパラメータの意味は以下のとおりです。</p>
 <dl class="docutils">
 <dt><cite>name</cite></dt>
@@ -229,8 +251,8 @@ laser_filtersパッケージでは様々なタイプのフィルターが用意�
 また、laser_filtersパッケージは <cite>scan</cite> トピックにパブリッシュされるスキャンデータをフィルタリングしますが、今回はLiDARから <cite>laser/scan</cite> トピックにデータがパブリッシュされるので、リマップをしておきます。
 laser_filtersによってフィルタリングされたメッセージは <cite>scan_filtered</cite> トピックにパブリッシュされます。</p>
 <p>最終的に、mymodel_laser_filter.launchは以下のとおりになります。</p>
-<div class="literal-block-wrapper container" id="id5">
-<div class="code-block-caption"><span class="caption-text">mymodel_laser_filter.launch</span><a class="headerlink" href="#id5" title="このコードへのパーマリンク">¶</a></div>
+<div class="literal-block-wrapper container" id="id6">
+<div class="code-block-caption"><span class="caption-text">mymodel_laser_filter.launch</span><a class="headerlink" href="#id6" title="このコードへのパーマリンク">¶</a></div>
 <div class="highlight-xml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
