@@ -101,7 +101,7 @@ nav_msgs/Odometryメッセージがパブリッシュされるトピックはmav
 
 ``map`` から ``base_link`` へのTFはすでにパブリッシュされているので、今回は ``nav_msgs::Odometry`` メッセージのパブリッシャを書くだけで構いません。
 
-Pythonのコード例は、 :doc:`odom_pub_py` を参考にしてください。
+Pythonのコード例は、:doc:`odom_pub_py` を参考にしてください。
 
 .. literalinclude:: ../../src/odom_publisher.cpp
   :language: cpp
@@ -317,7 +317,7 @@ Launchファイルについては、後述の :ref:`navigation_launch` の項を
 二次元の自己位置推定やマッピングの精度を高めるためには、できるだけセンサを水平に保つ必要があります。
 ドローンのパラメータを設定してピッチ角とロール角が一定以上にならないようにしましょう。
 
-また、デフォルトではGCS（Ground Control Station）及びRCとの接続が切れた場合に自動でホームポジションに戻るようになっているので、フェイルセーフを無効化しておきます。
+また、デフォルトではGCS（Ground Control Station）及びRCとの接続が切れた場合と、OFFBOARDコントロールが切れた場合に自動でホームポジションに戻るようになっているので、フェイルセーフを無効化しておきます。
 実機でフェイルセーフを解除する場合には十分に注意して行いましょう。
 
 以下のパラメータの設定を変更します。
@@ -331,6 +331,7 @@ Launchファイルについては、後述の :ref:`navigation_launch` の項を
   FW_R_LIM, 35.0 > 65.0 (0.5), 50.0, deg
   NAV_DLL_ACT, 0 > 6, 0,
   NAV_RCL_ACT, 0 > 6, 2,
+  COM_OBL_ACT, 0 > 2, 0,
 
 パラメータを設定する方法は以下の2種類があります。
 
@@ -353,6 +354,7 @@ PX4シミュレータが起動したら、以下のコマンドを実行しま�
   param set FW_R_LIM 40.0
   param set NAV_DLL_ACT 0
   param set NAV_RCL_ACT 0
+  param set COM_OBL_ACT 0
 
 コマンドが成功したら次のように表示されます。
 以下はFW_R_LIMの例です。
@@ -606,10 +608,18 @@ Offboardモードにしてから一定の時間操作が無いとモードが切
 経路の障害物からの距離や、コストマップのサイズ、解像度などはコンフィグファイル内のパラメータを変更することで調節できます。
 また、他のパラメータについては、costmap_2dパッケージや、base_local_plannerパッケージのWikiページを参照してください。
 
-課題
+まとめ
 =====================================
 お疲れ様でした。
 以上までで、ドローンに目標位置を指定して、障害物を考慮した経路計画を実行し、経路上を移動して目標位置まで移動させることができました。
+
+以下のページを参考にしてパラメータをチューニングしたり、別のローカルプランナーを使用してナビゲーションの性能を向上させてもよいでしょう。
+
+- `costmap_2d - ROS Wiki <http://wiki.ros.org/costmap_2d>`_
+- `base_local_planner - ROS Wiki <http://wiki.ros.org/base_local_planner>`_
+- `global_planner - ROS Wiki <wiki.ros.org/global_planner>`_
+
+別のローカルプランナー使う方法については、 :doc:`../tips/change_local_planner/change_local_planner` を参考にしてください。
 
 参考
 =====================================

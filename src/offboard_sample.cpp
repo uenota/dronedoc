@@ -1,6 +1,3 @@
-// From https://dev.px4.io/en/ros/mavros_offboard.html (CC BY 4.0)
-// License: https://creativecommons.org/licenses/by/4.0/deed
-
 /**
  * @file offb_node.cpp
  * @brief Offboard control example node, written with MAVROS version 0.19.x, PX4 Pro Flight

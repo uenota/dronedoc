@@ -29,7 +29,7 @@ PX4 SITL Tutorial
 
    tips/control_alt/control_alt.rst
    tips/filter_lidar/filter_lidar.rst
-   tips/improve_nav/improve_nav.rst
+   tips/change_local_planner/change_local_planner.rst
 
 .. toctree::
    :maxdepth: 1
@@ -40,7 +40,7 @@ PX4 SITL Tutorial
    appendix/ros/ros.rst
    appendix/terms/terms.rst
    appendix/archive/archive.rst
-   appendix/trouble_shooting/trouble_shooting.rst
+   appendix/trouble_shooting/index.rst
 
 Issues & Pull Requests
 ====================================================
