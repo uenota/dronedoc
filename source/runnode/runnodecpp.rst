@@ -26,7 +26,7 @@ ROSパッケージを作る
 .. literalinclude:: ../../src/offboard_sample.cpp
     :language: cpp
     :linenos:
-    :caption: offboard_sample.cpp
+    :caption: From `PX4 Developer Guide <https://dev.px4.io/en/ros/mavros_offboard.html>`_ (`CC BY 4.0 <https://creativecommons.org/licenses/by/4.0/deed>`_)
 
 コードの解説
 ----------------------------------------------------------------
