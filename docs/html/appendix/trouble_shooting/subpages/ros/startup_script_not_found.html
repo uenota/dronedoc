@@ -1,0 +1,332 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="ja" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ja" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>5.4. etc/init.d-posix/rcSが見つからない &mdash; Dronedoc 1.0.0 ドキュメント</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="索引" href="../../../../genindex.html" />
+    <link rel="search" title="検索" href="../../../../search.html" />
+    <link rel="next" title="5.5. モデルを更新したのにGazeboで表示しても変更が反映されていない" href="../gazebo/model_update_not_shown.html" />
+    <link rel="prev" title="5.3. TFの向きが反対になっている" href="reversed_tf.html" /> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> Dronedoc
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../simulation/index.html">1. Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../bebop2/index.html">2. Parrot Bebop 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../F450/index.html">3. DJI F450</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../F550/index.html">4. DJI F550</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../phantom4pro/index.html">5. DJI Phantom 4 Professional</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Appendix</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../bash_commands/bash_commands.html">1. 基本的なBashの使い方</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ros/ros.html">2. ROSの基本</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../terms/terms.html">3. 用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../archive/archive.html">4. 読書案内</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">5. トラブルシューティング</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="forget_shebang.html">5.1. Pythonノードを実行したらimport: not authorized `rospy' &#64; error/constitute.c/WriteImage/1028.のエラーが出る</a></li>
+<li class="toctree-l2"><a class="reference internal" href="iginition_math_inertial_not_found.html">5.2. make posix_sitl_default gazeboでignition/math/Inertial.hhが見つからない</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reversed_tf.html">5.3. TFの向きが反対になっている</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">5.4. etc/init.d-posix/rcSが見つからない</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">5.4.1. 症状</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">5.4.2. もしかして</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../gazebo/model_update_not_shown.html">5.5. モデルを更新したのにGazeboで表示しても変更が反映されていない</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gazebo/sensor_pose_not_updated_urdf.html">5.6. URDF(xacro)を使った時にセンサーの姿勢が反映されない</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gazebo/weird_accel_gazebo.html">5.7. Gazeboシミュレーションで加速度の値がおかしい</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Dronedoc</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">5. トラブルシューティング</a> &raquo;</li>
+        
+      <li>5.4. etc/init.d-posix/rcSが見つからない</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../../_sources/appendix/trouble_shooting/subpages/ros/startup_script_not_found.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="etc-init-d-posix-rcs">
+<h1>5.4. etc/init.d-posix/rcSが見つからない<a class="headerlink" href="#etc-init-d-posix-rcs" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="id1">
+<h2>5.4.1. 症状<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>以下のようにLaunchファイルを起動すると、</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre>roslaunch px4 posix_sitl.launch
+</pre></div>
+</div>
+<p>以下のようなエラーが出る。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre>... logging to /home/uavteam/.ros/log/d9295a54-e8ad-11e8-ae34-40a3cc692f9e/roslaunch-rd-precision5520-8601.log
+Checking log directory for disk usage. This may take awhile.
+Press Ctrl-C to interrupt
+Done checking log file disk usage. Usage is &lt;1GB.
+
+started roslaunch server http://rd-precision5520:34685/
+
+SUMMARY
+========
+
+PARAMETERS
+* /rosdistro: kinetic
+* /rosversion: 1.12.14
+* /use_sim_time: True
+
+NODES
+/
+    gazebo (gazebo_ros/gzserver)
+    gazebo_gui (gazebo_ros/gzclient)
+    sitl (px4/px4)
+    vehicle_spawn_rd_precision5520_8601_1964229074022197941 (gazebo_ros/spawn_model)
+
+auto-starting new master
+process[master]: started with pid [8611]
+ROS_MASTER_URI=http://localhost:11311
+
+setting /run_id to d9295a54-e8ad-11e8-ae34-40a3cc692f9e
+process[rosout-1]: started with pid [8624]
+started core service [/rosout]
+process[sitl-2]: started with pid [8648]
+INFO  [Unknown] Creating symlink /home/uavteam/src/Firmware/ROMFS/px4fmu_common -&gt; /home/uavteam/.ros/etc
+ERROR [Unknown] Error opening startup file, does not exist: etc/init.d-posix/rcS
+process[gazebo-3]: started with pid [8649]
+process[gazebo_gui-4]: started with pid [8654]
+process[vehicle_spawn_rd_precision5520_8601_1964229074022197941-5]: started with pid [8659]
+================================================================================REQUIRED process [sitl-2] has died!
+process has died [pid 8648, exit code 255, cmd /home/uavteam/src/Firmware/build/posix_sitl_default/bin/px4 /home/uavteam/src/Firmware/ROMFS/px4fmu_common -s etc/init.d-posix/rcS __name:=sitl __log:=/home/uavteam/.ros/log/d9295a54-e8ad-11e8-ae34-40a3cc692f9e/sitl-2.log].
+log file: /home/uavteam/.ros/log/d9295a54-e8ad-11e8-ae34-40a3cc692f9e/sitl-2*.log
+Initiating shutdown!
+================================================================================
+[vehicle_spawn_rd_precision5520_8601_1964229074022197941-5] killing on exit
+[gazebo_gui-4] killing on exit
+Traceback (most recent call last):
+File &quot;/home/uavteam/catkin_ws/src/gazebo_ros_pkgs/gazebo_ros/scripts/spawn_model&quot;, line 32, in &lt;module&gt;
+    import tf.transformations as tft
+File &quot;/opt/ros/kinetic/lib/python2.7/dist-packages/tf/__init__.py&quot;, line 28, in &lt;module&gt;
+[gazebo-3] killing on exit
+[sitl-2] killing on exit
+    from tf2_ros import TransformException as Exception, ConnectivityException, LookupException, ExtrapolationException
+File &quot;/opt/ros/kinetic/lib/python2.7/dist-packages/tf2_ros/__init__.py&quot;, line 39, in &lt;module&gt;
+    from .buffer_interface import *
+File &quot;/opt/ros/kinetic/lib/python2.7/dist-packages/tf2_ros/buffer_interface.py&quot;, line 32, in &lt;module&gt;
+    import roslib; roslib.load_manifest(&#39;tf2_ros&#39;)
+File &quot;/opt/ros/kinetic/lib/python2.7/dist-packages/roslib/launcher.py&quot;, line 62, in load_manifest
+    sys.path = _generate_python_path(package_name, _rospack) + sys.path
+File &quot;/opt/ros/kinetic/lib/python2.7/dist-packages/roslib/launcher.py&quot;, line 93, in _generate_python_path
+    m = rospack.get_manifest(pkg)
+File &quot;/usr/lib/python2.7/dist-packages/rospkg/rospack.py&quot;, line 167, in get_manifest
+    return self._load_manifest(name)
+File &quot;/usr/lib/python2.7/dist-packages/rospkg/rospack.py&quot;, line 211, in _load_manifest
+    retval = self._manifests[name] = parse_manifest_file(self.get_path(name), self._manifest_name, rospack=self)
+File &quot;/usr/lib/python2.7/dist-packages/rospkg/rospack.py&quot;, line 201, in get_path
+    self._update_location_cache()
+File &quot;/usr/lib/python2.7/dist-packages/rospkg/rospack.py&quot;, line 184, in _update_location_cache
+    list_by_path(self._manifest_name, path, cache)
+File &quot;/usr/lib/python2.7/dist-packages/rospkg/rospack.py&quot;, line 68, in list_by_path
+    is_metapackage = root.find(&#39;./export/metapackage&#39;) is not None
+KeyboardInterrupt
+[rosout-1] killing on exit
+[master] killing on exit
+shutting down processing monitor...
+... shutting down processing monitor complete
+done
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>5.4.2. もしかして<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">~/.ros/etc/init.d-posix</span></code> 以下にrcSというファイルがありますか？</p>
+<p>PX4 SITLシミュレーションでは最初にスタートアップスクリプト（ <code class="docutils literal notranslate"><span class="pre">~/.ros/etc/init.d-posix</span></code> ）がロードされます。
+普通はセットアップの際に自動で <code class="docutils literal notranslate"><span class="pre">~/src/Firmware/ROMFS/px4fmu_common</span></code> から <code class="docutils literal notranslate"><span class="pre">~/.ros/etc</span></code> へのシンボリックリンクが作成されますが、何らかの理由で作成されなかったのだと考えられます。</p>
+<p>以下のコマンドを使って``~/src/Firmware/ROMFS/px4fmu_common`` から <code class="docutils literal notranslate"><span class="pre">~/.ros/etc</span></code> へのシンボリックリンクを作成しましょう。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre>ln -s ~/src/Firmware/ROMFS/px4fmu_common ~/.ros/etc
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../gazebo/model_update_not_shown.html" class="btn btn-neutral float-right" title="5.5. モデルを更新したのにGazeboで表示しても変更が反映されていない" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="reversed_tf.html" class="btn btn-neutral" title="5.3. TFの向きが反対になっている" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Takaki Ueno
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../../_static/translations.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

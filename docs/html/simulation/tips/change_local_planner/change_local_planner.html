@@ -1,0 +1,305 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="ja" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ja" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>move_baseのローカルプランナーを変更する &mdash; Dronedoc 1.0.0 ドキュメント</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="検索" href="../../../search.html" /> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Dronedoc
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">1. Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../bebop2/index.html">2. Parrot Bebop 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../F450/index.html">3. DJI F450</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../F550/index.html">4. DJI F550</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../phantom4pro/index.html">5. DJI Phantom 4 Professional</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../appendix/bash_commands/bash_commands.html">1. 基本的なBashの使い方</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../appendix/ros/ros.html">2. ROSの基本</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../appendix/terms/terms.html">3. 用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../appendix/archive/archive.html">4. 読書案内</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../appendix/trouble_shooting/index.html">5. トラブルシューティング</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Dronedoc</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+      <li>move_baseのローカルプランナーを変更する</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../_sources/simulation/tips/change_local_planner/change_local_planner.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="move-base">
+<h1>move_baseのローカルプランナーを変更する<a class="headerlink" href="#move-base" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>このページではmove_baseのローカルプランナーを変更する方法について扱います。</p>
+<p>move_baseのローカルプランナーは、デフォルトでは <a class="reference external" href="http://wiki.ros.org/base_local_planner">Trajectory Rollout</a> が使用されています。
+それ以外には、 <a class="reference external" href="http://wiki.ros.org/dwa_local_planner">Dynamic Window Approach</a> や、 <a class="reference external" href="http://wiki.ros.org/eband_local_planner">Elastic Band</a> 、 <a class="reference external" href="http://wiki.ros.org/teb_local_planner">Timed Elastic Band</a> などを使用することができます。</p>
+<div class="section" id="id1">
+<h2>Dynamic Window Approach<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Dynamic Window Approach (DWA)は、base_local_plannerパッケージの <cite>dwa</cite> パラメータを <cite>true</cite> にすることで使用できます。</p>
+</div>
+<div class="section" id="id2">
+<h2>Elastic Band<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="eband-local-planner">
+<h3>eband_local_plannerをインストールする<a class="headerlink" href="#eband-local-planner" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre>sudo apt install ros-kinetic-eband-local-planner
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h3>設定ファイルを作る<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>以下の設定ファイルの内容を、config以下にeband_local_planner_params.yamlとして保存します。</p>
+<p>eband_local_plannerのパラメータ一覧は <a class="reference external" href="wiki.ros.org/eband_local_planner">eband_local_plannerのROS Wikiページ</a> にあります。</p>
+</div>
+<div class="section" id="id4">
+<h3>move_baseのパラメータを変更する<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>move_baseがEBandLocalPlannerROSを使うように設定します。
+navigation.launchをコピーして新たにeband_navigation.launchを作成します。</p>
+<p><cite>&lt;node&gt;</cite> タグ内を以下のように変更します。</p>
+<div class="literal-block-wrapper container" id="id13">
+<div class="code-block-caption"><span class="caption-text">eband_navigation.launch</span><a class="headerlink" href="#id13" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span class="nt">&lt;node</span> <span class="na">pkg=</span><span class="s">&quot;move_base&quot;</span> <span class="na">type=</span><span class="s">&quot;move_base&quot;</span> <span class="na">name=</span><span class="s">&quot;move_base&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;base_local_planner&quot;</span> <span class="na">value=</span><span class="s">&quot;eband_local_planner/EBandPlannerROS&quot;</span> <span class="nt">/&gt;</span>
+    ...
+    <span class="nt">&lt;rosparam</span> <span class="na">command=</span><span class="s">&quot;load&quot;</span> <span class="na">file=</span><span class="s">&quot;$(find px4_sim_pkg)/config/eband_local_planner_params.yaml&quot;</span><span class="nt">/&gt;</span>
+    ...
+<span class="nt">&lt;/node&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>Timed Elastic Band<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="teb-local-planner">
+<h3>teb_local_plannerをインストールする<a class="headerlink" href="#teb-local-planner" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre>sudo apt install ros-kinetic-teb-local-planner
+</pre></div>
+</div>
+</div>
+<div class="section" id="id6">
+<h3>設定ファイルを作る<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>以下の設定ファイルの内容を、config以下にteb_local_planner_params.yamlとして保存します。</p>
+<p>teb_local_plannerのパラメータ一覧は <a class="reference external" href="wiki.ros.org/teb_local_planner">teb_local_plannerのROS Wikiページ</a> にあります。</p>
+</div>
+<div class="section" id="id7">
+<h3>move_baseのパラメータを変更する<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>move_baseがTebLocalPlannerROSを使うように設定します。
+navigation.launchをコピーして新たにteb_navigation.launchを作成します。</p>
+<p><cite>&lt;node&gt;</cite> タグ内を以下のように変更します。</p>
+<div class="literal-block-wrapper container" id="id14">
+<div class="code-block-caption"><span class="caption-text">teb_navigation.launch</span><a class="headerlink" href="#id14" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span class="nt">&lt;node</span> <span class="na">pkg=</span><span class="s">&quot;move_base&quot;</span> <span class="na">type=</span><span class="s">&quot;move_base&quot;</span> <span class="na">name=</span><span class="s">&quot;move_base&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;base_local_planner&quot;</span> <span class="na">value=</span><span class="s">&quot;teb_local_planner/TebLocalPlannerROS&quot;</span> <span class="nt">/&gt;</span>
+    ...
+    <span class="nt">&lt;rosparam</span> <span class="na">command=</span><span class="s">&quot;load&quot;</span> <span class="na">file=</span><span class="s">&quot;$(find px4_sim_pkg)/config/teb_local_planner_params.yaml&quot;</span><span class="nt">/&gt;</span>
+    ...
+<span class="nt">&lt;/node&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="costmap-conversion">
+<h3>Costmap Conversion<a class="headerlink" href="#costmap-conversion" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>TODO</p>
+</div>
+</div>
+<div class="section" id="id8">
+<h2>参考<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<dl class="docutils">
+<dt><a class="reference external" href="https://www.semanticscholar.org/paper/Planning-and-Control-in-Unstructured-Terrain-Gerkey/dabdbb636f02d3cff3d546bd1bdae96a058ba4bc">Trajectory Rollout</a></dt>
+<dd>Trajectory Rolloutアルゴリズム</dd>
+<dt><a class="reference external" href="https://doi.org/10.1109/100.580977">Dynamic Window Approach</a></dt>
+<dd>DWAアルゴリズム</dd>
+<dt><a class="reference external" href="https://doi.org/10.1109/ROBOT.1993.291936">Elastic Band</a></dt>
+<dd>Elastic Bandアルゴリズム</dd>
+<dt><a class="reference external" href="https://doi.org/10.1016/j.robot.2016.11.007">Timed Elastic Band</a></dt>
+<dd>Timed Elastic Bandアルゴリズム。他の論文は <a class="reference external" href="https://github.com/rst-tu-dortmund/teb_local_planner">GitHubページ</a> を参照</dd>
+<dt><a class="reference external" href="http://wiki.ros.org/teb_local_planner/Tutorials/Configure%20and%20run%20Robot%20Navigation">Configure and run Robot Navigation</a></dt>
+<dd>Timed Elastic Bandをmove_baseで使う</dd>
+<dt><a class="reference external" href="https://answers.ros.org/question/10718/dwa_planner-vs-base_local_planner/">dwa_planner vs. base_local_planner</a></dt>
+<dd>Dynamic Window ApproachとTrajectory Rolloutの比較</dd>
+<dt><a class="reference external" href="https://answers.ros.org/question/242067/difference-between-eband_local_planner-and-teb_local-planner/">difference between eband_local_planner and teb_local planner</a></dt>
+<dd>Elastic BandとTimed Elastic Bandの比較</dd>
+</dl>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Takaki Ueno
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/translations.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
