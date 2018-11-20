@@ -7,29 +7,15 @@ PX4 SITL Tutorial
 ====================================
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
    :caption: Contents
    :numbered:
 
-   introduction/introduction.rst
-   px4sim/px4sim.rst
-   runnode/runnodecpp.rst
-   runnode/runnodepy.rst
-   addmodel/addmodel.rst
-   slam/slam.rst
-   slam/gps_nav.rst
-   slam/lidar_localization.rst
-   slam/localization_and_mapping.rst
-   octomap/octomap.rst
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Tips
-   :numbered:
-
-   tips/control_alt/control_alt.rst
-   tips/filter_lidar/filter_lidar.rst
-   tips/change_local_planner/change_local_planner.rst
+   simulation/index.rst
+   bebop2/index.rst
+   F450/index.rst
+   F550/index.rst
+   phantom4pro/index.rst
 
 .. toctree::
    :maxdepth: 1
