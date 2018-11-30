@@ -27,12 +27,6 @@ Simulation
 
 です。
 
-1. ROSの基本
-2. 基本的なLinuxコマンド
-
-についての知識があれば望ましいですが、これらは補遺で補足します。
-
-
 **環境**
 
 本テキストにおいては以下の環境を使用しています。
@@ -41,11 +35,14 @@ Simulation
 * ROS Kinetic
 * PX4 Firmware v1.8.0
 
+**ソースコード**
+
+このチュートリアルで使用したプログラムやLaunchファイルなどは `dronedocリポジトリ <https://github.com/uenota/dronedoc>`_ にあります。
 
 .. toctree::
    :maxdepth: 1
    :caption: Contents
-   :numbered: 1
+   :numbered:
 
    px4sim/px4sim.rst
    runnode/runnodecpp.rst
@@ -62,4 +59,4 @@ Simulation
 * :doc:`tips/control_alt/control_alt`
 * :doc:`tips/filter_lidar/filter_lidar`
 * :doc:`tips/change_local_planner/change_local_planner`
-* :doc:`tips/counter_rudder/counter_rudder`
+* :doc:`tips/build_map_gmapping/build_map_gmapping`
