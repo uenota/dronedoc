@@ -12,10 +12,7 @@ PX4 SITL Tutorial
    :numbered:
 
    simulation/index.rst
-   bebop2/index.rst
-   F450/index.rst
-   F550/index.rst
-   phantom4pro/index.rst
+   hardwares/index.rst
 
 .. toctree::
    :maxdepth: 1

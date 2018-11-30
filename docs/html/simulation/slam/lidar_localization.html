@@ -88,25 +88,15 @@
 <li class="toctree-l2"><a class="reference internal" href="slam.html">1.5. 自律飛行とSLAM</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gps_nav.html">1.6. GPSを用いた自律飛行</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">1.7. LiDARとAMCLを用いた自己位置推定</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#world">1.7.1. Worldファイルを作る</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id1">1.7.2. 自己位置推定用の地図を作る</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id2">1.7.2.1. 必要なパッケージをインストールする</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id3">1.7.2.2. 必要なノードを起動する</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id4">1.7.2.3. 地図を保存する</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#amcl">1.7.3. AMCLを使って自己位置推定を行う</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id6">1.7.4. 参考</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">1.7.1. 自己位置推定用の地図を作る</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#amcl">1.7.2. AMCLを使って自己位置推定を行う</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="localization_and_mapping.html">1.8. LiDARを用いたSLAM</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../octomap/octomap.html">1.9. Octomapを使って3Dマップを作る</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../bebop2/index.html">2. Parrot Bebop 2</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../F450/index.html">3. DJI F450</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../F550/index.html">4. DJI F550</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../phantom4pro/index.html">5. DJI Phantom 4 Professional</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../hardwares/index.html">2. Hardwares</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Appendix</span></p>
 <ul>
@@ -184,70 +174,81 @@
   <div class="section" id="lidaramcl">
 <h1>1.7. LiDARとAMCLを用いた自己位置推定<a class="headerlink" href="#lidaramcl" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p>このページではLiDARとAdaptive Monte Carlo Localization (AMCL)を用いて自己位置推定を行います。</p>
-<div class="section" id="world">
-<h2>1.7.1. Worldファイルを作る<a class="headerlink" href="#world" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>Gazeboを起動してWorldファイルを作ります。
-すでにあるWorldファイルを使う場合はこの手順は必要ありません。</p>
-<p>今回はGazeboモデルデータベース（<a class="reference external" href="http://models.gazebosim.org/">http://models.gazebosim.org/</a>）にあるWillow Garageモデルを利用します。
-Willow GarageモデルはInsertタブから追加することができます。
-モデルはデータベースから自動でダウンロードされますが、ダウンロードされるまでにしばらく時間がかかります。</p>
-<p>以下のようなWorldファイルを作りましょう。</p>
-<img alt="../../_images/willow_garage.png" src="../../_images/willow_garage.png" />
-</div>
 <div class="section" id="id1">
-<h2>1.7.2. 自己位置推定用の地図を作る<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>今回はTurtlebotを使ってマップを作成します。
-<a class="reference external" href="http://wiki.ros.org/turtlebot_navigation/Tutorials/Build%20a%20map%20with%20SLAM">SLAM Map Building with TurtleBot</a> を参考にして地図の作成を行います。</p>
-<div class="section" id="id2">
-<h3>1.7.2.1. 必要なパッケージをインストールする<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre>sudo apt install ros-kinetic-turtlebot-teleop <span class="se">\</span>
-                 ros-kinetic-turtlebot-gazebo <span class="se">\</span>
-                 ros-kinetic-turtlebot-bringup
+<h2>1.7.1. 自己位置推定用の地図を作る<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>自己位置推定を行うには事前に地図を用意する必要があります。
+事前に用意した地図がない場合には、以下のどちらかの方法で地図を作成してください。</p>
+<dl class="docutils">
+<dt><a class="reference internal" href="../tips/build_map_gazebo_plugin/build_map_gazebo_plugin.html"><span class="doc">Gazebo Pluginを使って地図を作成する</span></a></dt>
+<dd>Gazebo Pluginを使用する</dd>
+<dt><a class="reference internal" href="../tips/build_map_gmapping/build_map_gmapping.html"><span class="doc">Gmappingを使って地図を生成する</span></a></dt>
+<dd>gmappingを使用する</dd>
+</dl>
+<p>このページではGazebo Pluginを使用する方法について説明します。
+Gazebo Pluginを作成するのは発展的な内容を含むため、今回はすでに作成済みのプラグインを使用します。
+まずは、プラグインが含まれているパッケージをダウンロードしましょう。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span class="nb">cd</span> ~/catkin_ws/src
+git clone https://github.com/uenota/dronedoc.git
+<span class="nb">cd</span> ..
+catkin build
 </pre></div>
 </div>
-</div>
-<div class="section" id="id3">
-<h3>1.7.2.2. 必要なノードを起動する<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>今回はGazebo内のモデルの地図を作成するので、シミュレータを起動します.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre>roslaunch turtlebot_gazebo turtlebot_world.launch world_file:<span class="o">=</span>~/catkin_ws/src/px4_sim_pkg/worlds/willow_garage.world
+<p>次に、使用するWorldファイルに以下の内容を追加します。</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span class="nt">&lt;plugin</span> <span class="na">filename=</span><span class="s">&quot;map_builder.so&quot;</span> <span class="na">name=</span><span class="s">&quot;map_builder&quot;</span><span class="nt">/&gt;</span>
 </pre></div>
 </div>
-<p>Turtlebotを起動します。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre>roslaunch turtlebot_bringup minimal.launch
+<p>以下の例の様になればOKです。</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span class="cp">&lt;?xml version =&#39;1.0&#39;?&gt;</span>
+<span class="nt">&lt;sdf</span> <span class="na">version =</span><span class="s">&#39;1.4&#39;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;world</span> <span class="na">name=</span><span class="s">&#39;default&#39;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;include&gt;</span>
+      <span class="nt">&lt;uri&gt;</span>model://ground_plane<span class="nt">&lt;/uri&gt;</span>
+    <span class="nt">&lt;/include&gt;</span>
+
+    <span class="nt">&lt;include&gt;</span>
+      <span class="nt">&lt;uri&gt;</span>model://sun<span class="nt">&lt;/uri&gt;</span>
+    <span class="nt">&lt;/include&gt;</span>
+
+    <span class="nt">&lt;include&gt;</span>
+      <span class="nt">&lt;uri&gt;</span>model://willowgarage<span class="nt">&lt;/uri&gt;</span>
+    <span class="nt">&lt;/include&gt;</span>
+
+    <span class="nt">&lt;plugin</span> <span class="na">filename=</span><span class="s">&quot;map_builder.so&quot;</span> <span class="na">name=</span><span class="s">&quot;map_builder&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/world&gt;</span>
+<span class="nt">&lt;/sdf&gt;</span>
 </pre></div>
 </div>
-<p>Teleopノードを起動します。
-使用するコントローラに適したLaunchファイルを使ってください。
-キーボードを使うときはkeyboard_teleop.launchファイルを使います。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre>roslaunch turtlebot_teleop logitech.launch
+<p>マップを作りたいワールドを起動します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre>roslaunch gazebo_ros empty_world.launch world_name:<span class="o">=</span>~/catkin_ws/src/px4_sim_pkg/worlds/willowgarage.world
 </pre></div>
 </div>
-<p>地図作成用のノードを起動します。
-今回は <a class="reference external" href="http://wiki.ros.org/gmapping">gmapping</a> を使って地図を作成します。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre>roslaunch turtlebot_navigation gmapping_demo.launch
+<p>Gazeboが起動したら以下のコマンドを実行します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre>rosrun dronedoc request_publisher <span class="m">10</span> 0.01 <span class="s2">&quot;(-12,0)&quot;</span> <span class="m">60</span> <span class="m">50</span> ~/map.png 255
 </pre></div>
 </div>
-</div>
-<div class="section" id="id4">
-<h3>1.7.2.3. 地図を保存する<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>コントローラを使用する場合は <a class="reference external" href="https://ja.wikipedia.org/wiki/%E3%83%87%E3%83%83%E3%83%89%E3%83%9E%E3%83%B3%E8%A3%85%E7%BD%AE">デッドマンスイッチ</a> に割り当てられたボタンを押しながらスティックを動かしてTurtlebotを操作します。</p>
-<p>デッドマンスイッチは大抵LBボタンに割り当てられていますが、そうでない場合は次の手順で確認します。</p>
-<p>Rvizで作成される地図を確認しながら作業を行うと良いでしょう。</p>
-<p>Turtlebotを走らせて一通り地図ができたら、<a class="reference external" href="http://wiki.ros.org/map_server">map_server</a> を使って地図を保存します。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre>rosrun map_server map_saver -f /tmp/my_map
+<p>このコマンドを実行すると、x,y座標が(-12, 0)の点を原点として、50m x 60mの矩形に囲まれた領域の、高さ10mより下にある障害物のマップが <code class="docutils literal notranslate"><span class="pre">~/map.png</span></code> として作成されます。
+グリッドの間隔は0.01mで、グリッドが占有されていると判断するしきい値は255です。
+また、同時に地図の設定ファイルも <code class="docutils literal notranslate"><span class="pre">~/map.yaml</span></code> として生成されます。</p>
+<p>このコマンドの使用方法は以下のとおりです。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre>Usage: rosrun dronedoc request_publisher a1 a2 a3 a4 a5 <span class="o">[</span>a6 a7<span class="o">]</span>
+      a1: height
+      a2: resolution
+      a3: <span class="s2">&quot;(origin.x, origin.y)&quot;</span>
+        Origin is the point on lower left corner of map image
+      a4: map_width
+      a5: map_height
+      a6: filename    <span class="o">[</span><span class="nv">default</span><span class="o">=</span><span class="s2">&quot;map&quot;</span><span class="o">]</span>
+      a7: threshold   <span class="o">[</span><span class="nv">default</span><span class="o">=</span>255<span class="o">]</span>
 </pre></div>
 </div>
-</div>
+<p>以下のようなワールドに対して上記のコマンドを実行すれば、</p>
+<img alt="../../_images/willow_garage.png" src="../../_images/willow_garage.png" />
+<p>次のような地図が生成されます。
+画像左下が原点です。</p>
+<img alt="../../_images/willow_garage_map.png" src="../../_images/willow_garage_map.png" />
 </div>
 <div class="section" id="amcl">
-<h2>1.7.3. AMCLを使って自己位置推定を行う<a class="headerlink" href="#amcl" title="このヘッドラインへのパーマリンク">¶</a></h2>
-</div>
-<div class="section" id="id6">
-<h2>1.7.4. 参考<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<dl class="docutils">
-<dt><a class="reference external" href="http://wiki.ros.org/slam_gmapping/Tutorials/MappingFromLoggedData">How to Build a Map Using Logged Data - ROS Wiki</a></dt>
-<dd>gmappingを使って自己位置推定用の地図を作る</dd>
-</dl>
+<h2>1.7.2. AMCLを使って自己位置推定を行う<a class="headerlink" href="#amcl" title="このヘッドラインへのパーマリンク">¶</a></h2>
 </div>
 </div>
 

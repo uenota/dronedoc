@@ -3,84 +3,99 @@ LiDARとAMCLを用いた自己位置推定
 **************************************************************************
 このページではLiDARとAdaptive Monte Carlo Localization (AMCL)を用いて自己位置推定を行います。
 
-Worldファイルを作る
+自己位置推定用の地図を作る
 ==========================================================================
-Gazeboを起動してWorldファイルを作ります。
-すでにあるWorldファイルを使う場合はこの手順は必要ありません。
 
-今回はGazeboモデルデータベース（http://models.gazebosim.org/）にあるWillow Garageモデルを利用します。
-Willow GarageモデルはInsertタブから追加することができます。
-モデルはデータベースから自動でダウンロードされますが、ダウンロードされるまでにしばらく時間がかかります。
+自己位置推定を行うには事前に地図を用意する必要があります。
+事前に用意した地図がない場合には、以下のどちらかの方法で地図を作成してください。
 
-以下のようなWorldファイルを作りましょう。
+:doc:`../tips/build_map_gazebo_plugin/build_map_gazebo_plugin`
+  Gazebo Pluginを使用する
+:doc:`../tips/build_map_gmapping/build_map_gmapping`
+  gmappingを使用する
+
+このページではGazebo Pluginを使用する方法について説明します。
+Gazebo Pluginを作成するのは発展的な内容を含むため、今回はすでに作成済みのプラグインを使用します。
+まずは、プラグインが含まれているパッケージをダウンロードしましょう。
+
+.. code-block:: bash
+
+  cd ~/catkin_ws/src
+  git clone https://github.com/uenota/dronedoc.git
+  cd ..
+  catkin build
+
+次に、使用するWorldファイルに以下の内容を追加します。
+
+.. code-block:: xml
+
+    <plugin filename="map_builder.so" name="map_builder"/>
+
+以下の例の様になればOKです。
+
+.. code-block:: xml
+
+  <?xml version ='1.0'?>
+  <sdf version ='1.4'>
+    <world name='default'>
+      <include>
+        <uri>model://ground_plane</uri>
+      </include>
+
+      <include>
+        <uri>model://sun</uri>
+      </include>
+
+      <include>
+        <uri>model://willowgarage</uri>
+      </include>
+
+      <plugin filename="map_builder.so" name="map_builder"/>
+    </world>
+  </sdf>
+
+マップを作りたいワールドを起動します。
+
+.. code-block:: bash
+
+  roslaunch gazebo_ros empty_world.launch world_name:=~/catkin_ws/src/px4_sim_pkg/worlds/willowgarage.world
+
+Gazeboが起動したら以下のコマンドを実行します。
+
+.. code-block:: bash
+
+  rosrun dronedoc request_publisher 10 0.01 "(-12,0)" 60 50 ~/map.png 255
+
+このコマンドを実行すると、x,y座標が(-12, 0)の点を原点として、50m x 60mの矩形に囲まれた領域の、高さ10mより下にある障害物のマップが ``~/map.png`` として作成されます。
+グリッドの間隔は0.01mで、グリッドが占有されていると判断するしきい値は255です。
+また、同時に地図の設定ファイルも ``~/map.yaml`` として生成されます。
+
+このコマンドの使用方法は以下のとおりです。
+
+.. code-block:: bash
+
+  Usage: rosrun dronedoc request_publisher a1 a2 a3 a4 a5 [a6 a7]
+	a1: height
+	a2: resolution
+	a3: "(origin.x, origin.y)"
+	  Origin is the point on lower left corner of map image
+	a4: map_width
+	a5: map_height
+	a6: filename	[default="map"]
+	a7: threshold	[default=255]
+
+以下のようなワールドに対して上記のコマンドを実行すれば、
 
 .. image:: imgs/willow_garage.png
 
-自己位置推定用の地図を作る
-==========================================================================
-今回はTurtlebotを使ってマップを作成します。
-`SLAM Map Building with TurtleBot <http://wiki.ros.org/turtlebot_navigation/Tutorials/Build%20a%20map%20with%20SLAM>`_ を参考にして地図の作成を行います。
+次のような地図が生成されます。
+画像左下が原点です。
 
-必要なパッケージをインストールする
---------------------------------------------------------------------------
-
-.. code-block:: bash
-
-  sudo apt install ros-kinetic-turtlebot-teleop \
-                   ros-kinetic-turtlebot-gazebo \
-                   ros-kinetic-turtlebot-bringup
-
-必要なノードを起動する
---------------------------------------------------------------------------
-今回はGazebo内のモデルの地図を作成するので、シミュレータを起動します.
-
-.. code-block:: bash
-
-  roslaunch turtlebot_gazebo turtlebot_world.launch world_file:=~/catkin_ws/src/px4_sim_pkg/worlds/willow_garage.world
-
-Turtlebotを起動します。
-
-.. code-block:: bash
-
-  roslaunch turtlebot_bringup minimal.launch
-
-Teleopノードを起動します。
-使用するコントローラに適したLaunchファイルを使ってください。
-キーボードを使うときはkeyboard_teleop.launchファイルを使います。
-
-.. code-block:: bash
-
-  roslaunch turtlebot_teleop logitech.launch
-
-地図作成用のノードを起動します。
-今回は `gmapping <http://wiki.ros.org/gmapping>`_ を使って地図を作成します。
-
-.. code-block:: bash
-
-  roslaunch turtlebot_navigation gmapping_demo.launch
-
-地図を保存する
---------------------------------------------------------------------------
-コントローラを使用する場合は `デッドマンスイッチ <https://ja.wikipedia.org/wiki/%E3%83%87%E3%83%83%E3%83%89%E3%83%9E%E3%83%B3%E8%A3%85%E7%BD%AE>`_ に割り当てられたボタンを押しながらスティックを動かしてTurtlebotを操作します。
-
-デッドマンスイッチは大抵LBボタンに割り当てられていますが、そうでない場合は次の手順で確認します。
-
-.. TODO: デッドマンボタンの確認方法
-
-Rvizで作成される地図を確認しながら作業を行うと良いでしょう。
-
-Turtlebotを走らせて一通り地図ができたら、`map_server <http://wiki.ros.org/map_server>`_ を使って地図を保存します。
-
-.. code-block:: bash
-
-  rosrun map_server map_saver -f /tmp/my_map
+.. image:: imgs/willow_garage_map.png
 
 AMCLを使って自己位置推定を行う
 ==========================================================================
 
-.. TODO: http://wiki.ros.org/amcl
+.. todo:: http://wiki.ros.org/amcl
 
-参考
-==========================================================================
-`How to Build a Map Using Logged Data - ROS Wiki <http://wiki.ros.org/slam_gmapping/Tutorials/MappingFromLoggedData>`_
-  gmappingを使って自己位置推定用の地図を作る
+
