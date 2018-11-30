@@ -4,6 +4,7 @@
     <node pkg="tf" name="map2odom" type="static_transform_publisher" args="0 0 0 0 0 0 map odom 100"/>
 
     <arg name="vehicle" default="iris_2d_lidar"/>
+    <arg name="world" default="$(find mavlink_sitl_gazebo)/worlds/empty.world" />
     <arg name="sdf" default="$(find dronedoc)/models/iris_2d_lidar/model.sdf" />
     <arg name="verbose" default="false"/>
     <arg name="debug" default="false"/>
@@ -13,6 +14,7 @@
         <arg name="vehicle" value="$(arg vehicle)" />
         <arg name="verbose" value="$(arg verbose)" />
         <arg name="debug" value="$(arg debug)" />
+        <arg name="world" value="$(arg world)" />
     </include>
 
     <param name="/mavros/local_position/tf/send" type="bool" value="true" />

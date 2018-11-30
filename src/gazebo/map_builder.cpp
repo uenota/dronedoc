@@ -127,9 +127,9 @@ class MapCreator : public WorldPlugin
     out << YAML::Key << "negate";
     out << YAML::Value << 0;
     out << YAML::Key << "free_thresh";
-    out << YAML::Value << (255-msg->threshold())/255;
+    out << YAML::Value << 0.196;
     out << YAML::Key << "occupied_thresh";
-    out << YAML::Value << 1;
+    out << YAML::Value << 0.65;
     out << YAML::Key << "origin";
     out << YAML::Value;
     out << YAML::Flow;

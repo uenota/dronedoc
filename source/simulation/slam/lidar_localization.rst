@@ -16,7 +16,7 @@ LiDARとAMCLを用いた自己位置推定
 
 このページではGazebo Pluginを使用する方法について説明します。
 Gazebo Pluginを作成するのは発展的な内容を含むため、今回はすでに作成済みのプラグインを使用します。
-まずは、プラグインが含まれているパッケージをダウンロードしましょう。
+まずは、プラグインが含まれているパッケージをダウンロードしてビルドしましょう。
 
 .. code-block:: bash
 
@@ -25,7 +25,7 @@ Gazebo Pluginを作成するのは発展的な内容を含むため、今回は�
   cd ..
   catkin build
 
-次に、使用するWorldファイルに以下の内容を追加します。
+次に、地図出力用のプラグインを使えるようにするために、Worldファイルに以下の内容を追加します。
 
 .. code-block:: xml
 
@@ -93,9 +93,28 @@ Gazeboが起動したら以下のコマンドを実行します。
 
 .. image:: imgs/willow_garage_map.png
 
+
 AMCLを使って自己位置推定を行う
 ==========================================================================
+モンテカルロ位置推定（Monte Carlo Localization）は、パーティクルフィルタを用いて自己位置推定を行う手法です。
+このアルゴリズムではロボットの位置の確率分布をパーティクルの分布で表現し、その分布を、観測した情報を元に更新することで自己位置の推定を行います。
 
-.. todo:: http://wiki.ros.org/amcl
+適応的モンテカルロ位置推定（Adaptive Monte Carlo Localization）は、モンテカルロ位置推定で用いる粒子の数を動的に調整することのできるアルゴリズムです。
+
+今回はROSの `amclパッケージ <http://wiki.ros.org/amcl>`_ を使います。
+また、前節で作成した地図情報を利用するために、 `map_serverパッケージ <wiki.ros.org/map_server>`_ も使用します。
 
 
+参考
+==========================================================================
+`モンテカルロ位置推定を使用した TurtleBot の位置推定 <https://jp.mathworks.com/help/robotics/examples/localize-turtlebot-using-monte-carlo-localization.html>`_
+  モンテカルロ位置推定の解説
+`Monte Carlo Localization <https://en.wikipedia.org/wiki/Monte_Carlo_localization>`_
+
+`Monte Carlo Localization for Mobile Robots <https://www.cc.gatech.edu/~dellaert/ftp/Dellaert99icra.pdf>`_
+
+`Particle Filter <https://en.wikipedia.org/wiki/Particle_filter>`_
+
+`A Tutorial on Particle Filtering and Smoothing: Fifteen years later <https://www.seas.harvard.edu/courses/cs281/papers/doucet-johansen.pdf>`_
+
+`Adaptive Monte Carlo Localization <http://roboticsknowledgebase.com/wiki/state-estimation/adaptive-monte-carlo-localization/>`_
