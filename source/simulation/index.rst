@@ -59,4 +59,6 @@ Simulation
 * :doc:`tips/control_alt/control_alt`
 * :doc:`tips/filter_lidar/filter_lidar`
 * :doc:`tips/change_local_planner/change_local_planner`
+* :doc:`tips/local_planner_for_uav/local_planner_for_uav`
 * :doc:`tips/build_map_gmapping/build_map_gmapping`
+* :doc:`tips/build_map_gazebo_plugin/build_map_gazebo_plugin`
