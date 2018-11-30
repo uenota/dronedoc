@@ -152,5 +152,7 @@
         <projection_type>perspective</projection_type>
       </camera>
     </gui>
+
+  <plugin filename="libmap_builder.so" name="map_builder"/>
   </world>
 </sdf>

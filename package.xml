@@ -12,6 +12,8 @@
 
   <buildtool_depend>catkin</buildtool_depend>
 
+  <build_depend>protobuf-compiler</build_depend>
+
   <depend>geometry_msgs</depend>
   <depend>laser_assembler</depend>
   <depend>mavros_msgs</depend>
@@ -19,11 +21,12 @@
   <depend>sensor_msgs</depend>
   <depend>nav_msgs</depend>
   <depend>tf</depend>
+  <depend>gazebo_ros</depend>
 
   <exec_depend>laser_filters</exec_depend>
-  <exec_depend>gazebo_ros</exec_depend>
 
   <export>
     <gazebo_ros gazebo_model_path="${prefix}/models"/>
+    <gazebo_ros plugin_path="${prefix}/lib" />
   </export>
 </package>

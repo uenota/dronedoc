@@ -1,0 +1,12 @@
+package dronedoc.msgs;
+import "vector2d.proto";
+
+message MapRequest{
+    required double               height     = 1;
+    required double               resolution = 2;
+    required gazebo.msgs.Vector2d origin     = 3;
+    required double               map_width  = 4;
+    required double               map_height = 5;
+    optional string               filename   = 6 [default = "~/map.png"];
+    optional int32                threshold  = 7 [default = 255];
+}
