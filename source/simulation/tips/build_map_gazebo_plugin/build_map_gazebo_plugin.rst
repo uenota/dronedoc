@@ -1,5 +1,5 @@
 *************************************************************
-Gazebo Pluginを使ってマップを作成する
+Gazebo Pluginを使って地図を作成する
 *************************************************************
 
 以下のコード以外は `Custom messages <http://gazebosim.org/tutorials?cat=install&tut=custom_messages&ver=1.9-7>`_ にあるものと同じです。
