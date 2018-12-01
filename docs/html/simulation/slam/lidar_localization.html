@@ -88,8 +88,16 @@
 <li class="toctree-l2"><a class="reference internal" href="slam.html">1.5. 自律飛行とSLAM</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gps_nav.html">1.6. GPSを用いた自律飛行</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">1.7. LiDARとAMCLを用いた自己位置推定</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id1">1.7.1. 自己位置推定用の地図を作る</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#amcl">1.7.2. AMCLを使って自己位置推定を行う</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">1.7.1. 自己位置推定用の地図を作る</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#gazebo-plugin">1.7.1.1. Gazebo Pluginを使って地図を作成する</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">1.7.1.2. 地図を出力する</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#amcl">1.7.2. AMCLを使って自己位置推定を行う</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id4">1.7.2.1. map_serverを使って地図情報をパブリッシュする</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">1.7.3. 参考</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="localization_and_mapping.html">1.8. LiDARを用いたSLAM</a></li>
@@ -184,16 +192,18 @@
 <dt><a class="reference internal" href="../tips/build_map_gmapping/build_map_gmapping.html"><span class="doc">Gmappingを使って地図を生成する</span></a></dt>
 <dd>gmappingを使用する</dd>
 </dl>
+<div class="section" id="gazebo-plugin">
+<h3>1.7.1.1. Gazebo Pluginを使って地図を作成する<a class="headerlink" href="#gazebo-plugin" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>このページではGazebo Pluginを使用する方法について説明します。
 Gazebo Pluginを作成するのは発展的な内容を含むため、今回はすでに作成済みのプラグインを使用します。
-まずは、プラグインが含まれているパッケージをダウンロードしましょう。</p>
+まずは、プラグインが含まれているパッケージをダウンロードしてビルドしましょう。</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span class="nb">cd</span> ~/catkin_ws/src
 git clone https://github.com/uenota/dronedoc.git
 <span class="nb">cd</span> ..
 catkin build
 </pre></div>
 </div>
-<p>次に、使用するWorldファイルに以下の内容を追加します。</p>
+<p>次に、地図出力用のプラグインを使えるようにするために、Worldファイルに以下の内容を追加します。</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span class="nt">&lt;plugin</span> <span class="na">filename=</span><span class="s">&quot;map_builder.so&quot;</span> <span class="na">name=</span><span class="s">&quot;map_builder&quot;</span><span class="nt">/&gt;</span>
 </pre></div>
 </div>
@@ -218,15 +228,18 @@ catkin build
 <span class="nt">&lt;/sdf&gt;</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="id2">
+<h3>1.7.1.2. 地図を出力する<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>マップを作りたいワールドを起動します。</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre>roslaunch gazebo_ros empty_world.launch world_name:<span class="o">=</span>~/catkin_ws/src/px4_sim_pkg/worlds/willowgarage.world
 </pre></div>
 </div>
 <p>Gazeboが起動したら以下のコマンドを実行します。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre>rosrun dronedoc request_publisher <span class="m">10</span> 0.01 <span class="s2">&quot;(-12,0)&quot;</span> <span class="m">60</span> <span class="m">50</span> ~/map.png 255
+<div class="highlight-bash notranslate"><div class="highlight"><pre>rosrun dronedoc request_publisher <span class="m">10</span> 0.01 <span class="s2">&quot;(-12,0)&quot;</span> <span class="m">60</span> <span class="m">50</span> map.png 255
 </pre></div>
 </div>
-<p>このコマンドを実行すると、x,y座標が(-12, 0)の点を原点として、50m x 60mの矩形に囲まれた領域の、高さ10mより下にある障害物のマップが <code class="docutils literal notranslate"><span class="pre">~/map.png</span></code> として作成されます。
+<p>このコマンドを実行すると、x,y座標が(-12, 0)の点を原点として、50m x 60mの矩形に囲まれた領域の、高さ10mより下にある障害物のマップがカレントディレクトリに <code class="docutils literal notranslate"><span class="pre">map.png</span></code> として作成されます。
 グリッドの間隔は0.01mで、グリッドが占有されていると判断するしきい値は255です。
 また、同時に地図の設定ファイルも <code class="docutils literal notranslate"><span class="pre">~/map.yaml</span></code> として生成されます。</p>
 <p>このコマンドの使用方法は以下のとおりです。</p>
@@ -247,8 +260,43 @@ catkin build
 画像左下が原点です。</p>
 <img alt="../../_images/willow_garage_map.png" src="../../_images/willow_garage_map.png" />
 </div>
+</div>
 <div class="section" id="amcl">
 <h2>1.7.2. AMCLを使って自己位置推定を行う<a class="headerlink" href="#amcl" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>モンテカルロ位置推定（Monte Carlo Localization）は、パーティクルフィルタを用いて自己位置推定を行う手法です。
+このアルゴリズムではロボットの位置の確率分布をパーティクルの分布で表現し、その分布を、観測した情報を元に更新することで自己位置の推定を行います。</p>
+<p>適応的モンテカルロ位置推定（Adaptive Monte Carlo Localization）は、モンテカルロ位置推定で用いる粒子の数を動的に調整することのできるアルゴリズムです。</p>
+<p>今回はROSの <a class="reference external" href="http://wiki.ros.org/amcl">amclパッケージ</a> を使います。
+また、前節で作成した地図情報を利用するために、 <a class="reference external" href="wiki.ros.org/map_server">map_serverパッケージ</a> も使用します。</p>
+<div class="section" id="id4">
+<h3>1.7.2.1. map_serverを使って地図情報をパブリッシュする<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>amclは <code class="docutils literal notranslate"><span class="pre">map</span></code> トピックにパブリッシュされている地図情報を用いて自己位置推定を行うので、前節で作成した地図の情報をパブリッシュしてやる必要があります。</p>
+<p>以下のコマンドで地図の情報をパブリッシュするノードを起動します。
+map.yamlは地図画像と一緒に生成される設定ファイルです。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre>rosrun map_server map_server map.yaml
+</pre></div>
+</div>
+<img alt="../../_images/initpose.png" src="../../_images/initpose.png" />
+<p>最初は以下の画像のように姿勢（赤矢印）が分布していますが、</p>
+<img alt="../../_images/initest.png" src="../../_images/initest.png" />
+<p>データを観測するにつれて姿勢の分散は小さくなっていきます。</p>
+<img alt="../../_images/updatedest.png" src="../../_images/updatedest.png" />
+<p>以下の動画では、途中で壁にぶつかってしまっていますが、影響なく位置推定ができていることがわかります。</p>
+<img alt="../../_images/amcl.gif" src="../../_images/amcl.gif" />
+</div>
+</div>
+<div class="section" id="id5">
+<h2>1.7.3. 参考<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<dl class="docutils">
+<dt><a class="reference external" href="https://jp.mathworks.com/help/robotics/examples/localize-turtlebot-using-monte-carlo-localization.html">モンテカルロ位置推定を使用した TurtleBot の位置推定</a></dt>
+<dd>モンテカルロ位置推定の解説</dd>
+</dl>
+<p><a class="reference external" href="https://qiita.com/MoriKen/items/87be494f048ea03fdab8">Navigation Stack を理解する - 3.1 amcl: ROSで遊んでみる</a></p>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Monte_Carlo_localization">Monte Carlo Localization</a></p>
+<p><a class="reference external" href="https://www.cc.gatech.edu/~dellaert/ftp/Dellaert99icra.pdf">Monte Carlo Localization for Mobile Robots</a></p>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Particle_filter">Particle Filter</a></p>
+<p><a class="reference external" href="https://www.seas.harvard.edu/courses/cs281/papers/doucet-johansen.pdf">A Tutorial on Particle Filtering and Smoothing: Fifteen years later</a></p>
+<p><a class="reference external" href="http://roboticsknowledgebase.com/wiki/state-estimation/adaptive-monte-carlo-localization/">Adaptive Monte Carlo Localization</a></p>
 </div>
 </div>
 

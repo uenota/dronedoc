@@ -14,9 +14,11 @@ LiDARとAMCLを用いた自己位置推定
 :doc:`../tips/build_map_gmapping/build_map_gmapping`
   gmappingを使用する
 
+Gazebo Pluginを使って地図を作成する
+--------------------------------------------------------------------------
 このページではGazebo Pluginを使用する方法について説明します。
 Gazebo Pluginを作成するのは発展的な内容を含むため、今回はすでに作成済みのプラグインを使用します。
-まずは、プラグインが含まれているパッケージをダウンロードしましょう。
+まずは、プラグインが含まれているパッケージをダウンロードしてビルドしましょう。
 
 .. code-block:: bash
 
@@ -25,7 +27,7 @@ Gazebo Pluginを作成するのは発展的な内容を含むため、今回は�
   cd ..
   catkin build
 
-次に、使用するWorldファイルに以下の内容を追加します。
+次に、地図出力用のプラグインを使えるようにするために、Worldファイルに以下の内容を追加します。
 
 .. code-block:: xml
 
@@ -54,6 +56,8 @@ Gazebo Pluginを作成するのは発展的な内容を含むため、今回は�
     </world>
   </sdf>
 
+地図を出力する
+--------------------------------------------------------------------------
 マップを作りたいワールドを起動します。
 
 .. code-block:: bash
@@ -64,9 +68,9 @@ Gazeboが起動したら以下のコマンドを実行します。
 
 .. code-block:: bash
 
-  rosrun dronedoc request_publisher 10 0.01 "(-12,0)" 60 50 ~/map.png 255
+  rosrun dronedoc request_publisher 10 0.01 "(-12,0)" 60 50 map.png 255
 
-このコマンドを実行すると、x,y座標が(-12, 0)の点を原点として、50m x 60mの矩形に囲まれた領域の、高さ10mより下にある障害物のマップが ``~/map.png`` として作成されます。
+このコマンドを実行すると、x,y座標が(-12, 0)の点を原点として、50m x 60mの矩形に囲まれた領域の、高さ10mより下にある障害物のマップがカレントディレクトリに ``map.png`` として作成されます。
 グリッドの間隔は0.01mで、グリッドが占有されていると判断するしきい値は255です。
 また、同時に地図の設定ファイルも ``~/map.yaml`` として生成されます。
 
@@ -93,9 +97,54 @@ Gazeboが起動したら以下のコマンドを実行します。
 
 .. image:: imgs/willow_garage_map.png
 
+
 AMCLを使って自己位置推定を行う
 ==========================================================================
+モンテカルロ位置推定（Monte Carlo Localization）は、パーティクルフィルタを用いて自己位置推定を行う手法です。
+このアルゴリズムではロボットの位置の確率分布をパーティクルの分布で表現し、その分布を、観測した情報を元に更新することで自己位置の推定を行います。
 
-.. todo:: http://wiki.ros.org/amcl
+適応的モンテカルロ位置推定（Adaptive Monte Carlo Localization）は、モンテカルロ位置推定で用いる粒子の数を動的に調整することのできるアルゴリズムです。
 
+今回はROSの `amclパッケージ <http://wiki.ros.org/amcl>`_ を使います。
+また、前節で作成した地図情報を利用するために、 `map_serverパッケージ <wiki.ros.org/map_server>`_ も使用します。
 
+map_serverを使って地図情報をパブリッシュする
+--------------------------------------------------------------------------
+amclは ``map`` トピックにパブリッシュされている地図情報を用いて自己位置推定を行うので、前節で作成した地図の情報をパブリッシュしてやる必要があります。
+
+以下のコマンドで地図の情報をパブリッシュするノードを起動します。
+map.yamlは地図画像と一緒に生成される設定ファイルです。
+
+.. code-block:: bash
+
+  rosrun map_server map_server map.yaml
+
+.. image:: imgs/initpose.png
+
+最初は以下の画像のように姿勢（赤矢印）が分布していますが、
+
+.. image:: imgs/initest.png
+
+データを観測するにつれて姿勢の分散は小さくなっていきます。
+
+.. image:: imgs/updatedest.png
+
+以下の動画では、途中で壁にぶつかってしまっていますが、影響なく位置推定ができていることがわかります。
+
+.. image:: imgs/amcl.gif
+
+参考
+==========================================================================
+`モンテカルロ位置推定を使用した TurtleBot の位置推定 <https://jp.mathworks.com/help/robotics/examples/localize-turtlebot-using-monte-carlo-localization.html>`_
+  モンテカルロ位置推定の解説
+`Navigation Stack を理解する - 3.1 amcl: ROSで遊んでみる <https://qiita.com/MoriKen/items/87be494f048ea03fdab8>`_
+
+`Monte Carlo Localization <https://en.wikipedia.org/wiki/Monte_Carlo_localization>`_
+
+`Monte Carlo Localization for Mobile Robots <https://www.cc.gatech.edu/~dellaert/ftp/Dellaert99icra.pdf>`_
+
+`Particle Filter <https://en.wikipedia.org/wiki/Particle_filter>`_
+
+`A Tutorial on Particle Filtering and Smoothing: Fifteen years later <https://www.seas.harvard.edu/courses/cs281/papers/doucet-johansen.pdf>`_
+  
+`Adaptive Monte Carlo Localization <http://roboticsknowledgebase.com/wiki/state-estimation/adaptive-monte-carlo-localization/>`_
