@@ -4,7 +4,7 @@ project(dronedoc)
 
 add_compile_options(-std=c++11)
 
-find_package(Boost 1.4.0 COMPONENTS system REQUIRED)
+find_package(Boost 1.4.0 COMPONENTS system filesystem REQUIRED)
 
 find_package(catkin REQUIRED COMPONENTS
   geometry_msgs

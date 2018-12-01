@@ -16,6 +16,7 @@
 #include "yaml-cpp/yaml.h"
 #include <ros/ros.h>
 #include <fstream>
+#include <boost/filesystem.hpp>
 
 namespace gazebo
 {
@@ -109,11 +110,14 @@ class MapCreator : public WorldPlugin
       }
     }
 
+    boost::filesystem::path fname(msg->filename());
+    fname = boost::filesystem::absolute(fname);
+
     ROS_INFO("Completed calculations, writing to image");
     if (!msg->filename().empty())
     {
       boost::gil::gray8_view_t view = image._view;
-      boost::gil::png_write_view(msg->filename(), view);
+      boost::gil::png_write_view(fname.string(), view);
     }
 
     ROS_INFO("Writing map info");
@@ -121,7 +125,7 @@ class MapCreator : public WorldPlugin
     YAML::Emitter out;
     out << YAML::BeginMap;
     out << YAML::Key << "image";
-    out << YAML::Value << msg->filename();
+    out << YAML::Value << fname.filename().string();
     out << YAML::Key << "resolution";
     out << YAML::Value << msg->resolution();
     out << YAML::Key << "negate";
@@ -135,16 +139,7 @@ class MapCreator : public WorldPlugin
     out << YAML::Flow;
     out << YAML::BeginSeq << msg->origin().x() << msg->origin().y() << 0.00 << YAML::EndSeq;
 
-    size_t dotpos = msg->filename().rfind(".");
-    std::string fname;
-    if(dotpos == std::string::npos)
-    {
-      fname = msg->filename();
-    }else{
-      fname = msg->filename().substr(0, dotpos);
-    }
-
-    std::ofstream yaml_out(fname+".yaml");
+    std::ofstream yaml_out(fname.replace_extension(".yaml").string());
     yaml_out << out.c_str();
     yaml_out.close();
 

@@ -14,6 +14,7 @@
 #include "vector2d.pb.h"
 
 #include <ros/ros.h>
+#include <boost/filesystem/path.hpp>
 
 using namespace std;
 
@@ -61,11 +62,15 @@ int main(int argc, char * argv[])
         request.set_map_width(atof(argv[4]));
         request.set_map_height(atof(argv[5]));
 
+        std::string filename;
         if(argc < 7){
-            request.set_filename("map");
+            filename = "map.png";
         } else {
-            request.set_filename(argv[6]);
+            filename = argv[6];
         }
+        boost::filesystem::path fname(filename);
+        fname = boost::filesystem::absolute(fname);
+        request.set_filename(fname.string());
 
         if (argc == 8)
         {
@@ -76,6 +81,7 @@ int main(int argc, char * argv[])
         gazebo::transport::run();
         gazebo::transport::NodePtr node(new gazebo::transport::Node());
         node->Init("default");
+
 
         ROS_INFO("\nRequest: \n"
                  " origin.x: %f origin.y: %f\n"
