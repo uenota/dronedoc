@@ -541,7 +541,15 @@ ROSサービスを利用しても構いません。
 
 .. code-block:: bash
 
-    rosservice call /mavros/cmd/takeoff "{min_pitch: 0.0, yaw: 0.0, latitude: 47.3977506, longitude: 8.5456074, altitude: 5}"
+  rosservice call /mavros/cmd/takeoff "{min_pitch: 0.0, yaw: 0.0, latitude: 47.3977506, longitude: 8.5456074, altitude: 5}"
+
+もしくは、mavrosの提供するノードを使って、以下のように離陸させることもできます。
+
+.. code-block:: bash
+
+  rosrun mavros mavcmd takeoffcur -a 0 0 5
+
+mavrosの提供するサービスやコマンドについては `mavrosのROS Wikiページ <http://wiki.ros.org/mavros>`_ に一覧があります。
 
 Rvizを使ってゴールを送信する
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -563,6 +571,12 @@ Offboardモードにしてから一定の時間操作が無いとモードが切
 
   rosservice call /mavros/set_mode "base_mode: 0
   custom_mode: 'OFFBOARD'"
+
+もしくは、先ほどと同様にmavrosのノードを使用しても構いません。
+
+.. code-block:: bash
+
+  rosrun mavros mavsys mode -c OFFBOARD
 
 実行結果
 -------------------------------------
