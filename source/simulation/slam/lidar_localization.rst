@@ -119,6 +119,42 @@ map.yamlは地図画像と一緒に生成される設定ファイルです。
 
   rosrun map_server map_server map.yaml
 
+Rvizを起動して ``/map`` トピックを表示すれば以下の画像のような地図が表示されます。
+
+.. image:: imgs/map_rviz.png
+
+地図が表示されない場合はGlobal OptionのFixed Frameが ``map`` になっているか確認してください。
+
+amclノードを起動する
+--------------------------------------------------------------------------
+次にamclノードを起動するためのLaunchファイルを書きます。
+amclノードには多くのパラメータがあり、パラメータのチューニングによって自己位置推定の精度は影響を受けます。
+pr2_navigationパッケージの `amcl_node.xml <https://github.com/PR2-prime/pr2_navigation/blob/hydro-devel/pr2_navigation_global/amcl_node.xml>`_ など、既存のLaunchファイルを参考にするとよいでしょう。
+このLaunchファイルでは、レーザースキャンのトピックが ``base_scan`` になっているので、使用する場合は自分の使うセンサの設定に合わせてトピック名を変更しましょう。
+また、base_frame_idとodom_frame_idも自分の使用するロボットの構成と同じように変更する必要があります。
+
+amclの各パラメータとその解説は `amclのROS Wikiページ <http://wiki.ros.org/amcl>`_ にあるのでパラメータをチューニングする際には参考にしてください。
+
+map_serverの起動を含めたlaunchファイルは以下のとおりです。
+
+.. literalinclude:: ../../../launch/amcl.launch
+  :linenos:
+  :language: xml
+  :caption: amcl.launch
+
+PX4 SITLシミュレータを起動する
+--------------------------------------------------------------------------
+最後に、PX4 SITLシミュレータを起動するLaunchファイルを作成します。
+
+Teleopノードを使う
+--------------------------------------------------------------------------
+.. mavros_extras の teleopを参考にする
+.. OFFBOARDにすることをわすれない！！
+.. -rc だったらoffboardじゃなくてもできそう？
+
+
+実行する
+--------------------------------------------------------------------------
 .. image:: imgs/initpose.png
 
 最初は以下の画像のように姿勢（赤矢印）が分布していますが、
@@ -146,5 +182,5 @@ map.yamlは地図画像と一緒に生成される設定ファイルです。
 `Particle Filter <https://en.wikipedia.org/wiki/Particle_filter>`_
 
 `A Tutorial on Particle Filtering and Smoothing: Fifteen years later <https://www.seas.harvard.edu/courses/cs281/papers/doucet-johansen.pdf>`_
-  
+
 `Adaptive Monte Carlo Localization <http://roboticsknowledgebase.com/wiki/state-estimation/adaptive-monte-carlo-localization/>`_
