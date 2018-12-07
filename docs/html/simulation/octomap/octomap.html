@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>1.9. Octomapを使って3Dマップを作る &mdash; Dronedoc 1.0.0 ドキュメント</title>
+  <title>1.10. Octomapを使って3Dマップを作る &mdash; Dronedoc 1.0.0 ドキュメント</title>
   
 
   
@@ -29,7 +29,7 @@
     <link rel="index" title="索引" href="../../genindex.html" />
     <link rel="search" title="検索" href="../../search.html" />
     <link rel="next" title="2. Hardwares" href="../../hardwares/index.html" />
-    <link rel="prev" title="1.8. LiDARを用いたSLAM" href="../slam/localization_and_mapping.html" /> 
+    <link rel="prev" title="1.9. LiDARを用いたSLAM" href="../slam/localization_and_mapping.html" /> 
 
   
   <script src="../../_static/js/modernizr.min.js"></script>
@@ -87,11 +87,12 @@
 <li class="toctree-l2"><a class="reference internal" href="../addmodel/addmodel.html">1.4. 新しいモデルを追加する</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../slam/slam.html">1.5. 自律飛行とSLAM</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../slam/gps_nav.html">1.6. GPSを用いた自律飛行</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../slam/lidar_localization.html">1.7. LiDARとAMCLを用いた自己位置推定</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../slam/localization_and_mapping.html">1.8. LiDARを用いたSLAM</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">1.9. Octomapを使って3Dマップを作る</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#rotors-simulator">1.9.1. Rotors Simulatorを準備する</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#githubros">1.9.1.1. GitHub上のROSパッケージを使う</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../slam/turtle_mapping.html">1.7. Turtlebotを使ってマップを作る</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../slam/lidar_localization.html">1.8. LiDARとAMCLを用いた自己位置推定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../slam/localization_and_mapping.html">1.9. LiDARを用いたSLAM</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">1.10. Octomapを使って3Dマップを作る</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#rotors-simulator">1.10.1. Rotors Simulatorを準備する</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#githubros">1.10.1.1. GitHub上のROSパッケージを使う</a></li>
 </ul>
 </li>
 </ul>
@@ -154,7 +155,7 @@
         
           <li><a href="../index.html">1. Simulation</a> &raquo;</li>
         
-      <li>1.9. Octomapを使って3Dマップを作る</li>
+      <li>1.10. Octomapを使って3Dマップを作る</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -174,13 +175,13 @@
            <div itemprop="articleBody">
             
   <div class="section" id="octomap3d">
-<h1>1.9. Octomapを使って3Dマップを作る<a class="headerlink" href="#octomap3d" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<h1>1.10. Octomapを使って3Dマップを作る<a class="headerlink" href="#octomap3d" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p>以下の内容は、 <a class="reference external" href="https://dev.px4.io/en/simulation/gazebo_octomap.html">OctoMap 3D Models with ROS/Gazebo - PX4 Developer Guide</a> を参考にしています。</p>
 <div class="section" id="rotors-simulator">
-<h2>1.9.1. Rotors Simulatorを準備する<a class="headerlink" href="#rotors-simulator" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>1.10.1. Rotors Simulatorを準備する<a class="headerlink" href="#rotors-simulator" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>このチュートリアルでは、 <a class="reference external" href="https://github.com/ethz-asl/rotors_simulator">Rotors Simulator</a> を使用します。</p>
 <div class="section" id="githubros">
-<h3>1.9.1.1. GitHub上のROSパッケージを使う<a class="headerlink" href="#githubros" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>1.10.1.1. GitHub上のROSパッケージを使う<a class="headerlink" href="#githubros" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>GitHub上にあるリポジトリは <code class="docutils literal notranslate"><span class="pre">git</span></code> コマンドを使ってローカルにクローン（複製）することができます。
 例えば、上記のRotors Simulatorリポジトリであれば、</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre>git clone https://github.com/ethz-asl/rotors_simulator.git
@@ -209,7 +210,7 @@ catkin_make
         <a href="../../hardwares/index.html" class="btn btn-neutral float-right" title="2. Hardwares" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../slam/localization_and_mapping.html" class="btn btn-neutral" title="1.8. LiDARを用いたSLAM" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../slam/localization_and_mapping.html" class="btn btn-neutral" title="1.9. LiDARを用いたSLAM" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

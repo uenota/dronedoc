@@ -33,24 +33,9 @@ Willow GarageモデルはInsertタブから追加することができます。
 --------------------------------------------------------------------------
 今回はGazebo内のモデルの地図を作成するので、シミュレータを起動します.
 
-以下のLaunchファイルでは、 `TURTLEBOT_3D_SENSOR` に指定されたセンサーを搭載したTurtlebotがスポーンします。
-デフォルトのasus_xtion_proだと、gmappingのノードでエラーが出てうまく動かないので、今回はkinectを使います。
-
-.. code-block:: bash
-
-  export TURTLEBOT_3D_SENSOR=kinect
-
-使用するターミナル全てで `TURTLEBOT_3D_SENSOR` の値がkinectになっていることを確認してから以下のコマンドを実行しましょう。
-
 .. code-block:: bash
 
   roslaunch turtlebot_gazebo turtlebot_world.launch world_file:=~/catkin_ws/src/px4_sim_pkg/worlds/willow_garage.world
-
-Turtlebotを起動します。
-
-.. code-block:: bash
-
-  roslaunch turtlebot_bringup minimal.launch
 
 Teleopノードを起動します。
 使用するコントローラに適したLaunchファイルを使ってください。
@@ -70,10 +55,6 @@ Teleopノードを起動します。
 
 地図を保存する
 --------------------------------------------------------------------------
-コントローラを使用する場合は `デッドマンスイッチ <https://ja.wikipedia.org/wiki/%E3%83%87%E3%83%83%E3%83%89%E3%83%9E%E3%83%B3%E8%A3%85%E7%BD%AE>`_ に割り当てられたボタンを押しながらスティックを動かしてTurtlebotを操作します。
-
-デッドマンスイッチは大抵LBボタンに割り当てられていますが、そうでない場合は :ref:`deadman` の手順で確認します。
-
 Rvizで作成される地図を確認しながら作業を行うと良いでしょう。
 
 .. code-block:: bash
@@ -96,62 +77,6 @@ my_map.yaml
 
 マップファイルのフォーマットについては `Map Format <http://wiki.ros.org/map_server>`_ を参照してください。
 
-.. _deadman:
-
-補足: デッドマンスイッチを確認する
-==========================================================================
-``/joy`` トピック
---------------------------------------------------------------------------
-teleopノードを起動すると、 ``/joy`` トピックにジョイスティックの入力値がパブリッシュされます。
-
-axesがスティックの入力、buttonsがボタンの入力です。
-それぞれインデックスは0から始まるので注意してください。
-
-.. code-block:: none
-
-  $ rostopic echo /joy
-  header:
-    seq: 2
-    stamp:
-      secs: 1543249966
-      nsecs: 586445147
-    frame_id: ''
-  axes: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-  buttons: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-  ---
-  header:
-    seq: 3
-    stamp:
-      secs: 1543249966
-      nsecs: 734398094
-    frame_id: ''
-  axes: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-  buttons: [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0]
-  ---
-
-このように、``/joy`` トピックを確認しながらジョイスティックを操作することでどのようにボタンやスティックがマッピングされているかを確認できます。
-
-
-logitech.launchを使う場合
---------------------------------------------------------------------------
-logitech.launchを使う場合には、デッドマンスイッチは4番のIDを持つボタンに固定されています。
-上記の手順でボタンのIDを確認して使用しましょう。
-
-ps3_teleop.launchもしくはxbox360_teleop.launch
---------------------------------------------------------------------------
-これらのLaunchファイルを使う場合には、 ``axis_deadman`` パラメータにデッドマンスイッチのIDが格納されています。
-以下のコマンドを使えば現在の設定値が確認できます。
-パラメータの名前は環境によって異なる場合があるので適宜変更してください。
-
-.. code-block:: bash
-
-  rosparam get /turtlebot_teleop_joystick/axis_deadman
-
-このようにして確認したIDがどのボタンにマッピングされているかを上記の手順で確認しても良いですし、以下のコマンドを使って自分の好きなIDに設定することもできます。
-
-.. code-block:: bash
-
-  rosparam set /turtlebot_teleop_joystick/axis_deadman 4
 
 参考
 ==========================================================================

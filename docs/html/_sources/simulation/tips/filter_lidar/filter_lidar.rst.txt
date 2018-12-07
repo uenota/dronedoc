@@ -20,7 +20,7 @@ laser_filtersパッケージでは様々なタイプのフィルターが用意�
 
 以下の内容を、 config/laser_filter.yamlに保存します。
 
-.. literalinclude:: ../../../config/laser_filter.yaml
+.. literalinclude:: ../../../../config/laser_filter.yaml
     :language: yaml
     :linenos:
     :caption: laser_filter.yaml
