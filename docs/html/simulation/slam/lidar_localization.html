@@ -95,9 +95,13 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#amcl">1.7.2. AMCLを使って自己位置推定を行う</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#id4">1.7.2.1. map_serverを使って地図情報をパブリッシュする</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">1.7.2.2. amclノードを起動する</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#px4-sitl">1.7.2.3. PX4 SITLシミュレータを起動する</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#teleop">1.7.2.4. Teleopノードを使う</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">1.7.2.5. 実行する</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id5">1.7.3. 参考</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">1.7.3. 参考</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="localization_and_mapping.html">1.8. LiDARを用いたSLAM</a></li>
@@ -270,12 +274,281 @@ catkin build
 また、前節で作成した地図情報を利用するために、 <a class="reference external" href="wiki.ros.org/map_server">map_serverパッケージ</a> も使用します。</p>
 <div class="section" id="id4">
 <h3>1.7.2.1. map_serverを使って地図情報をパブリッシュする<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>amclは <code class="docutils literal notranslate"><span class="pre">map</span></code> トピックにパブリッシュされている地図情報を用いて自己位置推定を行うので、前節で作成した地図の情報をパブリッシュしてやる必要があります。</p>
+<p>amclは <code class="docutils literal notranslate"><span class="pre">/map</span></code> トピックにパブリッシュされている地図情報を用いて自己位置推定を行うので、前節で作成した地図の情報をmap_serverを用いてパブリッシュしてやる必要があります。</p>
 <p>以下のコマンドで地図の情報をパブリッシュするノードを起動します。
 map.yamlは地図画像と一緒に生成される設定ファイルです。</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre>rosrun map_server map_server map.yaml
 </pre></div>
 </div>
+<p>Rvizを起動して <code class="docutils literal notranslate"><span class="pre">/map</span></code> トピックを表示すれば以下の画像のような地図が表示されます。</p>
+<img alt="../../_images/map_rviz.png" src="../../_images/map_rviz.png" />
+<p>地図が表示されない場合はGlobal OptionのFixed Frameが <code class="docutils literal notranslate"><span class="pre">map</span></code> になっているか確認してください。</p>
+</div>
+<div class="section" id="id5">
+<h3>1.7.2.2. amclノードを起動する<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>次にamclノードを起動するためのLaunchファイルを書きます。
+amclノードには多くのパラメータがあり、パラメータのチューニングによって自己位置推定の精度は影響を受けます。
+pr2_navigationパッケージの <a class="reference external" href="https://github.com/PR2-prime/pr2_navigation/blob/hydro-devel/pr2_navigation_global/amcl_node.xml">amcl_node.xml</a> など、既存のLaunchファイルを参考にするとよいでしょう。
+このLaunchファイルでは、レーザースキャンのトピックが <code class="docutils literal notranslate"><span class="pre">base_scan</span></code> になっているので、使用する場合は自分の使うセンサの設定に合わせてトピック名を変更しましょう。
+また、base_frame_idとodom_frame_idも自分の使用するロボットの構成と同じように変更する必要があります。</p>
+<p>amclの各パラメータとその解説は <a class="reference external" href="http://wiki.ros.org/amcl">amclのROS Wikiページ</a> にあるのでパラメータをチューニングする際には参考にしてください。</p>
+<p>map_serverの起動を含めたlaunchファイルは以下のとおりです。</p>
+<div class="literal-block-wrapper container" id="id8">
+<div class="code-block-caption"><span class="caption-text">amcl.launch</span><a class="headerlink" href="#id8" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-xml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43</pre></div></td><td class="code"><div class="highlight"><pre><span class="nt">&lt;launch&gt;</span>
+    <span class="nt">&lt;node</span> <span class="na">name=</span><span class="s">&quot;map_server&quot;</span> <span class="na">pkg=</span><span class="s">&quot;map_server&quot;</span> <span class="na">type=</span><span class="s">&quot;map_server&quot;</span> <span class="na">args=</span><span class="s">&quot;$(find px4_sim_pkg)/map/willow_garage.yaml&quot;</span> <span class="nt">/&gt;</span>
+
+    <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;use_map_topic&quot;</span> <span class="na">default=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+
+    <span class="nt">&lt;node</span> <span class="na">pkg=</span><span class="s">&quot;amcl&quot;</span> <span class="na">type=</span><span class="s">&quot;amcl&quot;</span> <span class="na">name=</span><span class="s">&quot;amcl&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;remap</span> <span class="na">from=</span><span class="s">&quot;scan&quot;</span> <span class="na">to=</span><span class="s">&quot;/laser/scan&quot;</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;use_map_topic&quot;</span> <span class="na">value=</span><span class="s">&quot;$(arg use_map_topic)&quot;</span><span class="nt">/&gt;</span>
+        <span class="c">&lt;!-- Publish scans from best pose at a max of 10 Hz --&gt;</span>
+        <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;base_frame_id&quot;</span> <span class="na">value=</span><span class="s">&quot;base_link&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;odom_model_type&quot;</span> <span class="na">value=</span><span class="s">&quot;omni&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;odom_alpha5&quot;</span> <span class="na">value=</span><span class="s">&quot;0.1&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;transform_tolerance&quot;</span> <span class="na">value=</span><span class="s">&quot;0.2&quot;</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;gui_publish_rate&quot;</span> <span class="na">value=</span><span class="s">&quot;10.0&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;laser_max_beams&quot;</span> <span class="na">value=</span><span class="s">&quot;30&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;min_particles&quot;</span> <span class="na">value=</span><span class="s">&quot;500&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;max_particles&quot;</span> <span class="na">value=</span><span class="s">&quot;5000&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;kld_err&quot;</span> <span class="na">value=</span><span class="s">&quot;0.05&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;kld_z&quot;</span> <span class="na">value=</span><span class="s">&quot;0.99&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;odom_alpha1&quot;</span> <span class="na">value=</span><span class="s">&quot;0.2&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;odom_alpha2&quot;</span> <span class="na">value=</span><span class="s">&quot;0.2&quot;</span><span class="nt">/&gt;</span>
+        <span class="c">&lt;!-- translation std dev, m --&gt;</span>
+        <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;odom_alpha3&quot;</span> <span class="na">value=</span><span class="s">&quot;0.8&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;odom_alpha4&quot;</span> <span class="na">value=</span><span class="s">&quot;0.2&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;laser_z_hit&quot;</span> <span class="na">value=</span><span class="s">&quot;0.5&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;laser_z_short&quot;</span> <span class="na">value=</span><span class="s">&quot;0.05&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;laser_z_max&quot;</span> <span class="na">value=</span><span class="s">&quot;0.05&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;laser_z_rand&quot;</span> <span class="na">value=</span><span class="s">&quot;0.5&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;laser_sigma_hit&quot;</span> <span class="na">value=</span><span class="s">&quot;0.2&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;laser_lambda_short&quot;</span> <span class="na">value=</span><span class="s">&quot;0.1&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;laser_lambda_short&quot;</span> <span class="na">value=</span><span class="s">&quot;0.1&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;laser_model_type&quot;</span> <span class="na">value=</span><span class="s">&quot;likelihood_field&quot;</span><span class="nt">/&gt;</span>
+        <span class="c">&lt;!-- &lt;param name=&quot;laser_model_type&quot; value=&quot;beam&quot;/&gt; --&gt;</span>
+        <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;laser_likelihood_max_dist&quot;</span> <span class="na">value=</span><span class="s">&quot;2.0&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;update_min_d&quot;</span> <span class="na">value=</span><span class="s">&quot;0.2&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;update_min_a&quot;</span> <span class="na">value=</span><span class="s">&quot;0.5&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;odom_frame_id&quot;</span> <span class="na">value=</span><span class="s">&quot;odom&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;resample_interval&quot;</span> <span class="na">value=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;transform_tolerance&quot;</span> <span class="na">value=</span><span class="s">&quot;0.1&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;recovery_alpha_slow&quot;</span> <span class="na">value=</span><span class="s">&quot;0.0&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;recovery_alpha_fast&quot;</span> <span class="na">value=</span><span class="s">&quot;0.0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/node&gt;</span>
+<span class="nt">&lt;/launch&gt;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+</div>
+<div class="section" id="px4-sitl">
+<h3>1.7.2.3. PX4 SITLシミュレータを起動する<a class="headerlink" href="#px4-sitl" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>最後に、PX4 SITLシミュレータを起動するLaunchファイルを作成します。</p>
+<p>内容は <a class="reference internal" href="gps_nav.html"><span class="doc">GPSを用いた自律飛行</span></a> で使用した mymodel_sitl_tf.launchとほとんど同じですが、 <code class="docutils literal notranslate"><span class="pre">odom</span></code> から <code class="docutils literal notranslate"><span class="pre">map</span></code> へのTFをパブリッシュするノードをなくしています。</p>
+<p>amclノードは、 <code class="docutils literal notranslate"><span class="pre">map</span></code> フレームからロボットのベースフレーム（今回は <code class="docutils literal notranslate"><span class="pre">base_link</span></code> ）へのTFを計算しますが、実際にブロードキャストするのは <code class="docutils literal notranslate"><span class="pre">map</span></code> からオドメトリのベース（今回は <code class="docutils literal notranslate"><span class="pre">odom</span></code> ）へのTFです。
+今回はamclのブロードキャストする <code class="docutils literal notranslate"><span class="pre">map</span></code> から <code class="docutils literal notranslate"><span class="pre">odom</span></code> へのTFを使用するので、他のノードが <code class="docutils literal notranslate"><span class="pre">map</span></code> から <code class="docutils literal notranslate"><span class="pre">odom</span></code> へのTFをブロードキャストしないようにします。</p>
+<p>オドメトリは車輪の回転数などから計算され、自己位置推定に用いられますが、スリップや外乱などによって誤差が蓄積するため、センサ情報を用いて補正する必要があります。amclノードは、地図とセンサ情報を用いてこの誤差を推定し、 <code class="docutils literal notranslate"><span class="pre">map</span></code> から <code class="docutils literal notranslate"><span class="pre">odom</span></code> へのTFとしてブロードキャストします。</p>
+<p>また、今回は搭載したLiDARのデータを用いて自己位置推定をするので、 <code class="docutils literal notranslate"><span class="pre">base_link</span></code> から <code class="docutils literal notranslate"><span class="pre">lidar_link</span></code> へのTFもブロードキャストする必要があります。</p>
+<div class="figure">
+<img alt="../../_images/amcl_localization.png" src="../../_images/amcl_localization.png" />
+</div>
+<div class="literal-block-wrapper container" id="id9">
+<div class="code-block-caption"><span class="caption-text">mymodel_sitl_amcl.launch</span><a class="headerlink" href="#id9" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-xml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23</pre></div></td><td class="code"><div class="highlight"><pre><span class="nt">&lt;launch&gt;</span>
+
+    <span class="nt">&lt;node</span> <span class="na">pkg=</span><span class="s">&quot;tf&quot;</span> <span class="na">name=</span><span class="s">&quot;base2lidar&quot;</span> <span class="na">type=</span><span class="s">&quot;static_transform_publisher&quot;</span> <span class="na">args=</span><span class="s">&quot;0 0 0.1 0 0 0 base_link lidar_link 100&quot;</span><span class="nt">/&gt;</span>
+
+    <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;vehicle&quot;</span> <span class="na">default=</span><span class="s">&quot;iris_2d_lidar&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;world&quot;</span> <span class="na">default=</span><span class="s">&quot;$(find px4_sim_pkg)/worlds/willow_garage.world&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;sdf&quot;</span> <span class="na">default=</span><span class="s">&quot;$(find px4_sim_pkg)/models/iris_2d_lidar/model.sdf&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;verbose&quot;</span> <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;debug&quot;</span> <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+
+    <span class="nt">&lt;include</span> <span class="na">file=</span><span class="s">&quot;$(find px4)/launch/mavros_posix_sitl.launch&quot;</span> <span class="nt">&gt;</span>
+        <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;sdf&quot;</span> <span class="na">value=</span><span class="s">&quot;$(arg sdf)&quot;</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;vehicle&quot;</span> <span class="na">value=</span><span class="s">&quot;$(arg vehicle)&quot;</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;verbose&quot;</span> <span class="na">value=</span><span class="s">&quot;$(arg verbose)&quot;</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;debug&quot;</span> <span class="na">value=</span><span class="s">&quot;$(arg debug)&quot;</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;world&quot;</span> <span class="na">value=</span><span class="s">&quot;$(arg world)&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/include&gt;</span>
+
+    <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;/mavros/local_position/tf/send&quot;</span> <span class="na">type=</span><span class="s">&quot;bool&quot;</span> <span class="na">value=</span><span class="s">&quot;true&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;/mavros/local_position/frame_id&quot;</span> <span class="na">type=</span><span class="s">&quot;str&quot;</span> <span class="na">value=</span><span class="s">&quot;odom&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;/mavros/local_position/tf/frame_id&quot;</span> <span class="na">type=</span><span class="s">&quot;str&quot;</span> <span class="na">value=</span><span class="s">&quot;odom&quot;</span> <span class="nt">/&gt;</span>
+
+<span class="nt">&lt;/launch&gt;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+</div>
+<div class="section" id="teleop">
+<h3>1.7.2.4. Teleopノードを使う<a class="headerlink" href="#teleop" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>今回はゲームパッドを用いてドローンを操作します。
+ゲームパッドを用いて操作するには、<a class="reference external" href="http://wiki.ros.org/mavros_extras">mavros_extras</a> パッケージのmavteleopノードを使います。</p>
+<p>mavteleopノードは与える引数によって操作方法を変えることができます。
+今回は <code class="docutils literal notranslate"><span class="pre">-vel</span></code> オプションを与えて、ドローンの速度を操作するようにします。</p>
+<p><code class="docutils literal notranslate"><span class="pre">-vel</span></code> オプション以外にも <code class="docutils literal notranslate"><span class="pre">-att</span></code> や <code class="docutils literal notranslate"><span class="pre">-pos</span></code> オプションがあり、それぞれ姿勢と位置を操作するモードです。</p>
+<p>mavteleopノードを使用するLaunchファイルを以下に示します。</p>
+<div class="literal-block-wrapper container" id="id10">
+<div class="code-block-caption"><span class="caption-text">mavros_teleop.launch</span><a class="headerlink" href="#id10" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-xml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="highlight"><pre><span class="nt">&lt;launch&gt;</span>
+  <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;teleop_args&quot;</span> <span class="na">default=</span><span class="s">&quot;-vel&quot;</span> <span class="nt">/&gt;</span>
+
+  <span class="nt">&lt;node</span> <span class="na">pkg=</span><span class="s">&quot;joy&quot;</span> <span class="na">type=</span><span class="s">&quot;joy_node&quot;</span> <span class="na">name=</span><span class="s">&quot;joy&quot;</span> <span class="na">required=</span><span class="s">&quot;True&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;autorepeat_rate&quot;</span> <span class="na">value=</span><span class="s">&quot;5&quot;</span> <span class="nt">/&gt;</span> <span class="c">&lt;!-- Minimal update rate, Hz --&gt;</span>
+  <span class="nt">&lt;/node&gt;</span>
+
+  <span class="nt">&lt;node</span> <span class="na">pkg=</span><span class="s">&quot;mavros_extras&quot;</span> <span class="na">type=</span><span class="s">&quot;mavteleop&quot;</span> <span class="na">name=</span><span class="s">&quot;mavteleop&quot;</span> <span class="na">args=</span><span class="s">&quot;$(arg teleop_args)&quot;</span> <span class="na">required=</span><span class="s">&quot;True&quot;</span> <span class="na">output=</span><span class="s">&quot;screen&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;rosparam</span> <span class="na">command=</span><span class="s">&quot;load&quot;</span> <span class="na">file=</span><span class="s">&quot;$(find px4_sim_pkg)/config/f310_joy.yaml&quot;</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;/node&gt;</span>
+<span class="nt">&lt;/launch&gt;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<p>mavros_teleop.launch内ではゲームパッドのマッピングを記述したファイル（f310_joy.yaml）を <code class="docutils literal notranslate"><span class="pre">rosparam</span></code> タグでROSのパラメータとしてロードしています。
+ファイルの内容は以下のとおりです。</p>
+<p>このファイル内に書かれた内容がROSのパラメータとして保存され、mavteleopノードによって参照されます。
+自分の使っているゲームパッドのマッピングと合うように、 <code class="docutils literal notranslate"><span class="pre">axes_map</span></code> と、 <code class="docutils literal notranslate"><span class="pre">button_map</span></code> の部分を変更しましょう。
+ゲームパッドのマッピングを確認する方法は、前章の内容を参考にしてください。
+また、 <code class="docutils literal notranslate"><span class="pre">axes_scale</span></code> を変更すればスティックの操作量とドローンの移動速度の対応を変化させられます。</p>
+<div class="literal-block-wrapper container" id="id11">
+<div class="code-block-caption"><span class="caption-text">f310_joy.yaml</span><a class="headerlink" href="#id11" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-yaml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1"># Joystic configuration for Logitech F310 gamepad</span>
+<span class="l l-Scalar l-Scalar-Plain">axes_map</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">roll</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">2</span>
+  <span class="l l-Scalar l-Scalar-Plain">pitch</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">3</span>
+  <span class="l l-Scalar l-Scalar-Plain">yaw</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
+  <span class="l l-Scalar l-Scalar-Plain">throttle</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="l l-Scalar l-Scalar-Plain">axes_scale</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">roll</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">-0.5</span>
+  <span class="l l-Scalar l-Scalar-Plain">pitch</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0.5</span>
+  <span class="l l-Scalar l-Scalar-Plain">yaw</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0.5</span>
+  <span class="l l-Scalar l-Scalar-Plain">throttle</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0.5</span>
+<span class="l l-Scalar l-Scalar-Plain">button_map</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">takeoff</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
+  <span class="l l-Scalar l-Scalar-Plain">land</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+  <span class="l l-Scalar l-Scalar-Plain">enable</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">2</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+</div>
+<div class="section" id="id6">
+<h3>1.7.2.5. 実行する<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>最初にPX4シミュレータを起動します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre>roslaunch px4_sim_pkg mymodel_sitl_amcl.launch
+</pre></div>
+</div>
+<p>Gazeboが起動したら、次にmavteleopノードを起動します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre>roslaunch px4_sim_pkg mavros_teleop.launch
+</pre></div>
+</div>
+<p>ゲームパッドからドローンを操作できるようにするためには、OFFBOARDモードである必要があるので、、離陸させてからモードを変更します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre>rosrun mavros mavsys mode -c OFFBOARD
+</pre></div>
+</div>
+<p>OFFBOARDモードに変更するためには、すでに <code class="docutils literal notranslate"><span class="pre">setpoint_*</span></code> トピックにメッセージが届いている必要があります。
+この場合は、mavteleopノードが <code class="docutils literal notranslate"><span class="pre">/mavros/setpoint_velocity/cmd_vel</span></code> トピックにメッセージをパブリッシュしているので、モード変更することができます。
+自作のノードなどでOFFBOARDモードに変更できない時は、 <code class="docutils literal notranslate"><span class="pre">setpoint_*</span></code> トピックにメッセージがパブリッシュされているか確認しましょう。</p>
+<p>最後にamclノードを起動します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre>roslaunch px4_sim_pkg amcl.launch
+</pre></div>
+</div>
+<p>Rvizを起動して <code class="docutils literal notranslate"><span class="pre">/map</span></code> トピックを表示します。
+また、 <code class="docutils literal notranslate"><span class="pre">/particlecloud</span></code> トピックを表示すると、推定された姿勢のパーティクルが表示されます。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre>rviz
+</pre></div>
+</div>
+<p>Rvizを起動したら、2D Pose Estimateを選択して、初期位置と姿勢を以下の画像のようにして与えてやります。
+あとは、ゲームパッドを使ってドローンを移動させてみましょう。</p>
 <img alt="../../_images/initpose.png" src="../../_images/initpose.png" />
 <p>最初は以下の画像のように姿勢（赤矢印）が分布していますが、</p>
 <img alt="../../_images/initest.png" src="../../_images/initest.png" />
@@ -285,8 +558,8 @@ map.yamlは地図画像と一緒に生成される設定ファイルです。</p
 <img alt="../../_images/amcl.gif" src="../../_images/amcl.gif" />
 </div>
 </div>
-<div class="section" id="id5">
-<h2>1.7.3. 参考<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id7">
+<h2>1.7.3. 参考<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <dl class="docutils">
 <dt><a class="reference external" href="https://jp.mathworks.com/help/robotics/examples/localize-turtlebot-using-monte-carlo-localization.html">モンテカルロ位置推定を使用した TurtleBot の位置推定</a></dt>
 <dd>モンテカルロ位置推定の解説</dd>

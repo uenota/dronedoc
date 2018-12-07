@@ -89,14 +89,18 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">2. ROSの基本</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#id1">2.1. ROSコマンド</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id2">2.2. パブリッシャとサブスクライバ</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id3">2.3. サーバとクライアント</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#tf">2.4. TF</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id4">2.5. パラメータ</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#rosparam">2.5.1. <code class="docutils literal notranslate"><span class="pre">rosparam</span></code> コマンド</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id5">2.5.2. 参考</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">2.3. サーバとクライアント</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#rosservice">2.3.1. <code class="docutils literal notranslate"><span class="pre">rosservice</span></code> コマンド</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#srv">2.3.2. サービスファイル(.srv)</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id6">2.6. 各種ファイルの書き方</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#tf">2.4. TF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">2.5. パラメータ</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#rosparam">2.5.1. <code class="docutils literal notranslate"><span class="pre">rosparam</span></code> コマンド</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">2.5.2. 参考</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">2.6. 各種ファイルの書き方</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#launch">2.6.1. Launchファイル</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#package-xml">2.6.2. package.xml</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#cmakelists-txt">2.6.3. CMakeLists.txt</a></li>
@@ -179,18 +183,50 @@
 </div>
 <div class="section" id="id2">
 <h2>2.2. パブリッシャとサブスクライバ<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>TODO</p>
+<p>ノード同士はトピックを通じてメッセージを送受信することでやり取りしています。
+ノードがトピックにメッセージを送信することをパブリッシュするといい、
+データをパブリッシュするノードをパブリッシャといいます。
+また、ノードがトピックからメッセージを受け取ることをサブスクライブするといい、
+データをサブスクライブするノードをサブスクライバといいます。</p>
+<img alt="../../_images/topic.png" src="../../_images/topic.png" />
 </div>
 <div class="section" id="id3">
 <h2>2.3. サーバとクライアント<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>TODO</p>
+<p><a class="reference external" href="http://wiki.ros.org/Services">サービス</a> は、2つのノードが1対1でやり取りするときに使われる仕組みです。
+サービスの呼び出しでは、クライアントと呼ばれるノードがもう一方のノード（サーバ）に対してリクエストを送信し、
+サーバが何らかの処理を行った後にクライアントに対してレスポンスを送信します。</p>
+<div class="section" id="rosservice">
+<h3>2.3.1. <code class="docutils literal notranslate"><span class="pre">rosservice</span></code> コマンド<a class="headerlink" href="#rosservice" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p><a class="reference external" href="http://wiki.ros.org/rosservice">rosservice</a> コマンドを使えばROSサービスをコールしたり、その情報を調べることができます。</p>
+</div>
+<div class="section" id="srv">
+<h3>2.3.2. サービスファイル(.srv)<a class="headerlink" href="#srv" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>ノードが提供するサービスについての決まり事が書いてあるファイルです。
+具体的には、サービスのリクエストとレスポンスのデータ型が記載されています。
+<a class="reference external" href="http://wiki.ros.org/srv">srv`フォルダ以下に格納されます。
+サービスファイルの文法などは `srv - ROS.org</a> を参照してください。</p>
+<p>以下はturtlesimのSpawn.srvファイルです。
+turtleを新しく配置するときに使われるサービスです。
+点線で区切られた上の部分がリクエスト、下の部分がレスポンスです。</p>
+<p>turtleを配置する位置と角度、名前をリクエストとして与えると、
+サーバがturtleを新しく配置して、配置したturtleの名前をレスポンスとして返してきます。</p>
+<div class="highlight-msg notranslate"><div class="highlight"><pre>float32 x
+float32 y
+float32 theta
+string name # Optional.  A unique name will be created and returned if this is empty
+---
+string name
+</pre></div>
+</div>
+<p>メッセージファイルと同様、 <code class="docutils literal notranslate"><span class="pre">#</span></code> 以降はコメントと判断されます。</p>
+</div>
 </div>
 <div class="section" id="tf">
 <h2>2.4. TF<a class="headerlink" href="#tf" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p><a href="#id7"><span class="problematic" id="id8">`tf/Tutorial - ROS Wiki http://wiki.ros.org/ja/tf/Tutorials&gt;`_</span></a></p>
+<p><a class="reference external" href="http://wiki.ros.org/ja/tf/Tutorials">tf/Tutorial - ROS Wiki</a></p>
 </div>
-<div class="section" id="id4">
-<h2>2.5. パラメータ<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id6">
+<h2>2.5. パラメータ<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>ROSノードは、再利用性を高めるためにパラメータを用いてその動作を変更できるようにしてあります。</p>
 <p>ノード内でパラメータを利用する方法については、 <a class="reference external" href="http://wiki.ros.org/roscpp/Overview/Parameter%20Server">roscpp</a> と <a class="reference external" href="http://wiki.ros.org/rospy/Overview/Parameter%20Server">rospy</a> のドキュメンテーションを参考にしてください。</p>
 <div class="section" id="rosparam">
@@ -200,13 +236,13 @@ rosparamコマンドについては <a class="reference external" href="http://w
 <p>また、Launchファイルからノードを起動した時は、以下のようにパラメータ一覧が表示されます。</p>
 <img alt="../../_images/param_launch.png" src="../../_images/param_launch.png" />
 </div>
-<div class="section" id="id5">
-<h3>2.5.2. 参考<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id7">
+<h3>2.5.2. 参考<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p><a class="reference external" href="http://wiki.ros.org/ja/Parameter%20Server">Parameter Server - ROS Wiki</a></p>
 </div>
 </div>
-<div class="section" id="id6">
-<h2>2.6. 各種ファイルの書き方<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id8">
+<h2>2.6. 各種ファイルの書き方<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="section" id="launch">
 <h3>2.6.1. Launchファイル<a class="headerlink" href="#launch" title="このヘッドラインへのパーマリンク">¶</a></h3>
 </div>

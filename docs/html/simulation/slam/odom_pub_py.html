@@ -154,6 +154,147 @@
             
   <div class="section" id="odom-publisher-py">
 <h1>odom_publisher.py<a class="headerlink" href="#odom-publisher-py" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70</pre></div></td><td class="code"><div class="highlight"><pre><span class="ch">#!/usr/bin/env python</span>
+
+<span class="kn">import</span> <span class="nn">rospy</span>
+<span class="kn">from</span> <span class="nn">nav_msgs.msg</span> <span class="kn">import</span> <span class="n">Odometry</span>
+<span class="kn">from</span> <span class="nn">geometry_msgs.msg</span> <span class="kn">import</span> <span class="n">PoseStamped</span><span class="p">,</span> <span class="n">TwistStamped</span><span class="p">,</span> <span class="n">Quaternion</span>
+<span class="kn">import</span> <span class="nn">tf</span>
+
+<span class="c1"># Callback for local position</span>
+<span class="n">local_pos</span> <span class="o">=</span> <span class="n">PoseStamped</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">local_pos_cb</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+    <span class="c1"># Need global declaration in order to assign global variable</span>
+    <span class="k">global</span> <span class="n">local_pos</span>
+    <span class="n">local_pos</span> <span class="o">=</span> <span class="n">msg</span>
+
+<span class="c1"># Callback for local velocity</span>
+<span class="n">local_vel</span> <span class="o">=</span> <span class="n">TwistStamped</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">local_vel_cb</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+    <span class="c1"># Need global declaration in order to assign global variable</span>
+    <span class="k">global</span> <span class="n">local_vel</span>
+    <span class="n">local_vel</span> <span class="o">=</span> <span class="n">msg</span>
+
+<span class="k">def</span> <span class="nf">odom_publisher</span><span class="p">():</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="s2">&quot;odom_publisher&quot;</span><span class="p">)</span>
+
+    <span class="n">odom_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="s2">&quot;odom&quot;</span><span class="p">,</span> <span class="n">Odometry</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+
+    <span class="n">local_pos_sub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="s2">&quot;mavros/local_position/pose&quot;</span><span class="p">,</span>
+                                      <span class="n">PoseStamped</span><span class="p">,</span>
+                                      <span class="n">callback</span><span class="o">=</span><span class="n">local_pos_cb</span><span class="p">)</span>
+    <span class="n">local_vel_sub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="s2">&quot;mavros/local_position/velocity&quot;</span><span class="p">,</span>
+                                      <span class="n">TwistStamped</span><span class="p">,</span>
+                                      <span class="n">callback</span><span class="o">=</span><span class="n">local_vel_cb</span><span class="p">)</span>
+
+    <span class="n">rate</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Rate</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">rospy</span><span class="o">.</span><span class="n">is_shutdown</span><span class="p">():</span>
+
+        <span class="n">pose</span> <span class="o">=</span> <span class="n">local_pos</span><span class="o">.</span><span class="n">pose</span>
+        <span class="n">twist</span> <span class="o">=</span> <span class="n">local_vel</span><span class="o">.</span><span class="n">twist</span>
+
+        <span class="c1"># Create quaternion from euler angle of local position</span>
+        <span class="n">odom_quat</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">transformations</span><span class="o">.</span><span class="n">quaternion_from_euler</span><span class="p">(</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">x</span><span class="p">,</span>
+                                                             <span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">y</span><span class="p">,</span>
+                                                             <span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">z</span><span class="p">)</span>
+
+        <span class="n">odom</span> <span class="o">=</span> <span class="n">Odometry</span><span class="p">()</span>
+        <span class="n">odom</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">stamp</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="c1"># Global frame is &quot;odom&quot;</span>
+        <span class="n">odom</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">frame_id</span> <span class="o">=</span> <span class="s2">&quot;odom&quot;</span>
+
+        <span class="n">odom</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span>
+        <span class="n">odom</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span>
+        <span class="n">odom</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">odom</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span> <span class="o">=</span> <span class="n">odom_quat</span>
+
+        <span class="c1"># Set robot&#39;s base frame as odometry child frame</span>
+        <span class="n">odom</span><span class="o">.</span><span class="n">child_frame_id</span> <span class="o">=</span> <span class="s2">&quot;base_link&quot;</span>
+        <span class="n">odom</span><span class="o">.</span><span class="n">twist</span><span class="o">.</span><span class="n">twist</span><span class="o">.</span><span class="n">linear</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">twist</span><span class="o">.</span><span class="n">linear</span><span class="o">.</span><span class="n">x</span>
+        <span class="n">odom</span><span class="o">.</span><span class="n">twist</span><span class="o">.</span><span class="n">twist</span><span class="o">.</span><span class="n">linear</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">twist</span><span class="o">.</span><span class="n">linear</span><span class="o">.</span><span class="n">y</span>
+        <span class="n">odom</span><span class="o">.</span><span class="n">twist</span><span class="o">.</span><span class="n">twist</span><span class="o">.</span><span class="n">angular</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">twist</span><span class="o">.</span><span class="n">angular</span><span class="o">.</span><span class="n">z</span>
+
+        <span class="n">odom_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">odom</span><span class="p">)</span>
+        <span class="n">rate</span><span class="o">.</span><span class="n">sleep</span><span class="p">()</span>
+
+<span class="c1"># Only run if executed as top level script</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">odom_publisher</span><span class="p">()</span>
+    <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ROSInterruptException</span><span class="p">:</span>
+        <span class="k">pass</span>
+</pre></div>
+</td></tr></table></div>
 </div>
 <div class="section" id="id1">
 <h1>解説<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
