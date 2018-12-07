@@ -23,7 +23,7 @@ ROSパッケージを作る
 
 このコードを ``offboard_sample.cpp`` という名前で、 ``px4_sim_pkg/src`` に保存してください。
 
-.. literalinclude:: ../../src/offboard_sample.cpp
+.. literalinclude:: ../../../src/offboard_sample.cpp
     :language: cpp
     :linenos:
     :caption: From `PX4 Developer Guide <https://dev.px4.io/en/ros/mavros_offboard.html>`_ (`CC BY 4.0 <https://creativecommons.org/licenses/by/4.0/deed>`_)

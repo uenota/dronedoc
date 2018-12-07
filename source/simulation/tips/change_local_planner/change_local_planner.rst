@@ -25,7 +25,7 @@ eband_local_plannerをインストールする
 
 eband_local_plannerのパラメータ一覧は `eband_local_plannerのROS Wikiページ <wiki.ros.org/eband_local_planner>`_ にあります。
 
-.. literalinclude:: ../../../config/eband_local_planner_params.yaml
+.. literalinclude:: ../../../../config/eband_local_planner_params.yaml
     :linenos:
     :language: yaml
     :caption: eband_local_planner_params.yaml
@@ -63,7 +63,7 @@ teb_local_plannerをインストールする
 
 teb_local_plannerのパラメータ一覧は `teb_local_plannerのROS Wikiページ <wiki.ros.org/teb_local_planner>`_ にあります。
 
-.. literalinclude:: ../../../config/teb_local_planner_params.yaml
+.. literalinclude:: ../../../../config/teb_local_planner_params.yaml
     :linenos:
     :language: yaml
     :caption: teb_local_planner_params.yaml
