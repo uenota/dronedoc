@@ -563,9 +563,9 @@ Rvizを使ってゴールを送信する
 
 Offboardモードにする
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-また、Offboardモードになっていないと ``cmd_vel`` トピックを使って操作できないので、Offboardモードにします。
+また、Offboardモードになっていないと ``cmd_vel_unstamped`` トピックを使って操作できないので、Offboardモードにします。
 以下のコマンドを使えばドローンの飛行モードがOffboardになります。
-Offboardモードにしてから一定の時間操作が無いとモードが切り替わるので、ゴールを指示してからOffboardモードにしたほうがスムーズに動作します。
+``/mavros/setpoint_velocity/cmd_vel_unstamped`` にトピックがパブリッシュされていないとOffboardモードに切り替わらないので、ゴールを指示してからOffboardモードにします。
 
 .. code-block:: bash
 

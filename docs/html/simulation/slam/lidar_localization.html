@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>1.7. LiDARとAMCLを用いた自己位置推定 &mdash; Dronedoc 1.0.0 ドキュメント</title>
+  <title>1.8. LiDARとAMCLを用いた自己位置推定 &mdash; Dronedoc 1.0.0 ドキュメント</title>
   
 
   
@@ -28,8 +28,8 @@
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="索引" href="../../genindex.html" />
     <link rel="search" title="検索" href="../../search.html" />
-    <link rel="next" title="1.8. LiDARを用いたSLAM" href="localization_and_mapping.html" />
-    <link rel="prev" title="1.6. GPSを用いた自律飛行" href="gps_nav.html" /> 
+    <link rel="next" title="1.9. LiDARを用いたSLAM" href="localization_and_mapping.html" />
+    <link rel="prev" title="1.7. Turtlebotを使ってマップを作る" href="turtle_mapping.html" /> 
 
   
   <script src="../../_static/js/modernizr.min.js"></script>
@@ -87,25 +87,22 @@
 <li class="toctree-l2"><a class="reference internal" href="../addmodel/addmodel.html">1.4. 新しいモデルを追加する</a></li>
 <li class="toctree-l2"><a class="reference internal" href="slam.html">1.5. 自律飛行とSLAM</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gps_nav.html">1.6. GPSを用いた自律飛行</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">1.7. LiDARとAMCLを用いた自己位置推定</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id1">1.7.1. 自己位置推定用の地図を作る</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#gazebo-plugin">1.7.1.1. Gazebo Pluginを使って地図を作成する</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id2">1.7.1.2. 地図を出力する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="turtle_mapping.html">1.7. Turtlebotを使ってマップを作る</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">1.8. LiDARとAMCLを用いた自己位置推定</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">1.8.1. 自己位置推定用の地図を作る</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#amcl">1.8.2. AMCLを使って自己位置推定を行う</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id3">1.8.2.1. map_serverを使って地図情報をパブリッシュする</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">1.8.2.2. amclノードを起動する</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#px4-sitl">1.8.2.3. PX4 SITLシミュレータを起動する</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#teleop">1.8.2.4. Teleopノードを使う</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">1.8.2.5. 実行する</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#amcl">1.7.2. AMCLを使って自己位置推定を行う</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id4">1.7.2.1. map_serverを使って地図情報をパブリッシュする</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id5">1.7.2.2. amclノードを起動する</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#px4-sitl">1.7.2.3. PX4 SITLシミュレータを起動する</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#teleop">1.7.2.4. Teleopノードを使う</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id6">1.7.2.5. 実行する</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">1.8.3. 参考</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id7">1.7.3. 参考</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="localization_and_mapping.html">1.8. LiDARを用いたSLAM</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../octomap/octomap.html">1.9. Octomapを使って3Dマップを作る</a></li>
+<li class="toctree-l2"><a class="reference internal" href="localization_and_mapping.html">1.9. LiDARを用いたSLAM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../octomap/octomap.html">1.10. Octomapを使って3Dマップを作る</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../hardwares/index.html">2. Hardwares</a></li>
@@ -164,7 +161,7 @@
         
           <li><a href="../index.html">1. Simulation</a> &raquo;</li>
         
-      <li>1.7. LiDARとAMCLを用いた自己位置推定</li>
+      <li>1.8. LiDARとAMCLを用いた自己位置推定</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -184,10 +181,10 @@
            <div itemprop="articleBody">
             
   <div class="section" id="lidaramcl">
-<h1>1.7. LiDARとAMCLを用いた自己位置推定<a class="headerlink" href="#lidaramcl" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<h1>1.8. LiDARとAMCLを用いた自己位置推定<a class="headerlink" href="#lidaramcl" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p>このページではLiDARとAdaptive Monte Carlo Localization (AMCL)を用いて自己位置推定を行います。</p>
 <div class="section" id="id1">
-<h2>1.7.1. 自己位置推定用の地図を作る<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>1.8.1. 自己位置推定用の地図を作る<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>自己位置推定を行うには事前に地図を用意する必要があります。
 事前に用意した地図がない場合には、以下のどちらかの方法で地図を作成してください。</p>
 <dl class="docutils">
@@ -196,84 +193,16 @@
 <dt><a class="reference internal" href="../tips/build_map_gmapping/build_map_gmapping.html"><span class="doc">Gmappingを使って地図を生成する</span></a></dt>
 <dd>gmappingを使用する</dd>
 </dl>
-<div class="section" id="gazebo-plugin">
-<h3>1.7.1.1. Gazebo Pluginを使って地図を作成する<a class="headerlink" href="#gazebo-plugin" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>このページではGazebo Pluginを使用する方法について説明します。
-Gazebo Pluginを作成するのは発展的な内容を含むため、今回はすでに作成済みのプラグインを使用します。
-まずは、プラグインが含まれているパッケージをダウンロードしてビルドしましょう。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span class="nb">cd</span> ~/catkin_ws/src
-git clone https://github.com/uenota/dronedoc.git
-<span class="nb">cd</span> ..
-catkin build
-</pre></div>
-</div>
-<p>次に、地図出力用のプラグインを使えるようにするために、Worldファイルに以下の内容を追加します。</p>
-<div class="highlight-xml notranslate"><div class="highlight"><pre><span class="nt">&lt;plugin</span> <span class="na">filename=</span><span class="s">&quot;map_builder.so&quot;</span> <span class="na">name=</span><span class="s">&quot;map_builder&quot;</span><span class="nt">/&gt;</span>
-</pre></div>
-</div>
-<p>以下の例の様になればOKです。</p>
-<div class="highlight-xml notranslate"><div class="highlight"><pre><span class="cp">&lt;?xml version =&#39;1.0&#39;?&gt;</span>
-<span class="nt">&lt;sdf</span> <span class="na">version =</span><span class="s">&#39;1.4&#39;</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;world</span> <span class="na">name=</span><span class="s">&#39;default&#39;</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;include&gt;</span>
-      <span class="nt">&lt;uri&gt;</span>model://ground_plane<span class="nt">&lt;/uri&gt;</span>
-    <span class="nt">&lt;/include&gt;</span>
-
-    <span class="nt">&lt;include&gt;</span>
-      <span class="nt">&lt;uri&gt;</span>model://sun<span class="nt">&lt;/uri&gt;</span>
-    <span class="nt">&lt;/include&gt;</span>
-
-    <span class="nt">&lt;include&gt;</span>
-      <span class="nt">&lt;uri&gt;</span>model://willowgarage<span class="nt">&lt;/uri&gt;</span>
-    <span class="nt">&lt;/include&gt;</span>
-
-    <span class="nt">&lt;plugin</span> <span class="na">filename=</span><span class="s">&quot;map_builder.so&quot;</span> <span class="na">name=</span><span class="s">&quot;map_builder&quot;</span><span class="nt">/&gt;</span>
-  <span class="nt">&lt;/world&gt;</span>
-<span class="nt">&lt;/sdf&gt;</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="id2">
-<h3>1.7.1.2. 地図を出力する<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>マップを作りたいワールドを起動します。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre>roslaunch gazebo_ros empty_world.launch world_name:<span class="o">=</span>~/catkin_ws/src/px4_sim_pkg/worlds/willowgarage.world
-</pre></div>
-</div>
-<p>Gazeboが起動したら以下のコマンドを実行します。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre>rosrun dronedoc request_publisher <span class="m">10</span> 0.01 <span class="s2">&quot;(-12,0)&quot;</span> <span class="m">60</span> <span class="m">50</span> map.png 255
-</pre></div>
-</div>
-<p>このコマンドを実行すると、x,y座標が(-12, 0)の点を原点として、50m x 60mの矩形に囲まれた領域の、高さ10mより下にある障害物のマップがカレントディレクトリに <code class="docutils literal notranslate"><span class="pre">map.png</span></code> として作成されます。
-グリッドの間隔は0.01mで、グリッドが占有されていると判断するしきい値は255です。
-また、同時に地図の設定ファイルも <code class="docutils literal notranslate"><span class="pre">~/map.yaml</span></code> として生成されます。</p>
-<p>このコマンドの使用方法は以下のとおりです。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre>Usage: rosrun dronedoc request_publisher a1 a2 a3 a4 a5 <span class="o">[</span>a6 a7<span class="o">]</span>
-      a1: height
-      a2: resolution
-      a3: <span class="s2">&quot;(origin.x, origin.y)&quot;</span>
-        Origin is the point on lower left corner of map image
-      a4: map_width
-      a5: map_height
-      a6: filename    <span class="o">[</span><span class="nv">default</span><span class="o">=</span><span class="s2">&quot;map&quot;</span><span class="o">]</span>
-      a7: threshold   <span class="o">[</span><span class="nv">default</span><span class="o">=</span>255<span class="o">]</span>
-</pre></div>
-</div>
-<p>以下のようなワールドに対して上記のコマンドを実行すれば、</p>
-<img alt="../../_images/willow_garage.png" src="../../_images/willow_garage.png" />
-<p>次のような地図が生成されます。
-画像左下が原点です。</p>
-<img alt="../../_images/willow_garage_map.png" src="../../_images/willow_garage_map.png" />
-</div>
 </div>
 <div class="section" id="amcl">
-<h2>1.7.2. AMCLを使って自己位置推定を行う<a class="headerlink" href="#amcl" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>1.8.2. AMCLを使って自己位置推定を行う<a class="headerlink" href="#amcl" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>モンテカルロ位置推定（Monte Carlo Localization）は、パーティクルフィルタを用いて自己位置推定を行う手法です。
 このアルゴリズムではロボットの位置の確率分布をパーティクルの分布で表現し、その分布を、観測した情報を元に更新することで自己位置の推定を行います。</p>
 <p>適応的モンテカルロ位置推定（Adaptive Monte Carlo Localization）は、モンテカルロ位置推定で用いる粒子の数を動的に調整することのできるアルゴリズムです。</p>
 <p>今回はROSの <a class="reference external" href="http://wiki.ros.org/amcl">amclパッケージ</a> を使います。
 また、前節で作成した地図情報を利用するために、 <a class="reference external" href="wiki.ros.org/map_server">map_serverパッケージ</a> も使用します。</p>
-<div class="section" id="id4">
-<h3>1.7.2.1. map_serverを使って地図情報をパブリッシュする<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id3">
+<h3>1.8.2.1. map_serverを使って地図情報をパブリッシュする<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>amclは <code class="docutils literal notranslate"><span class="pre">/map</span></code> トピックにパブリッシュされている地図情報を用いて自己位置推定を行うので、前節で作成した地図の情報をmap_serverを用いてパブリッシュしてやる必要があります。</p>
 <p>以下のコマンドで地図の情報をパブリッシュするノードを起動します。
 map.yamlは地図画像と一緒に生成される設定ファイルです。</p>
@@ -284,8 +213,8 @@ map.yamlは地図画像と一緒に生成される設定ファイルです。</p
 <img alt="../../_images/map_rviz.png" src="../../_images/map_rviz.png" />
 <p>地図が表示されない場合はGlobal OptionのFixed Frameが <code class="docutils literal notranslate"><span class="pre">map</span></code> になっているか確認してください。</p>
 </div>
-<div class="section" id="id5">
-<h3>1.7.2.2. amclノードを起動する<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id4">
+<h3>1.8.2.2. amclノードを起動する<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>次にamclノードを起動するためのLaunchファイルを書きます。
 amclノードには多くのパラメータがあり、パラメータのチューニングによって自己位置推定の精度は影響を受けます。
 pr2_navigationパッケージの <a class="reference external" href="https://github.com/PR2-prime/pr2_navigation/blob/hydro-devel/pr2_navigation_global/amcl_node.xml">amcl_node.xml</a> など、既存のLaunchファイルを参考にするとよいでしょう。
@@ -293,8 +222,8 @@ pr2_navigationパッケージの <a class="reference external" href="https://git
 また、base_frame_idとodom_frame_idも自分の使用するロボットの構成と同じように変更する必要があります。</p>
 <p>amclの各パラメータとその解説は <a class="reference external" href="http://wiki.ros.org/amcl">amclのROS Wikiページ</a> にあるのでパラメータをチューニングする際には参考にしてください。</p>
 <p>map_serverの起動を含めたlaunchファイルは以下のとおりです。</p>
-<div class="literal-block-wrapper container" id="id8">
-<div class="code-block-caption"><span class="caption-text">amcl.launch</span><a class="headerlink" href="#id8" title="このコードへのパーマリンク">¶</a></div>
+<div class="literal-block-wrapper container" id="id7">
+<div class="code-block-caption"><span class="caption-text">amcl.launch</span><a class="headerlink" href="#id7" title="このコードへのパーマリンク">¶</a></div>
 <div class="highlight-xml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -385,7 +314,7 @@ pr2_navigationパッケージの <a class="reference external" href="https://git
 </div>
 </div>
 <div class="section" id="px4-sitl">
-<h3>1.7.2.3. PX4 SITLシミュレータを起動する<a class="headerlink" href="#px4-sitl" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>1.8.2.3. PX4 SITLシミュレータを起動する<a class="headerlink" href="#px4-sitl" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>最後に、PX4 SITLシミュレータを起動するLaunchファイルを作成します。</p>
 <p>内容は <a class="reference internal" href="gps_nav.html"><span class="doc">GPSを用いた自律飛行</span></a> で使用した mymodel_sitl_tf.launchとほとんど同じですが、 <code class="docutils literal notranslate"><span class="pre">odom</span></code> から <code class="docutils literal notranslate"><span class="pre">map</span></code> へのTFをパブリッシュするノードをなくしています。</p>
 <p>amclノードは、 <code class="docutils literal notranslate"><span class="pre">map</span></code> フレームからロボットのベースフレーム（今回は <code class="docutils literal notranslate"><span class="pre">base_link</span></code> ）へのTFを計算しますが、実際にブロードキャストするのは <code class="docutils literal notranslate"><span class="pre">map</span></code> からオドメトリのベース（今回は <code class="docutils literal notranslate"><span class="pre">odom</span></code> ）へのTFです。
@@ -395,8 +324,8 @@ pr2_navigationパッケージの <a class="reference external" href="https://git
 <div class="figure">
 <img alt="../../_images/amcl_localization.png" src="../../_images/amcl_localization.png" />
 </div>
-<div class="literal-block-wrapper container" id="id9">
-<div class="code-block-caption"><span class="caption-text">mymodel_sitl_amcl.launch</span><a class="headerlink" href="#id9" title="このコードへのパーマリンク">¶</a></div>
+<div class="literal-block-wrapper container" id="id8">
+<div class="code-block-caption"><span class="caption-text">mymodel_sitl_amcl.launch</span><a class="headerlink" href="#id8" title="このコードへのパーマリンク">¶</a></div>
 <div class="highlight-xml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -447,15 +376,15 @@ pr2_navigationパッケージの <a class="reference external" href="https://git
 </div>
 </div>
 <div class="section" id="teleop">
-<h3>1.7.2.4. Teleopノードを使う<a class="headerlink" href="#teleop" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>1.8.2.4. Teleopノードを使う<a class="headerlink" href="#teleop" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>今回はゲームパッドを用いてドローンを操作します。
 ゲームパッドを用いて操作するには、<a class="reference external" href="http://wiki.ros.org/mavros_extras">mavros_extras</a> パッケージのmavteleopノードを使います。</p>
 <p>mavteleopノードは与える引数によって操作方法を変えることができます。
 今回は <code class="docutils literal notranslate"><span class="pre">-vel</span></code> オプションを与えて、ドローンの速度を操作するようにします。</p>
 <p><code class="docutils literal notranslate"><span class="pre">-vel</span></code> オプション以外にも <code class="docutils literal notranslate"><span class="pre">-att</span></code> や <code class="docutils literal notranslate"><span class="pre">-pos</span></code> オプションがあり、それぞれ姿勢と位置を操作するモードです。</p>
 <p>mavteleopノードを使用するLaunchファイルを以下に示します。</p>
-<div class="literal-block-wrapper container" id="id10">
-<div class="code-block-caption"><span class="caption-text">mavros_teleop.launch</span><a class="headerlink" href="#id10" title="このコードへのパーマリンク">¶</a></div>
+<div class="literal-block-wrapper container" id="id9">
+<div class="code-block-caption"><span class="caption-text">mavros_teleop.launch</span><a class="headerlink" href="#id9" title="このコードへのパーマリンク">¶</a></div>
 <div class="highlight-xml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -486,8 +415,8 @@ pr2_navigationパッケージの <a class="reference external" href="https://git
 自分の使っているゲームパッドのマッピングと合うように、 <code class="docutils literal notranslate"><span class="pre">axes_map</span></code> と、 <code class="docutils literal notranslate"><span class="pre">button_map</span></code> の部分を変更しましょう。
 ゲームパッドのマッピングを確認する方法は、前章の内容を参考にしてください。
 また、 <code class="docutils literal notranslate"><span class="pre">axes_scale</span></code> を変更すればスティックの操作量とドローンの移動速度の対応を変化させられます。</p>
-<div class="literal-block-wrapper container" id="id11">
-<div class="code-block-caption"><span class="caption-text">f310_joy.yaml</span><a class="headerlink" href="#id11" title="このコードへのパーマリンク">¶</a></div>
+<div class="literal-block-wrapper container" id="id10">
+<div class="code-block-caption"><span class="caption-text">f310_joy.yaml</span><a class="headerlink" href="#id10" title="このコードへのパーマリンク">¶</a></div>
 <div class="highlight-yaml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -521,8 +450,8 @@ pr2_navigationパッケージの <a class="reference external" href="https://git
 </td></tr></table></div>
 </div>
 </div>
-<div class="section" id="id6">
-<h3>1.7.2.5. 実行する<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id5">
+<h3>1.8.2.5. 実行する<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>最初にPX4シミュレータを起動します。</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre>roslaunch px4_sim_pkg mymodel_sitl_amcl.launch
 </pre></div>
@@ -558,8 +487,8 @@ pr2_navigationパッケージの <a class="reference external" href="https://git
 <img alt="../../_images/amcl.gif" src="../../_images/amcl.gif" />
 </div>
 </div>
-<div class="section" id="id7">
-<h2>1.7.3. 参考<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id6">
+<h2>1.8.3. 参考<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <dl class="docutils">
 <dt><a class="reference external" href="https://jp.mathworks.com/help/robotics/examples/localize-turtlebot-using-monte-carlo-localization.html">モンテカルロ位置推定を使用した TurtleBot の位置推定</a></dt>
 <dd>モンテカルロ位置推定の解説</dd>
@@ -581,10 +510,10 @@ pr2_navigationパッケージの <a class="reference external" href="https://git
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="localization_and_mapping.html" class="btn btn-neutral float-right" title="1.8. LiDARを用いたSLAM" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="localization_and_mapping.html" class="btn btn-neutral float-right" title="1.9. LiDARを用いたSLAM" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="gps_nav.html" class="btn btn-neutral" title="1.6. GPSを用いた自律飛行" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="turtle_mapping.html" class="btn btn-neutral" title="1.7. Turtlebotを使ってマップを作る" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

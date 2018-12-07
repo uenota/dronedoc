@@ -28,7 +28,7 @@
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="索引" href="../../genindex.html" />
     <link rel="search" title="検索" href="../../search.html" />
-    <link rel="next" title="1.7. LiDARとAMCLを用いた自己位置推定" href="lidar_localization.html" />
+    <link rel="next" title="1.7. Turtlebotを使ってマップを作る" href="turtle_mapping.html" />
     <link rel="prev" title="1.5. 自律飛行とSLAM" href="slam.html" /> 
 
   
@@ -123,9 +123,10 @@
 <li class="toctree-l3"><a class="reference internal" href="#id30">1.6.10. 参考</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="lidar_localization.html">1.7. LiDARとAMCLを用いた自己位置推定</a></li>
-<li class="toctree-l2"><a class="reference internal" href="localization_and_mapping.html">1.8. LiDARを用いたSLAM</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../octomap/octomap.html">1.9. Octomapを使って3Dマップを作る</a></li>
+<li class="toctree-l2"><a class="reference internal" href="turtle_mapping.html">1.7. Turtlebotを使ってマップを作る</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lidar_localization.html">1.8. LiDARとAMCLを用いた自己位置推定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="localization_and_mapping.html">1.9. LiDARを用いたSLAM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../octomap/octomap.html">1.10. Octomapを使って3Dマップを作る</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../hardwares/index.html">2. Hardwares</a></li>
@@ -1085,9 +1086,9 @@ roslaunch px4_sim_pkg navigation.launch
 </div>
 <div class="section" id="offboard">
 <h4>1.6.8.3.3. Offboardモードにする<a class="headerlink" href="#offboard" title="このヘッドラインへのパーマリンク">¶</a></h4>
-<p>また、Offboardモードになっていないと <code class="docutils literal notranslate"><span class="pre">cmd_vel</span></code> トピックを使って操作できないので、Offboardモードにします。
+<p>また、Offboardモードになっていないと <code class="docutils literal notranslate"><span class="pre">cmd_vel_unstamped</span></code> トピックを使って操作できないので、Offboardモードにします。
 以下のコマンドを使えばドローンの飛行モードがOffboardになります。
-Offboardモードにしてから一定の時間操作が無いとモードが切り替わるので、ゴールを指示してからOffboardモードにしたほうがスムーズに動作します。</p>
+<code class="docutils literal notranslate"><span class="pre">/mavros/setpoint_velocity/cmd_vel_unstamped</span></code> にトピックがパブリッシュされていないとOffboardモードに切り替わらないので、ゴールを指示してからOffboardモードにします。</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre>rosservice call /mavros/set_mode <span class="s2">&quot;base_mode: 0</span>
 <span class="s2">custom_mode: &#39;OFFBOARD&#39;&quot;</span>
 </pre></div>
@@ -1173,7 +1174,7 @@ Offboardモードにしてから一定の時間操作が無いとモードが切
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="lidar_localization.html" class="btn btn-neutral float-right" title="1.7. LiDARとAMCLを用いた自己位置推定" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="turtle_mapping.html" class="btn btn-neutral float-right" title="1.7. Turtlebotを使ってマップを作る" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="slam.html" class="btn btn-neutral" title="1.5. 自律飛行とSLAM" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

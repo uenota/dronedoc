@@ -1,0 +1,9 @@
+<launch>
+
+  <remap from="costmap/costmap" to="map" />
+
+  <node pkg="costmap_2d" type="costmap_2d_node" name="costmap_node" respawn="false" output="screen">
+    <rosparam command="load" ns="costmap" file="$(find dronedoc)/config/costmap_params.yaml"/>
+  </node>
+
+</launch>
