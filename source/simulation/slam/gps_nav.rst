@@ -103,7 +103,7 @@ nav_msgs/Odometryメッセージがパブリッシュされるトピックはmav
 
 Pythonのコード例は、:doc:`odom_pub_py` を参考にしてください。
 
-.. literalinclude:: ../../src/odom_publisher.cpp
+.. literalinclude:: ../../../src/odom_publisher.cpp
   :language: cpp
   :linenos:
   :caption: odom_publisher.cpp
@@ -223,7 +223,7 @@ Launchファイルについては、後述の :ref:`navigation_launch` の項を
 
 共通設定
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: ../../config/costmap_common_params.yaml
+.. literalinclude:: ../../../config/costmap_common_params.yaml
   :language: yaml
   :caption: costmap_common_params.yaml
   :linenos:
@@ -257,7 +257,7 @@ Launchファイルについては、後述の :ref:`navigation_launch` の項を
 
 大域的コストマップの設定
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: ../../config/global_costmap_params.yaml
+.. literalinclude:: ../../../config/global_costmap_params.yaml
   :language: yaml
   :caption: global_costmap_params.yaml
   :linenos:
@@ -282,7 +282,7 @@ Launchファイルについては、後述の :ref:`navigation_launch` の項を
 
 局所的コストマップの設定
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: ../../config/local_costmap_params.yaml
+.. literalinclude:: ../../../config/local_costmap_params.yaml
   :language: yaml
   :caption: local_costmap_params.yaml
   :linenos:
@@ -305,7 +305,7 @@ Launchファイルについては、後述の :ref:`navigation_launch` の項を
 例えば、自動車は全体の自由度が3（x, y, yaw）ですが、制御可能な自由度は2（x, yaw）であり、ノンホロノミックなシステムであるといえます。
 ドローンの場合は制御可能な自由度（x, y, z, roll, pitch, yaw）が全体の自由度と等しいのでホロノミックなシステムです。
 
-.. literalinclude:: ../../config/base_local_planner_params.yaml
+.. literalinclude:: ../../../config/base_local_planner_params.yaml
   :language: yaml
   :caption: base_local_planner_params.yaml
   :linenos:
@@ -384,7 +384,7 @@ PX4シミュレーションの起動は、起動スクリプト（ ``~/.ros/etc/
 説明されていないパラメータについてはパラメータ一覧を見てください。
 設定スクリプトについては、 `Adding a New Airframe Configuration - PX4 Developer Guide <https://dev.px4.io/en/airframes/adding_a_new_frame.html>`_ に説明があります。
 
-.. literalinclude:: ../../posix_airframes/70010_iris_2d_lidar
+.. literalinclude:: ../../../posix_airframes/70010_iris_2d_lidar
   :linenos:
   :caption: 70010_iris_2d_lidar
 
@@ -541,7 +541,15 @@ ROSサービスを利用しても構いません。
 
 .. code-block:: bash
 
-    rosservice call /mavros/cmd/takeoff "{min_pitch: 0.0, yaw: 0.0, latitude: 47.3977506, longitude: 8.5456074, altitude: 5}"
+  rosservice call /mavros/cmd/takeoff "{min_pitch: 0.0, yaw: 0.0, latitude: 47.3977506, longitude: 8.5456074, altitude: 5}"
+
+もしくは、mavrosの提供するノードを使って、以下のように離陸させることもできます。
+
+.. code-block:: bash
+
+  rosrun mavros mavcmd takeoffcur -a 0 0 5
+
+mavrosの提供するサービスやコマンドについては `mavrosのROS Wikiページ <http://wiki.ros.org/mavros>`_ に一覧があります。
 
 Rvizを使ってゴールを送信する
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -563,6 +571,12 @@ Offboardモードにしてから一定の時間操作が無いとモードが切
 
   rosservice call /mavros/set_mode "base_mode: 0
   custom_mode: 'OFFBOARD'"
+
+もしくは、先ほどと同様にmavrosのノードを使用しても構いません。
+
+.. code-block:: bash
+
+  rosrun mavros mavsys mode -c OFFBOARD
 
 実行結果
 -------------------------------------
@@ -615,9 +629,9 @@ Offboardモードにしてから一定の時間操作が無いとモードが切
 
 以下のページを参考にしてパラメータをチューニングしたり、別のローカルプランナーを使用してナビゲーションの性能を向上させてもよいでしょう。
 
-- `costmap_2d - ROS Wiki <http://wiki.ros.org/costmap_2d>`_
-- `base_local_planner - ROS Wiki <http://wiki.ros.org/base_local_planner>`_
-- `global_planner - ROS Wiki <wiki.ros.org/global_planner>`_
+- `costmap_2d <http://wiki.ros.org/costmap_2d>`_
+- `base_local_planner <http://wiki.ros.org/base_local_planner>`_
+- `global_planner <wiki.ros.org/global_planner>`_
 
 別のローカルプランナー使う方法については、 :doc:`../tips/change_local_planner/change_local_planner` を参考にしてください。
 

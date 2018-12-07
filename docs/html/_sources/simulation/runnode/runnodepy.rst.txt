@@ -22,7 +22,7 @@ ROSパッケージを作る
 
 このコードを ``offboard_sample.py`` という名前で、 ``px4_sim_pkg/script`` に保存してください。
 
-.. literalinclude:: ../../script/offboard_sample.py
+.. literalinclude:: ../../../script/offboard_sample.py
     :language: python
     :linenos:
     :caption: offboard_sample.py

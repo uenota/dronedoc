@@ -14,7 +14,7 @@ GpuRayセンサであれば問題なく起動できるらしいので、どう�
 
 超音波センサを追加したモデルは以下のようになります。
 
-.. literalinclude:: ../../../models/iris_sonar/model.sdf
+.. literalinclude:: ../../../../models/iris_sonar/model.sdf
     :language: xml
     :linenos:
     :caption: model.sdf
@@ -22,7 +22,7 @@ GpuRayセンサであれば問題なく起動できるらしいので、どう�
 以下のようなmodel.configも作成し、modelsディレクトリ以下にiris_sonarディレクトリを作ってその中に保存しましょう。
 autrhorタグの中身は適宜変更してください。
 
-.. literalinclude:: ../../../models/iris_sonar/model.config
+.. literalinclude:: ../../../../models/iris_sonar/model.config
     :language: xml
     :linenos:
     :caption: model.config

@@ -1,8 +1,10 @@
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 2.8.8 FATAL_ERROR)
 
 project(dronedoc)
 
 add_compile_options(-std=c++11)
+
+find_package(Boost 1.4.0 COMPONENTS system filesystem REQUIRED)
 
 find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
@@ -13,9 +15,18 @@ find_package(catkin REQUIRED COMPONENTS
   tf
 )
 
+find_package(yaml-cpp REQUIRED)
+find_package(Protobuf REQUIRED)
+
 find_package(gazebo REQUIRED)
 if("${GAZEBO_VERSION}" VERSION_LESS "7.4")
   message(FATAL_ERROR "Gazebo 7.4 or later is required.")
+endif()
+
+include (FindPkgConfig)
+if (PKG_CONFIG_FOUND)
+  pkg_check_modules(GAZEBO gazebo)
+  pkg_check_modules(SDF sdformat)
 endif()
 
 catkin_package()
@@ -23,14 +34,36 @@ catkin_package()
 include_directories(
 # include
   ${catkin_INCLUDE_DIRS}
+  ${YAML_CPP_INCLUDE_DIR}
+  ${GAZEBO_INCLUDE_DIRS}
+  ${SDF_INCLUDE_DIRS}
+  ${CMAKE_CURRENT_BINARY_DIR}/msgs/proto
 )
+link_directories(${GAZEBO_LIBRARY_DIRS} ${CMAKE_CURRENT_BINARY_DIR}/msgs/proto)
+add_subdirectory(msgs/proto)
 
+# Build map builder and request publisher
+add_executable (request_publisher src/gazebo/request_publisher.cpp)
+target_link_libraries(request_publisher dronedoc ${GAZEBO_LIBRARIES}
+                                                 ${Boost_LIBRARIES}
+                                                 ${SDF_LIBRARIES}
+                                                 ${catkin_LIBRARIES})
+add_dependencies(request_publisher dronedoc)
+add_library(map_builder SHARED src/gazebo/map_builder.cpp)
+target_link_libraries(map_builder dronedoc ${Boost_LIBRARIES}
+                                           ${GAZEBO_LIBRARIES}
+                                           ${SDF_LIBRARIES}
+                                           ${YAML_CPP_LIBRARIES}
+                                           ${catkin_LIBRARIES})
+add_dependencies(map_builder dronedoc)
+
+# Build ROS nodes
 add_executable(offboard_sample src/offboard_sample.cpp)
 target_link_libraries(offboard_sample ${catkin_LIBRARIES})
-
 add_executable(odom_publisher src/odom_publisher.cpp)
 target_link_libraries(odom_publisher ${catkin_LIBRARIES})
 
+# Create symbolic link of airframe defs
 set(PACK_AIRFRAME_DIR ${CMAKE_CURRENT_SOURCE_DIR}/posix_airframes)
 set(LOCAL_AIRFRAME_DIR $ENV{HOME}/.ros/etc/init.d-posix)
 

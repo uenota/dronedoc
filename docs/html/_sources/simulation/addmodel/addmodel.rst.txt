@@ -53,7 +53,7 @@ LiDARのリンクを定義する
 
 model.sdfファイル内では、以下のようにLiDARのリンクを定義しています。
 
-.. literalinclude:: ../../models/iris_2d_lidar/model.sdf
+.. literalinclude:: ../../../models/iris_2d_lidar/model.sdf
     :linenos:
     :language: xml
     :lines: 9-70
@@ -79,7 +79,7 @@ LiDARとbase_linkのジョイントを定義する
 ``<child>`` タグで子リンクを指定し、 ``<parent>`` タグで親リンクを指定しています。
 irisのbase_linkのような、インクルードしたモデルのリンクを指定する際には、 ``iris::base_link`` のように、どのモデルのリンクであるかを指定してやる必要があります。
 
-.. literalinclude:: ../../models/iris_2d_lidar/model.sdf
+.. literalinclude:: ../../../models/iris_2d_lidar/model.sdf
     :language: xml
     :linenos:
     :lines: 72-75
@@ -90,10 +90,19 @@ model.sdf
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 最終的なmodel.sdfファイルは以下のようになります。
 
-.. literalinclude:: ../../models/iris_2d_lidar/model.sdf
+.. literalinclude:: ../../../models/iris_2d_lidar/model.sdf
     :language: xml
     :linenos:
     :caption: model.sdf
+
+lidarのリンクの姿勢は、
+
+.. code-block:: xml
+
+    <pose>0 0 0.05 0 -0.0085 0</pose>
+
+のように、少し後ろに傾けて定義してあります。
+これは、ドローン自身に光線が干渉するのを防ぐためです。
 
 SDFのタグ一覧は `ここ <http://sdformat.org/spec>`_ から見ることができます。
 
@@ -116,7 +125,7 @@ LiDARのモデルも別のファイルで記述してインクルードすると
 
         <include>
         <uri>model://lidar_2d</uri>
-        <pose>0 0 0.07 0 0 3.14</pose>
+        <pose>0 0 0.07 0 0 0</pose>
         </include>
 
         <joint name="lidar_joint" type="fixed">
@@ -151,7 +160,7 @@ configファイルを作る
 基本的には以下のような形になります。
 タグの詳細については `Model structure and requirements <http://gazebosim.org/tutorials?tut=model_structure>`_ で確認してください。
 
-.. literalinclude:: ../../models/iris_2d_lidar/model.config
+.. literalinclude:: ../../../models/iris_2d_lidar/model.config
     :language: xml
     :linenos:
     :caption: model.config

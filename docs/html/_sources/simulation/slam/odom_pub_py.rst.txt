@@ -1,7 +1,7 @@
 odom_publisher.py
 ============================================
 
-.. literalinclude:: ../../script/odom_publisher.py
+.. literalinclude:: ../../../script/odom_publisher.py
   :linenos:
   :language: python
 
