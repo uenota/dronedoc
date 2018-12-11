@@ -53,5 +53,6 @@ Simulation
    teleop/teleop.rst
    slam/lidar_localization.rst
    slam/localization_and_mapping.rst
+   slam/lidar_nav.rst
    octomap/octomap.rst
    tips/index.rst

@@ -1,10 +1,8 @@
 ===========================================================
 Tips
 ===========================================================
-
 .. toctree::
    :maxdepth: 1
-   :caption: Tips
 
    control_alt/control_alt.rst
    filter_lidar/filter_lidar.rst
