@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>地上からの距離を一定にする &mdash; Dronedoc 1.0.0 ドキュメント</title>
+  <title>1.12.1. 地上からの距離を一定にする &mdash; Dronedoc 1.0.0 ドキュメント</title>
   
 
   
@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="index" title="索引" href="../../../genindex.html" />
-    <link rel="search" title="検索" href="../../../search.html" /> 
+    <link rel="search" title="検索" href="../../../search.html" />
+    <link rel="next" title="1.12.2. LiDARのデータをフィルタリングする" href="../filter_lidar/filter_lidar.html" />
+    <link rel="prev" title="1.12. Tips" href="../index.html" /> 
 
   
   <script src="../../../_static/js/modernizr.min.js"></script>
@@ -77,8 +79,33 @@
             
             
               <p class="caption"><span class="caption-text">Contents</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../index.html">1. Simulation</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">1. Simulation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../px4sim/px4sim.html">1.1. PX4 SITLシミュレーション</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../runnode/runnodecpp.html">1.2. 自作ノードを実行する（C++）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../runnode/runnodepy.html">1.3. 自作ノードを実行する（Python）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../addmodel/addmodel.html">1.4. 新しいモデルを追加する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../slam/slam.html">1.5. 自律飛行とSLAM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../slam/gps_nav.html">1.6. GPSを用いた自律飛行</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../slam/turtle_mapping.html">1.7. Turtlebotを使ってマップを作る</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../teleop/teleop.html">1.8. ゲームパッドを使ってドローンを操作する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../slam/lidar_localization.html">1.9. LiDARとAMCLを用いた自己位置推定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../slam/localization_and_mapping.html">1.10. LiDARを用いたSLAM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../octomap/octomap.html">1.11. Octomapを使って3Dマップを作る</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">1.12. Tips</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1.12.1. 地上からの距離を一定にする</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id2">1.12.1.1. 距離センサをつける</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../filter_lidar/filter_lidar.html">1.12.2. LiDARのデータをフィルタリングする</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../change_local_planner/change_local_planner.html">1.12.3. move_baseのローカルプランナーを変更する</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../local_planner_for_uav/local_planner_for_uav.html">1.12.4. UAV用のローカルプランナを実装する</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../build_map_gmapping/build_map_gmapping.html">1.12.5. Gmappingを使って地図を生成する</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../build_map_gazebo_plugin/build_map_gazebo_plugin.html">1.12.6. Gazebo Pluginを使って地図を作成する</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../hardwares/index.html">2. Hardwares</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Appendix</span></p>
@@ -133,7 +160,11 @@
     
       <li><a href="../../../index.html">Docs</a> &raquo;</li>
         
-      <li>地上からの距離を一定にする</li>
+          <li><a href="../../index.html">1. Simulation</a> &raquo;</li>
+        
+          <li><a href="../index.html">1.12. Tips</a> &raquo;</li>
+        
+      <li>1.12.1. 地上からの距離を一定にする</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -153,11 +184,11 @@
            <div itemprop="articleBody">
             
   <div class="section" id="id1">
-<h1>地上からの距離を一定にする<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<h1>1.12.1. 地上からの距離を一定にする<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <div class="section" id="id2">
-<h2>距離センサをつける<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>1.12.1.1. 距離センサをつける<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="section" id="id3">
-<h3>モデルを作成する<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>1.12.1.1.1. モデルを作成する<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>レーザー高度計（Lidar Liteなど）とRayセンサ（Lidarなど）を同時に使用するとセグメンテーションフォールトでGazeboが起動できない（ <a class="reference external" href="https://github.com/PX4/Firmware/issues/9156">#9156</a>）ので今回は距離センサとして超音波センサを利用します。
 GpuRayセンサであれば問題なく起動できるらしいので、どうしてもレーザー高度計を使用したい場合にはGpuRayセンサを利用すると良いでしょう。
 ただし、GpuRayセンサはGPUを使用しない場合は正常に動作しないようなので、GPUがある場合に限って使用しましょう。</p>
@@ -426,7 +457,7 @@ autrhorタグの中身は適宜変更してください。</p>
 <img alt="../../../_images/sonar.png" src="../../../_images/sonar.png" />
 </div>
 <div class="section" id="id5">
-<h3>地上からの距離を一定にする<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>1.12.1.1.2. 地上からの距離を一定にする<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h3>
 </div>
 </div>
 </div>
@@ -436,6 +467,15 @@ autrhorタグの中身は適宜変更してください。</p>
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../filter_lidar/filter_lidar.html" class="btn btn-neutral float-right" title="1.12.2. LiDARのデータをフィルタリングする" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../index.html" class="btn btn-neutral" title="1.12. Tips" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

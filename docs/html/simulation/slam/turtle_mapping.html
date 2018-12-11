@@ -28,7 +28,7 @@
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="索引" href="../../genindex.html" />
     <link rel="search" title="検索" href="../../search.html" />
-    <link rel="next" title="1.8. LiDARとAMCLを用いた自己位置推定" href="lidar_localization.html" />
+    <link rel="next" title="1.8. ゲームパッドを使ってドローンを操作する" href="../teleop/teleop.html" />
     <link rel="prev" title="1.6. GPSを用いた自律飛行" href="gps_nav.html" /> 
 
   
@@ -87,26 +87,12 @@
 <li class="toctree-l2"><a class="reference internal" href="../addmodel/addmodel.html">1.4. 新しいモデルを追加する</a></li>
 <li class="toctree-l2"><a class="reference internal" href="slam.html">1.5. 自律飛行とSLAM</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gps_nav.html">1.6. GPSを用いた自律飛行</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">1.7. Turtlebotを使ってマップを作る</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#world">1.7.1. Worldファイルを作る</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id1">1.7.1.1. 地図作成用のノードを作成する</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id2">1.7.1.2. 必要なノードを起動する</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id3">1.7.1.3. 地図を保存する</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#id5">1.7.2. さいごに</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#deadman">1.7.3. 補足: デッドマンスイッチを確認する</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#joy">1.7.3.1. <code class="docutils literal notranslate"><span class="pre">/joy</span></code> トピック</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#logitech-launch">1.7.3.2. logitech.launchを使う場合</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#ps3-teleop-launchxbox360-teleop-launch">1.7.3.3. ps3_teleop.launchもしくはxbox360_teleop.launch</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#id7">1.7.4. 参考</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="lidar_localization.html">1.8. LiDARとAMCLを用いた自己位置推定</a></li>
-<li class="toctree-l2"><a class="reference internal" href="localization_and_mapping.html">1.9. LiDARを用いたSLAM</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../octomap/octomap.html">1.10. Octomapを使って3Dマップを作る</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">1.7. Turtlebotを使ってマップを作る</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../teleop/teleop.html">1.8. ゲームパッドを使ってドローンを操作する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lidar_localization.html">1.9. LiDARとAMCLを用いた自己位置推定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="localization_and_mapping.html">1.10. LiDARを用いたSLAM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../octomap/octomap.html">1.11. Octomapを使って3Dマップを作る</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tips/index.html">1.12. Tips</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../hardwares/index.html">2. Hardwares</a></li>
@@ -186,7 +172,7 @@
             
   <div class="section" id="turtlebot">
 <h1>1.7. Turtlebotを使ってマップを作る<a class="headerlink" href="#turtlebot" title="このヘッドラインへのパーマリンク">¶</a></h1>
-<p>このページではTurtlebotと`costmap_2d &lt;<a class="reference external" href="http://wiki.ros.org/costmap_2d">http://wiki.ros.org/costmap_2d</a>&gt;`_を用いてGazeboシミュレーション内の地図を生成する方法について扱います。
+<p>このページではTurtlebotと <a class="reference external" href="http://wiki.ros.org/costmap_2d">costmap_2d</a> を用いてGazeboシミュレーション内の地図を生成する方法について扱います。
 ドローンを使った場合には、姿勢の傾きによって正確な地図が作成できない恐れがあるので、今回はTurtlebotを使用します。</p>
 <p>costmap_2dパッケージは、ロボットのナビゲーションに用いられる占有格子地図を生成するノードを提供するパッケージです。
 占有格子地図はセンサ情報をもとに計算された障害物の存在確率を示す地図で、さらにロボットの形状や障害物の情報を考慮することでコストマップが生成されます。</p>
@@ -407,7 +393,7 @@ buttons: [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0]
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="lidar_localization.html" class="btn btn-neutral float-right" title="1.8. LiDARとAMCLを用いた自己位置推定" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../teleop/teleop.html" class="btn btn-neutral float-right" title="1.8. ゲームパッドを使ってドローンを操作する" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="gps_nav.html" class="btn btn-neutral" title="1.6. GPSを用いた自律飛行" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

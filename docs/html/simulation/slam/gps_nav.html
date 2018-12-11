@@ -86,47 +86,13 @@
 <li class="toctree-l2"><a class="reference internal" href="../runnode/runnodepy.html">1.3. 自作ノードを実行する（Python）</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../addmodel/addmodel.html">1.4. 新しいモデルを追加する</a></li>
 <li class="toctree-l2"><a class="reference internal" href="slam.html">1.5. 自律飛行とSLAM</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">1.6. GPSを用いた自律飛行</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#tf">1.6.1. TF</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id1">1.6.2. センサ情報</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id2">1.6.3. オドメトリ情報</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id3">1.6.3.1. TFをパブリッシュする</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#nav-msgs-odometry">1.6.3.2. nav_msgs/Odometryをパブリッシュする</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#id8">1.6.4. 速度指令</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id10">1.6.5. 設定ファイルを書く</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id11">1.6.5.1. 大域的経路計画と局所的経路計画</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id13">1.6.5.2. コストマップの設定</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id17">1.6.5.3. ローカルプランナーの設定</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#id18">1.6.6. ドローンのパラメータの変更</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id19">1.6.6.1. コマンドで設定する</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id20">1.6.6.2. 設定ファイルを使う</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#launch">1.6.7. Launchファイルを書く</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#navigation-launch">1.6.7.1. navigation.launch</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#mymodel-sitl-tf-launch">1.6.7.2. mymodel_sitl_tf.launch</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#id22">1.6.8. 実行してみる</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id23">1.6.8.1. ビルドする</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id24">1.6.8.2. ノードを起動する</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id25">1.6.8.3. ゴールを送信する</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id27">1.6.8.4. 実行結果</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id28">1.6.8.5. 障害物回避</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#id29">1.6.9. まとめ</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id30">1.6.10. 参考</a></li>
-</ul>
-</li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">1.6. GPSを用いた自律飛行</a></li>
 <li class="toctree-l2"><a class="reference internal" href="turtle_mapping.html">1.7. Turtlebotを使ってマップを作る</a></li>
-<li class="toctree-l2"><a class="reference internal" href="lidar_localization.html">1.8. LiDARとAMCLを用いた自己位置推定</a></li>
-<li class="toctree-l2"><a class="reference internal" href="localization_and_mapping.html">1.9. LiDARを用いたSLAM</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../octomap/octomap.html">1.10. Octomapを使って3Dマップを作る</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../teleop/teleop.html">1.8. ゲームパッドを使ってドローンを操作する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lidar_localization.html">1.9. LiDARとAMCLを用いた自己位置推定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="localization_and_mapping.html">1.10. LiDARを用いたSLAM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../octomap/octomap.html">1.11. Octomapを使って3Dマップを作る</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tips/index.html">1.12. Tips</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../hardwares/index.html">2. Hardwares</a></li>
@@ -210,7 +176,7 @@
 <p>以下の赤枠内の部分が経路計画と障害物回避に必要な部分です。
 経路計画と障害物回避を含む自律飛行を行うためには、</p>
 <ol class="arabic simple">
-<li>ロボットのベース座標系と使用するセンサの座標系の間のTFがブロードキャストされていること</li>
+<li>ロボットのベース座標系( <code class="docutils literal notranslate"><span class="pre">bsae_link</span></code> など)と使用するセンサの座標系の間のTFがブロードキャストされていること</li>
 <li>センサデータがパブリッシュされていること</li>
 <li>オドメトリ情報がTFとnav_msgs/Odometryメッセージでパブリッシュされていること</li>
 <li>geometry_msgs/Twistメッセージを使ってロボットを操作できること</li>
@@ -223,8 +189,10 @@
 </div>
 <div class="section" id="tf">
 <h2>1.6.1. TF<a class="headerlink" href="#tf" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>今回はLiDARを使用するので、LiDARとロボットの位置関係がわかるように、ロボットのベースフレーム（ <code class="docutils literal notranslate"><span class="pre">base_link</span></code> ）からLiDARのフレーム（ <code class="docutils literal notranslate"><span class="pre">lidar_link</span></code> ）へのTFを定義してあげる必要があります。
-静的なTFをパブリッシュするにはtfパッケージの <a class="reference external" href="http://wiki.ros.org/tf#static_transform_publisher">static_transform_publisher</a> を使います。
+<p>今回はLiDARを使用するので、LiDARとロボットの位置関係がわかるように、ロボットのベースフレームからLiDARのフレームへのTFを定義してあげる必要があります。
+今回はロボットのベースフレームは <code class="docutils literal notranslate"><span class="pre">base_link</span></code> 、LiDARのフレームは <code class="docutils literal notranslate"><span class="pre">lidar_link</span></code> となっています。
+自分のロボットの設定をモデルなどを参照して確認して、必要な場合は適宜変更してください。</p>
+<p>静的なTFをパブリッシュするにはtfパッケージの <a class="reference external" href="http://wiki.ros.org/tf#static_transform_publisher">static_transform_publisher</a> を使います。
 そのために、mymodel_sitl.launchをコピーして新しくmymodel_sitl_tf.launchというファイルを作って、以下の内容を追加してください。</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span class="nt">&lt;node</span> <span class="na">pkg=</span><span class="s">&quot;tf&quot;</span> <span class="na">name=</span><span class="s">&quot;base2lidar&quot;</span> <span class="na">type=</span><span class="s">&quot;static_transform_publisher&quot;</span> <span class="na">args=</span><span class="s">&quot;0 0 0.1 0 0 0 base_link lidar_link 100&quot;</span><span class="nt">/&gt;</span>
 </pre></div>
