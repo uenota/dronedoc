@@ -1,11 +1,11 @@
 # Joystic configuration for Logitech F310 gamepad
 axes_map:
-  roll: 2
-  pitch: 3
+  roll: 3
+  pitch: 2
   yaw: 0
   throttle: 1
 axes_scale:
-  roll: -0.5
+  roll: 0.5
   pitch: 0.5
   yaw: 0.5
   throttle: 0.5

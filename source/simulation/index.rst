@@ -40,9 +40,8 @@ Simulation
 このチュートリアルで使用したプログラムやLaunchファイルなどは `dronedocリポジトリ <https://github.com/uenota/dronedoc>`_ にあります。
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
    :caption: Contents
-   :numbered:
 
    px4sim/px4sim.rst
    runnode/runnodecpp.rst
@@ -51,15 +50,8 @@ Simulation
    slam/slam.rst
    slam/gps_nav.rst
    slam/turtle_mapping.rst
+   teleop/teleop.rst
    slam/lidar_localization.rst
    slam/localization_and_mapping.rst
    octomap/octomap.rst
-
-**Tips**
-
-* :doc:`tips/control_alt/control_alt`
-* :doc:`tips/filter_lidar/filter_lidar`
-* :doc:`tips/change_local_planner/change_local_planner`
-* :doc:`tips/local_planner_for_uav/local_planner_for_uav`
-* :doc:`tips/build_map_gmapping/build_map_gmapping`
-* :doc:`tips/build_map_gazebo_plugin/build_map_gazebo_plugin`
+   tips/index.rst
