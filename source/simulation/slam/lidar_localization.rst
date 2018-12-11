@@ -1,3 +1,5 @@
+:tocdepth: 1
+
 **************************************************************************
 LiDARとAMCLを用いた自己位置推定
 **************************************************************************
@@ -145,48 +147,6 @@ amclノードは、 ``map`` フレームからロボットのベースフレー�
 
   </launch>
 
-Teleopノードを使う
---------------------------------------------------------------------------
-今回はゲームパッドを用いてドローンを操作します。
-ゲームパッドを用いて操作するには、`mavros_extras <http://wiki.ros.org/mavros_extras>`_ パッケージのmavteleopノードを使います。
-
-mavteleopノードは与える引数によって操作方法を変えることができます。
-今回は ``-vel`` オプションを与えて、ドローンの速度を操作するようにします。
-
-``-vel`` オプション以外にも ``-att`` や ``-pos`` オプションがあり、それぞれ姿勢と位置を操作するモードです。
-
-mavteleopノードを使用するLaunchファイルを以下に示します。
-
-.. code-block:: xml
-  :linenos:
-  :caption: mavros_teleop.launch
-
-  <launch>
-    <arg name="teleop_args" default="-vel" />
-
-    <node pkg="joy" type="joy_node" name="joy" required="True">
-      <param name="autorepeat_rate" value="5" /> <!-- Minimal update rate, Hz -->
-    </node>
-
-    <node pkg="mavros_extras" type="mavteleop" name="mavteleop" args="$(arg teleop_args)" required="True" output="screen">
-      <rosparam command="load" file="$(find px4_sim_pkg)/config/f310_joy.yaml" />
-    </node>
-  </launch>
-
-mavros_teleop.launch内ではゲームパッドのマッピングを記述したファイル（f310_joy.yaml）を ``rosparam`` タグでROSのパラメータとしてロードしています。
-ファイルの内容は以下のとおりです。
-
-このファイル内に書かれた内容がROSのパラメータとして保存され、mavteleopノードによって参照されます。
-自分の使っているゲームパッドのマッピングと合うように、 ``axes_map`` と、 ``button_map`` の部分を変更しましょう。
-ゲームパッドのマッピングを確認する方法は、前章の内容を参考にしてください。
-また、 ``axes_scale`` を変更すればスティックの操作量とドローンの移動速度の対応を変化させられます。
-
-.. literalinclude:: ../../../config/f310_joy.yaml
-  :linenos:
-  :language: yaml
-  :caption: f310_joy.yaml
-
-
 実行する
 --------------------------------------------------------------------------
 
@@ -202,15 +162,11 @@ Gazeboが起動したら、次にmavteleopノードを起動します。
 
   roslaunch px4_sim_pkg mavros_teleop.launch
 
-ゲームパッドからドローンを操作できるようにするためには、OFFBOARDモードである必要があるので、、離陸させてからモードを変更します。
+ゲームパッドからドローンを操作できるようにするために、離陸させてからモードを変更します。
 
 .. code-block:: bash
 
   rosrun mavros mavsys mode -c OFFBOARD
-
-OFFBOARDモードに変更するためには、すでに ``setpoint_*`` トピックにメッセージが届いている必要があります。
-この場合は、mavteleopノードが ``/mavros/setpoint_velocity/cmd_vel`` トピックにメッセージをパブリッシュしているので、モード変更することができます。
-自作のノードなどでOFFBOARDモードに変更できない時は、 ``setpoint_*`` トピックにメッセージがパブリッシュされているか確認しましょう。
 
 最後にamclノードを起動します。
 
@@ -257,3 +213,4 @@ Rvizを起動したら、2D Pose Estimateを選択して、初期位置と姿勢
 `A Tutorial on Particle Filtering and Smoothing: Fifteen years later <https://www.seas.harvard.edu/courses/cs281/papers/doucet-johansen.pdf>`_
 
 `Adaptive Monte Carlo Localization <http://roboticsknowledgebase.com/wiki/state-estimation/adaptive-monte-carlo-localization/>`_
+
