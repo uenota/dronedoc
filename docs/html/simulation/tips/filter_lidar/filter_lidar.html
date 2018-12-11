@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>1.12.2. LiDARのデータをフィルタリングする &mdash; Dronedoc 1.0.0 ドキュメント</title>
+  <title>1.13.2. LiDARのデータをフィルタリングする &mdash; Dronedoc 1.0.0 ドキュメント</title>
   
 
   
@@ -28,8 +28,8 @@
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="index" title="索引" href="../../../genindex.html" />
     <link rel="search" title="検索" href="../../../search.html" />
-    <link rel="next" title="1.12.3. move_baseのローカルプランナーを変更する" href="../change_local_planner/change_local_planner.html" />
-    <link rel="prev" title="1.12.1. 地上からの距離を一定にする" href="../control_alt/control_alt.html" /> 
+    <link rel="next" title="1.13.3. move_baseのローカルプランナーを変更する" href="../change_local_planner/change_local_planner.html" />
+    <link rel="prev" title="1.13.1. 地上からの距離を一定にする" href="../control_alt/control_alt.html" /> 
 
   
   <script src="../../../_static/js/modernizr.min.js"></script>
@@ -91,21 +91,22 @@
 <li class="toctree-l2"><a class="reference internal" href="../../teleop/teleop.html">1.8. ゲームパッドを使ってドローンを操作する</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../slam/lidar_localization.html">1.9. LiDARとAMCLを用いた自己位置推定</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../slam/localization_and_mapping.html">1.10. LiDARを用いたSLAM</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../octomap/octomap.html">1.11. Octomapを使って3Dマップを作る</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../index.html">1.12. Tips</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="../control_alt/control_alt.html">1.12.1. 地上からの距離を一定にする</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">1.12.2. LiDARのデータをフィルタリングする</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id1">1.12.2.1. はじめに</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id2">1.12.2.2. 設定ファイルを書く</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#launch">1.12.2.3. Launchファイルを作る</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id3">1.12.2.4. 試してみる</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id4">1.12.2.5. 参考</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../slam/lidar_nav.html">1.11. LiDARを用いた自律移動</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../octomap/octomap.html">1.12. Octomapを使って3Dマップを作る</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">1.13. Tips</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../control_alt/control_alt.html">1.13.1. 地上からの距離を一定にする</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1.13.2. LiDARのデータをフィルタリングする</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">1.13.2.1. はじめに</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">1.13.2.2. 設定ファイルを書く</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#launch">1.13.2.3. Launchファイルを作る</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">1.13.2.4. 試してみる</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">1.13.2.5. 参考</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="../change_local_planner/change_local_planner.html">1.12.3. move_baseのローカルプランナーを変更する</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../local_planner_for_uav/local_planner_for_uav.html">1.12.4. UAV用のローカルプランナを実装する</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../build_map_gmapping/build_map_gmapping.html">1.12.5. Gmappingを使って地図を生成する</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../build_map_gazebo_plugin/build_map_gazebo_plugin.html">1.12.6. Gazebo Pluginを使って地図を作成する</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../change_local_planner/change_local_planner.html">1.13.3. move_baseのローカルプランナーを変更する</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../local_planner_for_uav/local_planner_for_uav.html">1.13.4. UAV用のローカルプランナを実装する</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../build_map_gmapping/build_map_gmapping.html">1.13.5. Gmappingを使って地図を生成する</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../build_map_gazebo_plugin/build_map_gazebo_plugin.html">1.13.6. Gazebo Pluginを使って地図を作成する</a></li>
 </ul>
 </li>
 </ul>
@@ -166,9 +167,9 @@
         
           <li><a href="../../index.html">1. Simulation</a> &raquo;</li>
         
-          <li><a href="../index.html">1.12. Tips</a> &raquo;</li>
+          <li><a href="../index.html">1.13. Tips</a> &raquo;</li>
         
-      <li>1.12.2. LiDARのデータをフィルタリングする</li>
+      <li>1.13.2. LiDARのデータをフィルタリングする</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -188,9 +189,9 @@
            <div itemprop="articleBody">
             
   <div class="section" id="lidar">
-<h1>1.12.2. LiDARのデータをフィルタリングする<a class="headerlink" href="#lidar" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<h1>1.13.2. LiDARのデータをフィルタリングする<a class="headerlink" href="#lidar" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <div class="section" id="id1">
-<h2>1.12.2.1. はじめに<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>1.13.2.1. はじめに<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>ロボットがLiDARの光線に干渉すると、ロボットの一部がスキャンデータに含まれてしまい、マッピングや自己位置推定の精度に影響を与える可能性があります。
 このページでは、LiDARのデータをフィルタリングすることでロボットとの干渉を排除する方法を学びます。</p>
 <p>LiDARのデータをフィルタリングするには、<a class="reference external" href="http://wiki.ros.org/laser_filters">laser_filters</a> パッケージを使います。
@@ -198,7 +199,7 @@ laser_filtersパッケージでは様々なタイプのフィルターが用意�
 また、複数のフィルタをつなげてフィルターチェインを作ることもできます。</p>
 </div>
 <div class="section" id="id2">
-<h2>1.12.2.2. 設定ファイルを書く<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>1.13.2.2. 設定ファイルを書く<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>今回は特定の距離の範囲にあるスキャンデータを抽出するので、 <cite>LaseScanRangeFilter</cite> を使います。</p>
 <p><cite>LaserScanRangeFilter</cite> は距離を元にフィルタリングを行うフィルタです。
 ここでは、yamlファイル内に設定を記述して、Launchファイル内でそれをロードすることでROSのパラメータを設定します。</p>
@@ -247,7 +248,7 @@ laser_filtersパッケージでは様々なタイプのフィルターが用意�
 上限値は.infにしてあるので、0.5m以上のスキャンデータが置き換えられることはありません。</p>
 </div>
 <div class="section" id="launch">
-<h2>1.12.2.3. Launchファイルを作る<a class="headerlink" href="#launch" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>1.13.2.3. Launchファイルを作る<a class="headerlink" href="#launch" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>今回もmymodel_sitl_tf.launchに追加する形で編集します。</p>
 <p>以下の内容をLaunchファイルに追加することでlaser_filterパッケージを使用することができます。</p>
 <div class="highlight-xml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -325,7 +326,7 @@ laser_filtersによってフィルタリングされたメッセージは <cite>
 </div>
 </div>
 <div class="section" id="id3">
-<h2>1.12.2.4. 試してみる<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>1.13.2.4. 試してみる<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>ちゃんとフィルタリングされるかどうか試してみましょう。</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre>roslaunch px4_sim_pkg mymodel_laser_filter.launch
 </pre></div>
@@ -335,7 +336,7 @@ laser_filtersによってフィルタリングされたメッセージは <cite>
 <img alt="../../../_images/laser_filter.png" src="../../../_images/laser_filter.png" />
 </div>
 <div class="section" id="id4">
-<h2>1.12.2.5. 参考<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>1.13.2.5. 参考<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <dl class="docutils">
 <dt><a class="reference external" href="http://wiki.ros.org/ROS/Tutorials/UnderstandingServicesParams#Using_rosparam">Understanding ROS Services and Parameters</a></dt>
 <dd>ROSのパラメータの使い方</dd>
@@ -351,10 +352,10 @@ laser_filtersによってフィルタリングされたメッセージは <cite>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../change_local_planner/change_local_planner.html" class="btn btn-neutral float-right" title="1.12.3. move_baseのローカルプランナーを変更する" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../change_local_planner/change_local_planner.html" class="btn btn-neutral float-right" title="1.13.3. move_baseのローカルプランナーを変更する" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../control_alt/control_alt.html" class="btn btn-neutral" title="1.12.1. 地上からの距離を一定にする" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../control_alt/control_alt.html" class="btn btn-neutral" title="1.13.1. 地上からの距離を一定にする" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
