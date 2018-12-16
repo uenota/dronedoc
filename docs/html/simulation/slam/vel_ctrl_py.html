@@ -1,0 +1,409 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="ja" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ja" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>px4_vel_controller.py &mdash; Dronedoc 1.0.0 ドキュメント</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="検索" href="../../search.html" /> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Dronedoc
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">1. Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../hardwares/index.html">2. Hardwares</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/bash_commands/bash_commands.html">1. 基本的なBashの使い方</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/ros/ros.html">2. ROSの基本</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/terms/terms.html">3. 用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/archive/archive.html">4. 読書案内</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/trouble_shooting/index.html">5. トラブルシューティング</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Dronedoc</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+      <li>px4_vel_controller.py</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/simulation/slam/vel_ctrl_py.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="px4-vel-controller-py">
+<h1>px4_vel_controller.py<a class="headerlink" href="#px4-vel-controller-py" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58</pre></div></td><td class="code"><div class="highlight"><pre><span class="ch">#!/usr/bin/env python</span>
+
+<span class="kn">import</span> <span class="nn">rospy</span>
+<span class="kn">import</span> <span class="nn">tf</span>
+<span class="kn">from</span> <span class="nn">geometry_msgs.msg</span> <span class="kn">import</span> <span class="n">Twist</span><span class="p">,</span> <span class="n">TwistStamped</span><span class="p">,</span> <span class="n">Vector3Stamped</span>
+
+<span class="k">class</span> <span class="nc">PX4VelocityController</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">origin_frame</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;origin_frame&quot;</span><span class="p">,</span>
+                                            <span class="s2">&quot;map&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vehicle_frame</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;vehicle_frame&quot;</span><span class="p">,</span>
+                                             <span class="s2">&quot;base_link&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">move_base_topic</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;move_base_topic&quot;</span><span class="p">,</span>
+                                               <span class="s2">&quot;/cmd_vel&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mavros_topic</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;mavros_topic&quot;</span><span class="p">,</span>
+                                            <span class="s2">&quot;/mavros/setpoint_velocity/cmd_vel&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">transformer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">TransformListener</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mavros_topic</span><span class="p">,</span>
+                                       <span class="n">TwistStamped</span><span class="p">,</span>
+                                       <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd_sub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">move_base_topic</span><span class="p">,</span>
+                                        <span class="n">Twist</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vel_cmd_cb</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">vel_cmd_cb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="n">linear_vel</span> <span class="o">=</span> <span class="n">Vector3Stamped</span><span class="p">()</span>
+        <span class="n">linear_vel</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">frame_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vehicle_frame</span>
+        <span class="n">linear_vel</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">stamp</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="p">()</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+
+        <span class="n">linear_vel</span><span class="o">.</span><span class="n">vector</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">linear</span><span class="o">.</span><span class="n">x</span>
+        <span class="n">linear_vel</span><span class="o">.</span><span class="n">vector</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">linear</span><span class="o">.</span><span class="n">y</span>
+        <span class="n">linear_vel</span><span class="o">.</span><span class="n">vector</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">transformer</span><span class="o">.</span><span class="n">waitForTransform</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vehicle_frame</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin_frame</span><span class="p">,</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="p">()</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mf">0.05</span><span class="p">))</span>
+            <span class="n">linear_vel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transformer</span><span class="o">.</span><span class="n">transformVector3</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">origin_frame</span><span class="p">,</span> <span class="n">linear_vel</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">tf</span><span class="o">.</span><span class="n">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="n">vel_cmd</span> <span class="o">=</span> <span class="n">TwistStamped</span><span class="p">()</span>
+        <span class="n">vel_cmd</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">stamp</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="p">()</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="n">vel_cmd</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">frame_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin_frame</span>
+
+        <span class="n">vel_cmd</span><span class="o">.</span><span class="n">twist</span><span class="o">.</span><span class="n">linear</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">linear_vel</span><span class="o">.</span><span class="n">vector</span><span class="o">.</span><span class="n">x</span>
+        <span class="n">vel_cmd</span><span class="o">.</span><span class="n">twist</span><span class="o">.</span><span class="n">linear</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">linear_vel</span><span class="o">.</span><span class="n">vector</span><span class="o">.</span><span class="n">y</span>
+        <span class="n">vel_cmd</span><span class="o">.</span><span class="n">twist</span><span class="o">.</span><span class="n">linear</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">linear_vel</span><span class="o">.</span><span class="n">vector</span><span class="o">.</span><span class="n">z</span>
+        <span class="n">vel_cmd</span><span class="o">.</span><span class="n">twist</span><span class="o">.</span><span class="n">angular</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">angular</span><span class="o">.</span><span class="n">z</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">vel_cmd</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="s2">&quot;px4_vel_controller&quot;</span><span class="p">)</span>
+    <span class="n">rate</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Rate</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">PX4VelocityController</span><span class="p">()</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">spin</span><span class="p">()</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="id1">
+<h1>解説<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span class="k">class</span> <span class="nc">PX4VelocityController</span><span class="p">:</span>
+</pre></div>
+</div>
+<p>グローバル変数を使う代わりに、メンバ変数を使うので、速度指令をパブリッシュするクラスを宣言します。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">origin_frame</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;origin_frame&quot;</span><span class="p">,</span>
+                                        <span class="s2">&quot;map&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">vehicle_frame</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;vehicle_frame&quot;</span><span class="p">,</span>
+                                        <span class="s2">&quot;base_link&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">move_base_topic</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;move_base_topic&quot;</span><span class="p">,</span>
+                                        <span class="s2">&quot;/cmd_vel&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">mavros_topic</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;mavros_topic&quot;</span><span class="p">,</span>
+                                        <span class="s2">&quot;/mavros/setpoint_velocity/cmd_vel&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">PX4VelocityController</span></code> クラスのコンストラクタです。
+コンストラクタ内部では、ROSパラメータを使ってフレーム名やトピック名などの変数を初期化しています。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span class="bp">self</span><span class="o">.</span><span class="n">transformer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">TransformListener</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>ロボットのベースフレームへのTFを参照するためのリスナーを初期化しています。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span class="bp">self</span><span class="o">.</span><span class="n">cmd_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mavros_topic</span><span class="p">,</span>
+                                <span class="n">TwistStamped</span><span class="p">,</span>
+                                <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">cmd_sub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">move_base_topic</span><span class="p">,</span>
+                                <span class="n">Twist</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vel_cmd_cb</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>それぞれ、mavrosへ速度指令を送るためのパブリッシャと、move_baseからの速度指令を受け取るためのサブスクライバです。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span class="k">def</span> <span class="nf">vel_cmd_cb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+    <span class="n">linear_vel</span> <span class="o">=</span> <span class="n">Vector3Stamped</span><span class="p">()</span>
+    <span class="n">linear_vel</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">frame_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vehicle_frame</span>
+    <span class="n">linear_vel</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">stamp</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="p">()</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+
+    <span class="n">linear_vel</span><span class="o">.</span><span class="n">vector</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">linear</span><span class="o">.</span><span class="n">x</span>
+    <span class="n">linear_vel</span><span class="o">.</span><span class="n">vector</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">linear</span><span class="o">.</span><span class="n">y</span>
+    <span class="n">linear_vel</span><span class="o">.</span><span class="n">vector</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<p>move_baseから受け取った速度指令を処理するためのコールバック関数です。
+まずはじめに、受け取ったメッセージの値を <code class="docutils literal notranslate"><span class="pre">Vector3Stamped</span></code> 型の変数に格納しています。
+この変数に対して座標変換を行うことで、mavrosに送信する速度指令を得ます。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span class="k">try</span><span class="p">:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">transformer</span><span class="o">.</span><span class="n">waitForTransform</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vehicle_frame</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin_frame</span><span class="p">,</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="p">()</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mf">0.05</span><span class="p">))</span>
+    <span class="n">linear_vel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transformer</span><span class="o">.</span><span class="n">transformVector3</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">origin_frame</span><span class="p">,</span> <span class="n">linear_vel</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">waitForTransform</span></code> 関数で、ロボットのベースフレームへのTFが得られるまで待機します。
+第四引数に与えられた時間が経過してもTFが得られなかった場合は、 <code class="docutils literal notranslate"><span class="pre">tf.Exception</span></code> 例外を送出します。</p>
+<p>TFが届いたあとは、 <code class="docutils literal notranslate"><span class="pre">transformVector3</span></code> 関数でmove_baseからの速度指令の座標変換を行います。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span class="k">except</span> <span class="n">tf</span><span class="o">.</span><span class="n">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+    <span class="k">return</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">waitForTransform</span></code> 関数は <code class="docutils literal notranslate"><span class="pre">tf.Exception</span></code> 例外を、 <code class="docutils literal notranslate"><span class="pre">transformVector3</span></code> 関数は <code class="docutils literal notranslate"><span class="pre">tf.LookupException</span></code> 、 <code class="docutils literal notranslate"><span class="pre">tf.ConnectivityException</span></code> 、 <code class="docutils literal notranslate"><span class="pre">tf.ExtrapolationException</span></code> の3つの例外を送出する可能性があるので、 <code class="docutils literal notranslate"><span class="pre">try-except</span></code> 節で例外を補足する必要があります。
+<code class="docutils literal notranslate"><span class="pre">tf.LookupException</span></code> 、 <code class="docutils literal notranslate"><span class="pre">tf.ConnectivityException</span></code> 、 <code class="docutils literal notranslate"><span class="pre">tf.ExtrapolationException</span></code> の3つの例外は <code class="docutils literal notranslate"><span class="pre">tf.Exception</span></code> 例外のサブクラスなので、このように記述すれば全ての例外を捕捉できます。
+例外を補足した場合は、エラーメッセージを出力して、関数から抜け出します。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span class="n">vel_cmd</span> <span class="o">=</span> <span class="n">TwistStamped</span><span class="p">()</span>
+<span class="n">vel_cmd</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">stamp</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="p">()</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+<span class="n">vel_cmd</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">frame_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin_frame</span>
+
+<span class="n">vel_cmd</span><span class="o">.</span><span class="n">twist</span><span class="o">.</span><span class="n">linear</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">linear_vel</span><span class="o">.</span><span class="n">vector</span><span class="o">.</span><span class="n">x</span>
+<span class="n">vel_cmd</span><span class="o">.</span><span class="n">twist</span><span class="o">.</span><span class="n">linear</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">linear_vel</span><span class="o">.</span><span class="n">vector</span><span class="o">.</span><span class="n">y</span>
+<span class="n">vel_cmd</span><span class="o">.</span><span class="n">twist</span><span class="o">.</span><span class="n">linear</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">linear_vel</span><span class="o">.</span><span class="n">vector</span><span class="o">.</span><span class="n">z</span>
+<span class="n">vel_cmd</span><span class="o">.</span><span class="n">twist</span><span class="o">.</span><span class="n">angular</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">angular</span><span class="o">.</span><span class="n">z</span>
+
+<span class="bp">self</span><span class="o">.</span><span class="n">cmd_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">vel_cmd</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>mavrosに送信する速度指令のメッセージを作成し、パブリッシュします。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="s2">&quot;px4_vel_controller&quot;</span><span class="p">)</span>
+    <span class="n">rate</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Rate</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">PX4VelocityController</span><span class="p">()</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">spin</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">PX4VelocityController</span></code> クラスのインスタンスを作成し、ノードを実行します。</p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Takaki Ueno
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/translations.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
