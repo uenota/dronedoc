@@ -12,10 +12,11 @@
 
   <buildtool_depend>catkin</buildtool_depend>
 
-  <build_depend>protobuf-compiler</build_depend>
+  <build_depend>protobuf</build_depend>
 
   <depend>geometry_msgs</depend>
   <depend>laser_assembler</depend>
+  <depend>navigation</depend>
   <depend>mavros_msgs</depend>
   <depend>roscpp</depend>
   <depend>sensor_msgs</depend>
