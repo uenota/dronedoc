@@ -2,7 +2,12 @@
 
   <node pkg="dronedoc" type="odom_publisher" name="odom_publisher" respawn="false" output="screen" />
 
-  <remap from="/cmd_vel" to="/mavros/setpoint_velocity/cmd_vel_unstamped" />
+  <node pkg="dronedoc" type="px4_vel_controller" name="px4_vel_controller">
+    <param name="origin_frame" value="map"/>
+    <param name="vehicle_frame" value="base_link"/>
+    <param name="move_base_topic" value="/cmd_vel"/>
+    <param name="mavros_topic" value="/mavros/setpoint_velocity/cmd_vel"/>
+  </node>
 
   <node pkg="move_base" type="move_base" name="move_base" respawn="false" output="screen">
 

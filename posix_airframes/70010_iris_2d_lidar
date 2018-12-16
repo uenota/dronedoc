@@ -10,6 +10,9 @@ param set SYS_AUTOSTART 70010
 param set SYS_RESTART_TYPE 2
 param set BAT_N_CELLS 3
 
+# Takeoff altitude
+param set MIS_TAKEOFF_ALT 2.0
+
 # Setting tilt angle limit
 param set FW_P_LIM_MAX 10.0
 param set FW_P_LIM_MIN -10.0

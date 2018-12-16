@@ -97,7 +97,14 @@
 <li class="toctree-l3"><a class="reference internal" href="../control_alt/control_alt.html">1.13.1. 地上からの距離を一定にする</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../filter_lidar/filter_lidar.html">1.13.2. LiDARのデータをフィルタリングする</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../change_local_planner/change_local_planner.html">1.13.3. move_baseのローカルプランナーを変更する</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">1.13.4. UAV用のローカルプランナを実装する</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1.13.4. UAV用のローカルプランナを実装する</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">1.13.4.1. インストール</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">1.13.4.2. ローカルプランナを実装する</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ros">1.13.4.3. ROSプラグイン</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">1.13.4.4. 実行する</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">1.13.4.5. 参考</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="../build_map_gmapping/build_map_gmapping.html">1.13.5. Gmappingを使って地図を生成する</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../build_map_gazebo_plugin/build_map_gazebo_plugin.html">1.13.6. Gazebo Pluginを使って地図を作成する</a></li>
 </ul>
@@ -183,6 +190,70 @@
             
   <div class="section" id="uav">
 <h1>1.13.4. UAV用のローカルプランナを実装する<a class="headerlink" href="#uav" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>この章では、<a class="reference external" href="http://ompl.kavrakilab.org/">Open Motion Planning Library (OMPL)</a> を使ってドローン用のローカルプランナを実装します。</p>
+<p>OMPLはオープンソースの行動計画ライブラリで、マニピュレータやUGVなどの動作計画に用いられています。
+マニピュレータの制御に用いられる <a class="reference external" href="https://moveit.ros.org/">MoveIt!</a> というライブラリもOMPLを使っています。</p>
+<div class="section" id="id1">
+<h2>1.13.4.1. インストール<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>UbuntuにOMPLをインストールする方法は以下の3通りあります。</p>
+<ul class="simple">
+<li>ソースからインストールする</li>
+<li>ビルド済みバイナリをインストールする</li>
+<li>ROSバージョンのバイナリをインストールする</li>
+</ul>
+<p>今回はROSバージョンのバイナリをインストールします。
+他の方法については、<a class="reference external" href="http://ompl.kavrakilab.org/installation.html">OMPLのインストールガイド</a> を見てください。</p>
+<p>はじめに、ROSのリポジトリをaptのデータ取得元に追加します。
+すでにROSを使っている場合には必要ありません。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre>sudo sh -c <span class="s1">&#39;echo &quot;deb http://packages.ros.org/ros/ubuntu `lsb_release -sc` main&quot; &gt; /etc/apt/sources.list.d/ros-latest.list&#39;</span>
+wget http://packages.ros.org/ros.key -O - <span class="p">|</span> sudo apt-key add -
+</pre></div>
+</div>
+<p>追加できたら、OMPLをインストールします。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre>sudo apt update
+sudo apt install ros-kinetic-ompl
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>1.13.4.2. ローカルプランナを実装する<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>以下では、<a class="reference external" href="https://robotics.naist.jp/edu/text/?Robotics%2FOMPL#PlanningWithControls">制御指令値を含むプラニング</a> を参考にして作業を進めていきます。</p>
+</div>
+<div class="section" id="ros">
+<h2>1.13.4.3. ROSプラグイン<a class="headerlink" href="#ros" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>ROSのパッケージの中には、処理の一部（画像処理や行動計画など）をプラグインとして作成し、後で変更可能になっているものがあります。
+プラグインを作成、使用するためには <a class="reference external" href="http://wiki.ros.org/pluginlib">pluginlib</a> パッケージを使用します。
+プラグインの仕組みを使うことで、特定のインターフェースに従ったクラスを作れば中身の実装は自由にできるので、既存のパッケージを拡張することが容易になります。</p>
+<div class="section" id="navigation">
+<h3>1.13.4.3.1. navigationスタック<a class="headerlink" href="#navigation" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>navigationスタックは、move_baseやcostmap_2dなどを含むメタパッケージです。</p>
+<p>navigationスタックでは、pluginlibを使って作成したプラグインをローカルプランナやグローバルプランナとして使用することができるようになっています。
+navigationスタックのローカルプランナとして使用可能なクラスを作るためには、 <a class="reference external" href="http://docs.ros.org/jade/api/nav_core/html/classnav__core_1_1BaseLocalPlanner.html">nav_core::BaseLocalPlanner</a> を継承したクラスを作る必要があります。</p>
+</div>
+<div class="section" id="id4">
+<h3>1.13.4.3.2. ローカルプランナをプラグイン化する<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h3>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>1.13.4.4. 実行する<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="id6">
+<h2>1.13.4.5. 参考<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<dl class="docutils">
+<dt><a class="reference external" href="https://robotics.naist.jp/edu/text/?Robotics%2FOMPL">Robotics/OMPL - NAIST::OnlineText</a></dt>
+<dd>OMPLの日本語チュートリアル</dd>
+<dt><a class="reference external" href="http://ompl.kavrakilab.org/OMPL_Primer.pdf">Open Motion Planning Library: A Primer</a></dt>
+<dd>OMPLの英語チュートリアル（PDF）</dd>
+<dt><a class="reference external" href="http://manpages.ubuntu.com/manpages/xenial/ja/man5/sources.list.5.html">sources.list - APT のデータ取得元の設定リスト</a></dt>
+<dd>sources.listについて</dd>
+<dt><a class="reference external" href="http://makemove.hatenablog.com/entry/2015/09/29/001725">navigationスタックで学ぶpluginlibの使い方</a></dt>
+<dd>navigationスタック用のプラグインについて</dd>
+<dt><a class="reference external" href="http://wiki.ros.org/navigation/Tutorials/Writing%20A%20Global%20Path%20Planner%20As%20Plugin%20in%20ROS">Writing A Global Path Planner As Plugin in ROS</a></dt>
+<dd>navigationスタック用のグローバルプランナプラグインを作る</dd>
+<dt><a class="reference external" href="http://wiki.ros.org/nav_core">nav_core - ROS Wiki</a></dt>
+<dd>nav_coreパッケージ</dd>
+</dl>
+</div>
 </div>
 
 
