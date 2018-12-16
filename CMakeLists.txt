@@ -12,11 +12,13 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   sensor_msgs
   nav_msgs
+  nav_core
   tf
 )
 
 find_package(yaml-cpp REQUIRED)
 find_package(Protobuf REQUIRED)
+find_package(OMPL REQUIRED)
 
 find_package(gazebo REQUIRED)
 if("${GAZEBO_VERSION}" VERSION_LESS "7.4")
@@ -64,6 +66,10 @@ add_executable(px4_vel_controller src/px4_vel_controller.cpp)
 target_link_libraries(px4_vel_controller ${catkin_LIBRARIES})
 add_executable(odom_publisher src/odom_publisher.cpp)
 target_link_libraries(odom_publisher ${catkin_LIBRARIES})
+add_executable(RRTPlanner src/RRTPlanner.cpp)
+target_link_libraries(RRTPlanner ${catkin_LIBRARIES}
+                                 ${OMPL_LIBRARIES}
+                                 ${Boost_LIBRARIES})
 
 # Create symbolic link of airframe defs
 set(PACK_AIRFRAME_DIR ${CMAKE_CURRENT_SOURCE_DIR}/posix_airframes)
