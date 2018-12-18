@@ -184,7 +184,7 @@
 </ol>
 <p>が必要です。
 以降ではそれぞれの設定について見ていきます。</p>
-<div class="figure" id="id33">
+<div class="figure" id="id31">
 <img alt="../../_images/overview_tf_gps.png" src="../../_images/overview_tf_gps.png" />
 <p class="caption"><span class="caption-text">From <a class="reference external" href="http://wiki.ros.org/navigation/Tutorials/RobotSetup">ROS Wiki</a> (<a class="reference external" href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>)</span></p>
 </div>
@@ -260,8 +260,8 @@ LiDARの点群データは <code class="docutils literal notranslate"><span clas
 <p><a class="reference external" href="http://wiki.ros.org/navigation/Tutorials/RobotSetup/Odom">ROS Wikiのチュートリアル</a> を参考にしてノードを作成しましょう。</p>
 <p><code class="docutils literal notranslate"><span class="pre">map</span></code> から <code class="docutils literal notranslate"><span class="pre">base_link</span></code> へのTFはすでにパブリッシュされているので、今回は <code class="docutils literal notranslate"><span class="pre">nav_msgs::Odometry</span></code> メッセージのパブリッシャを書くだけで構いません。</p>
 <p>Pythonのコード例は、<a class="reference internal" href="odom_pub_py.html"><span class="doc">odom_publisher.py</span></a> を参考にしてください。</p>
-<div class="literal-block-wrapper container" id="id34">
-<div class="code-block-caption"><span class="caption-text">odom_publisher.cpp</span><a class="headerlink" href="#id34" title="このコードへのパーマリンク">¶</a></div>
+<div class="literal-block-wrapper container" id="id32">
+<div class="code-block-caption"><span class="caption-text">odom_publisher.cpp</span><a class="headerlink" href="#id32" title="このコードへのパーマリンク">¶</a></div>
 <div class="highlight-cpp notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -504,341 +504,37 @@ LiDARの点群データは <code class="docutils literal notranslate"><span clas
 <div class="section" id="id8">
 <h2>1.6.4. 速度指令<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="section" id="cmd-vel">
-<h3>1.6.4.1. <code class="docutils literal notranslate"><span class="pre">cmd_vel</span></code> トピック<a class="headerlink" href="#cmd-vel" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>mavrosを使えば、 <code class="docutils literal notranslate"><span class="pre">/mavros/setpoint_velocity/cmd_vel_unstamped</span></code> トピックもしくは、 <code class="docutils literal notranslate"><span class="pre">/mavros/setpoint_velocity/cmd_vel</span></code> トピックに速度指令を送信することでドローンを移動させることができます。</p>
-<p>しかし、 <code class="docutils literal notranslate"><span class="pre">cmd_vel</span></code> トピックもしくは、 <code class="docutils literal notranslate"><span class="pre">cmd_vel_unstamped</span></code> トピックを使う場合の速度指令は、ドローンのベースフレームではなく、ドローンの位置の基準となるフレーム（ <code class="docutils literal notranslate"><span class="pre">odom</span></code> や <code class="docutils literal notranslate"><span class="pre">map</span></code> など）を基準とした速度を使う必要があります（ <a class="reference external" href="http://wiki.ros.org/mavros/Enumerations">参考</a> ）。</p>
-<p>一方で、move_baseがパブリッシュする速度指令は、ロボットのベースフレームを基準としたものなので、これを変換するノードを書かなければなりません。</p>
-</div>
-<div class="section" id="px4-vel-controller-cpp">
-<h3>1.6.4.2. px4_vel_controller.cpp<a class="headerlink" href="#px4-vel-controller-cpp" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>以下が、move_baseの速度指令をmavros用に変換するノードです。
-Pythonのコードは <a class="reference internal" href="vel_ctrl_py.html"><span class="doc">px4_vel_controller.py</span></a> を見てください。</p>
-<div class="literal-block-wrapper container" id="id35">
-<div class="code-block-caption"><span class="caption-text">px4_vel_controller.cpp</span><a class="headerlink" href="#id35" title="このコードへのパーマリンク">¶</a></div>
-<div class="highlight-cpp notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
-  2
-  3
-  4
-  5
-  6
-  7
-  8
-  9
- 10
- 11
- 12
- 13
- 14
- 15
- 16
- 17
- 18
- 19
- 20
- 21
- 22
- 23
- 24
- 25
- 26
- 27
- 28
- 29
- 30
- 31
- 32
- 33
- 34
- 35
- 36
- 37
- 38
- 39
- 40
- 41
- 42
- 43
- 44
- 45
- 46
- 47
- 48
- 49
- 50
- 51
- 52
- 53
- 54
- 55
- 56
- 57
- 58
- 59
- 60
- 61
- 62
- 63
- 64
- 65
- 66
- 67
- 68
- 69
- 70
- 71
- 72
- 73
- 74
- 75
- 76
- 77
- 78
- 79
- 80
- 81
- 82
- 83
- 84
- 85
- 86
- 87
- 88
- 89
- 90
- 91
- 92
- 93
- 94
- 95
- 96
- 97
- 98
- 99
-100
-101
-102
-103</pre></div></td><td class="code"><div class="highlight"><pre><span class="cm">/**</span>
-<span class="cm"> * @file px4_vel_controller.cpp</span>
-<span class="cm"> * @brief Node for converting velocity command of move_base to mavros</span>
-<span class="cm"> * @ author Takaki Ueno</span>
-<span class="cm"> */</span>
-
-<span class="c1">// c++ library</span>
-<span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp"></span>
-<span class="c1">// ROS</span>
-<span class="cp">#include</span> <span class="cpf">&lt;ros/ros.h&gt;</span><span class="cp"></span>
-<span class="c1">// TF</span>
-<span class="cp">#include</span> <span class="cpf">&lt;tf/transform_listener.h&gt;</span><span class="cp"></span>
-<span class="c1">// geometry_msgs</span>
-<span class="cp">#include</span> <span class="cpf">&lt;geometry_msgs/Twist.h&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;geometry_msgs/TwistStamped.h&gt;</span><span class="cp"></span>
-
-<span class="c1">//! mavros velocity publisher</span>
-<span class="n">ros</span><span class="o">::</span><span class="n">Publisher</span> <span class="n">cmd_pub</span><span class="p">;</span>
-
-<span class="c1">//! origin frame name</span>
-<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">origin_frame</span><span class="p">;</span>
-<span class="c1">//! base frame name of vehicle</span>
-<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">vehicle_frame</span><span class="p">;</span>
-
-<span class="c1">//! origin coordinate of origin_frame</span>
-<span class="n">tf</span><span class="o">::</span><span class="n">Vector3</span> <span class="n">global_origin</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-<span class="c1">//! pointer to tf listener</span>
-<span class="n">tf</span><span class="o">::</span><span class="n">TransformListener</span> <span class="o">*</span><span class="n">listener_ptr</span><span class="p">;</span>
-
-<span class="cm">/**</span>
-<span class="cm"> * @brief Callback function for velocity command from move_base</span>
-<span class="cm"> * @param msg Incoming msg</span>
-<span class="cm"> */</span>
-<span class="kt">void</span> <span class="nf">vel_cmd_cb</span><span class="p">(</span><span class="k">const</span> <span class="n">geometry_msgs</span><span class="o">::</span><span class="n">Twist</span><span class="o">::</span><span class="n">ConstPtr</span> <span class="o">&amp;</span><span class="n">msg</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="n">tf</span><span class="o">::</span><span class="n">Vector3</span> <span class="n">vel_unstamped</span><span class="p">(</span><span class="n">msg</span><span class="o">-&gt;</span><span class="n">linear</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">msg</span><span class="o">-&gt;</span><span class="n">linear</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-
-    <span class="n">tf</span><span class="o">::</span><span class="n">StampedTransform</span> <span class="n">vehicle_tf</span><span class="p">;</span>
-    <span class="k">try</span>
-    <span class="p">{</span>
-        <span class="c1">// get tf from origin to base and transform velocity by using the tf</span>
-        <span class="n">listener_ptr</span><span class="o">-&gt;</span><span class="n">lookupTransform</span><span class="p">(</span><span class="n">origin_frame</span><span class="p">,</span> <span class="n">vehicle_frame</span><span class="p">,</span> <span class="n">ros</span><span class="o">::</span><span class="n">Time</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">vehicle_tf</span><span class="p">);</span>
-        <span class="n">vehicle_tf</span><span class="p">.</span><span class="n">setOrigin</span><span class="p">(</span><span class="n">global_origin</span><span class="p">);</span>
-        <span class="n">vel_unstamped</span> <span class="o">=</span> <span class="n">vehicle_tf</span> <span class="o">*</span> <span class="n">vel_unstamped</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="k">catch</span> <span class="p">(</span><span class="n">tf</span><span class="o">::</span><span class="n">TransformException</span><span class="o">&amp;</span> <span class="n">ex</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="c1">// print error and exit function without publishing message</span>
-        <span class="n">ROS_ERROR</span><span class="p">(</span><span class="s">&quot;%s&quot;</span><span class="p">,</span> <span class="n">ex</span><span class="p">.</span><span class="n">what</span><span class="p">());</span>
-        <span class="k">return</span><span class="p">;</span>
-    <span class="p">}</span>
-
-    <span class="n">geometry_msgs</span><span class="o">::</span><span class="n">TwistStamped</span> <span class="n">vel_cmd</span><span class="p">;</span>
-
-    <span class="c1">// setting header field</span>
-    <span class="n">vel_cmd</span><span class="p">.</span><span class="n">header</span><span class="p">.</span><span class="n">frame_id</span> <span class="o">=</span> <span class="n">origin_frame</span><span class="p">;</span>
-    <span class="n">vel_cmd</span><span class="p">.</span><span class="n">header</span><span class="p">.</span><span class="n">stamp</span> <span class="o">=</span> <span class="n">ros</span><span class="o">::</span><span class="n">Time</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
-
-    <span class="c1">// setting twist field</span>
-    <span class="n">vel_cmd</span><span class="p">.</span><span class="n">twist</span><span class="p">.</span><span class="n">linear</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">vel_unstamped</span><span class="p">.</span><span class="n">getX</span><span class="p">();</span>
-    <span class="n">vel_cmd</span><span class="p">.</span><span class="n">twist</span><span class="p">.</span><span class="n">linear</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">vel_unstamped</span><span class="p">.</span><span class="n">getY</span><span class="p">();</span>
-    <span class="n">vel_cmd</span><span class="p">.</span><span class="n">twist</span><span class="p">.</span><span class="n">linear</span><span class="p">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">vel_unstamped</span><span class="p">.</span><span class="n">getZ</span><span class="p">();</span>
-    <span class="n">vel_cmd</span><span class="p">.</span><span class="n">twist</span><span class="p">.</span><span class="n">angular</span> <span class="o">=</span> <span class="n">msg</span><span class="o">-&gt;</span><span class="n">angular</span><span class="p">;</span>
-
-    <span class="n">cmd_pub</span><span class="p">.</span><span class="n">publish</span><span class="p">(</span><span class="n">vel_cmd</span><span class="p">);</span>
-<span class="p">}</span>
-
-<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="n">ros</span><span class="o">::</span><span class="n">init</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">,</span> <span class="s">&quot;px4_vel_controller&quot;</span><span class="p">);</span>
-    <span class="n">ros</span><span class="o">::</span><span class="n">NodeHandle</span> <span class="n">nh</span><span class="p">;</span>
-    <span class="n">ros</span><span class="o">::</span><span class="n">Rate</span> <span class="n">rate</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>
-
-    <span class="c1">// Fixed frame name</span>
-    <span class="n">nh</span><span class="p">.</span><span class="n">param</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;origin_frame&quot;</span><span class="p">,</span> <span class="n">origin_frame</span><span class="p">,</span> <span class="s">&quot;map&quot;</span><span class="p">);</span>
-    <span class="c1">// Vehicle base name</span>
-    <span class="n">nh</span><span class="p">.</span><span class="n">param</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;vehicle_frame&quot;</span><span class="p">,</span> <span class="n">vehicle_frame</span><span class="p">,</span> <span class="s">&quot;base_link&quot;</span><span class="p">);</span>
-
-    <span class="c1">// move_base velocity topic</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">move_base_topic</span><span class="p">;</span>
-    <span class="n">nh</span><span class="p">.</span><span class="n">param</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;move_base_topic&quot;</span><span class="p">,</span> <span class="n">move_base_topic</span><span class="p">,</span> <span class="s">&quot;/cmd_vel&quot;</span><span class="p">);</span>
-    <span class="c1">// mavros velocity topic</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">mavros_topic</span><span class="p">;</span>
-    <span class="n">nh</span><span class="p">.</span><span class="n">param</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;mavros_topic&quot;</span><span class="p">,</span> <span class="n">mavros_topic</span><span class="p">,</span> <span class="s">&quot;/mavros/setpoint_velocity/cmd_vel&quot;</span><span class="p">);</span>
-
-    <span class="n">cmd_pub</span> <span class="o">=</span> <span class="n">nh</span><span class="p">.</span><span class="n">advertise</span><span class="o">&lt;</span><span class="n">geometry_msgs</span><span class="o">::</span><span class="n">TwistStamped</span><span class="o">&gt;</span><span class="p">(</span><span class="n">mavros_topic</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
-    <span class="c1">// subscriber for velocity command from move base</span>
-    <span class="n">ros</span><span class="o">::</span><span class="n">Subscriber</span> <span class="n">cmd_sub</span> <span class="o">=</span> <span class="n">nh</span><span class="p">.</span><span class="n">subscribe</span><span class="o">&lt;</span><span class="n">geometry_msgs</span><span class="o">::</span><span class="n">Twist</span><span class="o">&gt;</span><span class="p">(</span><span class="n">move_base_topic</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">vel_cmd_cb</span><span class="p">);</span>
-
-    <span class="c1">// listener should initialized after ros::init</span>
-    <span class="n">tf</span><span class="o">::</span><span class="n">TransformListener</span> <span class="n">listener</span><span class="p">;</span>
-
-    <span class="c1">// use pointer to listener</span>
-    <span class="c1">// so that listener can be used in callback function</span>
-    <span class="c1">// and keep listener alive until the node dies</span>
-    <span class="c1">// Listener starts buffering transform after created</span>
-    <span class="c1">// and every query will fail if listener becomes out of scope</span>
-    <span class="n">listener_ptr</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">listener</span><span class="p">;</span>
-
-    <span class="n">ros</span><span class="o">::</span><span class="n">spin</span><span class="p">();</span>
-
-    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span>
+<h3>1.6.4.1. cmd_velトピック<a class="headerlink" href="#cmd-vel" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>mavrosを使えば、 <code class="docutils literal notranslate"><span class="pre">/mavros/setpoint_velocity/cmd_vel_unstamped</span></code> トピックもしくは、 <code class="docutils literal notranslate"><span class="pre">/mavros/setpoint_velocity/cmd_vel</span></code> トピックに速度指令を送信することでドローンを移動させることができます。
+これらのトピックはメッセージの型によって分けられており、 <code class="docutils literal notranslate"><span class="pre">cmd_vel_unstamped</span></code> は <code class="docutils literal notranslate"><span class="pre">Twist</span></code> 型、 <code class="docutils literal notranslate"><span class="pre">cmd_vel</span></code> は <code class="docutils literal notranslate"><span class="pre">TwistStamped</span></code> 型のメッセージを使います。
+move_baseは <code class="docutils literal notranslate"><span class="pre">Twist</span></code> 型のメッセージをパブリッシュするので、今回は <code class="docutils literal notranslate"><span class="pre">/mavros/setpoint_velocity/cmd_vel_unstamped</span></code> トピックを利用します。</p>
+<p>また、move_baseは <code class="docutils literal notranslate"><span class="pre">/cmd_vel</span></code> トピックに速度指令をパブリッシュするようになっているので、Launchファイル内で次のように <a class="reference external" href="http://wiki.ros.org/roslaunch/XML/remap">リマップ</a> することでmove_baseからの速度指令がドローンに送られるようにします。</p>
+<p>Launchファイルについては、後述の <a class="reference internal" href="#navigation-launch"><span class="std std-ref">navigation.launch</span></a> の項を参照してください。</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span class="nt">&lt;remap</span> <span class="na">from=</span><span class="s">&quot;/cmd_vel&quot;</span> <span class="na">to=</span><span class="s">&quot;/mavros/setpoint_velocity/cmd_vel_unstamped&quot;</span> <span class="nt">/&gt;</span>
 </pre></div>
-</td></tr></table></div>
+</div>
+</div>
+<div class="section" id="mav-frame">
+<h3>1.6.4.2. mav_frameパラメータ<a class="headerlink" href="#mav-frame" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">cmd_vel</span></code> トピックもしくは、 <code class="docutils literal notranslate"><span class="pre">cmd_vel_unstamped</span></code> トピックを使う場合の速度指令は、デフォルトではドローンのベースフレームではなく、ドローンの位置の基準となるフレーム（ <code class="docutils literal notranslate"><span class="pre">odom</span></code> や <code class="docutils literal notranslate"><span class="pre">map</span></code> など）を基準とした速度を使用しています。</p>
+<p>以下の画像のように、速度指令の基準となるフレームが異なる場合には、同じ値の速度指令値を入力しても、ロボットの速度（太い矢印）は異なります。</p>
+<img alt="../../_images/mav_frame.png" src="../../_images/mav_frame.png" />
+<p>move_baseがパブリッシュする速度指令は、ロボットのベースフレームを基準としたものです。
+そのため、今回は速度指令の基準となるフレームをロボットのベースフレームに設定しなければなりません。</p>
+<p><code class="docutils literal notranslate"><span class="pre">cmd_vel</span></code> トピックによる速度指令が基準とするフレームを変更するには、 <code class="docutils literal notranslate"><span class="pre">/mavros/setpoint_velocity/mav_frame</span></code> パラメータの設定を変える必要があります。
+ドローンのベースフレームを基準にする場合は、このパラメータの値を <code class="docutils literal notranslate"><span class="pre">BODY_NED</span></code> に変更します。
+デフォルトでは <code class="docutils literal notranslate"><span class="pre">LOCAL_NED</span></code> になっています。</p>
+<p>以下の内容をmymodel_sitl_tf.launchに追加することで、このパラメータの値を変更できます。</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;/mavros/setpoint_velocity/mav_frame&quot;</span>  <span class="na">type=</span><span class="s">&quot;str&quot;</span> <span class="na">value=</span><span class="s">&quot;BODY_NED&quot;</span> <span class="nt">/&gt;</span>
+</pre></div>
+</div>
+<p>他の利用可能なフレームについては <a class="reference external" href="http://wiki.ros.org/mavros/Enumerations">mavros/Enumerations</a> にリストがあります。</p>
 </div>
 </div>
 <div class="section" id="id10">
-<h3>1.6.4.3. コード解説<a class="headerlink" href="#id10" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;ros/ros.h&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;tf/transform_listener.h&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;geometry_msgs/Twist.h&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;geometry_msgs/TwistStamped.h&gt;</span><span class="cp"></span>
-</pre></div>
-</div>
-<p>tfパッケージからtransform_listenerを、geometry_msgsパッケージからTwistメッセージとTwistStampedメッセージを使用します。
-stringは文字列を扱うためのC++の標準パッケージです。</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span class="n">ros</span><span class="o">::</span><span class="n">Publisher</span> <span class="n">cmd_pub</span><span class="p">;</span>
-</pre></div>
-</div>
-<p>mavrosの <code class="docutils literal notranslate"><span class="pre">cmd_vel</span></code> トピックに速度指令をパブリッシュするためのパブリッシャーです。
-コールバック関数内で使用できるようにグローバル変数にしてあります。</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">origin_frame</span><span class="p">;</span>
-<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">vehicle_frame</span><span class="p">;</span>
-</pre></div>
-</div>
-<p>ロボットのベースフレームと位置の基準のフレームの名前を格納する変数です。
-これもコールバック関数内で使用できるようにグローバル変数にしてあります。</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span class="n">tf</span><span class="o">::</span><span class="n">Vector3</span> <span class="n">global_origin</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-<span class="n">tf</span><span class="o">::</span><span class="n">TransformListener</span> <span class="o">*</span><span class="n">listener_ptr</span><span class="p">;</span>
-</pre></div>
-</div>
-<p>tfの原点を指定するためのベクトルを初期化しています。
-<code class="docutils literal notranslate"><span class="pre">listener_ptr</span></code> は、ブロードキャストされているtfを参照するためのリスナーへのポインタです。</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span class="n">ros</span><span class="o">::</span><span class="n">init</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">,</span> <span class="s">&quot;px4_vel_controller&quot;</span><span class="p">);</span>
-<span class="n">ros</span><span class="o">::</span><span class="n">NodeHandle</span> <span class="n">nh</span><span class="p">;</span>
-<span class="n">ros</span><span class="o">::</span><span class="n">Rate</span> <span class="n">rate</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>
-</pre></div>
-</div>
-<p>ノードを初期化します。</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span class="n">nh</span><span class="p">.</span><span class="n">param</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;origin_frame&quot;</span><span class="p">,</span> <span class="n">origin_frame</span><span class="p">,</span> <span class="s">&quot;map&quot;</span><span class="p">);</span>
-<span class="n">nh</span><span class="p">.</span><span class="n">param</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;vehicle_frame&quot;</span><span class="p">,</span> <span class="n">vehicle_frame</span><span class="p">,</span> <span class="s">&quot;base_link&quot;</span><span class="p">);</span>
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">origin_frame</span></code> と <code class="docutils literal notranslate"><span class="pre">vehicle_frame</span></code> の値をパラメータを使って初期化しています。
-この書き方を使うことで、ROSのパラメータを使って変数の値を変更できるようになります。
-パラメータが与えられていない場合は、第三引数に指定された値がデフォルト値として使用されます。</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">move_base_topic</span><span class="p">;</span>
-<span class="n">nh</span><span class="p">.</span><span class="n">param</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;move_base_topic&quot;</span><span class="p">,</span> <span class="n">move_base_topic</span><span class="p">,</span> <span class="s">&quot;/cmd_vel&quot;</span><span class="p">);</span>
-<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">mavros_topic</span><span class="p">;</span>
-<span class="n">nh</span><span class="p">.</span><span class="n">param</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;mavros_topic&quot;</span><span class="p">,</span> <span class="n">mavros_topic</span><span class="p">,</span> <span class="s">&quot;/mavros/setpoint_velocity/cmd_vel&quot;</span><span class="p">);</span>
-</pre></div>
-</div>
-<p>move_baseの速度指令のトピック名とmavrosの速度指令のトピック名を格納する変数を初期化しています。
-これもフレーム名と同様にROSのパラメータを使って値を変更できます。</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span class="n">cmd_pub</span> <span class="o">=</span> <span class="n">nh</span><span class="p">.</span><span class="n">advertise</span><span class="o">&lt;</span><span class="n">geometry_msgs</span><span class="o">::</span><span class="n">TwistStamped</span><span class="o">&gt;</span><span class="p">(</span><span class="n">mavros_topic</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
-<span class="n">ros</span><span class="o">::</span><span class="n">Subscriber</span> <span class="n">cmd_sub</span> <span class="o">=</span> <span class="n">nh</span><span class="p">.</span><span class="n">subscribe</span><span class="o">&lt;</span><span class="n">geometry_msgs</span><span class="o">::</span><span class="n">Twist</span><span class="o">&gt;</span><span class="p">(</span><span class="n">move_base_topic</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">vel_cmd_cb</span><span class="p">);</span>
-</pre></div>
-</div>
-<p>mavrosの速度指令をパブリッシュするためのパブリッシャとmove_baseの速度指令をサブスクライブするためのサブスクライバです。</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span class="n">tf</span><span class="o">::</span><span class="n">TransformListener</span> <span class="n">listener</span><span class="p">;</span>
-<span class="n">listener_ptr</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">listener</span><span class="p">;</span>
-</pre></div>
-</div>
-<p>TFを参照するためのリスナーを初期化しています。
-リスナーの宣言は、ノードの初期化よりも後に行う必要があります。
-このような理由から、リスナーはグローバル変数として宣言せずに、main関数内で宣言しています。</p>
-<p>また、リスナーは生成されるとTFをバッファに保持し始めるので、リスナーの寿命がすぐに来ないようにスコープを設定する必要があります。
-リスナーがすぐに破棄されると、TFの参照が失敗してしまいます。
-この場合は、リスナーの寿命はノードが終了されるまでなので、ノードが起動している間はリスナーを使用することができます。</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span class="n">ros</span><span class="o">::</span><span class="n">spin</span><span class="p">();</span>
-</pre></div>
-</div>
-<p>サブスクライバのコールバックが実行されるようにします。</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">vel_cmd_cb</span><span class="p">(</span><span class="k">const</span> <span class="n">geometry_msgs</span><span class="o">::</span><span class="n">Twist</span><span class="o">::</span><span class="n">ConstPtr</span> <span class="o">&amp;</span><span class="n">msg</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="n">tf</span><span class="o">::</span><span class="n">Vector3</span> <span class="n">vel_unstamped</span><span class="p">(</span><span class="n">msg</span><span class="o">-&gt;</span><span class="n">linear</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">msg</span><span class="o">-&gt;</span><span class="n">linear</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-</pre></div>
-</div>
-<p>move_baseによってパブリッシュされた速度指令のためのコールバック関数です。
-受け取った速度のメッセージを変換するために、 <code class="docutils literal notranslate"><span class="pre">tf::Vector3</span></code> に変換しています。</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span class="n">tf</span><span class="o">::</span><span class="n">StampedTransform</span> <span class="n">vehicle_tf</span><span class="p">;</span>
-<span class="k">try</span>
-<span class="p">{</span>
-    <span class="n">listener_ptr</span><span class="o">-&gt;</span><span class="n">lookupTransform</span><span class="p">(</span><span class="n">origin_frame</span><span class="p">,</span> <span class="n">vehicle_frame</span><span class="p">,</span> <span class="n">ros</span><span class="o">::</span><span class="n">Time</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">vehicle_tf</span><span class="p">);</span>
-    <span class="n">vehicle_tf</span><span class="p">.</span><span class="n">setOrigin</span><span class="p">(</span><span class="n">global_origin</span><span class="p">);</span>
-    <span class="n">vel_unstamped</span> <span class="o">=</span> <span class="n">vehicle_tf</span> <span class="o">*</span> <span class="n">vel_unstamped</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p>ブロードキャストされたTFを参照して、受け取った速度のメッセージを座標変換します。
-TFを参照する方法については、ROS Wikiに <a class="reference external" href="http://wiki.ros.org/tf/Tutorials/Writing%20a%20tf%20listener%20%28C%2B%2B%29">チュートリアル</a> があります。</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span class="k">catch</span> <span class="p">(</span><span class="n">tf</span><span class="o">::</span><span class="n">TransformException</span><span class="o">&amp;</span> <span class="n">ex</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="n">ROS_ERROR</span><span class="p">(</span><span class="s">&quot;%s&quot;</span><span class="p">,</span> <span class="n">ex</span><span class="p">.</span><span class="n">what</span><span class="p">());</span>
-    <span class="k">return</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p>例外が送出された場合には、エラーメッセージを表示して、メッセージをパブリッシュせずに関数を抜けます。</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre>    <span class="n">geometry_msgs</span><span class="o">::</span><span class="n">TwistStamped</span> <span class="n">vel_cmd</span><span class="p">;</span>
-
-    <span class="n">vel_cmd</span><span class="p">.</span><span class="n">header</span><span class="p">.</span><span class="n">frame_id</span> <span class="o">=</span> <span class="n">origin_frame</span><span class="p">;</span>
-    <span class="n">vel_cmd</span><span class="p">.</span><span class="n">header</span><span class="p">.</span><span class="n">stamp</span> <span class="o">=</span> <span class="n">ros</span><span class="o">::</span><span class="n">Time</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
-
-    <span class="n">vel_cmd</span><span class="p">.</span><span class="n">twist</span><span class="p">.</span><span class="n">linear</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">vel_unstamped</span><span class="p">.</span><span class="n">getX</span><span class="p">();</span>
-    <span class="n">vel_cmd</span><span class="p">.</span><span class="n">twist</span><span class="p">.</span><span class="n">linear</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">vel_unstamped</span><span class="p">.</span><span class="n">getY</span><span class="p">();</span>
-    <span class="n">vel_cmd</span><span class="p">.</span><span class="n">twist</span><span class="p">.</span><span class="n">linear</span><span class="p">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">vel_unstamped</span><span class="p">.</span><span class="n">getZ</span><span class="p">();</span>
-    <span class="n">vel_cmd</span><span class="p">.</span><span class="n">twist</span><span class="p">.</span><span class="n">angular</span> <span class="o">=</span> <span class="n">msg</span><span class="o">-&gt;</span><span class="n">angular</span><span class="p">;</span>
-
-    <span class="n">cmd_pub</span><span class="p">.</span><span class="n">publish</span><span class="p">(</span><span class="n">vel_cmd</span><span class="p">);</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p>座標変換を行った速度とヘッダの情報を格納して速度指令をパブリッシュしています。</p>
-</div>
-</div>
-<div class="section" id="id12">
-<h2>1.6.5. 設定ファイルを書く<a class="headerlink" href="#id12" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id13">
-<h3>1.6.5.1. 大域的経路計画と局所的経路計画<a class="headerlink" href="#id13" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>1.6.5. 設定ファイルを書く<a class="headerlink" href="#id10" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id11">
+<h3>1.6.5.1. 大域的経路計画と局所的経路計画<a class="headerlink" href="#id11" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>コストマップは事前に与えられた地図情報やセンサから得られた障害物の情報をもとに構築される地図で、経路計画に用いられます。（ <a class="reference external" href="https://qiita.com/MoriKen/items/d5cd6208143d6c40caff#%E5%A4%A7%E5%9F%9F%E3%81%A8%E5%B1%80%E6%89%80%E3%81%AE%E6%AF%94%E8%BC%83">参考</a> ）</p>
 <p>大域的経路計画では、スタートからゴールまでの経路を計画します。
 大域的経路計画においては、グローバル（大域的）コストマップが使われます。</p>
@@ -847,16 +543,18 @@ TFを参照する方法については、ROS Wikiに <a class="reference externa
 <p>大域的経路計画を行う経路計画手法のことをグローバルプランナー、局所的経路計画を行う手法のことをローカルプランナーといいます。
 グローバルプランナーにはダイクストラ法やA*法が、ローカルプランナーにはDynamic Window Approach（DWA）などがあります。</p>
 </div>
-<div class="section" id="id15">
-<h3>1.6.5.2. コストマップの設定<a class="headerlink" href="#id15" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id13">
+<h3>1.6.5.2. コストマップの設定<a class="headerlink" href="#id13" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>コストマップの設定はyamlファイルに記述します。
 共通の設定、大域的コストマップの設定、局所的コストマップの設定用の3つの設定ファイルを以下のように準備します。</p>
+<p>コストマップのパラメータの設定はグローバルプランナーやローカルプランナーが生成する経路にも影響を与えます。
+生成されるグローバルパスやローカルパスが満足の行くものでない場合には、コストマップのパラメータを変更することも検討するとよいかもしれません。</p>
 <p>以下の設定は必要最小限のものです。
 他の設定やコストマップの詳細については <a class="reference external" href="http://wiki.ros.org/costmap_2d">costmap_2dのROS Wikiページ</a> を見てください。</p>
-<div class="section" id="id16">
-<h4>1.6.5.2.1. 共通設定<a class="headerlink" href="#id16" title="このヘッドラインへのパーマリンク">¶</a></h4>
-<div class="literal-block-wrapper container" id="id36">
-<div class="code-block-caption"><span class="caption-text">costmap_common_params.yaml</span><a class="headerlink" href="#id36" title="このコードへのパーマリンク">¶</a></div>
+<div class="section" id="id14">
+<h4>1.6.5.2.1. 共通設定<a class="headerlink" href="#id14" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<div class="literal-block-wrapper container" id="id33">
+<div class="code-block-caption"><span class="caption-text">costmap_common_params.yaml</span><a class="headerlink" href="#id33" title="このコードへのパーマリンク">¶</a></div>
 <div class="highlight-yaml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -891,15 +589,14 @@ TFを参照する方法については、ROS Wikiに <a class="reference externa
 <dl class="docutils">
 <dt><code class="docutils literal notranslate"><span class="pre">obstacle_range</span></code></dt>
 <dd>コストマップに反映する障害物の距離。
-この例では3.0 mより近くにある障害物がコストマップに反映される。</dd>
+この例では3.0 mより近くにある障害物がコストマップに反映されます。</dd>
 <dt><code class="docutils literal notranslate"><span class="pre">raytrace_range</span></code></dt>
 <dd>センサデータがこの数値以上の場合には、ロボットからこの数値の距離までの間に障害物はないと判断します。</dd>
 <dt><code class="docutils literal notranslate"><span class="pre">footprint</span></code></dt>
 <dd>ロボットの形状を多角形で指定します。中心は <code class="docutils literal notranslate"><span class="pre">(0.0,</span> <span class="pre">0.0)</span></code> です。
 ロボットの外形が円である場合には、 <code class="docutils literal notranslate"><span class="pre">robot_radius</span></code> パラメータを使います。</dd>
 <dt><code class="docutils literal notranslate"><span class="pre">inflation_radius</span></code></dt>
-<dd>障害物の影響がコストに反映される最大の距離です。
-今回の例では0.5 mに設定してありますが、これは障害物からの距離が0.5 m以上であるすべての経路は同じコストを持つということです。</dd>
+<dd>このパラメータで指定された値の距離よりも障害物に近いグリッドには、コストが付与されます。</dd>
 <dt><code class="docutils literal notranslate"><span class="pre">observation_sources</span></code></dt>
 <dd>コストマップに渡される情報を得るセンサを設定します。</dd>
 <dt><code class="docutils literal notranslate"><span class="pre">sensor_frame</span></code></dt>
@@ -914,10 +611,10 @@ TFを参照する方法については、ROS Wikiに <a class="reference externa
 <dd><code class="docutils literal notranslate"><span class="pre">true</span></code> の場合には、障害物をコストマップから除去する際にこのセンサの情報が使用されます。</dd>
 </dl>
 </div>
-<div class="section" id="id17">
-<h4>1.6.5.2.2. 大域的コストマップの設定<a class="headerlink" href="#id17" title="このヘッドラインへのパーマリンク">¶</a></h4>
-<div class="literal-block-wrapper container" id="id37">
-<div class="code-block-caption"><span class="caption-text">global_costmap_params.yaml</span><a class="headerlink" href="#id37" title="このコードへのパーマリンク">¶</a></div>
+<div class="section" id="id15">
+<h4>1.6.5.2.2. 大域的コストマップの設定<a class="headerlink" href="#id15" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<div class="literal-block-wrapper container" id="id34">
+<div class="code-block-caption"><span class="caption-text">global_costmap_params.yaml</span><a class="headerlink" href="#id34" title="このコードへのパーマリンク">¶</a></div>
 <div class="highlight-yaml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -960,10 +657,10 @@ TFを参照する方法については、ROS Wikiに <a class="reference externa
 <dd>コストマップの解像度（cell/m）</dd>
 </dl>
 </div>
-<div class="section" id="id18">
-<h4>1.6.5.2.3. 局所的コストマップの設定<a class="headerlink" href="#id18" title="このヘッドラインへのパーマリンク">¶</a></h4>
-<div class="literal-block-wrapper container" id="id38">
-<div class="code-block-caption"><span class="caption-text">local_costmap_params.yaml</span><a class="headerlink" href="#id38" title="このコードへのパーマリンク">¶</a></div>
+<div class="section" id="id16">
+<h4>1.6.5.2.3. 局所的コストマップの設定<a class="headerlink" href="#id16" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<div class="literal-block-wrapper container" id="id35">
+<div class="code-block-caption"><span class="caption-text">local_costmap_params.yaml</span><a class="headerlink" href="#id35" title="このコードへのパーマリンク">¶</a></div>
 <div class="highlight-yaml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -993,8 +690,8 @@ TFを参照する方法については、ROS Wikiに <a class="reference externa
 </dl>
 </div>
 </div>
-<div class="section" id="id19">
-<h3>1.6.5.3. ローカルプランナーの設定<a class="headerlink" href="#id19" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id17">
+<h3>1.6.5.3. ローカルプランナーの設定<a class="headerlink" href="#id17" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>ロボットのベースに与える速度指令を計算するためにローカルプランナーを使用します。
 パラメータの詳細やローカルプランナーの概要については <a class="reference external" href="http://wiki.ros.org/base_local_planner">base_local_plannerのROS Wikiページ</a> を見てください。</p>
 <p>以下の設定ファイルではロボットの速度と加速度の最大値、最小値等を定義しています。</p>
@@ -1002,8 +699,8 @@ TFを参照する方法については、ROS Wikiに <a class="reference externa
 ロボットの制御可能な自由度が全体の自由度と等しい場合にはホロノミックであるといい、そうでない場合はノンホロノミック（もしくは非ホロノミック）であるといいます。
 例えば、自動車は全体の自由度が3（x, y, yaw）ですが、制御可能な自由度は2（x, yaw）であり、ノンホロノミックなシステムであるといえます。
 ドローンの場合は制御可能な自由度（x, y, z, roll, pitch, yaw）が全体の自由度と等しいのでホロノミックなシステムです。</p>
-<div class="literal-block-wrapper container" id="id39">
-<div class="code-block-caption"><span class="caption-text">base_local_planner_params.yaml</span><a class="headerlink" href="#id39" title="このコードへのパーマリンク">¶</a></div>
+<div class="literal-block-wrapper container" id="id36">
+<div class="code-block-caption"><span class="caption-text">base_local_planner_params.yaml</span><a class="headerlink" href="#id36" title="このコードへのパーマリンク">¶</a></div>
 <div class="highlight-yaml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -1022,8 +719,8 @@ TFを参照する方法については、ROS Wikiに <a class="reference externa
 </div>
 </div>
 </div>
-<div class="section" id="id20">
-<h2>1.6.6. ドローンのパラメータの変更<a class="headerlink" href="#id20" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id18">
+<h2>1.6.6. ドローンのパラメータの変更<a class="headerlink" href="#id18" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>二次元の自己位置推定やマッピングの精度を高めるためには、できるだけセンサを水平に保つ必要があります。
 ドローンのパラメータを設定してピッチ角とロール角が一定以上にならないようにしましょう。</p>
 <p>また、デフォルトではGCS（Ground Control Station）及びRCとの接続が切れた場合と、OFFBOARDコントロールが切れた場合に自動でホームポジションに戻るようになっているので、フェイルセーフを無効化しておきます。
@@ -1084,8 +781,8 @@ TFを参照する方法については、ROS Wikiに <a class="reference externa
 </ul>
 <p>コマンドで設定する方法は簡単ですが、毎回設定しなければなりません。
 設定ファイルを使う方法は準備が必要ですが、基本的に一度準備すれば毎回設定し直す必要はありません。</p>
-<div class="section" id="id21">
-<h3>1.6.6.1. コマンドで設定する<a class="headerlink" href="#id21" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id19">
+<h3>1.6.6.1. コマンドで設定する<a class="headerlink" href="#id19" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>PX4シミュレータが起動したら、以下のコマンドを実行します。
 今回は試しに以下の数値を設定してみます。
 数値は適宜変更してください。</p>
@@ -1107,8 +804,8 @@ param set COM_OBL_ACT 0
 </pre></div>
 </div>
 </div>
-<div class="section" id="id22">
-<h3>1.6.6.2. 設定ファイルを使う<a class="headerlink" href="#id22" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id20">
+<h3>1.6.6.2. 設定ファイルを使う<a class="headerlink" href="#id20" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>PX4シミュレーションの起動は、起動スクリプト（ <code class="docutils literal notranslate"><span class="pre">~/.ros/etc/init.d-posix/rcS</span></code> ）によって行われ、その中で設定スクリプトが読み込まれることで機体のパラメータなどが設定されます。</p>
 <p>シミュレーションで使われる機体の設定スクリプトは、 <code class="docutils literal notranslate"><span class="pre">~/.ros/etc/init.d-posix</span></code> 以下にあり、ここからロードされます。
 なので、設定ファイルを作成した後にこのディレクトリに移動、もしくはシンボリックリンクを貼る必要があります。
@@ -1118,8 +815,8 @@ param set COM_OBL_ACT 0
 <p>以下のような内容の設定スクリプトを <code class="docutils literal notranslate"><span class="pre">px4_sim_pkg/posix_airframes</span></code> 以下に、 <code class="docutils literal notranslate"><span class="pre">70010_iris_2d_lidar</span></code> という名前で保存します。
 説明されていないパラメータについてはパラメータ一覧を見てください。
 設定スクリプトについては、 <a class="reference external" href="https://dev.px4.io/en/airframes/adding_a_new_frame.html">Adding a New Airframe Configuration - PX4 Developer Guide</a> に説明があります。</p>
-<div class="literal-block-wrapper container" id="id40">
-<div class="code-block-caption"><span class="caption-text">70010_iris_2d_lidar</span><a class="headerlink" href="#id40" title="このコードへのパーマリンク">¶</a></div>
+<div class="literal-block-wrapper container" id="id37">
+<div class="code-block-caption"><span class="caption-text">70010_iris_2d_lidar</span><a class="headerlink" href="#id37" title="このコードへのパーマリンク">¶</a></div>
 <div class="highlight-default notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -1206,11 +903,11 @@ param set COM_OBL_ACT 0
 <div class="section" id="launch">
 <h2>1.6.7. Launchファイルを書く<a class="headerlink" href="#launch" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="section" id="navigation-launch">
-<span id="id23"></span><h3>1.6.7.1. navigation.launch<a class="headerlink" href="#navigation-launch" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<span id="id21"></span><h3>1.6.7.1. navigation.launch<a class="headerlink" href="#navigation-launch" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>このLaunchファイルでは、コストマップ等の設定ファイルをすべて <code class="docutils literal notranslate"><span class="pre">px4_sim_pkg/config</span></code> 以下に保存していることを想定しています。</p>
 <p>以下の内容を、 <code class="docutils literal notranslate"><span class="pre">px4_sim_pkg/launch</span></code> 以下に、navigation.launchとして保存してください。</p>
-<div class="literal-block-wrapper container" id="id41">
-<div class="code-block-caption"><span class="caption-text">navigation.launch</span><a class="headerlink" href="#id41" title="このコードへのパーマリンク">¶</a></div>
+<div class="literal-block-wrapper container" id="id38">
+<div class="code-block-caption"><span class="caption-text">navigation.launch</span><a class="headerlink" href="#id38" title="このコードへのパーマリンク">¶</a></div>
 <div class="highlight-xml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -1236,21 +933,11 @@ param set COM_OBL_ACT 0
 23
 24
 25
-26
-27
-28
-29
-30
-31</pre></div></td><td class="code"><div class="highlight"><pre><span class="nt">&lt;launch&gt;</span>
+26</pre></div></td><td class="code"><div class="highlight"><pre><span class="nt">&lt;launch&gt;</span>
 
   <span class="nt">&lt;node</span> <span class="na">pkg=</span><span class="s">&quot;px4_sim_pkg&quot;</span> <span class="na">type=</span><span class="s">&quot;odom_publisher&quot;</span> <span class="na">name=</span><span class="s">&quot;odom_publisher&quot;</span><span class="nt">/&gt;</span>
 
-  <span class="nt">&lt;node</span> <span class="na">pkg=</span><span class="s">&quot;px4_sim_pkg&quot;</span> <span class="na">type=</span><span class="s">&quot;px4_vel_controller&quot;</span> <span class="na">name=</span><span class="s">&quot;px4_vel_controller&quot;</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;origin_frame&quot;</span> <span class="na">value=</span><span class="s">&quot;map&quot;</span><span class="nt">/&gt;</span>
-    <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;vehicle_frame&quot;</span> <span class="na">value=</span><span class="s">&quot;base_link&quot;</span><span class="nt">/&gt;</span>
-    <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;move_base_topic&quot;</span> <span class="na">value=</span><span class="s">&quot;/cmd_vel&quot;</span><span class="nt">/&gt;</span>
-    <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;mavros_topic&quot;</span> <span class="na">value=</span><span class="s">&quot;/mavros/setpoint_velocity/cmd_vel&quot;</span><span class="nt">/&gt;</span>
-  <span class="nt">&lt;/node&gt;</span>
+  <span class="nt">&lt;remap</span> <span class="na">from=</span><span class="s">&quot;/cmd_vel&quot;</span> <span class="na">to=</span><span class="s">&quot;/mavros/setpoint_velocity/cmd_vel_unstamped&quot;</span><span class="nt">/&gt;</span>
 
   <span class="nt">&lt;node</span> <span class="na">pkg=</span><span class="s">&quot;move_base&quot;</span> <span class="na">type=</span><span class="s">&quot;move_base&quot;</span> <span class="na">name=</span><span class="s">&quot;move_base&quot;</span> <span class="na">respawn=</span><span class="s">&quot;false&quot;</span> <span class="na">output=</span><span class="s">&quot;screen&quot;</span><span class="nt">&gt;</span>
 
@@ -1296,7 +983,8 @@ param set COM_OBL_ACT 0
 15
 16
 17
-18</pre></div></td><td class="code"><div class="highlight"><pre><span class="nt">&lt;launch&gt;</span>
+18
+19</pre></div></td><td class="code"><div class="highlight"><pre><span class="nt">&lt;launch&gt;</span>
 
     <span class="nt">&lt;node</span> <span class="na">pkg=</span><span class="s">&quot;tf&quot;</span> <span class="na">name=</span><span class="s">&quot;base2lidar&quot;</span> <span class="na">type=</span><span class="s">&quot;static_transform_publisher&quot;</span> <span class="na">args=</span><span class="s">&quot;0 0 0.1 0 0 0 base_link lidar_link 100&quot;</span><span class="nt">/&gt;</span>
     <span class="nt">&lt;node</span> <span class="na">pkg=</span><span class="s">&quot;tf&quot;</span> <span class="na">name=</span><span class="s">&quot;map2odom&quot;</span> <span class="na">type=</span><span class="s">&quot;static_transform_publisher&quot;</span> <span class="na">args=</span><span class="s">&quot;0 0 0 0 0 0 map odom 100&quot;</span><span class="nt">/&gt;</span>
@@ -1312,16 +1000,17 @@ param set COM_OBL_ACT 0
     <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;/mavros/local_position/tf/send&quot;</span> <span class="na">type=</span><span class="s">&quot;bool&quot;</span> <span class="na">value=</span><span class="s">&quot;true&quot;</span> <span class="nt">/&gt;</span>
     <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;/mavros/local_position/frame_id&quot;</span> <span class="na">type=</span><span class="s">&quot;str&quot;</span> <span class="na">value=</span><span class="s">&quot;odom&quot;</span> <span class="nt">/&gt;</span>
     <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;/mavros/local_position/tf/frame_id&quot;</span> <span class="na">type=</span><span class="s">&quot;str&quot;</span> <span class="na">value=</span><span class="s">&quot;odom&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;/mavros/setpoint_velocity/mav_frame&quot;</span>  <span class="na">type=</span><span class="s">&quot;str&quot;</span> <span class="na">value=</span><span class="s">&quot;BODY_NED&quot;</span> <span class="nt">/&gt;</span>
 
 <span class="nt">&lt;/launch&gt;</span>
 </pre></div>
 </td></tr></table></div>
 </div>
 </div>
-<div class="section" id="id24">
-<h2>1.6.8. 実行してみる<a class="headerlink" href="#id24" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id25">
-<h3>1.6.8.1. ビルドする<a class="headerlink" href="#id25" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id22">
+<h2>1.6.8. 実行してみる<a class="headerlink" href="#id22" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id23">
+<h3>1.6.8.1. ビルドする<a class="headerlink" href="#id23" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>オドメトリをパブリッシュするためのノードをビルドします。</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span class="nb">cd</span> ~/catkin_ws
 catkin_make
@@ -1337,8 +1026,8 @@ catkin_make
 </pre></div>
 </div>
 </div>
-<div class="section" id="id26">
-<h3>1.6.8.2. ノードを起動する<a class="headerlink" href="#id26" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id24">
+<h3>1.6.8.2. ノードを起動する<a class="headerlink" href="#id24" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>以下のコマンドを用いてLaunchファイルを起動します。</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre>roslaunch px4_sim_pkg mymodel_sitl.launch
 roslaunch px4_sim_pkg navigation.launch
@@ -1346,10 +1035,10 @@ roslaunch px4_sim_pkg navigation.launch
 </div>
 <img alt="../../_images/gazebomymodel.png" src="../../_images/gazebomymodel.png" />
 </div>
-<div class="section" id="id27">
-<h3>1.6.8.3. ゴールを送信する<a class="headerlink" href="#id27" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<div class="section" id="id28">
-<h4>1.6.8.3.1. ドローンを離陸させる<a class="headerlink" href="#id28" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<div class="section" id="id25">
+<h3>1.6.8.3. ゴールを送信する<a class="headerlink" href="#id25" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id26">
+<h4>1.6.8.3.1. ドローンを離陸させる<a class="headerlink" href="#id26" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>ゴールを送信する前にドローンを離陸させます。
 シミュレーションのノードを起動しているターミナルで以下のコマンドを実行すると離陸します。</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre>commander takeoff
@@ -1388,8 +1077,8 @@ roslaunch px4_sim_pkg navigation.launch
 </div>
 </div>
 </div>
-<div class="section" id="id29">
-<h3>1.6.8.4. 実行結果<a class="headerlink" href="#id29" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id27">
+<h3>1.6.8.4. 実行結果<a class="headerlink" href="#id27" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>上記の手順を踏んで実行した結果が以下の動画です。
 ゴールを指定するとゴールに向かって飛行していることがわかります。</p>
 <img alt="../../_images/nav_gps.gif" src="../../_images/nav_gps.gif" />
@@ -1409,8 +1098,8 @@ roslaunch px4_sim_pkg navigation.launch
 <p>これらのメッセージは、&quot;Add&quot;ボタンで表示されるメッセージの追加ウィンドウの、&quot;By Topic&quot;タブからも追加できます。</p>
 <img alt="../../_images/choose_topic.png" src="../../_images/choose_topic.png" />
 </div>
-<div class="section" id="id30">
-<h3>1.6.8.5. 障害物回避<a class="headerlink" href="#id30" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id28">
+<h3>1.6.8.5. 障害物回避<a class="headerlink" href="#id28" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>ドローンの進路に障害物をおいた場合には迂回する経路が生成されます。</p>
 <img alt="../../_images/obstacle.gif" src="../../_images/obstacle.gif" />
 <p>この例では更に以下のメッセージをRvizで可視化しています。</p>
@@ -1426,8 +1115,8 @@ roslaunch px4_sim_pkg navigation.launch
 また、他のパラメータについては、costmap_2dパッケージや、base_local_plannerパッケージのWikiページを参照してください。</p>
 </div>
 </div>
-<div class="section" id="id31">
-<h2>1.6.9. まとめ<a class="headerlink" href="#id31" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id29">
+<h2>1.6.9. まとめ<a class="headerlink" href="#id29" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>お疲れ様でした。
 以上までで、ドローンに目標位置を指定して、障害物を考慮した経路計画を実行し、経路上を移動して目標位置まで移動させることができました。</p>
 <p>以下のページを参考にしてパラメータをチューニングしたり、別のローカルプランナーを使用してナビゲーションの性能を向上させてもよいでしょう。</p>
@@ -1438,8 +1127,8 @@ roslaunch px4_sim_pkg navigation.launch
 </ul>
 <p>別のローカルプランナー使う方法については、 <a class="reference internal" href="../tips/change_local_planner/change_local_planner.html"><span class="doc">move_baseのローカルプランナーを変更する</span></a> を参考にしてください。</p>
 </div>
-<div class="section" id="id32">
-<h2>1.6.10. 参考<a class="headerlink" href="#id32" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id30">
+<h2>1.6.10. 参考<a class="headerlink" href="#id30" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <dl class="docutils">
 <dt><a class="reference external" href="http://wiki.ros.org/move_base">move_base - ROS Wiki</a></dt>
 <dd>move_baseパッケージ</dd>

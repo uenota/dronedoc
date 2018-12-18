@@ -192,162 +192,42 @@ z軸周りの回転（Yaw）からTFのクォータニオンを生成して、�
 
 速度指令
 =====================================
-``cmd_vel`` トピック
+cmd_velトピック
 -------------------------------------
 mavrosを使えば、 ``/mavros/setpoint_velocity/cmd_vel_unstamped`` トピックもしくは、 ``/mavros/setpoint_velocity/cmd_vel`` トピックに速度指令を送信することでドローンを移動させることができます。
+これらのトピックはメッセージの型によって分けられており、 ``cmd_vel_unstamped`` は ``Twist`` 型、 ``cmd_vel`` は ``TwistStamped`` 型のメッセージを使います。
+move_baseは ``Twist`` 型のメッセージをパブリッシュするので、今回は ``/mavros/setpoint_velocity/cmd_vel_unstamped`` トピックを利用します。
 
-しかし、 ``cmd_vel`` トピックもしくは、 ``cmd_vel_unstamped`` トピックを使う場合の速度指令は、ドローンのベースフレームではなく、ドローンの位置の基準となるフレーム（ ``odom`` や ``map`` など）を基準とした速度を使う必要があります（ `参考 <http://wiki.ros.org/mavros/Enumerations>`_ ）。
+また、move_baseは ``/cmd_vel`` トピックに速度指令をパブリッシュするようになっているので、Launchファイル内で次のように `リマップ <http://wiki.ros.org/roslaunch/XML/remap>`_ することでmove_baseからの速度指令がドローンに送られるようにします。
 
-一方で、move_baseがパブリッシュする速度指令は、ロボットのベースフレームを基準としたものなので、これを変換するノードを書かなければなりません。
+Launchファイルについては、後述の :ref:`navigation_launch` の項を参照してください。
 
-px4_vel_controller.cpp
+.. code-block:: xml
+
+  <remap from="/cmd_vel" to="/mavros/setpoint_velocity/cmd_vel_unstamped" />
+
+mav_frameパラメータ
 -------------------------------------
-以下が、move_baseの速度指令をmavros用に変換するノードです。
-Pythonのコードは :doc:`vel_ctrl_py` を見てください。
+``cmd_vel`` トピックもしくは、 ``cmd_vel_unstamped`` トピックを使う場合の速度指令は、デフォルトではドローンのベースフレームではなく、ドローンの位置の基準となるフレーム（ ``odom`` や ``map`` など）を基準とした速度を使用しています。
 
-.. literalinclude:: ../../../src/px4_vel_controller.cpp
-  :linenos:
-  :language: cpp
-  :caption: px4_vel_controller.cpp
+以下の画像のように、速度指令の基準となるフレームが異なる場合には、同じ値の速度指令値を入力しても、ロボットの速度（太い矢印）は異なります。
 
-コード解説
--------------------------------------
+.. image:: imgs/mav_frame.png
 
-.. code-block:: cpp
+move_baseがパブリッシュする速度指令は、ロボットのベースフレームを基準としたものです。
+そのため、今回は速度指令の基準となるフレームをロボットのベースフレームに設定しなければなりません。
 
-  #include <string>
-  #include <ros/ros.h>
-  #include <tf/transform_listener.h>
-  #include <geometry_msgs/Twist.h>
-  #include <geometry_msgs/TwistStamped.h>
+``cmd_vel`` トピックによる速度指令が基準とするフレームを変更するには、 ``/mavros/setpoint_velocity/mav_frame`` パラメータの設定を変える必要があります。
+ドローンのベースフレームを基準にする場合は、このパラメータの値を ``BODY_NED`` に変更します。
+デフォルトでは ``LOCAL_NED`` になっています。
 
-tfパッケージからtransform_listenerを、geometry_msgsパッケージからTwistメッセージとTwistStampedメッセージを使用します。
-stringは文字列を扱うためのC++の標準パッケージです。
+以下の内容をmymodel_sitl_tf.launchに追加することで、このパラメータの値を変更できます。
 
-.. code-block:: cpp
+.. code-block:: xml
 
-  ros::Publisher cmd_pub;
+  <param name="/mavros/setpoint_velocity/mav_frame"  type="str" value="BODY_NED" />
 
-mavrosの ``cmd_vel`` トピックに速度指令をパブリッシュするためのパブリッシャーです。
-コールバック関数内で使用できるようにグローバル変数にしてあります。
-
-.. code-block:: cpp
-
-  std::string origin_frame;
-  std::string vehicle_frame;
-
-ロボットのベースフレームと位置の基準のフレームの名前を格納する変数です。
-これもコールバック関数内で使用できるようにグローバル変数にしてあります。
-
-.. code-block:: cpp
-
-  tf::Vector3 global_origin(0, 0, 0);
-  tf::TransformListener *listener_ptr;
-
-tfの原点を指定するためのベクトルを初期化しています。
-``listener_ptr`` は、ブロードキャストされているtfを参照するためのリスナーへのポインタです。
-
-.. code-block:: cpp
-
-  ros::init(argc, argv, "px4_vel_controller");
-  ros::NodeHandle nh;
-  ros::Rate rate(20);
-
-ノードを初期化します。
-
-.. code-block:: cpp
-
-  nh.param<std::string>("origin_frame", origin_frame, "map");
-  nh.param<std::string>("vehicle_frame", vehicle_frame, "base_link");
-
-``origin_frame`` と ``vehicle_frame`` の値をパラメータを使って初期化しています。
-この書き方を使うことで、ROSのパラメータを使って変数の値を変更できるようになります。
-パラメータが与えられていない場合は、第三引数に指定された値がデフォルト値として使用されます。
-
-.. code-block:: cpp
-
-  std::string move_base_topic;
-  nh.param<std::string>("move_base_topic", move_base_topic, "/cmd_vel");
-  std::string mavros_topic;
-  nh.param<std::string>("mavros_topic", mavros_topic, "/mavros/setpoint_velocity/cmd_vel");
-
-move_baseの速度指令のトピック名とmavrosの速度指令のトピック名を格納する変数を初期化しています。
-これもフレーム名と同様にROSのパラメータを使って値を変更できます。
-
-.. code-block:: cpp
-
-  cmd_pub = nh.advertise<geometry_msgs::TwistStamped>(mavros_topic, 10);
-  ros::Subscriber cmd_sub = nh.subscribe<geometry_msgs::Twist>(move_base_topic, 10, vel_cmd_cb);
-
-mavrosの速度指令をパブリッシュするためのパブリッシャとmove_baseの速度指令をサブスクライブするためのサブスクライバです。
-
-.. code-block:: cpp
-
-  tf::TransformListener listener;
-  listener_ptr = &listener;
-
-TFを参照するためのリスナーを初期化しています。
-リスナーの宣言は、ノードの初期化よりも後に行う必要があります。
-このような理由から、リスナーはグローバル変数として宣言せずに、main関数内で宣言しています。
-
-また、リスナーは生成されるとTFをバッファに保持し始めるので、リスナーの寿命がすぐに来ないようにスコープを設定する必要があります。
-リスナーがすぐに破棄されると、TFの参照が失敗してしまいます。
-この場合は、リスナーの寿命はノードが終了されるまでなので、ノードが起動している間はリスナーを使用することができます。
-
-.. code-block:: cpp
-
-  ros::spin();
-
-サブスクライバのコールバックが実行されるようにします。
-
-.. code-block:: cpp
-
-  void vel_cmd_cb(const geometry_msgs::Twist::ConstPtr &msg)
-  {
-      tf::Vector3 vel_unstamped(msg->linear.x, msg->linear.y, 0);
-
-move_baseによってパブリッシュされた速度指令のためのコールバック関数です。
-受け取った速度のメッセージを変換するために、 ``tf::Vector3`` に変換しています。
-
-.. code-block:: cpp
-
-      tf::StampedTransform vehicle_tf;
-      try
-      {
-          listener_ptr->lookupTransform(origin_frame, vehicle_frame, ros::Time(0), vehicle_tf);
-          vehicle_tf.setOrigin(global_origin);
-          vel_unstamped = vehicle_tf * vel_unstamped;
-      }
-
-ブロードキャストされたTFを参照して、受け取った速度のメッセージを座標変換します。
-TFを参照する方法については、ROS Wikiに `チュートリアル <http://wiki.ros.org/tf/Tutorials/Writing%20a%20tf%20listener%20%28C%2B%2B%29>`_ があります。
-
-.. code-block:: cpp
-
-      catch (tf::TransformException& ex)
-      {
-          ROS_ERROR("%s", ex.what());
-          return;
-      }
-
-例外が送出された場合には、エラーメッセージを表示して、メッセージをパブリッシュせずに関数を抜けます。
-
-.. code-block:: cpp
-
-      geometry_msgs::TwistStamped vel_cmd;
-
-      vel_cmd.header.frame_id = origin_frame;
-      vel_cmd.header.stamp = ros::Time::now();
-
-      vel_cmd.twist.linear.x = vel_unstamped.getX();
-      vel_cmd.twist.linear.y = vel_unstamped.getY();
-      vel_cmd.twist.linear.z = vel_unstamped.getZ();
-      vel_cmd.twist.angular = msg->angular;
-
-      cmd_pub.publish(vel_cmd);
-  }
-
-座標変換を行った速度とヘッダの情報を格納して速度指令をパブリッシュしています。
+他の利用可能なフレームについては `mavros/Enumerations <http://wiki.ros.org/mavros/Enumerations>`_ にリストがあります。
 
 設定ファイルを書く
 =====================================
@@ -369,6 +249,9 @@ TFを参照する方法については、ROS Wikiに `チュートリアル <htt
 コストマップの設定はyamlファイルに記述します。
 共通の設定、大域的コストマップの設定、局所的コストマップの設定用の3つの設定ファイルを以下のように準備します。
 
+コストマップのパラメータの設定はグローバルプランナーやローカルプランナーが生成する経路にも影響を与えます。
+生成されるグローバルパスやローカルパスが満足の行くものでない場合には、コストマップのパラメータを変更することも検討するとよいかもしれません。
+
 以下の設定は必要最小限のものです。
 他の設定やコストマップの詳細については `costmap_2dのROS Wikiページ <http://wiki.ros.org/costmap_2d>`_ を見てください。
 
@@ -383,15 +266,14 @@ TFを参照する方法については、ROS Wikiに `チュートリアル <htt
 
 ``obstacle_range``
   コストマップに反映する障害物の距離。
-  この例では3.0 mより近くにある障害物がコストマップに反映される。
+  この例では3.0 mより近くにある障害物がコストマップに反映されます。
 ``raytrace_range``
   センサデータがこの数値以上の場合には、ロボットからこの数値の距離までの間に障害物はないと判断します。
 ``footprint``
   ロボットの形状を多角形で指定します。中心は ``(0.0, 0.0)`` です。
   ロボットの外形が円である場合には、 ``robot_radius`` パラメータを使います。
 ``inflation_radius``
-  障害物の影響がコストに反映される最大の距離です。
-  今回の例では0.5 mに設定してありますが、これは障害物からの距離が0.5 m以上であるすべての経路は同じコストを持つということです。
+  このパラメータで指定された値の距離よりも障害物に近いグリッドには、コストが付与されます。
 ``observation_sources``
   コストマップに渡される情報を得るセンサを設定します。
 ``sensor_frame``
@@ -404,7 +286,6 @@ TFを参照する方法については、ROS Wikiに `チュートリアル <htt
   ``true`` の場合には、障害物をコストマップに追加する際にこのセンサの情報が使用されます。
 ``clearing``
   ``true`` の場合には、障害物をコストマップから除去する際にこのセンサの情報が使用されます。
-
 
 大域的コストマップの設定
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -459,8 +340,6 @@ TFを参照する方法については、ROS Wikiに `チュートリアル <htt
   :language: yaml
   :caption: base_local_planner_params.yaml
   :linenos:
-
-
 
 ドローンのパラメータの変更
 =====================================
@@ -595,12 +474,7 @@ navigation.launch
 
     <node pkg="px4_sim_pkg" type="odom_publisher" name="odom_publisher"/>
 
-    <node pkg="px4_sim_pkg" type="px4_vel_controller" name="px4_vel_controller">
-      <param name="origin_frame" value="map"/>
-      <param name="vehicle_frame" value="base_link"/>
-      <param name="move_base_topic" value="/cmd_vel"/>
-      <param name="mavros_topic" value="/mavros/setpoint_velocity/cmd_vel"/>
-    </node>
+    <remap from="/cmd_vel" to="/mavros/setpoint_velocity/cmd_vel_unstamped"/>
 
     <node pkg="move_base" type="move_base" name="move_base" respawn="false" output="screen">
 
@@ -646,6 +520,7 @@ mymodel_sitl_tf.launch
       <param name="/mavros/local_position/tf/send" type="bool" value="true" />
       <param name="/mavros/local_position/frame_id" type="str" value="odom" />
       <param name="/mavros/local_position/tf/frame_id" type="str" value="odom" />
+      <param name="/mavros/setpoint_velocity/mav_frame"  type="str" value="BODY_NED" />
 
   </launch>
 

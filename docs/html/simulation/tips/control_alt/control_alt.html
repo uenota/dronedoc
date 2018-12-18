@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>1.13.1. 地上からの距離を一定にする &mdash; Dronedoc 1.0.0 ドキュメント</title>
+  <title>1.13.3. 地上からの距離を一定にする &mdash; Dronedoc 1.0.0 ドキュメント</title>
   
 
   
@@ -28,8 +28,8 @@
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="index" title="索引" href="../../../genindex.html" />
     <link rel="search" title="検索" href="../../../search.html" />
-    <link rel="next" title="1.13.2. LiDARのデータをフィルタリングする" href="../filter_lidar/filter_lidar.html" />
-    <link rel="prev" title="1.13. Tips" href="../index.html" /> 
+    <link rel="next" title="1.13.4. LiDARのデータをフィルタリングする" href="../filter_lidar/filter_lidar.html" />
+    <link rel="prev" title="1.13.2. ドローンに距離センサを搭載する" href="../add_range_sensor/add_range_sensor.html" /> 
 
   
   <script src="../../../_static/js/modernizr.min.js"></script>
@@ -94,15 +94,18 @@
 <li class="toctree-l2"><a class="reference internal" href="../../slam/lidar_nav.html">1.11. LiDARを用いた自律移動</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../octomap/octomap.html">1.12. Octomapを使って3Dマップを作る</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html">1.13. Tips</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="#">1.13.1. 地上からの距離を一定にする</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id2">1.13.1.1. 距離センサをつける</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../qgc_intro/qgc_intro.html">1.13.1. QGroundControl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../add_range_sensor/add_range_sensor.html">1.13.2. ドローンに距離センサを搭載する</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1.13.3. 地上からの距離を一定にする</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id2">1.13.3.1. 距離センサをつける</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">1.13.3.2. 距離センサの値をパブリッシュする</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="../filter_lidar/filter_lidar.html">1.13.2. LiDARのデータをフィルタリングする</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../change_local_planner/change_local_planner.html">1.13.3. move_baseのローカルプランナーを変更する</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../local_planner_for_uav/local_planner_for_uav.html">1.13.4. UAV用のローカルプランナを実装する</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../build_map_gmapping/build_map_gmapping.html">1.13.5. Gmappingを使って地図を生成する</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../build_map_gazebo_plugin/build_map_gazebo_plugin.html">1.13.6. Gazebo Pluginを使って地図を作成する</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../filter_lidar/filter_lidar.html">1.13.4. LiDARのデータをフィルタリングする</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../change_local_planner/change_local_planner.html">1.13.5. move_baseのローカルプランナーを変更する</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../local_planner_for_uav/local_planner_for_uav.html">1.13.6. UAV用のローカルプランナを実装する</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../build_map_gmapping/build_map_gmapping.html">1.13.7. Gmappingを使って地図を生成する</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../build_map_gazebo_plugin/build_map_gazebo_plugin.html">1.13.8. Gazebo Pluginを使って地図を作成する</a></li>
 </ul>
 </li>
 </ul>
@@ -165,7 +168,7 @@
         
           <li><a href="../index.html">1.13. Tips</a> &raquo;</li>
         
-      <li>1.13.1. 地上からの距離を一定にする</li>
+      <li>1.13.3. 地上からの距離を一定にする</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -185,18 +188,16 @@
            <div itemprop="articleBody">
             
   <div class="section" id="id1">
-<h1>1.13.1. 地上からの距離を一定にする<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<h1>1.13.3. 地上からの距離を一定にする<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <div class="section" id="id2">
-<h2>1.13.1.1. 距離センサをつける<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="section" id="id3">
-<h3>1.13.1.1.1. モデルを作成する<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h2>1.13.3.1. 距離センサをつける<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>レーザー高度計（Lidar Liteなど）とRayセンサ（Lidarなど）を同時に使用するとセグメンテーションフォールトでGazeboが起動できない（ <a class="reference external" href="https://github.com/PX4/Firmware/issues/9156">#9156</a>）ので今回は距離センサとして超音波センサを利用します。
 GpuRayセンサであれば問題なく起動できるらしいので、どうしてもレーザー高度計を使用したい場合にはGpuRayセンサを利用すると良いでしょう。
 ただし、GpuRayセンサはGPUを使用しない場合は正常に動作しないようなので、GPUがある場合に限って使用しましょう。</p>
 <p>また、iris_2d_lidarモデルをインクルードして超音波センサをつけても良いのですが、名前空間が煩雑（iris_2d_lidar::iris::base_linkとか）になり、TFの設定などが面倒なので、iris_2d_lidarモデルのSDFファイルをコピーして超音波センサを追加します。</p>
 <p>超音波センサを追加したモデルは以下のようになります。</p>
-<div class="literal-block-wrapper container" id="id6">
-<div class="code-block-caption"><span class="caption-text">model.sdf</span><a class="headerlink" href="#id6" title="このコードへのパーマリンク">¶</a></div>
+<div class="literal-block-wrapper container" id="id7">
+<div class="code-block-caption"><span class="caption-text">model.sdf</span><a class="headerlink" href="#id7" title="このコードへのパーマリンク">¶</a></div>
 <div class="highlight-xml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -284,14 +285,7 @@ GpuRayセンサであれば問題なく起動できるらしいので、どう�
 85
 86
 87
-88
-89
-90
-91
-92
-93
-94
-95</pre></div></td><td class="code"><div class="highlight"><pre><span class="cp">&lt;?xml version=&#39;1.0&#39;?&gt;</span>
+88</pre></div></td><td class="code"><div class="highlight"><pre><span class="cp">&lt;?xml version=&#39;1.0&#39;?&gt;</span>
 <span class="nt">&lt;sdf</span> <span class="na">version=</span><span class="s">&#39;1.6&#39;</span><span class="nt">&gt;</span>
   <span class="nt">&lt;model</span> <span class="na">name=</span><span class="s">&#39;iris_sonar&#39;</span><span class="nt">&gt;</span>
 
@@ -302,22 +296,15 @@ GpuRayセンサであれば問題なく起動できるらしいので、どう�
     <span class="c">&lt;!-- Sonar --&gt;</span>
     <span class="nt">&lt;include&gt;</span>
       <span class="nt">&lt;uri&gt;</span>model://sonar<span class="nt">&lt;/uri&gt;</span>
-      <span class="nt">&lt;pose&gt;</span>0 0 0 0 -1.57 0<span class="nt">&lt;/pose&gt;</span>
+      <span class="nt">&lt;pose&gt;</span>0 0 -0.04 0 -1.57 0<span class="nt">&lt;/pose&gt;</span>
     <span class="nt">&lt;/include&gt;</span>
-    <span class="nt">&lt;joint</span> <span class="na">name=</span><span class="s">&quot;sonar_joint&quot;</span> <span class="na">type=</span><span class="s">&quot;revolute&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;joint</span> <span class="na">name=</span><span class="s">&quot;sonar_joint&quot;</span> <span class="na">type=</span><span class="s">&quot;fixed&quot;</span><span class="nt">&gt;</span>
       <span class="nt">&lt;child&gt;</span>sonar_model::link<span class="nt">&lt;/child&gt;</span>
       <span class="nt">&lt;parent&gt;</span>iris::base_link<span class="nt">&lt;/parent&gt;</span>
-      <span class="nt">&lt;axis&gt;</span>
-        <span class="nt">&lt;xyz&gt;</span>0 0 1<span class="nt">&lt;/xyz&gt;</span>
-        <span class="nt">&lt;limit&gt;</span>
-          <span class="nt">&lt;upper&gt;</span>0<span class="nt">&lt;/upper&gt;</span>
-          <span class="nt">&lt;lower&gt;</span>0<span class="nt">&lt;/lower&gt;</span>
-        <span class="nt">&lt;/limit&gt;</span>
-      <span class="nt">&lt;/axis&gt;</span>
     <span class="nt">&lt;/joint&gt;</span>
 
     <span class="nt">&lt;link</span> <span class="na">name=</span><span class="s">&quot;lidar_link&quot;</span><span class="nt">&gt;</span>
-      <span class="nt">&lt;pose&gt;</span>0 0 0.1 0 0 0<span class="nt">&lt;/pose&gt;</span>
+      <span class="nt">&lt;pose&gt;</span>0 0 0.05 0 -0.0085 0<span class="nt">&lt;/pose&gt;</span>
 
       <span class="nt">&lt;inertial&gt;</span>
         <span class="nt">&lt;pose&gt;</span>0 0 0 0 -0 0<span class="nt">&lt;/pose&gt;</span>
@@ -336,7 +323,7 @@ GpuRayセンサであれば問題なく起動できるらしいので、どう�
         <span class="nt">&lt;geometry&gt;</span>
           <span class="nt">&lt;cylinder&gt;</span>
             <span class="nt">&lt;radius&gt;</span>0.01<span class="nt">&lt;/radius&gt;</span>
-            <span class="nt">&lt;length&gt;</span>0.2<span class="nt">&lt;/length&gt;</span>
+            <span class="nt">&lt;length&gt;</span>0.05<span class="nt">&lt;/length&gt;</span>
           <span class="nt">&lt;/cylinder&gt;</span>
         <span class="nt">&lt;/geometry&gt;</span>
         <span class="nt">&lt;material&gt;</span>
@@ -348,7 +335,7 @@ GpuRayセンサであれば問題なく起動できるらしいので、どう�
       <span class="nt">&lt;/visual&gt;</span>
 
       <span class="nt">&lt;sensor</span> <span class="na">name=</span><span class="s">&quot;laser&quot;</span> <span class="na">type=</span><span class="s">&quot;ray&quot;</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;pose&gt;</span>0 0 0.1 0 0 0<span class="nt">&lt;/pose&gt;</span>
+        <span class="nt">&lt;pose&gt;</span>0 0 0.02 0 0 0<span class="nt">&lt;/pose&gt;</span>
         <span class="nt">&lt;ray&gt;</span>
           <span class="nt">&lt;scan&gt;</span>
             <span class="nt">&lt;horizontal&gt;</span>
@@ -390,9 +377,9 @@ GpuRayセンサであれば問題なく起動できるらしいので、どう�
 </td></tr></table></div>
 </div>
 <p>以下のようなmodel.configも作成し、modelsディレクトリ以下にiris_sonarディレクトリを作ってその中に保存しましょう。
-autrhorタグの中身は適宜変更してください。</p>
-<div class="literal-block-wrapper container" id="id7">
-<div class="code-block-caption"><span class="caption-text">model.config</span><a class="headerlink" href="#id7" title="このコードへのパーマリンク">¶</a></div>
+authorタグの中身は適宜変更してください。</p>
+<div class="literal-block-wrapper container" id="id8">
+<div class="code-block-caption"><span class="caption-text">model.config</span><a class="headerlink" href="#id8" title="このコードへのパーマリンク">¶</a></div>
 <div class="highlight-xml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -426,8 +413,8 @@ autrhorタグの中身は適宜変更してください。</p>
 </td></tr></table></div>
 </div>
 <p>以下のようなLaunchファイルを作って、モデルがきちんと作成されているか確認してみましょう。</p>
-<div class="literal-block-wrapper container" id="id8">
-<div class="code-block-caption"><span class="caption-text">mymodel_sonar.launch</span><a class="headerlink" href="#id8" title="このコードへのパーマリンク">¶</a></div>
+<div class="literal-block-wrapper container" id="id9">
+<div class="code-block-caption"><span class="caption-text">mymodel_sonar.launch</span><a class="headerlink" href="#id9" title="このコードへのパーマリンク">¶</a></div>
 <div class="highlight-xml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -455,10 +442,42 @@ autrhorタグの中身は適宜変更してください。</p>
 </pre></div>
 </div>
 <p>地上にいる時はわかりませんが、離陸するときちんと超音波センサが取り付けられていることがわかります（青い円錐）。</p>
-<img alt="../../../_images/sonar.png" src="../../../_images/sonar.png" />
+<img alt="simulation/tips/control_alt/imgs/sonar.png" src="simulation/tips/control_alt/imgs/sonar.png" />
 </div>
+<div class="section" id="id4">
+<h2>1.13.3.2. 距離センサの値をパブリッシュする<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>ドローンに搭載された距離センサの値をパブリッシュするには、 <a class="reference external" href="http://wiki.ros.org/mavros_extras">mavros_extras</a> パッケージのdistance_sensorプラグインを使用します。</p>
 <div class="section" id="id5">
-<h3>1.13.1.1.2. 地上からの距離を一定にする<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>1.13.3.2.1. プラグインをブラックリストから外す<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre>roscp mavros px4_pluginlists.yaml catkin_ws/src/px4_sim_pkg/config/
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span class="n">plugin_blacklist</span><span class="p">:</span>
+<span class="c1"># common</span>
+<span class="o">-</span> <span class="n">safety_area</span>
+<span class="c1"># extras</span>
+<span class="o">-</span> <span class="n">image_pub</span>
+<span class="o">-</span> <span class="n">vibration</span>
+<span class="c1"># distance_sensor</span>
+<span class="o">-</span> <span class="n">rangefinder</span>
+
+<span class="n">plugin_whitelist</span><span class="p">:</span> <span class="p">[]</span>
+<span class="c1"># &#39;sys_*&#39;</span>
+
+</pre></div>
+</div>
+</div>
+<div class="section" id="id6">
+<h3>1.13.3.2.2. パラメータの設定<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span class="n">distance_sensor</span><span class="p">:</span>
+  <span class="n">sonar_pub</span><span class="p">:</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="mi">0</span>
+    <span class="n">frame_id</span><span class="p">:</span> <span class="s2">&quot;sonar_model::link&quot;</span>
+    <span class="n">field_of_view</span><span class="p">:</span> <span class="mi">0</span>
+    <span class="n">send_tf</span><span class="p">:</span> <span class="n">false</span>
+    <span class="n">sensor_position</span><span class="p">:</span> <span class="p">{</span><span class="n">x</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">z</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.04</span><span class="p">}</span>
+</pre></div>
+</div>
 </div>
 </div>
 </div>
@@ -471,10 +490,10 @@ autrhorタグの中身は適宜変更してください。</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../filter_lidar/filter_lidar.html" class="btn btn-neutral float-right" title="1.13.2. LiDARのデータをフィルタリングする" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../filter_lidar/filter_lidar.html" class="btn btn-neutral float-right" title="1.13.4. LiDARのデータをフィルタリングする" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../index.html" class="btn btn-neutral" title="1.13. Tips" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../add_range_sensor/add_range_sensor.html" class="btn btn-neutral" title="1.13.2. ドローンに距離センサを搭載する" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>1.13.4. UAV用のローカルプランナを実装する &mdash; Dronedoc 1.0.0 ドキュメント</title>
+  <title>1.13.5. UAV用のローカルプランナを実装する &mdash; Dronedoc 1.0.0 ドキュメント</title>
   
 
   
@@ -28,8 +28,8 @@
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="index" title="索引" href="../../../genindex.html" />
     <link rel="search" title="検索" href="../../../search.html" />
-    <link rel="next" title="1.13.5. Gmappingを使って地図を生成する" href="../build_map_gmapping/build_map_gmapping.html" />
-    <link rel="prev" title="1.13.3. move_baseのローカルプランナーを変更する" href="../change_local_planner/change_local_planner.html" /> 
+    <link rel="next" title="1.13.6. Gmappingを使って地図を生成する" href="../build_map_gmapping/build_map_gmapping.html" />
+    <link rel="prev" title="1.13.4. move_baseのローカルプランナーを変更する" href="../change_local_planner/change_local_planner.html" /> 
 
   
   <script src="../../../_static/js/modernizr.min.js"></script>
@@ -94,19 +94,20 @@
 <li class="toctree-l2"><a class="reference internal" href="../../slam/lidar_nav.html">1.11. LiDARを用いた自律移動</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../octomap/octomap.html">1.12. Octomapを使って3Dマップを作る</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html">1.13. Tips</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="../control_alt/control_alt.html">1.13.1. 地上からの距離を一定にする</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../filter_lidar/filter_lidar.html">1.13.2. LiDARのデータをフィルタリングする</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../change_local_planner/change_local_planner.html">1.13.3. move_baseのローカルプランナーを変更する</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">1.13.4. UAV用のローカルプランナを実装する</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id1">1.13.4.1. インストール</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id2">1.13.4.2. ローカルプランナを実装する</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#ros">1.13.4.3. ROSプラグイン</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id5">1.13.4.4. 実行する</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id6">1.13.4.5. 参考</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../qgc_intro/qgc_intro.html">1.13.1. QGroundControl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../add_range_sensor/add_range_sensor.html">1.13.2. ドローンに距離センサを搭載する</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../filter_lidar/filter_lidar.html">1.13.3. LiDARのデータをフィルタリングする</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../change_local_planner/change_local_planner.html">1.13.4. move_baseのローカルプランナーを変更する</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1.13.5. UAV用のローカルプランナを実装する</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">1.13.5.1. インストール</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">1.13.5.2. ローカルプランナを実装する</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ros">1.13.5.3. ROSプラグイン</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">1.13.5.4. 実行する</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">1.13.5.5. 参考</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="../build_map_gmapping/build_map_gmapping.html">1.13.5. Gmappingを使って地図を生成する</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../build_map_gazebo_plugin/build_map_gazebo_plugin.html">1.13.6. Gazebo Pluginを使って地図を作成する</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../build_map_gmapping/build_map_gmapping.html">1.13.6. Gmappingを使って地図を生成する</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../build_map_gazebo_plugin/build_map_gazebo_plugin.html">1.13.7. Gazebo Pluginを使って地図を作成する</a></li>
 </ul>
 </li>
 </ul>
@@ -169,7 +170,7 @@
         
           <li><a href="../index.html">1.13. Tips</a> &raquo;</li>
         
-      <li>1.13.4. UAV用のローカルプランナを実装する</li>
+      <li>1.13.5. UAV用のローカルプランナを実装する</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -189,12 +190,12 @@
            <div itemprop="articleBody">
             
   <div class="section" id="uav">
-<h1>1.13.4. UAV用のローカルプランナを実装する<a class="headerlink" href="#uav" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<h1>1.13.5. UAV用のローカルプランナを実装する<a class="headerlink" href="#uav" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p>この章では、<a class="reference external" href="http://ompl.kavrakilab.org/">Open Motion Planning Library (OMPL)</a> を使ってドローン用のローカルプランナを実装します。</p>
 <p>OMPLはオープンソースの行動計画ライブラリで、マニピュレータやUGVなどの動作計画に用いられています。
 マニピュレータの制御に用いられる <a class="reference external" href="https://moveit.ros.org/">MoveIt!</a> というライブラリもOMPLを使っています。</p>
 <div class="section" id="id1">
-<h2>1.13.4.1. インストール<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>1.13.5.1. インストール<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>UbuntuにOMPLをインストールする方法は以下の3通りあります。</p>
 <ul class="simple">
 <li>ソースからインストールする</li>
@@ -216,29 +217,29 @@ sudo apt install ros-kinetic-ompl
 </div>
 </div>
 <div class="section" id="id2">
-<h2>1.13.4.2. ローカルプランナを実装する<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>1.13.5.2. ローカルプランナを実装する<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>以下では、<a class="reference external" href="https://robotics.naist.jp/edu/text/?Robotics%2FOMPL#PlanningWithControls">制御指令値を含むプラニング</a> を参考にして作業を進めていきます。</p>
 </div>
 <div class="section" id="ros">
-<h2>1.13.4.3. ROSプラグイン<a class="headerlink" href="#ros" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>1.13.5.3. ROSプラグイン<a class="headerlink" href="#ros" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>ROSのパッケージの中には、処理の一部（画像処理や行動計画など）をプラグインとして作成し、後で変更可能になっているものがあります。
 プラグインを作成、使用するためには <a class="reference external" href="http://wiki.ros.org/pluginlib">pluginlib</a> パッケージを使用します。
 プラグインの仕組みを使うことで、特定のインターフェースに従ったクラスを作れば中身の実装は自由にできるので、既存のパッケージを拡張することが容易になります。</p>
 <div class="section" id="navigation">
-<h3>1.13.4.3.1. navigationスタック<a class="headerlink" href="#navigation" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>1.13.5.3.1. navigationスタック<a class="headerlink" href="#navigation" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>navigationスタックは、move_baseやcostmap_2dなどを含むメタパッケージです。</p>
 <p>navigationスタックでは、pluginlibを使って作成したプラグインをローカルプランナやグローバルプランナとして使用することができるようになっています。
 navigationスタックのローカルプランナとして使用可能なクラスを作るためには、 <a class="reference external" href="http://docs.ros.org/jade/api/nav_core/html/classnav__core_1_1BaseLocalPlanner.html">nav_core::BaseLocalPlanner</a> を継承したクラスを作る必要があります。</p>
 </div>
 <div class="section" id="id4">
-<h3>1.13.4.3.2. ローカルプランナをプラグイン化する<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>1.13.5.3.2. ローカルプランナをプラグイン化する<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h3>
 </div>
 </div>
 <div class="section" id="id5">
-<h2>1.13.4.4. 実行する<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>1.13.5.4. 実行する<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
 </div>
 <div class="section" id="id6">
-<h2>1.13.4.5. 参考<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>1.13.5.5. 参考<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <dl class="docutils">
 <dt><a class="reference external" href="https://robotics.naist.jp/edu/text/?Robotics%2FOMPL">Robotics/OMPL - NAIST::OnlineText</a></dt>
 <dd>OMPLの日本語チュートリアル</dd>
@@ -264,10 +265,10 @@ navigationスタックのローカルプランナとして使用可能なクラ�
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../build_map_gmapping/build_map_gmapping.html" class="btn btn-neutral float-right" title="1.13.5. Gmappingを使って地図を生成する" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../build_map_gmapping/build_map_gmapping.html" class="btn btn-neutral float-right" title="1.13.6. Gmappingを使って地図を生成する" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../change_local_planner/change_local_planner.html" class="btn btn-neutral" title="1.13.3. move_baseのローカルプランナーを変更する" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../change_local_planner/change_local_planner.html" class="btn btn-neutral" title="1.13.4. move_baseのローカルプランナーを変更する" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
