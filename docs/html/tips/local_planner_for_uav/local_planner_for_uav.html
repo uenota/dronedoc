@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>14.5. UAV用のローカルプランナを実装する &mdash; Dronedoc 1.0.0 ドキュメント</title>
+  <title>UAV用のローカルプランナを実装する &mdash; Dronedoc 1.0.0 ドキュメント</title>
   
 
   
@@ -89,8 +89,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../../slam/gps_nav.html">7. GPSを用いた自律飛行</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../slam/turtle_mapping.html">8. Turtlebotを使ってマップを作る</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../teleop/teleop.html">9. ゲームパッドを使ってドローンを操作する</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../slam/lidar_localization.html">10. LiDARとAMCLを用いた自己位置推定</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../slam/localization_and_mapping.html">11. LiDARを用いたSLAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../slam/lidar_localization.html">LiDARとAMCLを用いた自己位置推定</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../slam/localization_and_mapping.html">LiDARを用いたSLAM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../slam/lidar_nav.html">12. LiDARを用いた自律移動</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../octomap/octomap.html">13. Octomapを使って3Dマップを作る</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">14. Tips</a><ul class="current">
@@ -98,16 +98,16 @@
 <li class="toctree-l2"><a class="reference internal" href="../add_range_sensor/add_range_sensor.html">14.2. ドローンに距離センサを搭載する</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../filter_lidar/filter_lidar.html">14.3. LiDARのデータをフィルタリングする</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../change_local_planner/change_local_planner.html">14.4. move_baseのローカルプランナーを変更する</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">14.5. UAV用のローカルプランナを実装する</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id1">14.5.1. インストール</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id2">14.5.2. ローカルプランナを実装する</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#ros">14.5.3. ROSプラグイン</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#navigation">14.5.3.1. navigationスタック</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id4">14.5.3.2. ローカルプランナをプラグイン化する</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">UAV用のローカルプランナを実装する</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">インストール</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">ローカルプランナを実装する</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ros">ROSプラグイン</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#navigation">navigationスタック</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">ローカルプランナをプラグイン化する</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id5">14.5.4. 実行する</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id6">14.5.5. 参考</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">実行する</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">参考</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../build_map_gmapping/build_map_gmapping.html">14.6. Gmappingを使って地図を生成する</a></li>
@@ -117,11 +117,11 @@
 </ul>
 <p class="caption"><span class="caption-text">Appendix</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../appendix/bash_commands/bash_commands.html">1. 基本的なBashの使い方</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../appendix/ros/ros.html">2. ROSの基本</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/bash_commands/bash_commands.html">基本的なBashの使い方</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/ros/ros.html">ROSの基本</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../appendix/terms/terms.html">3. 用語集</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../appendix/archive/archive.html">4. 読書案内</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../appendix/trouble_shooting/index.html">5. トラブルシューティング</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/trouble_shooting/index.html">トラブルシューティング</a></li>
 </ul>
 
             
@@ -169,7 +169,7 @@
         
           <li><a href="../index.html">14. Tips</a> &raquo;</li>
         
-      <li>14.5. UAV用のローカルプランナを実装する</li>
+      <li>UAV用のローカルプランナを実装する</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -189,12 +189,12 @@
            <div itemprop="articleBody">
             
   <div class="section" id="uav">
-<h1>14.5. UAV用のローカルプランナを実装する<a class="headerlink" href="#uav" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<h1>UAV用のローカルプランナを実装する<a class="headerlink" href="#uav" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p>この章では、<a class="reference external" href="http://ompl.kavrakilab.org/">Open Motion Planning Library (OMPL)</a> を使ってドローン用のローカルプランナを実装します。</p>
 <p>OMPLはオープンソースの行動計画ライブラリで、マニピュレータやUGVなどの動作計画に用いられています。
 マニピュレータの制御に用いられる <a class="reference external" href="https://moveit.ros.org/">MoveIt!</a> というライブラリもOMPLを使っています。</p>
 <div class="section" id="id1">
-<h2>14.5.1. インストール<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>インストール<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>UbuntuにOMPLをインストールする方法は以下の3通りあります。</p>
 <ul class="simple">
 <li>ソースからインストールする</li>
@@ -216,29 +216,29 @@ sudo apt install ros-kinetic-ompl
 </div>
 </div>
 <div class="section" id="id2">
-<h2>14.5.2. ローカルプランナを実装する<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>ローカルプランナを実装する<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>以下では、<a class="reference external" href="https://robotics.naist.jp/edu/text/?Robotics%2FOMPL#PlanningWithControls">制御指令値を含むプラニング</a> を参考にして作業を進めていきます。</p>
 </div>
 <div class="section" id="ros">
-<h2>14.5.3. ROSプラグイン<a class="headerlink" href="#ros" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>ROSプラグイン<a class="headerlink" href="#ros" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>ROSのパッケージの中には、処理の一部（画像処理や行動計画など）をプラグインとして作成し、後で変更可能になっているものがあります。
 プラグインを作成、使用するためには <a class="reference external" href="http://wiki.ros.org/pluginlib">pluginlib</a> パッケージを使用します。
 プラグインの仕組みを使うことで、特定のインターフェースに従ったクラスを作れば中身の実装は自由にできるので、既存のパッケージを拡張することが容易になります。</p>
 <div class="section" id="navigation">
-<h3>14.5.3.1. navigationスタック<a class="headerlink" href="#navigation" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>navigationスタック<a class="headerlink" href="#navigation" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>navigationスタックは、move_baseやcostmap_2dなどを含むメタパッケージです。</p>
 <p>navigationスタックでは、pluginlibを使って作成したプラグインをローカルプランナやグローバルプランナとして使用することができるようになっています。
 navigationスタックのローカルプランナとして使用可能なクラスを作るためには、 <a class="reference external" href="http://docs.ros.org/jade/api/nav_core/html/classnav__core_1_1BaseLocalPlanner.html">nav_core::BaseLocalPlanner</a> を継承したクラスを作る必要があります。</p>
 </div>
 <div class="section" id="id4">
-<h3>14.5.3.2. ローカルプランナをプラグイン化する<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>ローカルプランナをプラグイン化する<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h3>
 </div>
 </div>
 <div class="section" id="id5">
-<h2>14.5.4. 実行する<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>実行する<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
 </div>
 <div class="section" id="id6">
-<h2>14.5.5. 参考<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>参考<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <dl class="docutils">
 <dt><a class="reference external" href="https://robotics.naist.jp/edu/text/?Robotics%2FOMPL">Robotics/OMPL - NAIST::OnlineText</a></dt>
 <dd>OMPLの日本語チュートリアル</dd>
@@ -252,6 +252,8 @@ navigationスタックのローカルプランナとして使用可能なクラ�
 <dd>navigationスタック用のグローバルプランナプラグインを作る</dd>
 <dt><a class="reference external" href="http://wiki.ros.org/nav_core">nav_core - ROS Wiki</a></dt>
 <dd>nav_coreパッケージ</dd>
+<dt><a class="reference external" href="https://github.com/ros-planning/navigation/tree/melodic-devel/dwa_local_planner">navigation/dwa_local_planner - GitHub</a></dt>
+<dd>dwa_local_plannerのソースコード</dd>
 </dl>
 </div>
 </div>

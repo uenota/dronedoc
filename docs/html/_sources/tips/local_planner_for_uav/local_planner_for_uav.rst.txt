@@ -72,3 +72,5 @@ navigationスタックのローカルプランナとして使用可能なクラ�
     navigationスタック用のグローバルプランナプラグインを作る
 `nav_core - ROS Wiki <http://wiki.ros.org/nav_core>`_
     nav_coreパッケージ
+`navigation/dwa_local_planner - GitHub <https://github.com/ros-planning/navigation/tree/melodic-devel/dwa_local_planner>`_
+    dwa_local_plannerのソースコード

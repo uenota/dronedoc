@@ -1,6 +1,5 @@
 :tocdepth: 1
 
-***********************************************************************
 GPSを用いた自律飛行
 ***********************************************************************
 このページの内容は `Setup and Configuration of the Navigation Stack on a Robot <http://wiki.ros.org/navigation/Tutorials/RobotSetup>`_ を参考にしています。

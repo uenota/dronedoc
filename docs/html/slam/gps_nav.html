@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>7. GPSを用いた自律飛行 &mdash; Dronedoc 1.0.0 ドキュメント</title>
+  <title>GPSを用いた自律飛行 &mdash; Dronedoc 1.0.0 ドキュメント</title>
   
 
   
@@ -28,8 +28,8 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <link rel="next" title="8. Turtlebotを使ってマップを作る" href="turtle_mapping.html" />
-    <link rel="prev" title="6. 自律飛行とSLAM" href="slam.html" /> 
+    <link rel="next" title="Turtlebotを使ってマップを作る" href="turtle_mapping.html" />
+    <link rel="prev" title="自律飛行とSLAM" href="slam.html" /> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -80,28 +80,28 @@
             
               <p class="caption"><span class="caption-text">Contents</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../introduction.html">1. はじめに</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../px4sim/px4sim.html">2. PX4 SITLシミュレーション</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../runnode/runnodecpp.html">3. 自作ノードを実行する（C++）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../runnode/runnodepy.html">4. 自作ノードを実行する（Python）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../addmodel/addmodel.html">5. 新しいモデルを追加する</a></li>
-<li class="toctree-l1"><a class="reference internal" href="slam.html">6. 自律飛行とSLAM</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">7. GPSを用いた自律飛行</a></li>
-<li class="toctree-l1"><a class="reference internal" href="turtle_mapping.html">8. Turtlebotを使ってマップを作る</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../teleop/teleop.html">9. ゲームパッドを使ってドローンを操作する</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lidar_localization.html">10. LiDARとAMCLを用いた自己位置推定</a></li>
-<li class="toctree-l1"><a class="reference internal" href="localization_and_mapping.html">11. LiDARを用いたSLAM</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lidar_nav.html">12. LiDARを用いた自律移動</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../octomap/octomap.html">13. Octomapを使って3Dマップを作る</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tips/index.html">14. Tips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../px4sim/px4sim.html">PX4 SITLシミュレーション</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../runnode/runnodecpp.html">自作ノードを実行する（C++）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../runnode/runnodepy.html">自作ノードを実行する（Python）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../addmodel/addmodel.html">新しいモデルを追加する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slam.html">自律飛行とSLAM</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">GPSを用いた自律飛行</a></li>
+<li class="toctree-l1"><a class="reference internal" href="turtle_mapping.html">Turtlebotを使ってマップを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../teleop/teleop.html">ゲームパッドを使ってドローンを操作する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lidar_localization.html">LiDARとAMCLを用いた自己位置推定</a></li>
+<li class="toctree-l1"><a class="reference internal" href="localization_and_mapping.html">LiDARを用いたSLAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lidar_nav.html">LiDARを用いた自律移動</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../octomap/octomap.html">Octomapを使って3Dマップを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tips/index.html">Tips</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Appendix</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/bash_commands/bash_commands.html">1. 基本的なBashの使い方</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/ros/ros.html">2. ROSの基本</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/terms/terms.html">3. 用語集</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/archive/archive.html">4. 読書案内</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/trouble_shooting/index.html">5. トラブルシューティング</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/bash_commands/bash_commands.html">基本的なBashの使い方</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/ros/ros.html">ROSの基本</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/terms/terms.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/archive/archive.html">読書案内</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/trouble_shooting/index.html">トラブルシューティング</a></li>
 </ul>
 
             
@@ -147,7 +147,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>7. GPSを用いた自律飛行</li>
+      <li>GPSを用いた自律飛行</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -167,7 +167,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="gps">
-<h1>7. GPSを用いた自律飛行<a class="headerlink" href="#gps" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<h1>GPSを用いた自律飛行<a class="headerlink" href="#gps" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p>このページの内容は <a class="reference external" href="http://wiki.ros.org/navigation/Tutorials/RobotSetup">Setup and Configuration of the Navigation Stack on a Robot</a> を参考にしています。</p>
 <p>以下の赤枠内の部分が経路計画と障害物回避に必要な部分です。
 経路計画と障害物回避を含む自律飛行を行うためには、</p>
@@ -184,7 +184,7 @@
 <p class="caption"><span class="caption-text">From <a class="reference external" href="http://wiki.ros.org/navigation/Tutorials/RobotSetup">ROS Wiki</a> (<a class="reference external" href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>)</span></p>
 </div>
 <div class="section" id="tf">
-<h2>7.1. TF<a class="headerlink" href="#tf" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>TF<a class="headerlink" href="#tf" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>今回はLiDARを使用するので、LiDARとロボットの位置関係がわかるように、ロボットのベースフレームからLiDARのフレームへのTFを定義してあげる必要があります。
 今回はロボットのベースフレームは <code class="docutils literal notranslate"><span class="pre">base_link</span></code> 、LiDARのフレームは <code class="docutils literal notranslate"><span class="pre">lidar_link</span></code> となっています。
 自分のロボットの設定をモデルなどを参照して確認して、必要な場合は適宜変更してください。</p>
@@ -195,7 +195,7 @@
 </div>
 </div>
 <div class="section" id="id1">
-<h2>7.2. センサ情報<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>センサ情報<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>今回は障害物の検出に2D LiDARを使います。
 <code class="docutils literal notranslate"><span class="pre">models/iris_2d_lidar/model.sdf</span></code> 内でLiDARの設定を以下のようにしたので、
 LiDARの点群データは <code class="docutils literal notranslate"><span class="pre">/laser/scan</span></code> トピックにパブリッシュされます。</p>
@@ -210,9 +210,9 @@ LiDARの点群データは <code class="docutils literal notranslate"><span clas
 つまり、 <code class="docutils literal notranslate"><span class="pre">base_link</span></code> → <code class="docutils literal notranslate"><span class="pre">lidar_link</span></code> のようにTFがパブリッシュされています。</p>
 </div>
 <div class="section" id="id2">
-<h2>7.3. オドメトリ情報<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>オドメトリ情報<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="section" id="id3">
-<h3>7.3.1. TFをパブリッシュする<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>TFをパブリッシュする<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>move_baseでは、障害物回避と経路計画のためにグローバルとローカルの２つのコストマップを使っています。
 今回の設定ではローカルコストマップは <code class="docutils literal notranslate"><span class="pre">odom</span></code> フレームを参照し、グローバルコストマップは <code class="docutils literal notranslate"><span class="pre">map</span></code> フレームを参照するようになっているので、それぞれのフレームからの <code class="docutils literal notranslate"><span class="pre">base_link</span></code> へのTFを定義する必要があります。</p>
 <p><code class="docutils literal notranslate"><span class="pre">odom</span></code> フレームは一般的にロボットのローカルフレームとして使用され、 <code class="docutils literal notranslate"><span class="pre">map</span></code> フレームは一般的にグローバルフレームとして使用されます。
@@ -223,7 +223,7 @@ LiDARの点群データは <code class="docutils literal notranslate"><span clas
 </div>
 <p>From <a class="reference external" href="http://wiki.ros.org/hector_slam/Tutorials/SettingUpForYourRobot">ROS Wiki</a> (<a class="reference external" href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>)</p>
 <div class="section" id="odom-base-link">
-<h4>7.3.1.1. odom-&gt;base_link<a class="headerlink" href="#odom-base-link" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h4>odom-&gt;base_link<a class="headerlink" href="#odom-base-link" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>機体のTFはmavrosを使ってパブリッシュすることができます。
 しかし、mavros_posix_sitl.launchを使った場合は、デフォルトではTFがパブリッシュされません。</p>
 <p>TFがパブリッシュされるようにするには、 <code class="docutils literal notranslate"><span class="pre">/mavros/local_position/tf/send</span></code> パラメータの値を <code class="docutils literal notranslate"><span class="pre">true</span></code> にする必要があります。</p>
@@ -236,7 +236,7 @@ LiDARの点群データは <code class="docutils literal notranslate"><span clas
 </div>
 </div>
 <div class="section" id="map-odom">
-<h4>7.3.1.2. map-&gt;odom<a class="headerlink" href="#map-odom" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h4>map-&gt;odom<a class="headerlink" href="#map-odom" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>本来、 <code class="docutils literal notranslate"><span class="pre">odom</span></code> フレームからのTFはホイールオドメトリなどを用いて計算し、 <code class="docutils literal notranslate"><span class="pre">map</span></code> フレームからのTFはGPSやLiDARなどのセンサ情報を用いて更新されるのですが、今回はどちらもGPSを用いている上に基点も同じなので、次のようにして <code class="docutils literal notranslate"><span class="pre">map</span></code> から <code class="docutils literal notranslate"><span class="pre">odom</span></code> へのTFをブロードキャストすることにします。
 以下の内容をmymodel_sitl_tf.launchに追加してください。</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span class="nt">&lt;node</span> <span class="na">pkg=</span><span class="s">&quot;tf&quot;</span> <span class="na">name=</span><span class="s">&quot;map2odom&quot;</span> <span class="na">type=</span><span class="s">&quot;static_transform_publisher&quot;</span> <span class="na">args=</span><span class="s">&quot;0 0 0 0 0 0 map odom 100&quot;</span><span class="nt">/&gt;</span>
@@ -250,7 +250,7 @@ LiDARの点群データは <code class="docutils literal notranslate"><span clas
 </div>
 </div>
 <div class="section" id="nav-msgs-odometry">
-<h3>7.3.2. nav_msgs/Odometryをパブリッシュする<a class="headerlink" href="#nav-msgs-odometry" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>nav_msgs/Odometryをパブリッシュする<a class="headerlink" href="#nav-msgs-odometry" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>nav_msgs/Odometryメッセージがパブリッシュされるトピックはmavrosには用意されていないので、自分で用意する必要があります。</p>
 <p><a class="reference external" href="http://wiki.ros.org/navigation/Tutorials/RobotSetup/Odom">ROS Wikiのチュートリアル</a> を参考にしてノードを作成しましょう。</p>
 <p><code class="docutils literal notranslate"><span class="pre">map</span></code> から <code class="docutils literal notranslate"><span class="pre">base_link</span></code> へのTFはすでにパブリッシュされているので、今回は <code class="docutils literal notranslate"><span class="pre">nav_msgs::Odometry</span></code> メッセージのパブリッシャを書くだけで構いません。</p>
@@ -432,7 +432,7 @@ LiDARの点群データは <code class="docutils literal notranslate"><span clas
 </td></tr></table></div>
 </div>
 <div class="section" id="id7">
-<h4>7.3.2.1. コード解説<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h4>コード解説<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span class="cp">#include</span> <span class="cpf">&lt;ros/ros.h&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;nav_msgs/Odometry.h&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;geometry_msgs/PoseStamped.h&gt;</span><span class="cp"></span>
@@ -497,9 +497,9 @@ LiDARの点群データは <code class="docutils literal notranslate"><span clas
 </div>
 </div>
 <div class="section" id="id8">
-<h2>7.4. 速度指令<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>速度指令<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="section" id="cmd-vel">
-<h3>7.4.1. cmd_velトピック<a class="headerlink" href="#cmd-vel" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>cmd_velトピック<a class="headerlink" href="#cmd-vel" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>mavrosを使えば、 <code class="docutils literal notranslate"><span class="pre">/mavros/setpoint_velocity/cmd_vel_unstamped</span></code> トピックもしくは、 <code class="docutils literal notranslate"><span class="pre">/mavros/setpoint_velocity/cmd_vel</span></code> トピックに速度指令を送信することでドローンを移動させることができます。
 これらのトピックはメッセージの型によって分けられており、 <code class="docutils literal notranslate"><span class="pre">cmd_vel_unstamped</span></code> は <code class="docutils literal notranslate"><span class="pre">Twist</span></code> 型、 <code class="docutils literal notranslate"><span class="pre">cmd_vel</span></code> は <code class="docutils literal notranslate"><span class="pre">TwistStamped</span></code> 型のメッセージを使います。
 move_baseは <code class="docutils literal notranslate"><span class="pre">Twist</span></code> 型のメッセージをパブリッシュするので、今回は <code class="docutils literal notranslate"><span class="pre">/mavros/setpoint_velocity/cmd_vel_unstamped</span></code> トピックを利用します。</p>
@@ -510,7 +510,7 @@ move_baseは <code class="docutils literal notranslate"><span class="pre">Twist<
 </div>
 </div>
 <div class="section" id="mav-frame">
-<h3>7.4.2. mav_frameパラメータ<a class="headerlink" href="#mav-frame" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>mav_frameパラメータ<a class="headerlink" href="#mav-frame" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">cmd_vel</span></code> トピックもしくは、 <code class="docutils literal notranslate"><span class="pre">cmd_vel_unstamped</span></code> トピックを使う場合の速度指令は、デフォルトではドローンのベースフレームではなく、ドローンの位置の基準となるフレーム（ <code class="docutils literal notranslate"><span class="pre">odom</span></code> や <code class="docutils literal notranslate"><span class="pre">map</span></code> など）を基準とした速度を使用しています。</p>
 <p>以下の画像のように、速度指令の基準となるフレームが異なる場合には、同じ値の速度指令値を入力しても、ロボットの速度（太い矢印）は異なります。</p>
 <img alt="../_images/mav_frame.png" src="../_images/mav_frame.png" />
@@ -527,9 +527,9 @@ move_baseは <code class="docutils literal notranslate"><span class="pre">Twist<
 </div>
 </div>
 <div class="section" id="id10">
-<h2>7.5. 設定ファイルを書く<a class="headerlink" href="#id10" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>設定ファイルを書く<a class="headerlink" href="#id10" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="section" id="id11">
-<h3>7.5.1. 大域的経路計画と局所的経路計画<a class="headerlink" href="#id11" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>大域的経路計画と局所的経路計画<a class="headerlink" href="#id11" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>コストマップは事前に与えられた地図情報やセンサから得られた障害物の情報をもとに構築される地図で、経路計画に用いられます。（ <a class="reference external" href="https://qiita.com/MoriKen/items/d5cd6208143d6c40caff#%E5%A4%A7%E5%9F%9F%E3%81%A8%E5%B1%80%E6%89%80%E3%81%AE%E6%AF%94%E8%BC%83">参考</a> ）</p>
 <p>大域的経路計画では、スタートからゴールまでの経路を計画します。
 大域的経路計画においては、グローバル（大域的）コストマップが使われます。</p>
@@ -539,7 +539,7 @@ move_baseは <code class="docutils literal notranslate"><span class="pre">Twist<
 グローバルプランナーにはダイクストラ法やA*法が、ローカルプランナーにはDynamic Window Approach（DWA）などがあります。</p>
 </div>
 <div class="section" id="id13">
-<h3>7.5.2. コストマップの設定<a class="headerlink" href="#id13" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>コストマップの設定<a class="headerlink" href="#id13" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>コストマップの設定はyamlファイルに記述します。
 共通の設定、大域的コストマップの設定、局所的コストマップの設定用の3つの設定ファイルを以下のように準備します。</p>
 <p>コストマップのパラメータの設定はグローバルプランナーやローカルプランナーが生成する経路にも影響を与えます。
@@ -547,7 +547,7 @@ move_baseは <code class="docutils literal notranslate"><span class="pre">Twist<
 <p>以下の設定は必要最小限のものです。
 他の設定やコストマップの詳細については <a class="reference external" href="http://wiki.ros.org/costmap_2d">costmap_2dのROS Wikiページ</a> を見てください。</p>
 <div class="section" id="id14">
-<h4>7.5.2.1. 共通設定<a class="headerlink" href="#id14" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h4>共通設定<a class="headerlink" href="#id14" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <div class="literal-block-wrapper container" id="id33">
 <div class="code-block-caption"><span class="caption-text">costmap_common_params.yaml</span><a class="headerlink" href="#id33" title="このコードへのパーマリンク">¶</a></div>
 <div class="highlight-yaml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -607,7 +607,7 @@ move_baseは <code class="docutils literal notranslate"><span class="pre">Twist<
 </dl>
 </div>
 <div class="section" id="id15">
-<h4>7.5.2.2. 大域的コストマップの設定<a class="headerlink" href="#id15" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h4>大域的コストマップの設定<a class="headerlink" href="#id15" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <div class="literal-block-wrapper container" id="id34">
 <div class="code-block-caption"><span class="caption-text">global_costmap_params.yaml</span><a class="headerlink" href="#id34" title="このコードへのパーマリンク">¶</a></div>
 <div class="highlight-yaml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -653,7 +653,7 @@ move_baseは <code class="docutils literal notranslate"><span class="pre">Twist<
 </dl>
 </div>
 <div class="section" id="id16">
-<h4>7.5.2.3. 局所的コストマップの設定<a class="headerlink" href="#id16" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h4>局所的コストマップの設定<a class="headerlink" href="#id16" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <div class="literal-block-wrapper container" id="id35">
 <div class="code-block-caption"><span class="caption-text">local_costmap_params.yaml</span><a class="headerlink" href="#id35" title="このコードへのパーマリンク">¶</a></div>
 <div class="highlight-yaml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -686,7 +686,7 @@ move_baseは <code class="docutils literal notranslate"><span class="pre">Twist<
 </div>
 </div>
 <div class="section" id="id17">
-<h3>7.5.3. ローカルプランナーの設定<a class="headerlink" href="#id17" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>ローカルプランナーの設定<a class="headerlink" href="#id17" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>ロボットのベースに与える速度指令を計算するためにローカルプランナーを使用します。
 パラメータの詳細やローカルプランナーの概要については <a class="reference external" href="http://wiki.ros.org/base_local_planner">base_local_plannerのROS Wikiページ</a> を見てください。</p>
 <p>以下の設定ファイルではロボットの速度と加速度の最大値、最小値等を定義しています。</p>
@@ -715,7 +715,7 @@ move_baseは <code class="docutils literal notranslate"><span class="pre">Twist<
 </div>
 </div>
 <div class="section" id="id18">
-<h2>7.6. ドローンのパラメータの変更<a class="headerlink" href="#id18" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>ドローンのパラメータの変更<a class="headerlink" href="#id18" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>二次元の自己位置推定やマッピングの精度を高めるためには、できるだけセンサを水平に保つ必要があります。
 ドローンのパラメータを設定してピッチ角とロール角が一定以上にならないようにしましょう。</p>
 <p>また、デフォルトではGCS（Ground Control Station）及びRCとの接続が切れた場合と、OFFBOARDコントロールが切れた場合に自動でホームポジションに戻るようになっているので、フェイルセーフを無効化しておきます。
@@ -777,7 +777,7 @@ move_baseは <code class="docutils literal notranslate"><span class="pre">Twist<
 <p>コマンドで設定する方法は簡単ですが、毎回設定しなければなりません。
 設定ファイルを使う方法は準備が必要ですが、基本的に一度準備すれば毎回設定し直す必要はありません。</p>
 <div class="section" id="id19">
-<h3>7.6.1. コマンドで設定する<a class="headerlink" href="#id19" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>コマンドで設定する<a class="headerlink" href="#id19" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>PX4シミュレータが起動したら、以下のコマンドを実行します。
 今回は試しに以下の数値を設定してみます。
 数値は適宜変更してください。</p>
@@ -800,7 +800,7 @@ param set COM_OBL_ACT 0
 </div>
 </div>
 <div class="section" id="id20">
-<h3>7.6.2. 設定ファイルを使う<a class="headerlink" href="#id20" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>設定ファイルを使う<a class="headerlink" href="#id20" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>PX4シミュレーションの起動は、起動スクリプト（ <code class="docutils literal notranslate"><span class="pre">~/.ros/etc/init.d-posix/rcS</span></code> ）によって行われ、その中で設定スクリプトが読み込まれることで機体のパラメータなどが設定されます。</p>
 <p>シミュレーションで使われる機体の設定スクリプトは、 <code class="docutils literal notranslate"><span class="pre">~/.ros/etc/init.d-posix</span></code> 以下にあり、ここからロードされます。
 なので、設定ファイルを作成した後にこのディレクトリに移動、もしくはシンボリックリンクを貼る必要があります。
@@ -896,9 +896,9 @@ param set COM_OBL_ACT 0
 </div>
 </div>
 <div class="section" id="launch">
-<h2>7.7. Launchファイルを書く<a class="headerlink" href="#launch" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>Launchファイルを書く<a class="headerlink" href="#launch" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="section" id="navigation-launch">
-<span id="id21"></span><h3>7.7.1. navigation.launch<a class="headerlink" href="#navigation-launch" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<span id="id21"></span><h3>navigation.launch<a class="headerlink" href="#navigation-launch" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>このLaunchファイルでは、コストマップ等の設定ファイルをすべて <code class="docutils literal notranslate"><span class="pre">px4_sim_pkg/config</span></code> 以下に保存していることを想定しています。</p>
 <p>以下の内容を、 <code class="docutils literal notranslate"><span class="pre">px4_sim_pkg/launch</span></code> 以下に、navigation.launchとして保存してください。</p>
 <div class="literal-block-wrapper container" id="id38">
@@ -959,7 +959,7 @@ param set COM_OBL_ACT 0
 </div>
 </div>
 <div class="section" id="mymodel-sitl-tf-launch">
-<h3>7.7.2. mymodel_sitl_tf.launch<a class="headerlink" href="#mymodel-sitl-tf-launch" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>mymodel_sitl_tf.launch<a class="headerlink" href="#mymodel-sitl-tf-launch" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>最終的な mymodel_sitl_tf.launchは以下のようになります。</p>
 <div class="highlight-xml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -1003,9 +1003,9 @@ param set COM_OBL_ACT 0
 </div>
 </div>
 <div class="section" id="id22">
-<h2>7.8. 実行してみる<a class="headerlink" href="#id22" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>実行してみる<a class="headerlink" href="#id22" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="section" id="id23">
-<h3>7.8.1. ビルドする<a class="headerlink" href="#id23" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>ビルドする<a class="headerlink" href="#id23" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>オドメトリをパブリッシュするためのノードをビルドします。</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span class="nb">cd</span> ~/catkin_ws
 catkin_make
@@ -1022,7 +1022,7 @@ catkin_make
 </div>
 </div>
 <div class="section" id="id24">
-<h3>7.8.2. ノードを起動する<a class="headerlink" href="#id24" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>ノードを起動する<a class="headerlink" href="#id24" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>以下のコマンドを用いてLaunchファイルを起動します。</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre>roslaunch px4_sim_pkg mymodel_sitl.launch
 roslaunch px4_sim_pkg navigation.launch
@@ -1031,9 +1031,9 @@ roslaunch px4_sim_pkg navigation.launch
 <img alt="../_images/gazebomymodel.png" src="../_images/gazebomymodel.png" />
 </div>
 <div class="section" id="id25">
-<h3>7.8.3. ゴールを送信する<a class="headerlink" href="#id25" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>ゴールを送信する<a class="headerlink" href="#id25" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <div class="section" id="id26">
-<h4>7.8.3.1. ドローンを離陸させる<a class="headerlink" href="#id26" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h4>ドローンを離陸させる<a class="headerlink" href="#id26" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>ゴールを送信する前にドローンを離陸させます。
 シミュレーションのノードを起動しているターミナルで以下のコマンドを実行すると離陸します。</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre>commander takeoff
@@ -1050,7 +1050,7 @@ roslaunch px4_sim_pkg navigation.launch
 <p>mavrosの提供するサービスやコマンドについては <a class="reference external" href="http://wiki.ros.org/mavros">mavrosのROS Wikiページ</a> に一覧があります。</p>
 </div>
 <div class="section" id="rviz">
-<h4>7.8.3.2. Rvizを使ってゴールを送信する<a class="headerlink" href="#rviz" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h4>Rvizを使ってゴールを送信する<a class="headerlink" href="#rviz" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p><code class="docutils literal notranslate"><span class="pre">move_base/goal</span></code> トピックに <code class="docutils literal notranslate"><span class="pre">move_base_msgs/MoveBaseActionGoal</span></code> 型のメッセージを送ってもゴールを設定することができるのですが、Rvizを使ったほうが簡単なので今回はRvizを使用してゴールを送信します。</p>
 <p>以下の画像のように、Rvizを使ってmove_baseのゴールを設定することができます。
 赤枠内の2D Nav Goalをクリックして選択したあとに、目標位置をクリックして決定します。
@@ -1058,7 +1058,7 @@ roslaunch px4_sim_pkg navigation.launch
 <img alt="../_images/rviz_goal.gif" src="../_images/rviz_goal.gif" />
 </div>
 <div class="section" id="offboard">
-<h4>7.8.3.3. Offboardモードにする<a class="headerlink" href="#offboard" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<h4>Offboardモードにする<a class="headerlink" href="#offboard" title="このヘッドラインへのパーマリンク">¶</a></h4>
 <p>また、Offboardモードになっていないと <code class="docutils literal notranslate"><span class="pre">cmd_vel_unstamped</span></code> トピックを使って操作できないので、Offboardモードにします。
 以下のコマンドを使えばドローンの飛行モードがOffboardになります。
 <code class="docutils literal notranslate"><span class="pre">/mavros/setpoint_velocity/cmd_vel_unstamped</span></code> にトピックがパブリッシュされていないとOffboardモードに切り替わらないので、ゴールを指示してからOffboardモードにします。</p>
@@ -1073,7 +1073,7 @@ roslaunch px4_sim_pkg navigation.launch
 </div>
 </div>
 <div class="section" id="id27">
-<h3>7.8.4. 実行結果<a class="headerlink" href="#id27" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>実行結果<a class="headerlink" href="#id27" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>上記の手順を踏んで実行した結果が以下の動画です。
 ゴールを指定するとゴールに向かって飛行していることがわかります。</p>
 <img alt="../_images/nav_gps.gif" src="../_images/nav_gps.gif" />
@@ -1094,7 +1094,7 @@ roslaunch px4_sim_pkg navigation.launch
 <img alt="../_images/choose_topic.png" src="../_images/choose_topic.png" />
 </div>
 <div class="section" id="id28">
-<h3>7.8.5. 障害物回避<a class="headerlink" href="#id28" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>障害物回避<a class="headerlink" href="#id28" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>ドローンの進路に障害物をおいた場合には迂回する経路が生成されます。</p>
 <img alt="../_images/obstacle.gif" src="../_images/obstacle.gif" />
 <p>この例では更に以下のメッセージをRvizで可視化しています。</p>
@@ -1111,7 +1111,7 @@ roslaunch px4_sim_pkg navigation.launch
 </div>
 </div>
 <div class="section" id="id29">
-<h2>7.9. まとめ<a class="headerlink" href="#id29" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>まとめ<a class="headerlink" href="#id29" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>お疲れ様でした。
 以上までで、ドローンに目標位置を指定して、障害物を考慮した経路計画を実行し、経路上を移動して目標位置まで移動させることができました。</p>
 <p>以下のページを参考にしてパラメータをチューニングしたり、別のローカルプランナーを使用してナビゲーションの性能を向上させてもよいでしょう。</p>
@@ -1123,7 +1123,7 @@ roslaunch px4_sim_pkg navigation.launch
 <p>別のローカルプランナー使う方法については、 <a class="reference internal" href="../tips/change_local_planner/change_local_planner.html"><span class="doc">move_baseのローカルプランナーを変更する</span></a> を参考にしてください。</p>
 </div>
 <div class="section" id="id30">
-<h2>7.10. 参考<a class="headerlink" href="#id30" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>参考<a class="headerlink" href="#id30" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <dl class="docutils">
 <dt><a class="reference external" href="http://wiki.ros.org/move_base">move_base - ROS Wiki</a></dt>
 <dd>move_baseパッケージ</dd>
@@ -1149,10 +1149,10 @@ roslaunch px4_sim_pkg navigation.launch
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="turtle_mapping.html" class="btn btn-neutral float-right" title="8. Turtlebotを使ってマップを作る" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="turtle_mapping.html" class="btn btn-neutral float-right" title="Turtlebotを使ってマップを作る" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="slam.html" class="btn btn-neutral" title="6. 自律飛行とSLAM" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="slam.html" class="btn btn-neutral" title="自律飛行とSLAM" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

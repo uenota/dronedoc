@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>11. LiDARを用いたSLAM &mdash; Dronedoc 1.0.0 ドキュメント</title>
+  <title>LiDARを用いたSLAM &mdash; Dronedoc 1.0.0 ドキュメント</title>
   
 
   
@@ -28,8 +28,8 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <link rel="next" title="12. LiDARを用いた自律移動" href="lidar_nav.html" />
-    <link rel="prev" title="10. LiDARとAMCLを用いた自己位置推定" href="lidar_localization.html" /> 
+    <link rel="next" title="LiDARを用いた自律移動" href="lidar_nav.html" />
+    <link rel="prev" title="LiDARとAMCLを用いた自己位置推定" href="lidar_localization.html" /> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -80,28 +80,28 @@
             
               <p class="caption"><span class="caption-text">Contents</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../introduction.html">1. はじめに</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../px4sim/px4sim.html">2. PX4 SITLシミュレーション</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../runnode/runnodecpp.html">3. 自作ノードを実行する（C++）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../runnode/runnodepy.html">4. 自作ノードを実行する（Python）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../addmodel/addmodel.html">5. 新しいモデルを追加する</a></li>
-<li class="toctree-l1"><a class="reference internal" href="slam.html">6. 自律飛行とSLAM</a></li>
-<li class="toctree-l1"><a class="reference internal" href="gps_nav.html">7. GPSを用いた自律飛行</a></li>
-<li class="toctree-l1"><a class="reference internal" href="turtle_mapping.html">8. Turtlebotを使ってマップを作る</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../teleop/teleop.html">9. ゲームパッドを使ってドローンを操作する</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lidar_localization.html">10. LiDARとAMCLを用いた自己位置推定</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">11. LiDARを用いたSLAM</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lidar_nav.html">12. LiDARを用いた自律移動</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../octomap/octomap.html">13. Octomapを使って3Dマップを作る</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tips/index.html">14. Tips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../px4sim/px4sim.html">PX4 SITLシミュレーション</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../runnode/runnodecpp.html">自作ノードを実行する（C++）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../runnode/runnodepy.html">自作ノードを実行する（Python）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../addmodel/addmodel.html">新しいモデルを追加する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slam.html">自律飛行とSLAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gps_nav.html">GPSを用いた自律飛行</a></li>
+<li class="toctree-l1"><a class="reference internal" href="turtle_mapping.html">Turtlebotを使ってマップを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../teleop/teleop.html">ゲームパッドを使ってドローンを操作する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lidar_localization.html">LiDARとAMCLを用いた自己位置推定</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">LiDARを用いたSLAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lidar_nav.html">LiDARを用いた自律移動</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../octomap/octomap.html">Octomapを使って3Dマップを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tips/index.html">Tips</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Appendix</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/bash_commands/bash_commands.html">1. 基本的なBashの使い方</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/ros/ros.html">2. ROSの基本</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/terms/terms.html">3. 用語集</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/archive/archive.html">4. 読書案内</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/trouble_shooting/index.html">5. トラブルシューティング</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/bash_commands/bash_commands.html">基本的なBashの使い方</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/ros/ros.html">ROSの基本</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/terms/terms.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/archive/archive.html">読書案内</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/trouble_shooting/index.html">トラブルシューティング</a></li>
 </ul>
 
             
@@ -147,7 +147,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>11. LiDARを用いたSLAM</li>
+      <li>LiDARを用いたSLAM</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -167,9 +167,9 @@
            <div itemprop="articleBody">
             
   <div class="section" id="lidarslam">
-<h1>11. LiDARを用いたSLAM<a class="headerlink" href="#lidarslam" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<h1>LiDARを用いたSLAM<a class="headerlink" href="#lidarslam" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <div class="section" id="slam">
-<h2>11.1. SLAM<a class="headerlink" href="#slam" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>SLAM<a class="headerlink" href="#slam" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p><a class="reference internal" href="lidar_localization.html"><span class="doc">LiDARとAMCLを用いた自己位置推定</span></a> では、 <a class="reference internal" href="turtle_mapping.html"><span class="doc">Turtlebotを使ってマップを作る</span></a> 等で事前に作成した地図を利用して、自己位置推定を行いました。</p>
 <p>ノードとトピックの概略図は以下のとおりです。
 点線内は事前にマップを作る作業におけるノードの例で、この場合はcostmap_2dを用いた例を示しています。
@@ -181,7 +181,7 @@ amclノードがパブリッシュされた地図の情報とセンサー情報�
 これを同時に行うことをSLAM（Simultaneous Localization and Mapping）と言います。</p>
 <img alt="../_images/hector_diagram.png" src="../_images/hector_diagram.png" />
 <div class="section" id="gmappinghector-slam">
-<h3>11.1.1. gmappingとHector SLAM<a class="headerlink" href="#gmappinghector-slam" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>gmappingとHector SLAM<a class="headerlink" href="#gmappinghector-slam" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>今回はHector SLAMアルゴリズムを用いて地図生成と自己位置推定を行います。
 <a class="reference internal" href="../tips/build_map_gmapping/build_map_gmapping.html"><span class="doc">Gmappingを使って地図を生成する</span></a> で使用したgmappingもSLAMアルゴリズムの一つです。</p>
 <p>gmappingはロボットのオドメトリが必要である一方で、Hector SLAMはオドメトリフリーなSLAM手法です。
@@ -190,16 +190,16 @@ amclノードがパブリッシュされた地図の情報とセンサー情報�
 </div>
 </div>
 <div class="section" id="id1">
-<h2>11.2. パッケージのインストール<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>パッケージのインストール<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p><a class="reference external" href="http://wiki.ros.org/hector_slam">hector_slam</a> パッケージを使用するので、以下のコマンドでインストールしましょう。</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre>sudo apt install ros-kinetic-hector-slam
 </pre></div>
 </div>
 </div>
 <div class="section" id="launch">
-<h2>11.3. Launchファイル<a class="headerlink" href="#launch" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>Launchファイル<a class="headerlink" href="#launch" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="section" id="px4-sitl">
-<h3>11.3.1. PX4 SITLシミュレータを起動する<a class="headerlink" href="#px4-sitl" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>PX4 SITLシミュレータを起動する<a class="headerlink" href="#px4-sitl" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>SITLシミュレータを起動するLaunchファイルは以下のとおりです。
 mymodel_sitl_amcl.launchとほとんど同じですが、 <code class="docutils literal notranslate"><span class="pre">odom</span></code> から <code class="docutils literal notranslate"><span class="pre">base_link</span></code> へのTFをパブリッシュする必要が無いので、パラメータを設定する部分を消してあります。</p>
 <div class="literal-block-wrapper container" id="id5">
@@ -221,7 +221,9 @@ mymodel_sitl_amcl.launchとほとんど同じですが、 <code class="docutils 
 15
 16
 17
-18</pre></div></td><td class="code"><div class="highlight"><pre><span class="nt">&lt;launch&gt;</span>
+18
+19
+20</pre></div></td><td class="code"><div class="highlight"><pre><span class="nt">&lt;launch&gt;</span>
 
     <span class="nt">&lt;node</span> <span class="na">pkg=</span><span class="s">&quot;tf&quot;</span> <span class="na">name=</span><span class="s">&quot;base2lidar&quot;</span> <span class="na">type=</span><span class="s">&quot;static_transform_publisher&quot;</span> <span class="na">args=</span><span class="s">&quot;0 0 0.1 0 0 0 base_link lidar_link 100&quot;</span><span class="nt">/&gt;</span>
 
@@ -238,13 +240,15 @@ mymodel_sitl_amcl.launchとほとんど同じですが、 <code class="docutils 
         <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;debug&quot;</span> <span class="na">value=</span><span class="s">&quot;$(arg debug)&quot;</span> <span class="nt">/&gt;</span>
         <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;world&quot;</span> <span class="na">value=</span><span class="s">&quot;$(arg world)&quot;</span> <span class="nt">/&gt;</span>
     <span class="nt">&lt;/include&gt;</span>
+
+    <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;/mavros/setpoint_velocity/mav_frame&quot;</span>  <span class="na">type=</span><span class="s">&quot;str&quot;</span> <span class="na">value=</span><span class="s">&quot;BODY_NED&quot;</span> <span class="nt">/&gt;</span>
 <span class="nt">&lt;/launch&gt;</span>
 </pre></div>
 </td></tr></table></div>
 </div>
 </div>
 <div class="section" id="hector-mapping">
-<h3>11.3.2. hector_mappingノードを起動する<a class="headerlink" href="#hector-mapping" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>hector_mappingノードを起動する<a class="headerlink" href="#hector-mapping" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p><a class="reference external" href="http://wiki.ros.org/hector_mapping">hector_mapping</a> パッケージのmapping_default.launchをベースに変更を行うので、 <code class="docutils literal notranslate"><span class="pre">roscp</span></code> コマンドを使ってファイルをコピーします。</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre>roscp hector_mapping mapping_default.launch catkin_ws/src/px4_sim_pkg/launch/
 </pre></div>
@@ -390,7 +394,7 @@ mymodel_sitl_amcl.launchとほとんど同じですが、 <code class="docutils 
 </div>
 </div>
 <div class="section" id="id3">
-<h2>11.4. 実行する<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>実行する<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>はじめに、PX4 SITLシミュレータを起動します。</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre>roslaunch px4_sim_pkg mymodel_sitl_hector.launch
 </pre></div>
@@ -414,7 +418,7 @@ mymodel_sitl_amcl.launchとほとんど同じですが、 <code class="docutils 
 <img alt="../_images/hector.gif" src="../_images/hector.gif" />
 </div>
 <div class="section" id="id4">
-<h2>11.5. 参考<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>参考<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <dl class="docutils">
 <dt><a class="reference external" href="http://ardupilot.org/dev/docs/ros-slam.html">ROS and Hector SLAM for Non-GPS Navigation</a></dt>
 <dd>Hector SLAMを使った非GPS環境でのナビゲーション</dd>
@@ -434,10 +438,10 @@ mymodel_sitl_amcl.launchとほとんど同じですが、 <code class="docutils 
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="lidar_nav.html" class="btn btn-neutral float-right" title="12. LiDARを用いた自律移動" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="lidar_nav.html" class="btn btn-neutral float-right" title="LiDARを用いた自律移動" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="lidar_localization.html" class="btn btn-neutral" title="10. LiDARとAMCLを用いた自己位置推定" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="lidar_localization.html" class="btn btn-neutral" title="LiDARとAMCLを用いた自己位置推定" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

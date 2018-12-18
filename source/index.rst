@@ -4,7 +4,6 @@ PX4 SITL Tutorial
 .. toctree::
    :maxdepth: 2
    :caption: Contents
-   :numbered:
 
    introduction.rst
    px4sim/px4sim.rst
@@ -24,7 +23,6 @@ PX4 SITL Tutorial
 .. toctree::
    :maxdepth: 1
    :caption: Appendix
-   :numbered:
 
    appendix/bash_commands/bash_commands.rst
    appendix/ros/ros.rst
