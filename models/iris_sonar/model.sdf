@@ -9,22 +9,15 @@
     <!-- Sonar -->
     <include>
       <uri>model://sonar</uri>
-      <pose>0 0 0 0 -1.57 0</pose>
+      <pose>0 0 -0.04 0 -1.57 0</pose>
     </include>
-    <joint name="sonar_joint" type="revolute">
+    <joint name="sonar_joint" type="fixed">
       <child>sonar_model::link</child>
       <parent>iris::base_link</parent>
-      <axis>
-        <xyz>0 0 1</xyz>
-        <limit>
-          <upper>0</upper>
-          <lower>0</lower>
-        </limit>
-      </axis>
     </joint>
 
     <link name="lidar_link">
-      <pose>0 0 0.1 0 0 0</pose>
+      <pose>0 0 0.05 0 -0.0085 0</pose>
 
       <inertial>
         <pose>0 0 0 0 -0 0</pose>
@@ -43,7 +36,7 @@
         <geometry>
           <cylinder>
             <radius>0.01</radius>
-            <length>0.2</length>
+            <length>0.05</length>
           </cylinder>
         </geometry>
         <material>
@@ -55,7 +48,7 @@
       </visual>
 
       <sensor name="laser" type="ray">
-        <pose>0 0 0.1 0 0 0</pose>
+        <pose>0 0 0.02 0 0 0</pose>
         <ray>
           <scan>
             <horizontal>

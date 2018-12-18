@@ -5,6 +5,7 @@ Tips
    :maxdepth: 1
 
    qgc_intro/qgc_intro.rst
+   add_range_sensor/add_range_sensor.rst
    control_alt/control_alt.rst
    filter_lidar/filter_lidar.rst
    change_local_planner/change_local_planner.rst
