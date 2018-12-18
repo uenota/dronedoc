@@ -77,7 +77,7 @@ mavrosパッケージ以下にあるpx4_pluginlists.yamlを直接編集しても
 
 .. code-block:: bash
 
-    roscp mavros px4_pluginlists.yaml catkin_ws/src/px4_sim_pkg/config/
+    roscp mavros px4_pluginlists.yaml ~catkin_ws/src/px4_sim_pkg/config/
 
 以下のようにplugin_blacklist以下のdistance_sensorをコメントアウトします。
 
