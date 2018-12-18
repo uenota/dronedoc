@@ -85,13 +85,6 @@ navigation.launchをコピーして新たにteb_navigation.launchを作成しま
       ...
   </node>
 
-Costmap Conversion
-----------------------------------------------------------
-TODO
-
-.. TODO: http://wiki.ros.org/teb_local_planner/Tutorials/Costmap%20conversion
-.. TODO: http://wiki.ros.org/costmap_converter
-
 参考
 ==========================================================
 `Trajectory Rollout <https://www.semanticscholar.org/paper/Planning-and-Control-in-Unstructured-Terrain-Gerkey/dabdbb636f02d3cff3d546bd1bdae96a058ba4bc>`_
