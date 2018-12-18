@@ -2,12 +2,24 @@ PX4 SITL Tutorial
 ====================================
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 2
    :caption: Contents
    :numbered:
 
-   simulation/index.rst
-   hardwares/index.rst
+   introduction.rst
+   px4sim/px4sim.rst
+   runnode/runnodecpp.rst
+   runnode/runnodepy.rst
+   addmodel/addmodel.rst
+   slam/slam.rst
+   slam/gps_nav.rst
+   slam/turtle_mapping.rst
+   teleop/teleop.rst
+   slam/lidar_localization.rst
+   slam/localization_and_mapping.rst
+   slam/lidar_nav.rst
+   octomap/octomap.rst
+   tips/index.rst
 
 .. toctree::
    :maxdepth: 1

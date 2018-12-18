@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>3. move_baseのローカルプランナーを変更する &mdash; Dronedoc 1.0.0 ドキュメント</title>
+  <title>14.4. move_baseのローカルプランナーを変更する &mdash; Dronedoc 1.0.0 ドキュメント</title>
   
 
   
@@ -28,8 +28,8 @@
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="索引" href="../../genindex.html" />
     <link rel="search" title="検索" href="../../search.html" />
-    <link rel="next" title="1. 基本的なBashの使い方" href="../../appendix/bash_commands/bash_commands.html" />
-    <link rel="prev" title="2. LiDARのデータをフィルタリングする" href="../filter_lidar/filter_lidar.html" /> 
+    <link rel="next" title="14.5. UAV用のローカルプランナを実装する" href="../local_planner_for_uav/local_planner_for_uav.html" />
+    <link rel="prev" title="14.3. LiDARのデータをフィルタリングする" href="../filter_lidar/filter_lidar.html" /> 
 
   
   <script src="../../_static/js/modernizr.min.js"></script>
@@ -79,38 +79,45 @@
             
             
               <p class="caption"><span class="caption-text">Contents</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../introduction/introduction.html">1. はじめに</a></li>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">1. はじめに</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../px4sim/px4sim.html">2. PX4 SITLシミュレーション</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../runnode/runnodecpp.html">3. 自作ノードを実行する（C++）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../runnode/runnodepy.html">4. 自作ノードを実行する（Python）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../addmodel/addmodel.html">5. 新しいモデルを追加する</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../slam/slam.html">6. 自律飛行とSLAM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../slam/gps_nav.html">7. GPSを用いた自律飛行</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../slam/lidar_localization.html">8. LiDARとAMCLを用いた自己位置推定</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../slam/localization_and_mapping.html">9. LiDARを用いたSLAM</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../octomap/octomap.html">10. Octomapを使って3Dマップを作る</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Tips</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../control_alt/control_alt.html">1. 地上からの距離を一定にする</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../filter_lidar/filter_lidar.html">2. LiDARのデータをフィルタリングする</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">3. move_baseのローカルプランナーを変更する</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id1">3.1. Dynamic Window Approach</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id2">3.2. Elastic Band</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#eband-local-planner">3.2.1. eband_local_plannerをインストールする</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id3">3.2.2. 設定ファイルを作る</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id4">3.2.3. move_baseのパラメータを変更する</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#id5">3.3. Timed Elastic Band</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#teb-local-planner">3.3.1. teb_local_plannerをインストールする</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id6">3.3.2. 設定ファイルを作る</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id7">3.3.3. move_baseのパラメータを変更する</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#costmap-conversion">3.3.4. Costmap Conversion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../slam/turtle_mapping.html">8. Turtlebotを使ってマップを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../teleop/teleop.html">9. ゲームパッドを使ってドローンを操作する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../slam/lidar_localization.html">10. LiDARとAMCLを用いた自己位置推定</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../slam/localization_and_mapping.html">11. LiDARを用いたSLAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../slam/lidar_nav.html">12. LiDARを用いた自律移動</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../octomap/octomap.html">13. Octomapを使って3Dマップを作る</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">14. Tips</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../qgc_intro/qgc_intro.html">14.1. QGroundControl</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../add_range_sensor/add_range_sensor.html">14.2. ドローンに距離センサを搭載する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../filter_lidar/filter_lidar.html">14.3. LiDARのデータをフィルタリングする</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">14.4. move_baseのローカルプランナーを変更する</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">14.4.1. Dynamic Window Approach</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">14.4.2. Elastic Band</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#eband-local-planner">14.4.2.1. eband_local_plannerをインストールする</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">14.4.2.2. 設定ファイルを作る</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">14.4.2.3. move_baseのパラメータを変更する</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id8">3.4. 参考</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">14.4.3. Timed Elastic Band</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#teb-local-planner">14.4.3.1. teb_local_plannerをインストールする</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">14.4.3.2. 設定ファイルを作る</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">14.4.3.3. move_baseのパラメータを変更する</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#costmap-conversion">14.4.3.4. Costmap Conversion</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">14.4.4. 参考</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../local_planner_for_uav/local_planner_for_uav.html">14.5. UAV用のローカルプランナを実装する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../build_map_gmapping/build_map_gmapping.html">14.6. Gmappingを使って地図を生成する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../build_map_gazebo_plugin/build_map_gazebo_plugin.html">14.7. Gazebo Pluginを使って地図を作成する</a></li>
 </ul>
 </li>
 </ul>
@@ -166,7 +173,9 @@
     
       <li><a href="../../index.html">Docs</a> &raquo;</li>
         
-      <li>3. move_baseのローカルプランナーを変更する</li>
+          <li><a href="../index.html">14. Tips</a> &raquo;</li>
+        
+      <li>14.4. move_baseのローカルプランナーを変更する</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -186,24 +195,24 @@
            <div itemprop="articleBody">
             
   <div class="section" id="move-base">
-<h1>3. move_baseのローカルプランナーを変更する<a class="headerlink" href="#move-base" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<h1>14.4. move_baseのローカルプランナーを変更する<a class="headerlink" href="#move-base" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p>このページではmove_baseのローカルプランナーを変更する方法について扱います。</p>
 <p>move_baseのローカルプランナーは、デフォルトでは <a class="reference external" href="http://wiki.ros.org/base_local_planner">Trajectory Rollout</a> が使用されています。
 それ以外には、 <a class="reference external" href="http://wiki.ros.org/dwa_local_planner">Dynamic Window Approach</a> や、 <a class="reference external" href="http://wiki.ros.org/eband_local_planner">Elastic Band</a> 、 <a class="reference external" href="http://wiki.ros.org/teb_local_planner">Timed Elastic Band</a> などを使用することができます。</p>
 <div class="section" id="id1">
-<h2>3.1. Dynamic Window Approach<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>14.4.1. Dynamic Window Approach<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Dynamic Window Approach (DWA)は、base_local_plannerパッケージの <cite>dwa</cite> パラメータを <cite>true</cite> にすることで使用できます。</p>
 </div>
 <div class="section" id="id2">
-<h2>3.2. Elastic Band<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>14.4.2. Elastic Band<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="section" id="eband-local-planner">
-<h3>3.2.1. eband_local_plannerをインストールする<a class="headerlink" href="#eband-local-planner" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>14.4.2.1. eband_local_plannerをインストールする<a class="headerlink" href="#eband-local-planner" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre>sudo apt install ros-kinetic-eband-local-planner
 </pre></div>
 </div>
 </div>
 <div class="section" id="id3">
-<h3>3.2.2. 設定ファイルを作る<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>14.4.2.2. 設定ファイルを作る<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>以下の設定ファイルの内容を、config以下にeband_local_planner_params.yamlとして保存します。</p>
 <p>eband_local_plannerのパラメータ一覧は <a class="reference external" href="wiki.ros.org/eband_local_planner">eband_local_plannerのROS Wikiページ</a> にあります。</p>
 <div class="literal-block-wrapper container" id="id13">
@@ -230,7 +239,7 @@
 </div>
 </div>
 <div class="section" id="id4">
-<h3>3.2.3. move_baseのパラメータを変更する<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>14.4.2.3. move_baseのパラメータを変更する<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>move_baseがEBandLocalPlannerROSを使うように設定します。
 navigation.launchをコピーして新たにeband_navigation.launchを作成します。</p>
 <p><cite>&lt;node&gt;</cite> タグ内を以下のように変更します。</p>
@@ -248,15 +257,15 @@ navigation.launchをコピーして新たにeband_navigation.launchを作成し�
 </div>
 </div>
 <div class="section" id="id5">
-<h2>3.3. Timed Elastic Band<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>14.4.3. Timed Elastic Band<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="section" id="teb-local-planner">
-<h3>3.3.1. teb_local_plannerをインストールする<a class="headerlink" href="#teb-local-planner" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>14.4.3.1. teb_local_plannerをインストールする<a class="headerlink" href="#teb-local-planner" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre>sudo apt install ros-kinetic-teb-local-planner
 </pre></div>
 </div>
 </div>
 <div class="section" id="id6">
-<h3>3.3.2. 設定ファイルを作る<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>14.4.3.2. 設定ファイルを作る<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>以下の設定ファイルの内容を、config以下にteb_local_planner_params.yamlとして保存します。</p>
 <p>teb_local_plannerのパラメータ一覧は <a class="reference external" href="wiki.ros.org/teb_local_planner">teb_local_plannerのROS Wikiページ</a> にあります。</p>
 <div class="literal-block-wrapper container" id="id15">
@@ -319,7 +328,7 @@ navigation.launchをコピーして新たにeband_navigation.launchを作成し�
 </div>
 </div>
 <div class="section" id="id7">
-<h3>3.3.3. move_baseのパラメータを変更する<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>14.4.3.3. move_baseのパラメータを変更する<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>move_baseがTebLocalPlannerROSを使うように設定します。
 navigation.launchをコピーして新たにteb_navigation.launchを作成します。</p>
 <p><cite>&lt;node&gt;</cite> タグ内を以下のように変更します。</p>
@@ -336,12 +345,12 @@ navigation.launchをコピーして新たにteb_navigation.launchを作成しま
 </div>
 </div>
 <div class="section" id="costmap-conversion">
-<h3>3.3.4. Costmap Conversion<a class="headerlink" href="#costmap-conversion" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>14.4.3.4. Costmap Conversion<a class="headerlink" href="#costmap-conversion" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>TODO</p>
 </div>
 </div>
 <div class="section" id="id8">
-<h2>3.4. 参考<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>14.4.4. 参考<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <dl class="docutils">
 <dt><a class="reference external" href="https://www.semanticscholar.org/paper/Planning-and-Control-in-Unstructured-Terrain-Gerkey/dabdbb636f02d3cff3d546bd1bdae96a058ba4bc">Trajectory Rollout</a></dt>
 <dd>Trajectory Rolloutアルゴリズム</dd>
@@ -369,10 +378,10 @@ navigation.launchをコピーして新たにteb_navigation.launchを作成しま
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../../appendix/bash_commands/bash_commands.html" class="btn btn-neutral float-right" title="1. 基本的なBashの使い方" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../local_planner_for_uav/local_planner_for_uav.html" class="btn btn-neutral float-right" title="14.5. UAV用のローカルプランナを実装する" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../filter_lidar/filter_lidar.html" class="btn btn-neutral" title="2. LiDARのデータをフィルタリングする" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../filter_lidar/filter_lidar.html" class="btn btn-neutral" title="14.3. LiDARのデータをフィルタリングする" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

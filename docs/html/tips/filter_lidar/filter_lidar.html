@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>2. LiDARのデータをフィルタリングする &mdash; Dronedoc 1.0.0 ドキュメント</title>
+  <title>14.3. LiDARのデータをフィルタリングする &mdash; Dronedoc 1.0.0 ドキュメント</title>
   
 
   
@@ -28,8 +28,8 @@
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="索引" href="../../genindex.html" />
     <link rel="search" title="検索" href="../../search.html" />
-    <link rel="next" title="3. ナビゲーションを改善する" href="../improve_nav/improve_nav.html" />
-    <link rel="prev" title="1. 地上からの距離を一定にする" href="../control_alt/control_alt.html" /> 
+    <link rel="next" title="14.4. move_baseのローカルプランナーを変更する" href="../change_local_planner/change_local_planner.html" />
+    <link rel="prev" title="14.2. ドローンに距離センサを搭載する" href="../add_range_sensor/add_range_sensor.html" /> 
 
   
   <script src="../../_static/js/modernizr.min.js"></script>
@@ -79,30 +79,37 @@
             
             
               <p class="caption"><span class="caption-text">Contents</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../introduction/introduction.html">1. はじめに</a></li>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">1. はじめに</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../px4sim/px4sim.html">2. PX4 SITLシミュレーション</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../runnode/runnodecpp.html">3. 自作ノードを実行する（C++）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../runnode/runnodepy.html">4. 自作ノードを実行する（Python）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../addmodel/addmodel.html">5. 新しいモデルを追加する</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../slam/slam.html">6. 自律飛行とSLAM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../slam/gps_nav.html">7. GPSを用いた自律飛行</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../slam/lidar_localization.html">8. LiDARとAMCLを用いた自己位置推定</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../slam/localization_and_mapping.html">9. LiDARを用いたSLAM</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../octomap/octomap.html">10. Octomapを使って3Dマップを作る</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Tips</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../control_alt/control_alt.html">1. 地上からの距離を一定にする</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">2. LiDARのデータをフィルタリングする</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id1">2.1. はじめに</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id2">2.2. 設定ファイルを書く</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#launch">2.3. Launchファイルを作る</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id3">2.4. 試してみる</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id4">2.5. 参考</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../slam/turtle_mapping.html">8. Turtlebotを使ってマップを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../teleop/teleop.html">9. ゲームパッドを使ってドローンを操作する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../slam/lidar_localization.html">10. LiDARとAMCLを用いた自己位置推定</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../slam/localization_and_mapping.html">11. LiDARを用いたSLAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../slam/lidar_nav.html">12. LiDARを用いた自律移動</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../octomap/octomap.html">13. Octomapを使って3Dマップを作る</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">14. Tips</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../qgc_intro/qgc_intro.html">14.1. QGroundControl</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../add_range_sensor/add_range_sensor.html">14.2. ドローンに距離センサを搭載する</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">14.3. LiDARのデータをフィルタリングする</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">14.3.1. はじめに</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">14.3.2. 設定ファイルを書く</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#launch">14.3.3. Launchファイルを作る</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">14.3.4. 試してみる</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">14.3.5. 参考</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../improve_nav/improve_nav.html">3. ナビゲーションを改善する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../change_local_planner/change_local_planner.html">14.4. move_baseのローカルプランナーを変更する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../local_planner_for_uav/local_planner_for_uav.html">14.5. UAV用のローカルプランナを実装する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../build_map_gmapping/build_map_gmapping.html">14.6. Gmappingを使って地図を生成する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../build_map_gazebo_plugin/build_map_gazebo_plugin.html">14.7. Gazebo Pluginを使って地図を作成する</a></li>
+</ul>
+</li>
 </ul>
 <p class="caption"><span class="caption-text">Appendix</span></p>
 <ul>
@@ -110,7 +117,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../appendix/ros/ros.html">2. ROSの基本</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../appendix/terms/terms.html">3. 用語集</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../appendix/archive/archive.html">4. 読書案内</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../appendix/trouble_shooting/trouble_shooting.html">5. トラブルシューティング</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/trouble_shooting/index.html">5. トラブルシューティング</a></li>
 </ul>
 
             
@@ -156,7 +163,9 @@
     
       <li><a href="../../index.html">Docs</a> &raquo;</li>
         
-      <li>2. LiDARのデータをフィルタリングする</li>
+          <li><a href="../index.html">14. Tips</a> &raquo;</li>
+        
+      <li>14.3. LiDARのデータをフィルタリングする</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -176,9 +185,9 @@
            <div itemprop="articleBody">
             
   <div class="section" id="lidar">
-<h1>2. LiDARのデータをフィルタリングする<a class="headerlink" href="#lidar" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<h1>14.3. LiDARのデータをフィルタリングする<a class="headerlink" href="#lidar" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <div class="section" id="id1">
-<h2>2.1. はじめに<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>14.3.1. はじめに<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>ロボットがLiDARの光線に干渉すると、ロボットの一部がスキャンデータに含まれてしまい、マッピングや自己位置推定の精度に影響を与える可能性があります。
 このページでは、LiDARのデータをフィルタリングすることでロボットとの干渉を排除する方法を学びます。</p>
 <p>LiDARのデータをフィルタリングするには、<a class="reference external" href="http://wiki.ros.org/laser_filters">laser_filters</a> パッケージを使います。
@@ -186,7 +195,7 @@ laser_filtersパッケージでは様々なタイプのフィルターが用意�
 また、複数のフィルタをつなげてフィルターチェインを作ることもできます。</p>
 </div>
 <div class="section" id="id2">
-<h2>2.2. 設定ファイルを書く<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>14.3.2. 設定ファイルを書く<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>今回は特定の距離の範囲にあるスキャンデータを抽出するので、 <cite>LaseScanRangeFilter</cite> を使います。</p>
 <p><cite>LaserScanRangeFilter</cite> は距離を元にフィルタリングを行うフィルタです。
 ここでは、yamlファイル内に設定を記述して、Launchファイル内でそれをロードすることでROSのパラメータを設定します。</p>
@@ -235,7 +244,7 @@ laser_filtersパッケージでは様々なタイプのフィルターが用意�
 上限値は.infにしてあるので、0.5m以上のスキャンデータが置き換えられることはありません。</p>
 </div>
 <div class="section" id="launch">
-<h2>2.3. Launchファイルを作る<a class="headerlink" href="#launch" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>14.3.3. Launchファイルを作る<a class="headerlink" href="#launch" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>今回もmymodel_sitl_tf.launchに追加する形で編集します。</p>
 <p>以下の内容をLaunchファイルに追加することでlaser_filterパッケージを使用することができます。</p>
 <div class="highlight-xml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -313,7 +322,7 @@ laser_filtersによってフィルタリングされたメッセージは <cite>
 </div>
 </div>
 <div class="section" id="id3">
-<h2>2.4. 試してみる<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>14.3.4. 試してみる<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>ちゃんとフィルタリングされるかどうか試してみましょう。</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre>roslaunch px4_sim_pkg mymodel_laser_filter.launch
 </pre></div>
@@ -323,7 +332,7 @@ laser_filtersによってフィルタリングされたメッセージは <cite>
 <img alt="../../_images/laser_filter.png" src="../../_images/laser_filter.png" />
 </div>
 <div class="section" id="id4">
-<h2>2.5. 参考<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>14.3.5. 参考<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <dl class="docutils">
 <dt><a class="reference external" href="http://wiki.ros.org/ROS/Tutorials/UnderstandingServicesParams#Using_rosparam">Understanding ROS Services and Parameters</a></dt>
 <dd>ROSのパラメータの使い方</dd>
@@ -339,10 +348,10 @@ laser_filtersによってフィルタリングされたメッセージは <cite>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../improve_nav/improve_nav.html" class="btn btn-neutral float-right" title="3. ナビゲーションを改善する" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../change_local_planner/change_local_planner.html" class="btn btn-neutral float-right" title="14.4. move_baseのローカルプランナーを変更する" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../control_alt/control_alt.html" class="btn btn-neutral" title="1. 地上からの距離を一定にする" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../add_range_sensor/add_range_sensor.html" class="btn btn-neutral" title="14.2. ドローンに距離センサを搭載する" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
