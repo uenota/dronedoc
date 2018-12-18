@@ -4,7 +4,8 @@ Tips
 .. toctree::
    :maxdepth: 1
 
-   control_alt/control_alt.rst
+   qgc_intro/qgc_intro.rst
+   add_range_sensor/add_range_sensor.rst
    filter_lidar/filter_lidar.rst
    change_local_planner/change_local_planner.rst
    local_planner_for_uav/local_planner_for_uav.rst

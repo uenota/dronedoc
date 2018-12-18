@@ -5,3 +5,35 @@
     `mavlink command <https://dev.px4.io/en/middleware/modules_communication.html#mavlink>`_
     .. code-block:: bash
         mavlink stream -r 10 -s DISTANCE_SENSOR -u $udp_gcs_port_local
+
+    gitコマンドの使い方
+
+        GitHub上のROSパッケージを使う
+        ----------------------------------------------
+        GitHub上にあるリポジトリは ``git`` コマンドを使ってローカルにクローン（複製）することができます。
+        例えば、上記のRotors Simulatorリポジトリであれば、
+
+        .. code-block:: bash
+
+            git clone https://github.com/ethz-asl/rotors_simulator.git
+
+        また、ROSパッケージはワークスペース以下の ``src`` ディレクトリにクローンしてビルドすれば通常のROSパッケージと同様に使用することができます。
+
+        Rotors Simulatorを準備するために以下のコマンドを実行します。
+
+        .. code-block:: bash
+
+            cd ~/catkin_ws/src
+            git clone https://github.com/ethz-asl/rotors_simulator.git
+            cd ..
+            catkin_make
+
+        次のようなエラーが出るときは、
+
+        .. code-block:: none
+
+            Could not find a package configuration file provided by "mav_msgs" with any
+            of the following names:
+
+                mav_msgsConfig.cmake
+                mav_msgs-config.cmake

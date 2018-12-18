@@ -200,7 +200,10 @@ hector_slamを使用しているので、同時に地図を作成することも
 16
 17
 18
-19</pre></div></td><td class="code"><div class="highlight"><pre><span class="nt">&lt;launch&gt;</span>
+19
+20
+21
+22</pre></div></td><td class="code"><div class="highlight"><pre><span class="nt">&lt;launch&gt;</span>
 
     <span class="nt">&lt;node</span> <span class="na">pkg=</span><span class="s">&quot;tf&quot;</span> <span class="na">name=</span><span class="s">&quot;base2lidar&quot;</span> <span class="na">type=</span><span class="s">&quot;static_transform_publisher&quot;</span> <span class="na">args=</span><span class="s">&quot;0 0 0.1 0 0 0 base_link lidar_link 100&quot;</span><span class="nt">/&gt;</span>
     <span class="nt">&lt;node</span> <span class="na">pkg=</span><span class="s">&quot;tf&quot;</span> <span class="na">name=</span><span class="s">&quot;map2odom&quot;</span> <span class="na">type=</span><span class="s">&quot;static_transform_publisher&quot;</span> <span class="na">args=</span><span class="s">&quot;0 0 0 0 0 0 map odom 100&quot;</span><span class="nt">/&gt;</span>
@@ -218,6 +221,9 @@ hector_slamを使用しているので、同時に地図を作成することも
         <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;debug&quot;</span> <span class="na">value=</span><span class="s">&quot;$(arg debug)&quot;</span> <span class="nt">/&gt;</span>
         <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;world&quot;</span> <span class="na">value=</span><span class="s">&quot;$(arg world)&quot;</span> <span class="nt">/&gt;</span>
     <span class="nt">&lt;/include&gt;</span>
+
+    <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;/mavros/setpoint_velocity/mav_frame&quot;</span>  <span class="na">type=</span><span class="s">&quot;str&quot;</span> <span class="na">value=</span><span class="s">&quot;BODY_NED&quot;</span> <span class="nt">/&gt;</span>
+
 <span class="nt">&lt;/launch&gt;</span>
 </pre></div>
 </td></tr></table></div>

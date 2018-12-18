@@ -36,6 +36,9 @@ PX4 SITLシミュレーションを起動する
             <arg name="debug" value="$(arg debug)" />
             <arg name="world" value="$(arg world)" />
         </include>
+
+        <param name="/mavros/setpoint_velocity/mav_frame"  type="str" value="BODY_NED" />
+
     </launch>
 
 

@@ -28,7 +28,7 @@
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="索引" href="../../genindex.html" />
     <link rel="search" title="検索" href="../../search.html" />
-    <link rel="next" title="1.13.1. 地上からの距離を一定にする" href="control_alt/control_alt.html" />
+    <link rel="next" title="1.13.1. QGroundControl" href="qgc_intro/qgc_intro.html" />
     <link rel="prev" title="1.12. Octomapを使って3Dマップを作る" href="../octomap/octomap.html" /> 
 
   
@@ -94,12 +94,13 @@
 <li class="toctree-l2"><a class="reference internal" href="../slam/lidar_nav.html">1.11. LiDARを用いた自律移動</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../octomap/octomap.html">1.12. Octomapを使って3Dマップを作る</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">1.13. Tips</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="control_alt/control_alt.html">1.13.1. 地上からの距離を一定にする</a></li>
-<li class="toctree-l3"><a class="reference internal" href="filter_lidar/filter_lidar.html">1.13.2. LiDARのデータをフィルタリングする</a></li>
-<li class="toctree-l3"><a class="reference internal" href="change_local_planner/change_local_planner.html">1.13.3. move_baseのローカルプランナーを変更する</a></li>
-<li class="toctree-l3"><a class="reference internal" href="local_planner_for_uav/local_planner_for_uav.html">1.13.4. UAV用のローカルプランナを実装する</a></li>
-<li class="toctree-l3"><a class="reference internal" href="build_map_gmapping/build_map_gmapping.html">1.13.5. Gmappingを使って地図を生成する</a></li>
-<li class="toctree-l3"><a class="reference internal" href="build_map_gazebo_plugin/build_map_gazebo_plugin.html">1.13.6. Gazebo Pluginを使って地図を作成する</a></li>
+<li class="toctree-l3"><a class="reference internal" href="qgc_intro/qgc_intro.html">1.13.1. QGroundControl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="add_range_sensor/add_range_sensor.html">1.13.2. ドローンに距離センサを搭載する</a></li>
+<li class="toctree-l3"><a class="reference internal" href="filter_lidar/filter_lidar.html">1.13.3. LiDARのデータをフィルタリングする</a></li>
+<li class="toctree-l3"><a class="reference internal" href="change_local_planner/change_local_planner.html">1.13.4. move_baseのローカルプランナーを変更する</a></li>
+<li class="toctree-l3"><a class="reference internal" href="local_planner_for_uav/local_planner_for_uav.html">1.13.5. UAV用のローカルプランナを実装する</a></li>
+<li class="toctree-l3"><a class="reference internal" href="build_map_gmapping/build_map_gmapping.html">1.13.6. Gmappingを使って地図を生成する</a></li>
+<li class="toctree-l3"><a class="reference internal" href="build_map_gazebo_plugin/build_map_gazebo_plugin.html">1.13.7. Gazebo Pluginを使って地図を作成する</a></li>
 </ul>
 </li>
 </ul>
@@ -183,12 +184,13 @@
 <h1>1.13. Tips<a class="headerlink" href="#tips" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="control_alt/control_alt.html">1.13.1. 地上からの距離を一定にする</a></li>
-<li class="toctree-l1"><a class="reference internal" href="filter_lidar/filter_lidar.html">1.13.2. LiDARのデータをフィルタリングする</a></li>
-<li class="toctree-l1"><a class="reference internal" href="change_local_planner/change_local_planner.html">1.13.3. move_baseのローカルプランナーを変更する</a></li>
-<li class="toctree-l1"><a class="reference internal" href="local_planner_for_uav/local_planner_for_uav.html">1.13.4. UAV用のローカルプランナを実装する</a></li>
-<li class="toctree-l1"><a class="reference internal" href="build_map_gmapping/build_map_gmapping.html">1.13.5. Gmappingを使って地図を生成する</a></li>
-<li class="toctree-l1"><a class="reference internal" href="build_map_gazebo_plugin/build_map_gazebo_plugin.html">1.13.6. Gazebo Pluginを使って地図を作成する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="qgc_intro/qgc_intro.html">1.13.1. QGroundControl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="add_range_sensor/add_range_sensor.html">1.13.2. ドローンに距離センサを搭載する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="filter_lidar/filter_lidar.html">1.13.3. LiDARのデータをフィルタリングする</a></li>
+<li class="toctree-l1"><a class="reference internal" href="change_local_planner/change_local_planner.html">1.13.4. move_baseのローカルプランナーを変更する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="local_planner_for_uav/local_planner_for_uav.html">1.13.5. UAV用のローカルプランナを実装する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build_map_gmapping/build_map_gmapping.html">1.13.6. Gmappingを使って地図を生成する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build_map_gazebo_plugin/build_map_gazebo_plugin.html">1.13.7. Gazebo Pluginを使って地図を作成する</a></li>
 </ul>
 </div>
 </div>
@@ -201,7 +203,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="control_alt/control_alt.html" class="btn btn-neutral float-right" title="1.13.1. 地上からの距離を一定にする" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="qgc_intro/qgc_intro.html" class="btn btn-neutral float-right" title="1.13.1. QGroundControl" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="../octomap/octomap.html" class="btn btn-neutral" title="1.12. Octomapを使って3Dマップを作る" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

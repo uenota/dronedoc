@@ -62,8 +62,6 @@ add_dependencies(map_builder dronedoc)
 # Build ROS nodes
 add_executable(offboard_sample src/offboard_sample.cpp)
 target_link_libraries(offboard_sample ${catkin_LIBRARIES})
-add_executable(px4_vel_controller src/px4_vel_controller.cpp)
-target_link_libraries(px4_vel_controller ${catkin_LIBRARIES})
 add_executable(odom_publisher src/odom_publisher.cpp)
 target_link_libraries(odom_publisher ${catkin_LIBRARIES})
 add_executable(RRTPlanner src/RRTPlanner.cpp)
