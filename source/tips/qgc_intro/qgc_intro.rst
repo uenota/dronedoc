@@ -1,11 +1,10 @@
-=============================================================
 QGroundControl
 =============================================================
 
 `QGroundControl <http://qgroundcontrol.com/>`_ (QGC) はPX4もしくは、ArduPilotファームウェアで動作するドローン用のグラウンドコントロールステーションです。
 
 セットアップ
-=============================================================
+-------------------------------------------------------------
 QGCの公式サイトの `インストールガイド <https://docs.qgroundcontrol.com/en/getting_started/download_and_install.html#ubuntu-linux>`_ からQGroundControl.AppImageをダウンロードします。
 
 ダウンロードしたQGroundControl.AppImageに実行権限を与えます。

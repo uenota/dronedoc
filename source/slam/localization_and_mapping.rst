@@ -1,6 +1,5 @@
 :tocdepth: 1
 
-*********************************************************************************
 LiDARを用いたSLAM
 *********************************************************************************
 
@@ -68,6 +67,8 @@ mymodel_sitl_amcl.launchとほとんど同じですが、 ``odom`` から ``base
           <arg name="debug" value="$(arg debug)" />
           <arg name="world" value="$(arg world)" />
       </include>
+
+      <param name="/mavros/setpoint_velocity/mav_frame"  type="str" value="BODY_NED" />
   </launch>
 
 hector_mappingノードを起動する
