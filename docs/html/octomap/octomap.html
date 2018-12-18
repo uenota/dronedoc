@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>13. Octomapを使って3Dマップを作る &mdash; Dronedoc 1.0.0 ドキュメント</title>
+  <title>Octomapを使って3Dマップを作る &mdash; Dronedoc 1.0.0 ドキュメント</title>
   
 
   
@@ -28,8 +28,8 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <link rel="next" title="14. Tips" href="../tips/index.html" />
-    <link rel="prev" title="12. LiDARを用いた自律移動" href="../slam/lidar_nav.html" /> 
+    <link rel="next" title="Tips" href="../tips/index.html" />
+    <link rel="prev" title="LiDARを用いた自律移動" href="../slam/lidar_nav.html" /> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -80,28 +80,28 @@
             
               <p class="caption"><span class="caption-text">Contents</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../introduction.html">1. はじめに</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../px4sim/px4sim.html">2. PX4 SITLシミュレーション</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../runnode/runnodecpp.html">3. 自作ノードを実行する（C++）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../runnode/runnodepy.html">4. 自作ノードを実行する（Python）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../addmodel/addmodel.html">5. 新しいモデルを追加する</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../slam/slam.html">6. 自律飛行とSLAM</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../slam/gps_nav.html">7. GPSを用いた自律飛行</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../slam/turtle_mapping.html">8. Turtlebotを使ってマップを作る</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../teleop/teleop.html">9. ゲームパッドを使ってドローンを操作する</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../slam/lidar_localization.html">10. LiDARとAMCLを用いた自己位置推定</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../slam/localization_and_mapping.html">11. LiDARを用いたSLAM</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../slam/lidar_nav.html">12. LiDARを用いた自律移動</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">13. Octomapを使って3Dマップを作る</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tips/index.html">14. Tips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../px4sim/px4sim.html">PX4 SITLシミュレーション</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../runnode/runnodecpp.html">自作ノードを実行する（C++）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../runnode/runnodepy.html">自作ノードを実行する（Python）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../addmodel/addmodel.html">新しいモデルを追加する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/slam.html">自律飛行とSLAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/gps_nav.html">GPSを用いた自律飛行</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/turtle_mapping.html">Turtlebotを使ってマップを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../teleop/teleop.html">ゲームパッドを使ってドローンを操作する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/lidar_localization.html">LiDARとAMCLを用いた自己位置推定</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/localization_and_mapping.html">LiDARを用いたSLAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/lidar_nav.html">LiDARを用いた自律移動</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Octomapを使って3Dマップを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tips/index.html">Tips</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Appendix</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/bash_commands/bash_commands.html">1. 基本的なBashの使い方</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/ros/ros.html">2. ROSの基本</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/terms/terms.html">3. 用語集</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/archive/archive.html">4. 読書案内</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/trouble_shooting/index.html">5. トラブルシューティング</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/bash_commands/bash_commands.html">基本的なBashの使い方</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/ros/ros.html">ROSの基本</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/terms/terms.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/archive/archive.html">読書案内</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/trouble_shooting/index.html">トラブルシューティング</a></li>
 </ul>
 
             
@@ -147,7 +147,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>13. Octomapを使って3Dマップを作る</li>
+      <li>Octomapを使って3Dマップを作る</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -167,10 +167,10 @@
            <div itemprop="articleBody">
             
   <div class="section" id="octomap3d">
-<h1>13. Octomapを使って3Dマップを作る<a class="headerlink" href="#octomap3d" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<h1>Octomapを使って3Dマップを作る<a class="headerlink" href="#octomap3d" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p>このページでは、RGBDカメラ付きのドローンと <a class="reference external" href="http://wiki.ros.org/octomap">octomap</a> パッケージを使用して3Dマップを作成します。</p>
 <div class="section" id="id1">
-<h2>13.1. モデルを作成する<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>モデルを作成する<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>RGBDカメラ付きのIrisのSDFファイルは以下のとおりです。</p>
 <div class="literal-block-wrapper container" id="id6">
 <div class="code-block-caption"><span class="caption-text">model.sdf</span><a class="headerlink" href="#id6" title="このコードへのパーマリンク">¶</a></div>
@@ -502,15 +502,15 @@ ROSプラグインについては、<a class="reference external" href="http://g
 <img alt="../_images/iris_depth.jpg" src="../_images/iris_depth.jpg" />
 </div>
 <div class="section" id="id2">
-<h2>13.2. Octomapの準備<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>Octomapの準備<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="section" id="id3">
-<h3>13.2.1. Octomapのインストール<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>Octomapのインストール<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre>sudo apt install ros-kinetic-octomap-mapping
 </pre></div>
 </div>
 </div>
 <div class="section" id="launch">
-<h3>13.2.2. Launchファイル<a class="headerlink" href="#launch" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>Launchファイル<a class="headerlink" href="#launch" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>Octomapによる3D地図生成を行うノードである、octomap_server_nodeを実行するためのLaunchファイルを作成します。
 octomap_serverパッケージにあるoctomap_mapping.launchファイルを元に変更を加えるので、以下のコマンドでファイルをコピーします。</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre>roscp octomap_server octomap_mapping.launch ~/catkin_ws/src/px4_sim_pkg/launch/
@@ -554,7 +554,7 @@ octomap_serverパッケージにあるoctomap_mapping.launchファイルを元�
 </div>
 </div>
 <div class="section" id="id4">
-<h3>13.2.3. 実行する<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>実行する<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>シミュレーション環境を起動します。
 今回はwillow_garage.worldをワールドファイルとして使用します。</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre>roslaunch px4_sim_pkg mymodel_sitl_depth_cam.launch world:<span class="o">=</span>~/catkin_ws/src/dronedoc/worlds/willow_garage.world
@@ -582,7 +582,7 @@ octomap_serverパッケージにあるoctomap_mapping.launchファイルを元�
 </div>
 </div>
 <div class="section" id="id5">
-<h2>13.3. 参考<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>参考<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <dl class="docutils">
 <dt><a class="reference external" href="https://dev.px4.io/en/simulation/gazebo_octomap.html">OctoMap 3D Models with ROS/Gazebo - PX4 Developer Guide</a></dt>
 <dd>PX4 SITL環境でOctomapによるマッピングを行う</dd>
@@ -598,10 +598,10 @@ octomap_serverパッケージにあるoctomap_mapping.launchファイルを元�
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../tips/index.html" class="btn btn-neutral float-right" title="14. Tips" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../tips/index.html" class="btn btn-neutral float-right" title="Tips" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../slam/lidar_nav.html" class="btn btn-neutral" title="12. LiDARを用いた自律移動" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../slam/lidar_nav.html" class="btn btn-neutral" title="LiDARを用いた自律移動" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

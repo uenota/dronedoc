@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>14.7. Gazebo Pluginを使って地図を作成する &mdash; Dronedoc 1.0.0 ドキュメント</title>
+  <title>Gazebo Pluginを使って地図を作成する &mdash; Dronedoc 1.0.0 ドキュメント</title>
   
 
   
@@ -28,8 +28,8 @@
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="索引" href="../../genindex.html" />
     <link rel="search" title="検索" href="../../search.html" />
-    <link rel="next" title="1. 基本的なBashの使い方" href="../../appendix/bash_commands/bash_commands.html" />
-    <link rel="prev" title="14.6. Gmappingを使って地図を生成する" href="../build_map_gmapping/build_map_gmapping.html" /> 
+    <link rel="next" title="基本的なBashの使い方" href="../../appendix/bash_commands/bash_commands.html" />
+    <link rel="prev" title="Gmappingを使って地図を生成する" href="../build_map_gmapping/build_map_gmapping.html" /> 
 
   
   <script src="../../_static/js/modernizr.min.js"></script>
@@ -80,29 +80,29 @@
             
               <p class="caption"><span class="caption-text">Contents</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">1. はじめに</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../px4sim/px4sim.html">2. PX4 SITLシミュレーション</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../runnode/runnodecpp.html">3. 自作ノードを実行する（C++）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../runnode/runnodepy.html">4. 自作ノードを実行する（Python）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../addmodel/addmodel.html">5. 新しいモデルを追加する</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../slam/slam.html">6. 自律飛行とSLAM</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../slam/gps_nav.html">7. GPSを用いた自律飛行</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../slam/turtle_mapping.html">8. Turtlebotを使ってマップを作る</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../teleop/teleop.html">9. ゲームパッドを使ってドローンを操作する</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../slam/lidar_localization.html">10. LiDARとAMCLを用いた自己位置推定</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../slam/localization_and_mapping.html">11. LiDARを用いたSLAM</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../slam/lidar_nav.html">12. LiDARを用いた自律移動</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../octomap/octomap.html">13. Octomapを使って3Dマップを作る</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../index.html">14. Tips</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../qgc_intro/qgc_intro.html">14.1. QGroundControl</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../add_range_sensor/add_range_sensor.html">14.2. ドローンに距離センサを搭載する</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../filter_lidar/filter_lidar.html">14.3. LiDARのデータをフィルタリングする</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../change_local_planner/change_local_planner.html">14.4. move_baseのローカルプランナーを変更する</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../local_planner_for_uav/local_planner_for_uav.html">14.5. UAV用のローカルプランナを実装する</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../build_map_gmapping/build_map_gmapping.html">14.6. Gmappingを使って地図を生成する</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">14.7. Gazebo Pluginを使って地図を作成する</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id1">14.7.1. Gazebo Pluginを使って地図を作成する</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id2">14.7.2. 地図を出力する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../px4sim/px4sim.html">PX4 SITLシミュレーション</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../runnode/runnodecpp.html">自作ノードを実行する（C++）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../runnode/runnodepy.html">自作ノードを実行する（Python）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../addmodel/addmodel.html">新しいモデルを追加する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../slam/slam.html">自律飛行とSLAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../slam/gps_nav.html">GPSを用いた自律飛行</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../slam/turtle_mapping.html">Turtlebotを使ってマップを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../teleop/teleop.html">ゲームパッドを使ってドローンを操作する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../slam/lidar_localization.html">LiDARとAMCLを用いた自己位置推定</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../slam/localization_and_mapping.html">LiDARを用いたSLAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../slam/lidar_nav.html">LiDARを用いた自律移動</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../octomap/octomap.html">Octomapを使って3Dマップを作る</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Tips</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../qgc_intro/qgc_intro.html">QGroundControl</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../add_range_sensor/add_range_sensor.html">ドローンに距離センサを搭載する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../filter_lidar/filter_lidar.html">LiDARのデータをフィルタリングする</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../change_local_planner/change_local_planner.html">move_baseのローカルプランナーを変更する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../local_planner_for_uav/local_planner_for_uav.html">UAV用のローカルプランナを実装する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../build_map_gmapping/build_map_gmapping.html">Gmappingを使って地図を生成する</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Gazebo Pluginを使って地図を作成する</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Gazebo Pluginを使って地図を作成する</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">地図を出力する</a></li>
 </ul>
 </li>
 </ul>
@@ -110,11 +110,11 @@
 </ul>
 <p class="caption"><span class="caption-text">Appendix</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../appendix/bash_commands/bash_commands.html">1. 基本的なBashの使い方</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../appendix/ros/ros.html">2. ROSの基本</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../appendix/terms/terms.html">3. 用語集</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../appendix/archive/archive.html">4. 読書案内</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../appendix/trouble_shooting/index.html">5. トラブルシューティング</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/bash_commands/bash_commands.html">基本的なBashの使い方</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/ros/ros.html">ROSの基本</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/terms/terms.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/archive/archive.html">読書案内</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/trouble_shooting/index.html">トラブルシューティング</a></li>
 </ul>
 
             
@@ -160,9 +160,9 @@
     
       <li><a href="../../index.html">Docs</a> &raquo;</li>
         
-          <li><a href="../index.html">14. Tips</a> &raquo;</li>
+          <li><a href="../index.html">Tips</a> &raquo;</li>
         
-      <li>14.7. Gazebo Pluginを使って地図を作成する</li>
+      <li>Gazebo Pluginを使って地図を作成する</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -182,9 +182,9 @@
            <div itemprop="articleBody">
             
   <div class="section" id="gazebo-plugin">
-<h1>14.7. Gazebo Pluginを使って地図を作成する<a class="headerlink" href="#gazebo-plugin" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<h1>Gazebo Pluginを使って地図を作成する<a class="headerlink" href="#gazebo-plugin" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <div class="section" id="id1">
-<h2>14.7.1. Gazebo Pluginを使って地図を作成する<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>Gazebo Pluginを使って地図を作成する<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>このページではGazebo Pluginを使用する方法について説明します。
 Gazebo Pluginを作成するのは発展的な内容を含むため、今回はすでに作成済みのプラグインを使用します。
 この章で使われているGazebo Pluginのプログラムは <a class="reference internal" href="gazebo_map_builder.html"><span class="doc">地図を生成するGazebo Pluginを作る</span></a> にあります。</p>
@@ -222,7 +222,7 @@ catkin build
 </div>
 </div>
 <div class="section" id="id2">
-<h2>14.7.2. 地図を出力する<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>地図を出力する<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>マップを作りたいワールドを起動します。</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre>roslaunch gazebo_ros empty_world.launch world_name:<span class="o">=</span>~/catkin_ws/src/px4_sim_pkg/worlds/willowgarage.world
 </pre></div>
@@ -262,10 +262,10 @@ catkin build
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../../appendix/bash_commands/bash_commands.html" class="btn btn-neutral float-right" title="1. 基本的なBashの使い方" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../../appendix/bash_commands/bash_commands.html" class="btn btn-neutral float-right" title="基本的なBashの使い方" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../build_map_gmapping/build_map_gmapping.html" class="btn btn-neutral" title="14.6. Gmappingを使って地図を生成する" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../build_map_gmapping/build_map_gmapping.html" class="btn btn-neutral" title="Gmappingを使って地図を生成する" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

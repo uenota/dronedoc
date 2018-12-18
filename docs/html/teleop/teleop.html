@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>9. ゲームパッドを使ってドローンを操作する &mdash; Dronedoc 1.0.0 ドキュメント</title>
+  <title>ゲームパッドを使ってドローンを操作する &mdash; Dronedoc 1.0.0 ドキュメント</title>
   
 
   
@@ -28,8 +28,8 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <link rel="next" title="10. LiDARとAMCLを用いた自己位置推定" href="../slam/lidar_localization.html" />
-    <link rel="prev" title="8. Turtlebotを使ってマップを作る" href="../slam/turtle_mapping.html" /> 
+    <link rel="next" title="LiDARとAMCLを用いた自己位置推定" href="../slam/lidar_localization.html" />
+    <link rel="prev" title="Turtlebotを使ってマップを作る" href="../slam/turtle_mapping.html" /> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -80,28 +80,28 @@
             
               <p class="caption"><span class="caption-text">Contents</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../introduction.html">1. はじめに</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../px4sim/px4sim.html">2. PX4 SITLシミュレーション</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../runnode/runnodecpp.html">3. 自作ノードを実行する（C++）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../runnode/runnodepy.html">4. 自作ノードを実行する（Python）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../addmodel/addmodel.html">5. 新しいモデルを追加する</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../slam/slam.html">6. 自律飛行とSLAM</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../slam/gps_nav.html">7. GPSを用いた自律飛行</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../slam/turtle_mapping.html">8. Turtlebotを使ってマップを作る</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">9. ゲームパッドを使ってドローンを操作する</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../slam/lidar_localization.html">10. LiDARとAMCLを用いた自己位置推定</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../slam/localization_and_mapping.html">11. LiDARを用いたSLAM</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../slam/lidar_nav.html">12. LiDARを用いた自律移動</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../octomap/octomap.html">13. Octomapを使って3Dマップを作る</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tips/index.html">14. Tips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../px4sim/px4sim.html">PX4 SITLシミュレーション</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../runnode/runnodecpp.html">自作ノードを実行する（C++）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../runnode/runnodepy.html">自作ノードを実行する（Python）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../addmodel/addmodel.html">新しいモデルを追加する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/slam.html">自律飛行とSLAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/gps_nav.html">GPSを用いた自律飛行</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/turtle_mapping.html">Turtlebotを使ってマップを作る</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">ゲームパッドを使ってドローンを操作する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/lidar_localization.html">LiDARとAMCLを用いた自己位置推定</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/localization_and_mapping.html">LiDARを用いたSLAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/lidar_nav.html">LiDARを用いた自律移動</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../octomap/octomap.html">Octomapを使って3Dマップを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tips/index.html">Tips</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Appendix</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/bash_commands/bash_commands.html">1. 基本的なBashの使い方</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/ros/ros.html">2. ROSの基本</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/terms/terms.html">3. 用語集</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/archive/archive.html">4. 読書案内</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/trouble_shooting/index.html">5. トラブルシューティング</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/bash_commands/bash_commands.html">基本的なBashの使い方</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/ros/ros.html">ROSの基本</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/terms/terms.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/archive/archive.html">読書案内</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/trouble_shooting/index.html">トラブルシューティング</a></li>
 </ul>
 
             
@@ -147,7 +147,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>9. ゲームパッドを使ってドローンを操作する</li>
+      <li>ゲームパッドを使ってドローンを操作する</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -167,10 +167,10 @@
            <div itemprop="articleBody">
             
   <div class="section" id="id1">
-<h1>9. ゲームパッドを使ってドローンを操作する<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<h1>ゲームパッドを使ってドローンを操作する<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p>このページでは、ゲームパッド（ジョイスティック）と <a class="reference external" href="http://wiki.ros.org/mavros_extras">mavros_extras</a> パッケージのmavteleopノードを使ってドローンを操作する方法について解説します。</p>
 <div class="section" id="joy-node">
-<span id="start-joy"></span><h2>9.1. joy_nodeを起動する<a class="headerlink" href="#joy-node" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<span id="start-joy"></span><h2>joy_nodeを起動する<a class="headerlink" href="#joy-node" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>joy_nodeは <a class="reference external" href="http://wiki.ros.org/joy">joy</a> パッケージに含まれるノードで、ゲームパッドの入力を読み取って <code class="docutils literal notranslate"><span class="pre">sensor_msgs/Joy</span></code> 型のメッセージをパブリッシュしてくれます。</p>
 <p>使用するには、ゲームパッドを接続して以下のコマンドを実行します。</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre>roscore
@@ -200,7 +200,7 @@ buttons: [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 </div>
 </div>
 <div class="section" id="mavteleop">
-<h2>9.2. mavteleopノードを起動する<a class="headerlink" href="#mavteleop" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>mavteleopノードを起動する<a class="headerlink" href="#mavteleop" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>mavteleopノードはゲームパッドの入力を、ドローンの制御入力に変換して、 <code class="docutils literal notranslate"><span class="pre">setpoint_*</span></code> トピック（ <code class="docutils literal notranslate"><span class="pre">setpoint_velocity</span></code> 、 <code class="docutils literal notranslate"><span class="pre">setpoint_attitude</span></code> 、 <code class="docutils literal notranslate"><span class="pre">setpoint_position</span></code> など）にパブリッシュすることでドローンを操作します。</p>
 <p>与える引数によって操作方法を変えることができるので、今回は <code class="docutils literal notranslate"><span class="pre">-vel</span></code> オプションを与えて、ドローンの速度を操作するようにします。</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre>rosrun mavros_extras mavteleop -vel
@@ -209,16 +209,16 @@ buttons: [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 <p><code class="docutils literal notranslate"><span class="pre">-vel</span></code> オプション以外にも <code class="docutils literal notranslate"><span class="pre">-att</span></code> や <code class="docutils literal notranslate"><span class="pre">-pos</span></code> オプションがあり、それぞれ姿勢と位置を操作するモードです。</p>
 </div>
 <div class="section" id="id2">
-<h2>9.3. パラメータの設定用ファイルを作成する<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>パラメータの設定用ファイルを作成する<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="section" id="id3">
-<h3>9.3.1. ゲームパッドのマッピングを確認する<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>ゲームパッドのマッピングを確認する<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p><a class="reference internal" href="#start-joy"><span class="std std-ref">joy_nodeを起動する</span></a> で説明したように、joy_nodeノードを起動すると、 <code class="docutils literal notranslate"><span class="pre">/joy</span></code> トピックにジョイスティックの入力値がパブリッシュされます。
 パブリッシュされているメッセージの、axesがスティックの入力、buttonsがボタンの入力です。 それぞれインデックスは0から始まるので注意してください。
 <code class="docutils literal notranslate"><span class="pre">/joy</span></code> トピックの内容を確認しながらゲームパッドを操作することで、ゲームパッドのマッピングを確認することができます。</p>
 <p>このような、ゲームパッドのハードウェア（ボタンやスティックなど）とOSが認識するボタンのIDの対応関係のことをマッピングと言います。</p>
 </div>
 <div class="section" id="yaml">
-<h3>9.3.2. YAMLファイルを作る<a class="headerlink" href="#yaml" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>YAMLファイルを作る<a class="headerlink" href="#yaml" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>ROSでは、YAMLファイルを使ってパラメータをまとめてロードしたり、保存したりできます（ <a class="reference external" href="http://wiki.ros.org/rosparam">参考</a> ）。
 今回はこの仕組みを使ってゲームパッドのマッピングに関するパラメータをまとめてロードさせます。</p>
 <p>以下は、 <a class="reference external" href="https://gaming.logicool.co.jp/ja-jp/products/gamepads/f310-gamepad.html">Logicool F310</a> 用のパラメータが記述されたファイルです。
@@ -261,7 +261,7 @@ buttons: [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 </div>
 </div>
 <div class="section" id="id5">
-<h3>9.3.3. パラメータをロードする<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>パラメータをロードする<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>パラメータをロードするには以下のコマンドを使います。</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre>rosparam load ~/catkin_ws/src/px4_sim_pkg/config/f310_joy.yaml mavteleop
 </pre></div>
@@ -271,7 +271,7 @@ buttons: [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 </div>
 </div>
 <div class="section" id="id6">
-<h2>9.4. 実行する<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>実行する<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>はじめにPX4 SITLシミュレーションを起動します。</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre>roslaunch px4_sim_pkg mymodel_sitl_tf.launch
 </pre></div>
@@ -300,7 +300,7 @@ Offboardコマンドは500 msの間入力がなければタイムアウトする
 <img alt="../_images/teleop.gif" src="../_images/teleop.gif" />
 </div>
 <div class="section" id="launch">
-<h2>9.5. Launchファイルを使う<a class="headerlink" href="#launch" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>Launchファイルを使う<a class="headerlink" href="#launch" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Launchファイルを使えばjoy_nodeノードとmavteleopノードの起動と同時にパラメータを設定することができます。
 mavteleopノードを使用するLaunchファイルを以下に示します。</p>
 <div class="literal-block-wrapper container" id="id10">
@@ -331,7 +331,7 @@ mavteleopノードを使用するLaunchファイルを以下に示します。</
 </div>
 <p>mavros_teleop.launch内ではゲームパッドのマッピングを記述したファイル（f310_joy.yaml）を <code class="docutils literal notranslate"><span class="pre">rosparam</span></code> タグでROSのパラメータとしてロードしています。</p>
 <div class="section" id="id7">
-<h3>9.5.1. 実行する<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>実行する<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>Launchファイルを使う場合には、以下の手順だけで実行できます。</p>
 <p>はじめにPX4 SITLシミュレーションを起動します。</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre>roslaunch px4_sim_pkg mymodel_sitl_tf.launch
@@ -349,7 +349,7 @@ mavteleopノードを使用するLaunchファイルを以下に示します。</
 </div>
 </div>
 <div class="section" id="id8">
-<h2>9.6. 参考<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>参考<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <dl class="docutils">
 <dt><a class="reference external" href="https://qiita.com/honeytrap15/items/550c757f2964b575883c">rosparamの使い方メモ</a></dt>
 <dd>rosparamについて</dd>
@@ -365,10 +365,10 @@ mavteleopノードを使用するLaunchファイルを以下に示します。</
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../slam/lidar_localization.html" class="btn btn-neutral float-right" title="10. LiDARとAMCLを用いた自己位置推定" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../slam/lidar_localization.html" class="btn btn-neutral float-right" title="LiDARとAMCLを用いた自己位置推定" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../slam/turtle_mapping.html" class="btn btn-neutral" title="8. Turtlebotを使ってマップを作る" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../slam/turtle_mapping.html" class="btn btn-neutral" title="Turtlebotを使ってマップを作る" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

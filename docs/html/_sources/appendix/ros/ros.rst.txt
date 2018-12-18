@@ -1,10 +1,11 @@
-------------------------------------
 ROSの基本
-------------------------------------
+************************************
 
 ROSコマンド
 ====================================
-TODO
+.. TODO:
+
+`ROS Command-line tools <http://wiki.ros.org/ROS/CommandLineTools>`_
 
 パブリッシャとサブスクライバ
 ====================================
@@ -40,7 +41,7 @@ turtleを新しく配置するときに使われるサービスです。
 turtleを配置する位置と角度、名前をリクエストとして与えると、
 サーバがturtleを新しく配置して、配置したturtleの名前をレスポンスとして返してきます。
 
-.. code-block:: msg
+.. code-block:: guess
 
   float32 x
   float32 y
@@ -54,6 +55,8 @@ turtleを配置する位置と角度、名前をリクエストとして与え�
 
 TF
 ====================================
+.. TODO:
+
 `tf/Tutorial - ROS Wiki <http://wiki.ros.org/ja/tf/Tutorials>`_
 
 パラメータ
@@ -80,9 +83,18 @@ rosparamコマンドについては `rosparam - ROS Wiki <http://wiki.ros.org/ro
 
 Launchファイル
 ------------------------------------
+.. TODO:
+
+`roslaunch/XML <http://wiki.ros.org/roslaunch/XML>`_
 
 package.xml
 ------------------------------------
+.. TODO:
+
+`catkin/package.xml <http://wiki.ros.org/catkin/package.xml>`_
 
 CMakeLists.txt
 ------------------------------------
+.. TODO:
+
+`catkin/cmake <http://wiki.ros.org/catkin/CMakeLists.txt>`_

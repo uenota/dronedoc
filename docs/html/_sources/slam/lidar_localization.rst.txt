@@ -1,6 +1,5 @@
 :tocdepth: 1
 
-**************************************************************************
 LiDARとAMCLを用いた自己位置推定
 **************************************************************************
 このページではLiDARとAdaptive Monte Carlo Localization (AMCL)を用いて自己位置推定を行います。
@@ -144,6 +143,7 @@ amclノードは、 ``map`` フレームからロボットのベースフレー�
       <param name="/mavros/local_position/tf/send" type="bool" value="true" />
       <param name="/mavros/local_position/frame_id" type="str" value="odom" />
       <param name="/mavros/local_position/tf/frame_id" type="str" value="odom" />
+      <param name="/mavros/setpoint_velocity/mav_frame"  type="str" value="BODY_NED" />
 
   </launch>
 

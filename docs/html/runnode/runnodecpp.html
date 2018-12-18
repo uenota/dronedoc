@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>3. 自作ノードを実行する（C++） &mdash; Dronedoc 1.0.0 ドキュメント</title>
+  <title>自作ノードを実行する（C++） &mdash; Dronedoc 1.0.0 ドキュメント</title>
   
 
   
@@ -28,8 +28,8 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <link rel="next" title="4. 自作ノードを実行する（Python）" href="runnodepy.html" />
-    <link rel="prev" title="2. PX4 SITLシミュレーション" href="../px4sim/px4sim.html" /> 
+    <link rel="next" title="自作ノードを実行する（Python）" href="runnodepy.html" />
+    <link rel="prev" title="PX4 SITLシミュレーション" href="../px4sim/px4sim.html" /> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -80,28 +80,28 @@
             
               <p class="caption"><span class="caption-text">Contents</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../introduction.html">1. はじめに</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../px4sim/px4sim.html">2. PX4 SITLシミュレーション</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">3. 自作ノードを実行する（C++）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="runnodepy.html">4. 自作ノードを実行する（Python）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../addmodel/addmodel.html">5. 新しいモデルを追加する</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../slam/slam.html">6. 自律飛行とSLAM</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../slam/gps_nav.html">7. GPSを用いた自律飛行</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../slam/turtle_mapping.html">8. Turtlebotを使ってマップを作る</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../teleop/teleop.html">9. ゲームパッドを使ってドローンを操作する</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../slam/lidar_localization.html">10. LiDARとAMCLを用いた自己位置推定</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../slam/localization_and_mapping.html">11. LiDARを用いたSLAM</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../slam/lidar_nav.html">12. LiDARを用いた自律移動</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../octomap/octomap.html">13. Octomapを使って3Dマップを作る</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tips/index.html">14. Tips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../px4sim/px4sim.html">PX4 SITLシミュレーション</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">自作ノードを実行する（C++）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="runnodepy.html">自作ノードを実行する（Python）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../addmodel/addmodel.html">新しいモデルを追加する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/slam.html">自律飛行とSLAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/gps_nav.html">GPSを用いた自律飛行</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/turtle_mapping.html">Turtlebotを使ってマップを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../teleop/teleop.html">ゲームパッドを使ってドローンを操作する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/lidar_localization.html">LiDARとAMCLを用いた自己位置推定</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/localization_and_mapping.html">LiDARを用いたSLAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/lidar_nav.html">LiDARを用いた自律移動</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../octomap/octomap.html">Octomapを使って3Dマップを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tips/index.html">Tips</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Appendix</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/bash_commands/bash_commands.html">1. 基本的なBashの使い方</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/ros/ros.html">2. ROSの基本</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/terms/terms.html">3. 用語集</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/archive/archive.html">4. 読書案内</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/trouble_shooting/index.html">5. トラブルシューティング</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/bash_commands/bash_commands.html">基本的なBashの使い方</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/ros/ros.html">ROSの基本</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/terms/terms.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/archive/archive.html">読書案内</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/trouble_shooting/index.html">トラブルシューティング</a></li>
 </ul>
 
             
@@ -147,7 +147,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>3. 自作ノードを実行する（C++）</li>
+      <li>自作ノードを実行する（C++）</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -167,10 +167,10 @@
            <div itemprop="articleBody">
             
   <div class="section" id="c">
-<h1>3. 自作ノードを実行する（C++）<a class="headerlink" href="#c" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<h1>自作ノードを実行する（C++）<a class="headerlink" href="#c" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p>この章ではシミュレーション上のドローンを操作するROSノードをC++で作成します。</p>
 <div class="section" id="ros">
-<h2>3.1. ROSパッケージを作る<a class="headerlink" href="#ros" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>ROSパッケージを作る<a class="headerlink" href="#ros" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>はじめに、自作ノードを格納するためのROSパッケージを作ります。
 パッケージ名はpx4_sim_pkgとします。
 また、roscpp、geometry_msgs、mavros_msgsパッケージを使用するので依存パッケージに追加しておきます。</p>
@@ -180,7 +180,7 @@ catkin_create_pkg px4_sim_pkg roscpp geometry_msgs mavros_msgs
 </div>
 </div>
 <div class="section" id="id1">
-<h2>3.2. ノードを書く<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>ノードを書く<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>それでは実際にノードを書いてみましょう。
 今回は、ドローンを2m上空に離陸させるノードを書きます。
 以下のコードは、 <a class="reference external" href="https://dev.px4.io/en/ros/mavros_offboard.html">MAVROS Offboard control example - PX4 Developer Guide</a> にあるのと同じものです。</p>
@@ -364,7 +364,7 @@ catkin_create_pkg px4_sim_pkg roscpp geometry_msgs mavros_msgs
 </td></tr></table></div>
 </div>
 <div class="section" id="id2">
-<h3>3.2.1. コードの解説<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>コードの解説<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span class="cp">#include</span> <span class="cpf">&lt;ros/ros.h&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;geometry_msgs/PoseStamped.h&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;mavros_msgs/CommandBool.h&gt;</span><span class="cp"></span>
@@ -521,7 +521,7 @@ mavrosパッケージで使用するメッセージの定義は、 <a class="ref
 <p>最後に、ループ毎に目標位置をパブリッシュしています。</p>
 </div>
 <div class="section" id="cmakelists-txt">
-<h3>3.2.2. CMakeLists.txtの編集<a class="headerlink" href="#cmakelists-txt" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>CMakeLists.txtの編集<a class="headerlink" href="#cmakelists-txt" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>次にCMakeLists.txtの編集をおこないます。
 CMakeLists.txtの末尾に以下の行を追加します。</p>
 <div class="highlight-cmake notranslate"><div class="highlight"><pre><span class="nb">add_executable</span><span class="p">(</span><span class="s">offboard_sample</span> <span class="s">src/offboard_sample.cpp</span><span class="p">)</span>
@@ -530,7 +530,7 @@ CMakeLists.txtの末尾に以下の行を追加します。</p>
 </div>
 </div>
 <div class="section" id="id3">
-<h3>3.2.3. ビルドする<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>ビルドする<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span class="nb">cd</span> ~/catkin_ws
 catkin_make
 </pre></div>
@@ -538,7 +538,7 @@ catkin_make
 </div>
 </div>
 <div class="section" id="id4">
-<h2>3.3. ノードの起動<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>ノードの起動<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>はじめにシミュレータを起動します。
 ROSノードとの通信を行うためにはmavrosが必要なので、 <code class="docutils literal notranslate"><span class="pre">mavros_posix_sitl.launch</span></code> を使います。</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre>roslaunch px4 mavros_posix_sitl.launch
@@ -551,7 +551,7 @@ ROSノードとの通信を行うためにはmavrosが必要なので、 <code c
 <img alt="../_images/runningnode_cpp.png" src="../_images/runningnode_cpp.png" />
 </div>
 <div class="section" id="launch">
-<h2>3.4. launchファイルを書く<a class="headerlink" href="#launch" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>launchファイルを書く<a class="headerlink" href="#launch" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>シミュレータとOffboardノードを別々に起動するのは面倒なので、launchファイルにまとめて一つのコマンドで起動できるようにしましょう。</p>
 <p><code class="docutils literal notranslate"><span class="pre">px4_sim_pkg/launch</span></code> 以下に <code class="docutils literal notranslate"><span class="pre">cpp_offb_sample.launch</span></code> という名前で以下の内容を保存してください。</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span class="nt">&lt;launch&gt;</span>
@@ -568,7 +568,7 @@ ROSノードとの通信を行うためにはmavrosが必要なので、 <code c
 </div>
 </div>
 <div class="section" id="id5">
-<h2>3.5. 参考<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>参考<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <dl class="docutils">
 <dt><a class="reference external" href="http://wiki.ros.org/roscpp/Overview/Callbacks%20and%20Spinning">Callbacks and Spinning - ROS Wiki</a></dt>
 <dd>ros::spinOnce()について</dd>
@@ -586,10 +586,10 @@ ROSノードとの通信を行うためにはmavrosが必要なので、 <code c
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="runnodepy.html" class="btn btn-neutral float-right" title="4. 自作ノードを実行する（Python）" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="runnodepy.html" class="btn btn-neutral float-right" title="自作ノードを実行する（Python）" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../px4sim/px4sim.html" class="btn btn-neutral" title="2. PX4 SITLシミュレーション" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../px4sim/px4sim.html" class="btn btn-neutral" title="PX4 SITLシミュレーション" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

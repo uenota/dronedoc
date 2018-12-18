@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>14.2. ドローンに距離センサを搭載する &mdash; Dronedoc 1.0.0 ドキュメント</title>
+  <title>ドローンに距離センサを搭載する &mdash; Dronedoc 1.0.0 ドキュメント</title>
   
 
   
@@ -28,8 +28,8 @@
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="索引" href="../../genindex.html" />
     <link rel="search" title="検索" href="../../search.html" />
-    <link rel="next" title="14.3. LiDARのデータをフィルタリングする" href="../filter_lidar/filter_lidar.html" />
-    <link rel="prev" title="14.1. QGroundControl" href="../qgc_intro/qgc_intro.html" /> 
+    <link rel="next" title="LiDARのデータをフィルタリングする" href="../filter_lidar/filter_lidar.html" />
+    <link rel="prev" title="QGroundControl" href="../qgc_intro/qgc_intro.html" /> 
 
   
   <script src="../../_static/js/modernizr.min.js"></script>
@@ -80,56 +80,56 @@
             
               <p class="caption"><span class="caption-text">Contents</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">1. はじめに</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../px4sim/px4sim.html">2. PX4 SITLシミュレーション</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../runnode/runnodecpp.html">3. 自作ノードを実行する（C++）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../runnode/runnodepy.html">4. 自作ノードを実行する（Python）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../addmodel/addmodel.html">5. 新しいモデルを追加する</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../slam/slam.html">6. 自律飛行とSLAM</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../slam/gps_nav.html">7. GPSを用いた自律飛行</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../slam/turtle_mapping.html">8. Turtlebotを使ってマップを作る</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../teleop/teleop.html">9. ゲームパッドを使ってドローンを操作する</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../slam/lidar_localization.html">10. LiDARとAMCLを用いた自己位置推定</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../slam/localization_and_mapping.html">11. LiDARを用いたSLAM</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../slam/lidar_nav.html">12. LiDARを用いた自律移動</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../octomap/octomap.html">13. Octomapを使って3Dマップを作る</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../index.html">14. Tips</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../qgc_intro/qgc_intro.html">14.1. QGroundControl</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">14.2. ドローンに距離センサを搭載する</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id2">14.2.1. 距離センサをつける</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id3">14.2.1.1. はじめに</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#sdf">14.2.1.2. SDFファイル</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#config">14.2.1.3. configファイル</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id5">14.2.1.4. モデルを表示する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../px4sim/px4sim.html">PX4 SITLシミュレーション</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../runnode/runnodecpp.html">自作ノードを実行する（C++）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../runnode/runnodepy.html">自作ノードを実行する（Python）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../addmodel/addmodel.html">新しいモデルを追加する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../slam/slam.html">自律飛行とSLAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../slam/gps_nav.html">GPSを用いた自律飛行</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../slam/turtle_mapping.html">Turtlebotを使ってマップを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../teleop/teleop.html">ゲームパッドを使ってドローンを操作する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../slam/lidar_localization.html">LiDARとAMCLを用いた自己位置推定</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../slam/localization_and_mapping.html">LiDARを用いたSLAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../slam/lidar_nav.html">LiDARを用いた自律移動</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../octomap/octomap.html">Octomapを使って3Dマップを作る</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Tips</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../qgc_intro/qgc_intro.html">QGroundControl</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">ドローンに距離センサを搭載する</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">距離センサをつける</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id3">はじめに</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sdf">SDFファイル</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#config">configファイル</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">モデルを表示する</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id6">14.2.2. 距離センサの値をパブリッシュする</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id7">14.2.2.1. プラグインをブラックリストから外す</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id8">14.2.2.2. パラメータの設定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">距離センサの値をパブリッシュする</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id7">プラグインをブラックリストから外す</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id8">パラメータの設定</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#launch">14.2.3. Launchファイルを作る</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id9">14.2.3.1. 解説</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id10">14.2.3.2. 実行する</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#launch">Launchファイルを作る</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id9">解説</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id10">実行する</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../filter_lidar/filter_lidar.html">14.3. LiDARのデータをフィルタリングする</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../change_local_planner/change_local_planner.html">14.4. move_baseのローカルプランナーを変更する</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../local_planner_for_uav/local_planner_for_uav.html">14.5. UAV用のローカルプランナを実装する</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../build_map_gmapping/build_map_gmapping.html">14.6. Gmappingを使って地図を生成する</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../build_map_gazebo_plugin/build_map_gazebo_plugin.html">14.7. Gazebo Pluginを使って地図を作成する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../filter_lidar/filter_lidar.html">LiDARのデータをフィルタリングする</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../change_local_planner/change_local_planner.html">move_baseのローカルプランナーを変更する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../local_planner_for_uav/local_planner_for_uav.html">UAV用のローカルプランナを実装する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../build_map_gmapping/build_map_gmapping.html">Gmappingを使って地図を生成する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../build_map_gazebo_plugin/build_map_gazebo_plugin.html">Gazebo Pluginを使って地図を作成する</a></li>
 </ul>
 </li>
 </ul>
 <p class="caption"><span class="caption-text">Appendix</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../appendix/bash_commands/bash_commands.html">1. 基本的なBashの使い方</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../appendix/ros/ros.html">2. ROSの基本</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../appendix/terms/terms.html">3. 用語集</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../appendix/archive/archive.html">4. 読書案内</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../appendix/trouble_shooting/index.html">5. トラブルシューティング</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/bash_commands/bash_commands.html">基本的なBashの使い方</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/ros/ros.html">ROSの基本</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/terms/terms.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/archive/archive.html">読書案内</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/trouble_shooting/index.html">トラブルシューティング</a></li>
 </ul>
 
             
@@ -175,9 +175,9 @@
     
       <li><a href="../../index.html">Docs</a> &raquo;</li>
         
-          <li><a href="../index.html">14. Tips</a> &raquo;</li>
+          <li><a href="../index.html">Tips</a> &raquo;</li>
         
-      <li>14.2. ドローンに距離センサを搭載する</li>
+      <li>ドローンに距離センサを搭載する</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -197,17 +197,17 @@
            <div itemprop="articleBody">
             
   <div class="section" id="id1">
-<h1>14.2. ドローンに距離センサを搭載する<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<h1>ドローンに距離センサを搭載する<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <div class="section" id="id2">
-<h2>14.2.1. 距離センサをつける<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>距離センサをつける<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="section" id="id3">
-<h3>14.2.1.1. はじめに<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>はじめに<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>レーザー高度計（<a class="reference external" href="https://docs.px4.io/en/sensor/lidar_lite.html">Lidar Lite</a> など）とRayセンサ（Lidarなど）を同時に使用するとセグメンテーションフォールトでGazeboが起動できない（ <a class="reference external" href="https://github.com/PX4/Firmware/issues/9156">#9156</a>）ので今回は距離センサとして超音波センサを利用します。
 GpuRayセンサであれば問題なく起動できるらしいので、どうしてもレーザー高度計を使用したい場合にはGpuRayセンサを利用すると良いでしょう。
 ただし、GpuRayセンサはGPUを使用しない場合は正常に動作しないようなので、GPUがある場合に限って使用しましょう。</p>
 </div>
 <div class="section" id="sdf">
-<h3>14.2.1.2. SDFファイル<a class="headerlink" href="#sdf" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>SDFファイル<a class="headerlink" href="#sdf" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>iris_2d_lidarモデルをインクルードして超音波センサをつけても良いのですが、名前空間が煩雑（iris_2d_lidar::iris::base_linkとか）になり、TFの設定などが面倒なので、iris_2d_lidarモデルのSDFファイルをコピーして超音波センサを追加します。</p>
 <p>超音波センサを追加したモデルは以下のようになります。</p>
 <div class="literal-block-wrapper container" id="id11">
@@ -392,7 +392,7 @@ GpuRayセンサであれば問題なく起動できるらしいので、どう�
 </div>
 </div>
 <div class="section" id="config">
-<h3>14.2.1.3. configファイル<a class="headerlink" href="#config" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>configファイル<a class="headerlink" href="#config" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>以下のようなmodel.configも作成し、modelsディレクトリ以下にiris_sonarディレクトリを作ってその中に保存しましょう。
 authorタグの中身は適宜変更してください。</p>
 <div class="literal-block-wrapper container" id="id12">
@@ -431,7 +431,7 @@ authorタグの中身は適宜変更してください。</p>
 </div>
 </div>
 <div class="section" id="id5">
-<h3>14.2.1.4. モデルを表示する<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>モデルを表示する<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>以下のようなLaunchファイルを作って、モデルがきちんと作成されているか確認してみましょう。</p>
 <div class="literal-block-wrapper container" id="id13">
 <div class="code-block-caption"><span class="caption-text">mymodel_sonar.launch</span><a class="headerlink" href="#id13" title="このコードへのパーマリンク">¶</a></div>
@@ -466,11 +466,11 @@ authorタグの中身は適宜変更してください。</p>
 </div>
 </div>
 <div class="section" id="id6">
-<h2>14.2.2. 距離センサの値をパブリッシュする<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>距離センサの値をパブリッシュする<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>ドローンに搭載された距離センサの値をパブリッシュするには、 <a class="reference external" href="http://wiki.ros.org/mavros_extras">mavros_extras</a> パッケージのdistance_sensorプラグインを使用します。</p>
 <p>mavros_extrasパッケージには、他にも <a class="reference external" href="https://docs.px4.io/en/sensor/px4flow.html">px4_flow</a> からのデータをROSトピックにパブリッシュするプラグインなど、追加のセンサ用のプラグインが複数あります。</p>
 <div class="section" id="id7">
-<h3>14.2.2.1. プラグインをブラックリストから外す<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>プラグインをブラックリストから外す<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>デフォルトではdistance_sensorプラグインはブラックリストに入っていて読み込まれないので、ブラックリストから外す必要があります。
 プラグインのブラックリストおよびホワイトリストは、px4_pluginlists.yamlファイルに記述されています。
 mavrosノードが起動するときに、このファイルの内容をROSパラメータとして読み込むことで、ブラックリストとホワイトリストが反映されます。</p>
@@ -508,7 +508,7 @@ mavrosノードが起動するときに、このファイルの内容をROSパ�
 </div>
 </div>
 <div class="section" id="id8">
-<h3>14.2.2.2. パラメータの設定<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>パラメータの設定<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>次に、distance_sensor用のROSパラメータを記述するファイルを作成します。</p>
 <p>それぞれのパラメータの意味は以下のとおりです。</p>
 <dl class="docutils">
@@ -548,7 +548,7 @@ mavrosノードが起動するときに、このファイルの内容をROSパ�
 </div>
 </div>
 <div class="section" id="launch">
-<h2>14.2.3. Launchファイルを作る<a class="headerlink" href="#launch" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<h2>Launchファイルを作る<a class="headerlink" href="#launch" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>以下のようなLaunchファイルを作成します。
 TFをパブリッシュする設定などは省いているので、move_base等を使用する場合は適宜変更を加えてください。</p>
 <div class="literal-block-wrapper container" id="id16">
@@ -644,7 +644,7 @@ TFをパブリッシュする設定などは省いているので、move_base等
 </td></tr></table></div>
 </div>
 <div class="section" id="id9">
-<h3>14.2.3.1. 解説<a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>解説<a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span class="nt">&lt;node</span> <span class="na">pkg=</span><span class="s">&quot;tf&quot;</span> <span class="na">name=</span><span class="s">&quot;base2sonar&quot;</span> <span class="na">type=</span><span class="s">&quot;static_transform_publisher&quot;</span> <span class="na">args=</span><span class="s">&quot;0 0 -0.04 0 -1.57 0 base_link sonar_model::link 100&quot;</span><span class="nt">/&gt;</span>
 <span class="nt">&lt;node</span> <span class="na">pkg=</span><span class="s">&quot;tf&quot;</span> <span class="na">name=</span><span class="s">&quot;base2lidar&quot;</span> <span class="na">type=</span><span class="s">&quot;static_transform_publisher&quot;</span> <span class="na">args=</span><span class="s">&quot;0 0 0.1 0 0 0 base_link lidar_link 100&quot;</span><span class="nt">/&gt;</span>
 </pre></div>
@@ -696,7 +696,7 @@ TFをパブリッシュする設定などは省いているので、move_base等
 mavrosパッケージのpx4.launchと内容はほとんど同じですが、<code class="docutils literal notranslate"><span class="pre">fcu_url</span></code> をシミュレーション用に、<code class="docutils literal notranslate"><span class="pre">pluginlists_yaml</span></code> と <code class="docutils literal notranslate"><span class="pre">config_yaml</span></code> を作成した設定ファイルに変えています。</p>
 </div>
 <div class="section" id="id10">
-<h3>14.2.3.2. 実行する<a class="headerlink" href="#id10" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<h3>実行する<a class="headerlink" href="#id10" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>作成したLaunchファイルを実行します。</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre>roslaunch px4_sim_pkg mymodel_sonar.launch
 </pre></div>
@@ -756,10 +756,10 @@ range: 1.94000005722
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../filter_lidar/filter_lidar.html" class="btn btn-neutral float-right" title="14.3. LiDARのデータをフィルタリングする" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../filter_lidar/filter_lidar.html" class="btn btn-neutral float-right" title="LiDARのデータをフィルタリングする" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../qgc_intro/qgc_intro.html" class="btn btn-neutral" title="14.1. QGroundControl" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../qgc_intro/qgc_intro.html" class="btn btn-neutral" title="QGroundControl" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
