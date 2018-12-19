@@ -30,6 +30,10 @@ PX4 SITL Tutorial
    appendix/archive/archive.rst
    appendix/trouble_shooting/index.rst
 
+.. **Index**
+
+.. * :ref:`genindex`
+
 Issues & Pull Requests
 ====================================================
 内容に問題があれば気軽にお知らせください。
@@ -41,12 +45,9 @@ Pull Requestも大歓迎です!!!
 
 https://github.com/uenota/dronedoc/pulls
 
-Indices and tables
-====================================================
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+License
+====================================================
 
 .. image:: https://i.creativecommons.org/l/by/4.0/88x31.png
   :target: http://creativecommons.org/licenses/by/4.0/
