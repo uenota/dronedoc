@@ -28,8 +28,8 @@
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="索引" href="../../genindex.html" />
     <link rel="search" title="検索" href="../../search.html" />
-    <link rel="next" title="14.6. Gmappingを使って地図を生成する" href="../build_map_gmapping/build_map_gmapping.html" />
-    <link rel="prev" title="14.4. move_baseのローカルプランナーを変更する" href="../change_local_planner/change_local_planner.html" /> 
+    <link rel="next" title="MoveIt!を使ってドローンの経路計画を行う" href="../moveit/moveit.html" />
+    <link rel="prev" title="move_baseのローカルプランナーを変更する" href="../change_local_planner/change_local_planner.html" /> 
 
   
   <script src="../../_static/js/modernizr.min.js"></script>
@@ -80,27 +80,30 @@
             
               <p class="caption"><span class="caption-text">Contents</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">1. はじめに</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../px4sim/px4sim.html">2. PX4 SITLシミュレーション</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../runnode/runnodecpp.html">3. 自作ノードを実行する（C++）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../runnode/runnodepy.html">4. 自作ノードを実行する（Python）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../addmodel/addmodel.html">5. 新しいモデルを追加する</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../slam/slam.html">6. 自律飛行とSLAM</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../slam/gps_nav.html">7. GPSを用いた自律飛行</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../slam/turtle_mapping.html">8. Turtlebotを使ってマップを作る</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../teleop/teleop.html">9. ゲームパッドを使ってドローンを操作する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../px4sim/px4sim.html">PX4 SITLシミュレーション</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../runnode/runnodecpp.html">自作ノードを実行する（C++）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../runnode/runnodepy.html">自作ノードを実行する（Python）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../addmodel/addmodel.html">新しいモデルを追加する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../slam/slam.html">自律飛行とSLAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../slam/gps_nav.html">GPSを用いた自律飛行</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../slam/turtle_mapping.html">Turtlebotを使ってマップを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../teleop/teleop.html">ゲームパッドを使ってドローンを操作する</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../slam/lidar_localization.html">LiDARとAMCLを用いた自己位置推定</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../slam/localization_and_mapping.html">LiDARを用いたSLAM</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../slam/lidar_nav.html">12. LiDARを用いた自律移動</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../octomap/octomap.html">13. Octomapを使って3Dマップを作る</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../index.html">14. Tips</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../qgc_intro/qgc_intro.html">14.1. QGroundControl</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../add_range_sensor/add_range_sensor.html">14.2. ドローンに距離センサを搭載する</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../filter_lidar/filter_lidar.html">14.3. LiDARのデータをフィルタリングする</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../change_local_planner/change_local_planner.html">14.4. move_baseのローカルプランナーを変更する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../slam/lidar_nav.html">LiDARを用いた自律移動</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../octomap/octomap.html">Octomapを使って3Dマップを作る</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Tips</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../qgc_intro/qgc_intro.html">QGroundControl</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../add_range_sensor/add_range_sensor.html">ドローンに距離センサを搭載する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../filter_lidar/filter_lidar.html">LiDARのデータをフィルタリングする</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../change_local_planner/change_local_planner.html">move_baseのローカルプランナーを変更する</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">UAV用のローカルプランナを実装する</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id1">インストール</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id2">ローカルプランナを実装する</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">ローカルプランナを実装する</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#cmakelists-txt">CMakeLists.txt</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#ros">ROSプラグイン</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#navigation">navigationスタック</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id4">ローカルプランナをプラグイン化する</a></li>
@@ -110,8 +113,9 @@
 <li class="toctree-l3"><a class="reference internal" href="#id6">参考</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../build_map_gmapping/build_map_gmapping.html">14.6. Gmappingを使って地図を生成する</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../build_map_gazebo_plugin/build_map_gazebo_plugin.html">14.7. Gazebo Pluginを使って地図を作成する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../moveit/moveit.html">MoveIt!を使ってドローンの経路計画を行う</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../build_map_gmapping/build_map_gmapping.html">Gmappingを使って地図を生成する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../build_map_gazebo_plugin/build_map_gazebo_plugin.html">Gazebo Pluginを使って地図を作成する</a></li>
 </ul>
 </li>
 </ul>
@@ -119,8 +123,8 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../appendix/bash_commands/bash_commands.html">基本的なBashの使い方</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../appendix/ros/ros.html">ROSの基本</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../appendix/terms/terms.html">3. 用語集</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../appendix/archive/archive.html">4. 読書案内</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/terms/terms.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/archive/archive.html">読書案内</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../appendix/trouble_shooting/index.html">トラブルシューティング</a></li>
 </ul>
 
@@ -167,7 +171,7 @@
     
       <li><a href="../../index.html">Docs</a> &raquo;</li>
         
-          <li><a href="../index.html">14. Tips</a> &raquo;</li>
+          <li><a href="../index.html">Tips</a> &raquo;</li>
         
       <li>UAV用のローカルプランナを実装する</li>
     
@@ -191,8 +195,7 @@
   <div class="section" id="uav">
 <h1>UAV用のローカルプランナを実装する<a class="headerlink" href="#uav" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p>この章では、<a class="reference external" href="http://ompl.kavrakilab.org/">Open Motion Planning Library (OMPL)</a> を使ってドローン用のローカルプランナを実装します。</p>
-<p>OMPLはオープンソースの行動計画ライブラリで、マニピュレータやUGVなどの動作計画に用いられています。
-マニピュレータの制御に用いられる <a class="reference external" href="https://moveit.ros.org/">MoveIt!</a> というライブラリもOMPLを使っています。</p>
+<p>OMPLはオープンソースの行動計画ライブラリで、マニピュレータやUGVなどの動作計画に用いられる <a class="reference external" href="https://moveit.ros.org/">MoveIt!</a> というライブラリもOMPLを使っています。</p>
 <div class="section" id="id1">
 <h2>インストール<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>UbuntuにOMPLをインストールする方法は以下の3通りあります。</p>
@@ -218,6 +221,27 @@ sudo apt install ros-kinetic-ompl
 <div class="section" id="id2">
 <h2>ローカルプランナを実装する<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>以下では、<a class="reference external" href="https://robotics.naist.jp/edu/text/?Robotics%2FOMPL#PlanningWithControls">制御指令値を含むプラニング</a> を参考にして作業を進めていきます。</p>
+<div class="section" id="cmakelists-txt">
+<h3>CMakeLists.txt<a class="headerlink" href="#cmakelists-txt" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span class="nb">find_package</span><span class="p">(</span><span class="s">catkin</span> <span class="s">REQUIRED</span> <span class="s">COMPONENTS</span>
+    <span class="s">roscpp</span>
+    <span class="s">...</span>
+    <span class="s">nav_core</span>    <span class="c"># add</span>
+    <span class="s">tf</span>          <span class="c"># add</span>
+    <span class="s">costmap_2d</span>  <span class="c"># add</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span class="nb">find_package</span><span class="p">(</span><span class="s">OMPL</span> <span class="s">REQUIRED</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span class="nb">add_executable</span><span class="p">(</span><span class="s">rrt_planner</span> <span class="s">src/rrt_planner.cpp</span><span class="p">)</span>
+<span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">rrt_planner</span> <span class="o">${</span><span class="nv">catkin_LIBRARIES</span><span class="o">}</span>
+                                  <span class="o">${</span><span class="nv">OMPL_LIBRARIES</span><span class="o">}</span>
+                                  <span class="o">${</span><span class="nv">Boost_LIBRARIES</span><span class="o">}</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="ros">
 <h2>ROSプラグイン<a class="headerlink" href="#ros" title="このヘッドラインへのパーマリンク">¶</a></h2>
@@ -266,10 +290,10 @@ navigationスタックのローカルプランナとして使用可能なクラ�
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../build_map_gmapping/build_map_gmapping.html" class="btn btn-neutral float-right" title="14.6. Gmappingを使って地図を生成する" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../moveit/moveit.html" class="btn btn-neutral float-right" title="MoveIt!を使ってドローンの経路計画を行う" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../change_local_planner/change_local_planner.html" class="btn btn-neutral" title="14.4. move_baseのローカルプランナーを変更する" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../change_local_planner/change_local_planner.html" class="btn btn-neutral" title="move_baseのローカルプランナーを変更する" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

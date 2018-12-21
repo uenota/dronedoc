@@ -1,14 +1,12 @@
-==========================================================
 UAV用のローカルプランナを実装する
 ==========================================================
 
 この章では、`Open Motion Planning Library (OMPL) <http://ompl.kavrakilab.org/>`_ を使ってドローン用のローカルプランナを実装します。
 
-OMPLはオープンソースの行動計画ライブラリで、マニピュレータやUGVなどの動作計画に用いられています。
-マニピュレータの制御に用いられる `MoveIt! <https://moveit.ros.org/>`_ というライブラリもOMPLを使っています。
+OMPLはオープンソースの行動計画ライブラリで、マニピュレータやUGVなどの動作計画に用いられる `MoveIt! <https://moveit.ros.org/>`_ というライブラリもOMPLを使っています。
 
 インストール
-==========================================================
+----------------------------------------------------------
 UbuntuにOMPLをインストールする方法は以下の3通りあります。
 
 * ソースからインストールする
@@ -34,32 +32,55 @@ UbuntuにOMPLをインストールする方法は以下の3通りあります。
     sudo apt install ros-kinetic-ompl
 
 ローカルプランナを実装する
-==========================================================
+----------------------------------------------------------
 以下では、`制御指令値を含むプラニング <https://robotics.naist.jp/edu/text/?Robotics%2FOMPL#PlanningWithControls>`_ を参考にして作業を進めていきます。
 
+CMakeLists.txt
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+.. code-block:: cmake
+
+    find_package(catkin REQUIRED COMPONENTS
+        roscpp
+        ...
+        nav_core    # add
+        tf          # add
+        costmap_2d  # add
+    )
+
+.. code-block:: cmake
+
+    find_package(OMPL REQUIRED)
+
+.. code-block:: cmake
+
+    add_executable(rrt_planner src/rrt_planner.cpp)
+    target_link_libraries(rrt_planner ${catkin_LIBRARIES}
+                                      ${OMPL_LIBRARIES}
+                                      ${Boost_LIBRARIES})
 
 ROSプラグイン
-==========================================================
+----------------------------------------------------------
 ROSのパッケージの中には、処理の一部（画像処理や行動計画など）をプラグインとして作成し、後で変更可能になっているものがあります。
 プラグインを作成、使用するためには `pluginlib <http://wiki.ros.org/pluginlib>`_ パッケージを使用します。
 プラグインの仕組みを使うことで、特定のインターフェースに従ったクラスを作れば中身の実装は自由にできるので、既存のパッケージを拡張することが容易になります。
 
 navigationスタック
-----------------------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 navigationスタックは、move_baseやcostmap_2dなどを含むメタパッケージです。
 
 navigationスタックでは、pluginlibを使って作成したプラグインをローカルプランナやグローバルプランナとして使用することができるようになっています。
 navigationスタックのローカルプランナとして使用可能なクラスを作るためには、 `nav_core::BaseLocalPlanner <http://docs.ros.org/jade/api/nav_core/html/classnav__core_1_1BaseLocalPlanner.html>`_ を継承したクラスを作る必要があります。
 
 ローカルプランナをプラグイン化する
-----------------------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 
 実行する
-==========================================================
+----------------------------------------------------------
 
 参考
-==========================================================
+----------------------------------------------------------
 `Robotics/OMPL - NAIST::OnlineText <https://robotics.naist.jp/edu/text/?Robotics%2FOMPL>`_
     OMPLの日本語チュートリアル
 `Open Motion Planning Library: A Primer <http://ompl.kavrakilab.org/OMPL_Primer.pdf>`_
