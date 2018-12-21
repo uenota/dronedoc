@@ -21,10 +21,13 @@
   <depend>roscpp</depend>
   <depend>sensor_msgs</depend>
   <depend>nav_msgs</depend>
+  <depend>nav_core</depend>
   <depend>tf</depend>
   <depend>ompl</depend>
   <depend>gazebo_ros</depend>
 
+  <exec_depend>teb_local_planner</exec_depend>
+  <exec_depend>eband_local_planner</exec_depend>
   <exec_depend>laser_filters</exec_depend>
 
   <export>
