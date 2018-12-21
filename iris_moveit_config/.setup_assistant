@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: dronedoc
+    relative_path: models/iris_depth_camera/xacro/urdf/iris_base.xacro
+    xacro_args: rotors_description_dir:=$HOME/catkin_ws/src/dronedoc/models/iris_depth_camera/xacro mavlink_udp_port:=14560 --inorder
+  SRDF:
+    relative_path: config/iris.srdf
+  CONFIG:
+    author_name: Takaki Ueno
+    author_email: t_ueno@eis.hokudai.ac.jp
+    generated_timestamp: 1545386329

@@ -1,0 +1,4 @@
+controller_list:
+  - name: fake_iris_group_controller
+    joints:
+      - virtual_joint
