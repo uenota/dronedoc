@@ -40,6 +40,7 @@ release = u'1.0.0'
 # ones.
 extensions = [
     'sphinx.ext.githubpages',
+    'sphinxcontrib.youtube'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
