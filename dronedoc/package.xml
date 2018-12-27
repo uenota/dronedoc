@@ -25,6 +25,12 @@
   <depend>tf</depend>
   <depend>ompl</depend>
   <depend>gazebo_ros</depend>
+  <depend>actionlib</depend>
+  <depend>moveit</depend>
+  <depend>moveit_core</depend>
+  <depend>moveit_msgs</depend>
+  <depend>trajectory_msgs</depend>
+  <depend>pluginlib</depend>
 
   <exec_depend>teb_local_planner</exec_depend>
   <exec_depend>eband_local_planner</exec_depend>
@@ -33,5 +39,6 @@
   <export>
     <gazebo_ros gazebo_model_path="${prefix}/models"/>
     <gazebo_ros plugin_path="${prefix}/lib" />
+    <moveit_core plugin="${prefix}/moveit_multi_dof_controller_manager_plugin_description.xml"/>
   </export>
 </package>

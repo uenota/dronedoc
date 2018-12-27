@@ -157,6 +157,7 @@
     </xacro:bag_plugin_macro>
   </xacro:if>
 
+    <!-- camera link -->
     <link name="camera_link">
       <inertial>
         <mass value="0.01" />
@@ -175,6 +176,8 @@
         </geometry>
       </visual>
     </link>
+
+    <!-- depth camera attached to camera link -->
     <gazebo reference="camera_link">
       <sensor name="camera" type="depth">
         <pose>0 0 0 1.57 -1.57 0</pose>
@@ -219,6 +222,7 @@
       </sensor>
     </gazebo>
 
+    <!-- Joint -->
     <joint name="camera_joint" type="revolute">
       <origin xyz="0.1 0 0" rpy="0 1.57 0" />
       <parent link="base_link" />

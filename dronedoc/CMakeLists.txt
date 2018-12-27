@@ -15,6 +15,11 @@ find_package(catkin REQUIRED COMPONENTS
   nav_core
   tf
   costmap_2d
+  actionlib
+  trajectory_msgs
+  pluginlib
+  moveit_msgs
+  moveit_core
 )
 
 find_package(yaml-cpp REQUIRED)
@@ -44,6 +49,11 @@ catkin_package(
     nav_core
     tf
     navigation
+    actionlib
+    moveit_core
+    moveit_msgs
+    trajectory_msgs
+    pluginlib
 )
 
 include_directories(
@@ -73,12 +83,21 @@ target_link_libraries(map_builder dronedoc ${Boost_LIBRARIES}
                                            ${catkin_LIBRARIES})
 add_dependencies(map_builder dronedoc)
 
+# Build moveit library
+add_library(moveit_multi_dof_controller_manager src/moveit_multi_dof_controller_manager.cpp)
+target_link_libraries(moveit_multi_dof_controller_manager ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+install(TARGETS moveit_multi_dof_controller_manager LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION})
+install(FILES moveit_multi_dof_controller_manager_plugin_description.xml DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
+
 # Build ROS nodes
+add_executable(drone_controller src/drone_controller.cpp)
 add_executable(offboard_sample src/offboard_sample.cpp)
-target_link_libraries(offboard_sample ${catkin_LIBRARIES})
 add_executable(odom_publisher src/odom_publisher.cpp)
-target_link_libraries(odom_publisher ${catkin_LIBRARIES})
 add_executable(rrt_planner src/rrt_planner.cpp)
+
+target_link_libraries(drone_controller ${catkin_LIBRARIES})
+target_link_libraries(offboard_sample ${catkin_LIBRARIES})
+target_link_libraries(odom_publisher ${catkin_LIBRARIES})
 target_link_libraries(rrt_planner ${catkin_LIBRARIES}
                                   ${OMPL_LIBRARIES}
                                   ${Boost_LIBRARIES})
