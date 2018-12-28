@@ -1,0 +1,9 @@
+<library path="libmoveit_multi_dof_controller_manager">
+  <class name="moveit_multi_dof_controller_manager/MoveItMultiDOFControllerManager"
+         type="moveit_multi_dof_controller_manager::MoveItMultiDOFControllerManager"
+         base_class_type="moveit_controller_manager::MoveItControllerManager">
+    <description>
+    </description>
+  </class>
+
+</library>

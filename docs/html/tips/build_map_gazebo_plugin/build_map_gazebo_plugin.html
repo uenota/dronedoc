@@ -28,7 +28,7 @@
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="索引" href="../../genindex.html" />
     <link rel="search" title="検索" href="../../search.html" />
-    <link rel="next" title="基本的なBashの使い方" href="../../appendix/bash_commands/bash_commands.html" />
+    <link rel="next" title="AirSimシミュレータを使う" href="../airsim/airsim.html" />
     <link rel="prev" title="Gmappingを使って地図を生成する" href="../build_map_gmapping/build_map_gmapping.html" /> 
 
   
@@ -100,11 +100,9 @@
 <li class="toctree-l2"><a class="reference internal" href="../change_local_planner/change_local_planner.html">move_baseのローカルプランナーを変更する</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../local_planner_for_uav/local_planner_for_uav.html">UAV用のローカルプランナを実装する</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../build_map_gmapping/build_map_gmapping.html">Gmappingを使って地図を生成する</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Gazebo Pluginを使って地図を作成する</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id1">Gazebo Pluginを使って地図を作成する</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id2">地図を出力する</a></li>
-</ul>
-</li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Gazebo Pluginを使って地図を作成する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../airsim/airsim.html">AirSimシミュレータを使う</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../moveit/index.html">MoveIt!を使ってドローンの経路計画を行う</a></li>
 </ul>
 </li>
 </ul>
@@ -224,7 +222,7 @@ catkin build
 <div class="section" id="id2">
 <h2>地図を出力する<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>マップを作りたいワールドを起動します。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre>roslaunch gazebo_ros empty_world.launch world_name:<span class="o">=</span>~/catkin_ws/src/px4_sim_pkg/worlds/willowgarage.world
+<div class="highlight-bash notranslate"><div class="highlight"><pre>roslaunch gazebo_ros empty_world.launch world_name:<span class="o">=</span>$HOME/catkin_ws/src/px4_sim_pkg/worlds/willow_garage.world
 </pre></div>
 </div>
 <p>Gazeboが起動したら以下のコマンドを実行します。</p>
@@ -262,7 +260,7 @@ catkin build
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../../appendix/bash_commands/bash_commands.html" class="btn btn-neutral float-right" title="基本的なBashの使い方" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../airsim/airsim.html" class="btn btn-neutral float-right" title="AirSimシミュレータを使う" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="../build_map_gmapping/build_map_gmapping.html" class="btn btn-neutral" title="Gmappingを使って地図を生成する" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

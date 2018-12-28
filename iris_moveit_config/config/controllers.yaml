@@ -1,0 +1,7 @@
+controller_list:
+ - name: iris_group_controller
+   action_ns: follow_multi_dof_joint_trajectory
+   type: FollowMultiDOFJointTrajectory
+   default: true
+   joints:
+    - virtual_joint
