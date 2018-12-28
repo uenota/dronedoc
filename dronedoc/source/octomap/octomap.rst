@@ -130,7 +130,7 @@ octomap_serverパッケージにあるoctomap_mapping.launchファイルを元�
 
 .. code-block:: bash
 
-    roslaunch px4_sim_pkg mymodel_sitl_depth_cam.launch world:=~/catkin_ws/src/dronedoc/worlds/willow_garage.world
+    roslaunch px4_sim_pkg mymodel_sitl_depth_cam.launch world:=$HOME/catkin_ws/src/dronedoc/worlds/willow_garage.world
 
 次に、octomap_server_nodeノードを起動します。
 

@@ -71,7 +71,7 @@ costmap_2d_nodeのパラメータの設定ファイルは以下のようにな�
 
 .. code-block:: bash
 
-  roslaunch turtlebot_gazebo turtlebot_world.launch world_file:=~/catkin_ws/src/px4_sim_pkg/worlds/willow_garage.world
+  roslaunch turtlebot_gazebo turtlebot_world.launch world_file:=$HOME/catkin_ws/src/px4_sim_pkg/worlds/willow_garage.world
 
 Teleopノードを起動します。
 使用するコントローラに適したLaunchファイルを使ってください。
