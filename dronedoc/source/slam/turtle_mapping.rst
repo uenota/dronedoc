@@ -34,8 +34,8 @@ Willow GarageモデルはInsertタブから追加することができます。
     :linenos:
     :caption: map_builder.launch
 
-    <remap from="/costmap_node/costmap/costmap" to="map" />
     <launch>
+        <remap from="/costmap_node/costmap/costmap" to="map" />
         <node pkg="costmap_2d" type="costmap_2d_node" name="costmap_node" respawn="false" output="screen">
         <rosparam command="load" ns="costmap" file="$(find px4_sim_pkg)/config/costmap_params.yaml"/>
         </node>
