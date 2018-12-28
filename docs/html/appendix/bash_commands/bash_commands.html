@@ -29,7 +29,7 @@
     <link rel="index" title="索引" href="../../genindex.html" />
     <link rel="search" title="検索" href="../../search.html" />
     <link rel="next" title="ROSの基本" href="../ros/ros.html" />
-    <link rel="prev" title="AirSimシミュレータを使う" href="../../tips/airsim/airsim.html" /> 
+    <link rel="prev" title="AirSimシミュレータを使う" href="../../airsim/airsim.html" /> 
 
   
   <script src="../../_static/js/modernizr.min.js"></script>
@@ -78,9 +78,8 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption"><span class="caption-text">SLAM</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">はじめに</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../px4sim/px4sim.html">PX4 SITLシミュレーション</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../runnode/runnodecpp.html">自作ノードを実行する（C++）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../runnode/runnodepy.html">自作ノードを実行する（Python）</a></li>
@@ -92,20 +91,33 @@
 <li class="toctree-l1"><a class="reference internal" href="../../slam/lidar_localization.html">LiDARとAMCLを用いた自己位置推定</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../slam/localization_and_mapping.html">LiDARを用いたSLAM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../slam/lidar_nav.html">LiDARを用いた自律移動</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Mapping</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../octomap/octomap.html">Octomapを使って3Dマップを作る</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../tips/index.html">Tips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../build_map_gmapping/build_map_gmapping.html">Gmappingを使って地図を生成する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../build_map_gazebo_plugin/build_map_gazebo_plugin.html">Gazebo Pluginを使って地図を作成する</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Motion Planning</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../moveit/index.html">MoveIt!を使ってドローンの経路計画を行う</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../local_planner_for_uav/local_planner_for_uav.html">UAV用のローカルプランナを実装する</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Tips</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../qgc_intro/qgc_intro.html">QGroundControl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../add_range_sensor/add_range_sensor.html">ドローンに距離センサを搭載する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../filter_lidar/filter_lidar.html">LiDARのデータをフィルタリングする</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../change_local_planner/change_local_planner.html">move_baseのローカルプランナーを変更する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../airsim/airsim.html">AirSimシミュレータを使う</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Appendix</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">基本的なBashの使い方</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#id1">はじめに</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id2">基本的なコマンド</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#ls">ls</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id3">使い方</a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="#ls">ls</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#cd">cd</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#touch">touch</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#mkdir">mkdir</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#echo">echo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#rm">rm</a></li>
@@ -114,28 +126,28 @@
 <li class="toctree-l3"><a class="reference internal" href="#ssh">ssh</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#scp">scp</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#wget">wget</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#curl">curl</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#source">source</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#export">export</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#cat">cat</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#less">less</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#alias">alias</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id4">リダイレクト</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">リダイレクト</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#bashrc">.bashrc</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#tips">Tips</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#set-o-noclobber">set -o noclobber</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#alias">alias</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#cm-cs-cw">cm, cs, cw</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#git">Git</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id5">gitコマンドの使い方</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">gitコマンドの使い方</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#githubros">GitHub上のROSパッケージを使う</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id6">参考</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">参考</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../ros/ros.html">ROSの基本</a></li>
@@ -219,116 +231,226 @@ Linuxコマンドに関しては調べながら試してみるのが一番だと
 <h2>基本的なコマンド<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="section" id="ls">
 <h3>ls<a class="headerlink" href="#ls" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">ls</span></code> はファイルやディレクトリの内容を表示するコマンドです。</p>
-<div class="section" id="id3">
-<h4>使い方<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h4>
-<p><code class="docutils literal notranslate"><span class="pre">ls</span></code> コマンド単体で実行するとカレントディレクトリの内容を表示します。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre>ls
+<p>ファイルやディレクトリの内容を表示する。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span class="c1"># カレントディレクトリの内容を表示する</span>
+ls
+<span class="c1"># 指定したディレクトリの内容を表示する</span>
+ls dir_name
+<span class="c1"># 対象のディレクトリのすべてのフォルダ、ファイル（隠しフォルダ等を含む）を表示する</span>
+ls -a
+<span class="c1"># 対象のディレクトリの内容をより詳細に表示する</span>
+ls -l
+<span class="c1"># オプションは同時に指定することもできる</span>
+ls -la
 </pre></div>
-</div>
-<p>特定のパスを指定するとそのディレクトリの内容を表示します。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre>ls ~/catkin_ws/src
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">-a</span></code> オプションをつけると対象のディレクトリのすべてのフォルダ、ファイル（隠しフォルダ等を含む）を表示します。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre>ls -a
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">-l</span></code> オプションをつけると対象のディレクトリの内容をより詳細に表示することができます。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre>ls -l
-</pre></div>
-</div>
-<p>これらのオプションは同時に指定することもできます。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre>ls -la
-</pre></div>
-</div>
 </div>
 </div>
 <div class="section" id="cd">
 <h3>cd<a class="headerlink" href="#cd" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>TODO</p>
+<p>カレントディレクトリを変更する。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span class="c1"># ディレクトリを移動</span>
+<span class="nb">cd</span> dir_name
+<span class="c1"># ホームディレクトリに移動</span>
+<span class="nb">cd</span>
+</pre></div>
 </div>
-<div class="section" id="touch">
-<h3>touch<a class="headerlink" href="#touch" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>TODO</p>
 </div>
 <div class="section" id="mkdir">
 <h3>mkdir<a class="headerlink" href="#mkdir" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>TODO</p>
+<p>ディレクトリを作成する。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span class="c1"># ディレクトリを作成する</span>
+mkdir dir_name
+<span class="c1"># 指定したディレクトリをサブディレクトリまで作成する</span>
+mkdir -p parent_dir/dir_name
+</pre></div>
+</div>
 </div>
 <div class="section" id="echo">
 <h3>echo<a class="headerlink" href="#echo" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>TODO</p>
+<p>メッセージを表示する。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span class="c1"># helloという文字列を表示する</span>
+<span class="nb">echo</span> hello
+<span class="c1"># $HOME環境変数を表示する</span>
+<span class="nb">echo</span> $HOME
+</pre></div>
+</div>
 </div>
 <div class="section" id="rm">
 <h3>rm<a class="headerlink" href="#rm" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>TODO</p>
+<p>ファイル、ディレクトリを削除する。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span class="c1"># ファイルを削除する</span>
+rm file_name
+<span class="c1"># 複数ファイルを削除する</span>
+rm file1 file2
+<span class="c1"># ディレクトリを中身ごと削除する</span>
+rm -r dir_name
+<span class="c1"># 警告メッセージを表示しない</span>
+rm -f file_name
+</pre></div>
+</div>
 </div>
 <div class="section" id="cp">
 <h3>cp<a class="headerlink" href="#cp" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>TODO</p>
+<p>ファイル・ディレクトリをコピーする。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span class="c1"># ファイルをコピーする</span>
+cp src_file_name dest_file_name
+<span class="c1"># ディレクトリを中身ごとコピーする</span>
+cp -r src_dir_name dest_dir_name
+</pre></div>
+</div>
 </div>
 <div class="section" id="mv">
 <h3>mv<a class="headerlink" href="#mv" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>TODO</p>
+<p>ファイル・ディレクトリを移動・改名する</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span class="c1"># ファイルを改名する</span>
+mv src_file_name dest_file_name
+<span class="c1"># dest_dir_nameが存在する場合はdest_dir_name以下に移動する</span>
+<span class="c1"># 存在しない場合はディレクトリを改名する</span>
+mv src_dir_name dest_dir_name
+<span class="c1"># ファイルをディレクトリ内に移動する</span>
+mv src_file_name dest_dir_name
+<span class="c1"># 複数ファイルを移動する</span>
+mv file1 file2 dest_dir_name
+</pre></div>
+</div>
 </div>
 <div class="section" id="ssh">
 <h3>ssh<a class="headerlink" href="#ssh" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>TODO</p>
+<p>リモートマシンに接続する。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span class="c1"># 現在のユーザー名で指定したIPアドレスのマシンに接続する</span>
+ssh xxx.xxx.xxx.xxx
+<span class="c1"># ユーザー名user_nameで指定したIPアドレスのマシンに接続する</span>
+ssh user_name@xxx.xxx.xxx.xxx
+</pre></div>
+</div>
 </div>
 <div class="section" id="scp">
 <h3>scp<a class="headerlink" href="#scp" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>TODO</p>
+<p>リモートマシンとファイルをやり取りする。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span class="c1"># ローカルマシンのfile_nameファイルを指定したIPアドレスのマシンの</span>
+<span class="c1"># user_nameユーザーの指定したディレクトリ以下にコピーする</span>
+scp file_name user_name@xxx.xxx.xxx.xxx:dir_name
+<span class="c1"># 指定したIPアドレスのマシンのuser_nameユーザーのマシンのfile_nameファイルを</span>
+<span class="c1"># ローカルマシンのホームディレクトリに保存する</span>
+scp user_name@xxx.xxx.xxx.xxx:file_name ~/file_name
+<span class="c1"># ファイルを再帰的にコピーする</span>
+scp -r user_name@xxx.xxx.xxx.xxx:dir_name ~/dir_name
+</pre></div>
+</div>
 </div>
 <div class="section" id="wget">
 <h3>wget<a class="headerlink" href="#wget" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>TODO</p>
+<p>ファイルをダウンロードする。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span class="c1"># URLにあるファイルをダウンロードする</span>
+wget URL
+</pre></div>
 </div>
-<div class="section" id="curl">
-<h3>curl<a class="headerlink" href="#curl" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>TODO</p>
 </div>
 <div class="section" id="source">
 <h3>source<a class="headerlink" href="#source" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>TODO</p>
+<p>指定したファイルに書いてあるコマンドを実行する。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span class="c1"># ファイルに書いてあるコマンドを実行する</span>
+<span class="nb">source</span> file_name
+</pre></div>
+</div>
 </div>
 <div class="section" id="export">
 <h3>export<a class="headerlink" href="#export" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>TODO</p>
+<p>環境変数やシェル変数を変更する。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span class="c1"># 環境変数ENV_VARにvalueを設定する</span>
+<span class="nb">export</span> <span class="nv">ENV_VAR</span><span class="o">=</span>value
+<span class="c1"># 環境変数ENV_VARにvalueを追加する</span>
+<span class="c1"># 環境変数は:（コロン）で区切られている</span>
+<span class="nb">export</span> <span class="nv">ENV_VAR</span><span class="o">=</span><span class="nv">$E</span>NV_VAR:value
+</pre></div>
+</div>
 </div>
 <div class="section" id="cat">
 <h3>cat<a class="headerlink" href="#cat" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>TODO</p>
+<p>複数のファイルの内容を連結したり表示したりする。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span class="c1"># ファイルの内容を表示する</span>
+cat file_name
+<span class="c1"># ファイルの内容を連結する</span>
+cat file1 file2 &gt; newfile
+</pre></div>
+</div>
 </div>
 <div class="section" id="less">
 <h3>less<a class="headerlink" href="#less" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<p>TODO</p>
+<p>テキストファイルの内容を1画面ずつ表示する。
+スペースキーで画面を進め、qキーで終了できる。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span class="c1"># ファイルの内容を表示する</span>
+less file_name
+</pre></div>
 </div>
 </div>
-<div class="section" id="id4">
-<h2>リダイレクト<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>TODO</p>
+<div class="section" id="alias">
+<h3>alias<a class="headerlink" href="#alias" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>コマンドの別名（エイリアス）を定義する。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span class="c1"># エイリアスを定義する</span>
+<span class="nb">alias</span> <span class="nv">command</span><span class="o">=</span>another_command
+<span class="c1"># スペースを含むエイリアスを定義する</span>
+<span class="nb">alias</span> <span class="nv">command_opt</span><span class="o">=</span><span class="s2">&quot;command -option&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>リダイレクト<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Linuxでは、リダイレクトを使ってコマンドの出力先や入力先をターミナルからファイルへ変更したりできます。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span class="c1"># カレントディレクトリのファイル一覧をファイルに書き出す（上書き）</span>
+ls &gt; file_name
+<span class="c1"># カレントディレクトリのファイル一覧をファイルに書き出す（末尾に追加）</span>
+<span class="c1"># 存在しない場合は新たに作られる</span>
+ls &gt;&gt; file_name
+<span class="c1"># コマンドの実行結果とエラー内容をファイルに書き出す</span>
+ls not_existing_dir &gt;<span class="p">&amp;</span> file_name
+<span class="c1"># コマンドのエラー内容だけをファイルに書き出す</span>
+ls not_existing_dir 2&gt; file_name
+<span class="c1"># ファイルの内容を表示する</span>
+cat &lt; file_name
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;</span></code> はファイルを上書きするので使用する際は注意すること。</p>
+<ul class="simple">
+<li><a class="reference external" href="https://tech.nikkeibp.co.jp/it/article/COLUMN/20060228/231012/">リダイレクトの使い方</a></li>
+<li><a class="reference external" href="https://qiita.com/laikuaut/items/e1cc312ffc7ec2c872fc">bash: 標準出力、標準エラー出力をファイル、画面それぞれに出力する方法</a></li>
+</ul>
 </div>
 <div class="section" id="bashrc">
 <h2>.bashrc<a class="headerlink" href="#bashrc" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>.bashrcはBashの設定スクリプトです。</p>
+<p>.bashrcはBashの設定スクリプトで、bashを起動した際に毎回内容が実行されます。
+ターミナルの設定などはこのファイルに書くことが多いです。</p>
 <div class="section" id="tips">
 <h3>Tips<a class="headerlink" href="#tips" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <div class="section" id="set-o-noclobber">
 <h4>set -o noclobber<a class="headerlink" href="#set-o-noclobber" title="このヘッドラインへのパーマリンク">¶</a></h4>
-<p>TODO</p>
+<p>以下のコマンドを実行すれば、 <code class="docutils literal notranslate"><span class="pre">&gt;</span></code> を使ったリダイレクトでファイルが上書きされなくなります。</p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;|</span></code> を使えば強制的に上書きできる。
+また、 <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">+o</span> <span class="pre">noclobber</span></code> で上書き禁止を解除できる。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span class="nb">set</span> -o noclobber
+</pre></div>
 </div>
-<div class="section" id="alias">
-<h4>alias<a class="headerlink" href="#alias" title="このヘッドラインへのパーマリンク">¶</a></h4>
-<p>TODO</p>
+</div>
+<div class="section" id="cm-cs-cw">
+<h4>cm, cs, cw<a class="headerlink" href="#cm-cs-cw" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>catkin関連のコマンドのエイリアスを以下のように定義すると便利です。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span class="c1"># catkin_wsに移動してビルドしてから元のディレクトリに戻る</span>
+<span class="nb">alias</span> <span class="nv">cm</span><span class="o">=</span><span class="s2">&quot;cd ~/catkin_ws &amp;&amp; catkin build &amp;&amp; cd -&quot;</span>
+<span class="c1"># catkin_ws/srcに移動する</span>
+<span class="nb">alias</span> <span class="nv">cs</span><span class="o">=</span><span class="s2">&quot;cd ~/catkin_ws/src&quot;</span>
+<span class="c1"># catkin_wsに移動する</span>
+<span class="nb">alias</span> <span class="nv">cw</span><span class="o">=</span><span class="s2">&quot;cd ~/catkin_ws/&quot;</span>
+</pre></div>
+</div>
 </div>
 </div>
 </div>
 <div class="section" id="git">
 <h2>Git<a class="headerlink" href="#git" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Gitはバージョン管理ソフトウェアの一種で、インストール済みであれば <code class="docutils literal notranslate"><span class="pre">git</span></code> コマンドから利用することができます。</p>
-<div class="section" id="id5">
-<h3>gitコマンドの使い方<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="section" id="id6">
+<h3>gitコマンドの使い方<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>GitHub上にあるリポジトリは <code class="docutils literal notranslate"><span class="pre">git</span></code> コマンドを使ってローカルにクローン（複製）することができます。</p>
 <p>例えば、このチュートリアルのリポジトリであれば、</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre>git clone https://github.com/uenota/dronedoc.git
@@ -346,8 +468,11 @@ catkin_make
 </div>
 </div>
 </div>
-<div class="section" id="id6">
-<h2>参考<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id7">
+<h2>参考<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="https://tech.nikkeibp.co.jp/it/article/COLUMN/20060223/230520/">Linuxコマンド集 | 日経 xTECH（クロステック）</a></li>
+</ul>
 </div>
 </div>
 
@@ -362,7 +487,7 @@ catkin_make
         <a href="../ros/ros.html" class="btn btn-neutral float-right" title="ROSの基本" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../../tips/airsim/airsim.html" class="btn btn-neutral" title="AirSimシミュレータを使う" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../../airsim/airsim.html" class="btn btn-neutral" title="AirSimシミュレータを使う" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
