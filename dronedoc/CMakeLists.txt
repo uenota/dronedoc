@@ -86,8 +86,6 @@ add_dependencies(map_builder dronedoc)
 # Build moveit library
 add_library(moveit_multi_dof_controller_manager src/moveit_multi_dof_controller_manager.cpp)
 target_link_libraries(moveit_multi_dof_controller_manager ${catkin_LIBRARIES} ${Boost_LIBRARIES})
-install(TARGETS moveit_multi_dof_controller_manager LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION})
-install(FILES moveit_multi_dof_controller_manager_plugin_description.xml DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
 
 # Build ROS nodes
 add_executable(drone_controller src/drone_controller.cpp)
