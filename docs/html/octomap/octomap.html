@@ -518,6 +518,40 @@ octomap_serverパッケージにあるoctomap_mapping.launchファイルを元�
 </div>
 <p>編集後のLaunchファイルは以下のとおりです。</p>
 <p>今回の設定では、グローバルフレームが <code class="docutils literal notranslate"><span class="pre">map</span></code> になっており、点群は <code class="docutils literal notranslate"><span class="pre">/camera/depth/points</span></code> にパブリッシュされるので、その部分を変更してあります。</p>
+<div class="literal-block-wrapper container" id="id8">
+<div class="code-block-caption"><span class="caption-text">octomap_mapping.launch</span><a class="headerlink" href="#id8" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-xml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15</pre></div></td><td class="code"><div class="highlight"><pre><span class="nt">&lt;launch&gt;</span>
+    <span class="nt">&lt;node</span> <span class="na">pkg=</span><span class="s">&quot;octomap_server&quot;</span> <span class="na">type=</span><span class="s">&quot;octomap_server_node&quot;</span> <span class="na">name=</span><span class="s">&quot;octomap_server&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;resolution&quot;</span> <span class="na">value=</span><span class="s">&quot;0.05&quot;</span> <span class="nt">/&gt;</span>
+
+        <span class="c">&lt;!-- fixed map frame (set to &#39;map&#39; if SLAM or localization running!) --&gt;</span>
+	    <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;frame_id&quot;</span> <span class="na">type=</span><span class="s">&quot;string&quot;</span> <span class="na">value=</span><span class="s">&quot;map&quot;</span> <span class="nt">/&gt;</span>
+
+        <span class="c">&lt;!-- maximum range to integrate (speedup!) --&gt;</span>
+        <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;sensor_model/max_range&quot;</span> <span class="na">value=</span><span class="s">&quot;5.0&quot;</span> <span class="nt">/&gt;</span>
+
+        <span class="c">&lt;!-- data source to integrate (PointCloud2) --&gt;</span>
+        <span class="nt">&lt;remap</span> <span class="na">from=</span><span class="s">&quot;cloud_in&quot;</span> <span class="na">to=</span><span class="s">&quot;/camera/depth/points&quot;</span> <span class="nt">/&gt;</span>
+
+    <span class="nt">&lt;/node&gt;</span>
+<span class="nt">&lt;/launch&gt;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
 </div>
 <div class="section" id="id4">
 <h3>実行する<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h3>

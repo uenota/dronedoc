@@ -110,7 +110,7 @@ hector_mappingパッケージを使う際のTFの設定については `How to s
 
 最終的に、Launchファイルは以下のとおりになります。
 
-.. literalinclude:: ../../launch/mapping_default.launch
+.. literalinclude:: ../../launch/map/mapping_default.launch
   :linenos:
   :language: xml
   :caption: mapping_default.launch

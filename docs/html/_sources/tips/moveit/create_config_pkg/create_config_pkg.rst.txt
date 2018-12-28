@@ -388,13 +388,3 @@ Configuration Filesタブでは、今までの手順で作成した設定ファ�
     MoveIt!を使ってardroneの経路計画を行う
 `URDF and SRDF <http://docs.ros.org/kinetic/api/moveit_tutorials/html/doc/urdf_srdf/urdf_srdf_tutorial.html>`_
     URDFファイルとSRDFファイルについて
-
-ros_control関連
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-- `ros_control Wiki <https://github.com/ros-controls/ros_control/wiki>`_
-- `Tutorial: ROS Control <http://gazebosim.org/tutorials?tut=ros_control>`_
-- `Low Level Controllers <http://docs.ros.org/kinetic/api/moveit_tutorials/html/doc/controller_configuration/controller_configuration_tutorial.html>`_
-- `Controller と HardwareInterface との間の処理の仕組み（1. ロボットモデルの定義と登録）- Qiita <https://qiita.com/MoriKen/items/613635b90f3a98042dc5>`_
-- `Controller と HardwareInterface との間の処理の仕組み（2. RobotHWSimのプラグインについて）- Qiita <https://qiita.com/MoriKen/items/5cab7436c1b36c25e0ce>`_
-- `Controller と HardwareInterface との間の処理の仕組み（3. Controllerについて）- Qiita <https://qiita.com/MoriKen/items/c29f653d03baffe5f0e2>`_
-- `実機を動かす時の仕様について · Issue #46 · Nishida-Lab/motoman_project <https://github.com/Nishida-Lab/motoman_project/issues/46>`_
