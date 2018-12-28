@@ -1,7 +1,7 @@
 コード解説（マネージャ)
 ---------------------------------------------------------------------------
 
-.. literalinclude:: ../../../../src/moveit_multi_dof_controller_manager.cpp
+.. literalinclude:: ../../../src/moveit_multi_dof_controller_manager.cpp
     :linenos:
     :language: cpp
     :caption: moveit_multi_dof_controller_manager.cpp

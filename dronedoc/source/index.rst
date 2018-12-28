@@ -3,7 +3,7 @@ PX4 SITL Tutorial
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents
+   :caption: SLAM
 
    introduction.rst
    px4sim/px4sim.rst
@@ -17,8 +17,31 @@ PX4 SITL Tutorial
    slam/lidar_localization.rst
    slam/localization_and_mapping.rst
    slam/lidar_nav.rst
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Mapping
+
    octomap/octomap.rst
-   tips/index.rst
+   build_map_gmapping/build_map_gmapping.rst
+   build_map_gazebo_plugin/build_map_gazebo_plugin.rst
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Motion Planning
+
+   moveit/index.rst
+   local_planner_for_uav/local_planner_for_uav.rst
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Tips
+
+   qgc_intro/qgc_intro.rst
+   add_range_sensor/add_range_sensor.rst
+   filter_lidar/filter_lidar.rst
+   change_local_planner/change_local_planner.rst
+   airsim/airsim.rst
 
 .. toctree::
    :maxdepth: 1

@@ -115,7 +115,7 @@ MoveItSimpleControllerManagerは、FollowJointTrajectoryインターフェース
 今回はMoveItMultiDOFControllerManagerという名前の新しいマネージャを作成します。
 コードの詳細については、:doc:`ctrl_manager` を参照してください。
 
-.. literalinclude:: ../../../../src/moveit_multi_dof_controller_manager.cpp
+.. literalinclude:: ../../../src/moveit_multi_dof_controller_manager.cpp
     :linenos:
     :language: cpp
     :caption: moveit_multi_dof_controller_manager.cpp
@@ -129,7 +129,7 @@ MoveItSimpleControllerManagerは、FollowJointTrajectoryインターフェース
 
 コードの詳細については、:doc:`ctrl_interface` を参照してください。
 
-.. literalinclude:: ../../../../include/dronedoc/follow_multi_dof_joint_trajectory_controller_handle.hpp
+.. literalinclude:: ../../../include/dronedoc/follow_multi_dof_joint_trajectory_controller_handle.hpp
     :linenos:
     :language: cpp
     :caption: follow_multi_dof_joint_trajectory_controller_handle.hpp
@@ -140,7 +140,7 @@ MoveItSimpleControllerManagerは、FollowJointTrajectoryインターフェース
 
 コードの詳細については、:doc:`controller` を参照してください。
 
-.. literalinclude:: ../../../../src/drone_controller.cpp
+.. literalinclude:: ../../../src/drone_controller.cpp
     :linenos:
     :language: cpp
     :caption: drone_controller.cpp
@@ -188,7 +188,7 @@ moveit_multi_dof_controller_manager_plugin_description.xml
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 プラグインローダーがプラグインを見つけられるように、プラグインの情報を記述するファイルを作成します。
 
-.. literalinclude:: ../../../../moveit_multi_dof_controller_manager_plugin_description.xml
+.. literalinclude:: ../../../moveit_multi_dof_controller_manager_plugin_description.xml
     :linenos:
     :language: xml
     :caption: moveit_multi_dof_controller_manager_plugin_description.xml
@@ -388,7 +388,7 @@ iris_moveit_controller_manager.launch.xmlは、コントローラマネージャ
 ``moveit_controller_manager`` パラメータを変更して、作成したコントローラマネージャを使用するようにします。
 また、後述のcontrollers.yamlファイルをロードしてコントローラマネージャ用のパラメータをロードします。
 
-.. literalinclude:: ../../../../../iris_moveit_config/launch/iris_moveit_controller_manager.launch.xml
+.. literalinclude:: ../../../../iris_moveit_config/launch/iris_moveit_controller_manager.launch.xml
     :linenos:
     :language: xml
     :caption: iris_moveit_config/launch/iris_moveit_controller_manager.launch.xml
@@ -398,7 +398,7 @@ controller.yaml
 コントローラマネージャが使用するパラメータを記述してあるファイルです。
 パラメータに関しては、`Low Level Controllers <http://docs.ros.org/kinetic/api/moveit_tutorials/html/doc/controller_configuration/controller_configuration_tutorial.html>`_ を見てください。
 
-.. literalinclude:: ../../../../../iris_moveit_config/config/controllers.yaml
+.. literalinclude:: ../../../../iris_moveit_config/config/controllers.yaml
     :linenos:
     :language: yaml
     :caption: iris_moveit_config/config/controllers.yaml

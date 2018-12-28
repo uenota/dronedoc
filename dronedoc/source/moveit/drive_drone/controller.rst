@@ -1,7 +1,7 @@
 コード解説（コントローラ)
 ---------------------------------------------------------------------------
 
-.. literalinclude:: ../../../../src/drone_controller.cpp
+.. literalinclude:: ../../../src/drone_controller.cpp
     :linenos:
     :language: cpp
     :caption: drone_controller.cpp

@@ -1,7 +1,7 @@
 コード解説（インターフェース)
 ---------------------------------------------------------------------------
 
-.. literalinclude:: ../../../../include/dronedoc/follow_multi_dof_joint_trajectory_controller_handle.hpp
+.. literalinclude:: ../../../include/dronedoc/follow_multi_dof_joint_trajectory_controller_handle.hpp
     :linenos:
     :language: cpp
     :caption: follow_multi_dof_joint_trajectory_controller_handle.hpp

@@ -17,7 +17,7 @@ iris_2d_lidarモデルをインクルードして超音波センサをつけて�
 
 超音波センサを追加したモデルは以下のようになります。
 
-.. literalinclude:: ../../../models/iris_sonar/model.sdf
+.. literalinclude:: ../../models/iris_sonar/model.sdf
     :language: xml
     :linenos:
     :caption: model.sdf
@@ -27,7 +27,7 @@ configファイル
 以下のようなmodel.configも作成し、modelsディレクトリ以下にiris_sonarディレクトリを作ってその中に保存しましょう。
 authorタグの中身は適宜変更してください。
 
-.. literalinclude:: ../../../models/iris_sonar/model.config
+.. literalinclude:: ../../models/iris_sonar/model.config
     :language: xml
     :linenos:
     :caption: model.config
@@ -82,7 +82,7 @@ mavrosパッケージ以下にあるpx4_pluginlists.yamlを直接編集しても
 
 以下のようにplugin_blacklist以下のdistance_sensorをコメントアウトします。
 
-.. literalinclude:: ../../../config/px4_pluginlists.yaml
+.. literalinclude:: ../../config/px4_pluginlists.yaml
     :linenos:
     :language: yaml
     :caption: px4_pluginlists.yaml
@@ -106,7 +106,7 @@ mavrosパッケージ以下にあるpx4_pluginlists.yamlを直接編集しても
 ``sensor_position``
     センサの位置。
 
-.. literalinclude:: ../../../config/distance_sensor.yaml
+.. literalinclude:: ../../config/distance_sensor.yaml
     :linenos:
     :language: yaml
     :caption: distance_sensor.yaml

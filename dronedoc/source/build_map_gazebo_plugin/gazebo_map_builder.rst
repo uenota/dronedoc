@@ -6,7 +6,7 @@
 map_builder.cpp
 ----------------------------------------------------------
 
-.. literalinclude:: ../../../src/gazebo/map_builder.cpp
+.. literalinclude:: ../../src/gazebo/map_builder.cpp
     :linenos:
     :language: cpp
     :caption: map_builder.cpp
@@ -14,7 +14,7 @@ map_builder.cpp
 request_publisher.cpp
 ----------------------------------------------------------
 
-.. literalinclude:: ../../../src/gazebo/request_publisher.cpp
+.. literalinclude:: ../../src/gazebo/request_publisher.cpp
     :linenos:
     :language: cpp
     :caption: request_publisher.cpp
