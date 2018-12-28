@@ -80,7 +80,6 @@
             
               <p class="caption"><span class="caption-text">SLAM</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../introduction.html">はじめに</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../px4sim/px4sim.html">PX4 SITLシミュレーション</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../runnode/runnodecpp.html">自作ノードを実行する（C++）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../runnode/runnodepy.html">自作ノードを実行する（Python）</a></li>
@@ -463,7 +462,7 @@ authorタグの中身は適宜変更してください。</p>
 mavrosノードが起動するときに、このファイルの内容をROSパラメータとして読み込むことで、ブラックリストとホワイトリストが反映されます。</p>
 <p>mavrosパッケージ以下にあるpx4_pluginlists.yamlを直接編集してもいいのですが、これを変更すると他のLaunchファイルなどに影響を与える可能性があるので、すでにあるファイルをコピーして編集します。
 以下のコマンドでmavrosパッケージのディレクトリ内にあるpx4_pluginlists.yamlをコピーします。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre>roscp mavros px4_pluginlists.yaml ~catkin_ws/src/px4_sim_pkg/config/
+<div class="highlight-bash notranslate"><div class="highlight"><pre>roscp mavros px4_pluginlists.yaml ~/catkin_ws/src/px4_sim_pkg/config/
 </pre></div>
 </div>
 <p>以下のようにplugin_blacklist以下のdistance_sensorをコメントアウトします。</p>

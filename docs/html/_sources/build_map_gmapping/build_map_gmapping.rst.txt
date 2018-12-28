@@ -23,7 +23,6 @@ Willow GarageモデルはInsertタブから追加することができます。
 
 必要なパッケージをインストールする
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
 .. code-block:: bash
 
   sudo apt install ros-kinetic-turtlebot-teleop \
@@ -36,7 +35,7 @@ Willow GarageモデルはInsertタブから追加することができます。
 
 .. code-block:: bash
 
-  roslaunch turtlebot_gazebo turtlebot_world.launch world_file:=~/catkin_ws/src/px4_sim_pkg/worlds/willow_garage.world
+  roslaunch turtlebot_gazebo turtlebot_world.launch world_file:=$HOME/catkin_ws/src/px4_sim_pkg/worlds/willow_garage.world
 
 Teleopノードを起動します。
 使用するコントローラに適したLaunchファイルを使ってください。
