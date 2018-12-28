@@ -53,7 +53,7 @@ Gazebo Pluginを作成するのは発展的な内容を含むため、今回は�
 
 .. code-block:: bash
 
-  roslaunch gazebo_ros empty_world.launch world_name:=~/catkin_ws/src/px4_sim_pkg/worlds/willowgarage.world
+  roslaunch gazebo_ros empty_world.launch world_name:=$HOME/catkin_ws/src/px4_sim_pkg/worlds/willow_garage.world
 
 Gazeboが起動したら以下のコマンドを実行します。
 

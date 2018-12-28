@@ -118,7 +118,7 @@ octomap_serverパッケージにあるoctomap_mapping.launchファイルを元�
 
 今回の設定では、グローバルフレームが ``map`` になっており、点群は ``/camera/depth/points`` にパブリッシュされるので、その部分を変更してあります。
 
-.. literalinclude:: ../../launch/octomap_mapping.launch
+.. literalinclude:: ../../launch/map/octomap_mapping.launch
     :linenos:
     :language: xml
     :caption: octomap_mapping.launch
