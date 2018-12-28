@@ -426,7 +426,7 @@ Execution
 
 .. code-block:: bash
 
-    roslaunch px4_sim_pkg iris_moveit.Launch
+    roslaunch px4_sim_pkg iris_moveit.launch
 
 経路計画用にMoveIt!のプラグインを含むRVizを起動します。
 
