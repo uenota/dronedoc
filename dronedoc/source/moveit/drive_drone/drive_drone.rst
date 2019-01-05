@@ -172,10 +172,13 @@ CMakeLists.txt
 コントローラマネージャをコンパイルしてライブラリをリンクするために以下の内容を追加します。
 コントローラマネージャはノードではなく、ライブラリなので、 ``add_library`` を使います。
 
+他のパッケージのライブラリと名前が重複しないようにライブラリ名の先頭に ``${PROJECT_NAME}_`` をつけます。
+今回のプロジェクト名は ``dronedoc`` なので、こうすることで ``libdronedoc_moveit_multi_dof_controller_manager`` という名前のライブラリができます。
+
 .. code-block:: cmake
 
-    add_library(moveit_multi_dof_controller_manager src/moveit_multi_dof_controller_manager.cpp)
-    target_link_libraries(moveit_multi_dof_controller_manager ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+    add_library(${PROJECT_NAME}_moveit_multi_dof_controller_manager src/moveit_multi_dof_controller_manager.cpp)
+    target_link_libraries(${PROJECT_NAME}_moveit_multi_dof_controller_manager ${catkin_LIBRARIES} ${Boost_LIBRARIES})
 
 コントローラをコンパイルしてライブラリをリンクするために以下の内容を追加します。
 
@@ -196,7 +199,7 @@ moveit_multi_dof_controller_manager_plugin_description.xml
 それぞれのタグ及びフィールドの意味は以下のとおりです。
 
 ``path``
-    ライブラリのパス。CMakeLists.txtの ``add_library`` 内で指定した名前の先頭に ``lib`` を追加したもの（今回の場合は ``libmoveit_multi_dof_controller_manager`` ）がライブラリ名になる。
+    ライブラリのパス。CMakeLists.txtの ``add_library`` 内で指定した名前の先頭に ``lib`` を追加したもの（今回の場合は ``libdronedoc_moveit_multi_dof_controller_manager`` ）がライブラリ名になる。
 ``type``
     プラグインの型名。名前空間から指定する必要がある。
 ``base_class``

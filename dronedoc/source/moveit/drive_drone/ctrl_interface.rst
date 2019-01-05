@@ -18,9 +18,9 @@ FollowMultiDOFJointTrajectoryインターフェースは、`ExecuteTrajectory <h
 
 .. code-block:: cpp
 
-    namespace moveit_multi_dof_controller_manager
+    namespace dronedoc
 
-``moveit_multi_dof_controller_manager`` 名前空間を使用します。
+``dronedoc`` 名前空間を使用します。
 
 .. code-block:: cpp
 

@@ -553,7 +553,7 @@ ros_controlに関しては、以下のリンクが参考になります。</p>
 <span class="cp">#include</span> <span class="cpf">&lt;sensor_msgs/JointState.h&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;pluginlib/class_list_macros.hpp&gt;</span><span class="cp"></span>
 
-<span class="k">namespace</span> <span class="n">moveit_multi_dof_controller_manager</span>
+<span class="k">namespace</span> <span class="n">dronedoc</span>
 <span class="p">{</span>
 
 <span class="k">class</span> <span class="nc">MoveItMultiDOFControllerManager</span> <span class="o">:</span> <span class="k">public</span> <span class="n">moveit_controller_manager</span><span class="o">::</span><span class="n">MoveItControllerManager</span>
@@ -759,9 +759,9 @@ ros_controlに関しては、以下のリンクが参考になります。</p>
   <span class="n">moveit_simple_controller_manager</span><span class="o">::</span><span class="n">ActionBasedControllerHandleBasePtr</span> <span class="n">controller_</span><span class="p">;</span>
 <span class="p">};</span>
 
-<span class="p">}</span>  <span class="c1">// end namespace moveit_multi_dof_controller_manager</span>
+<span class="p">}</span>  <span class="c1">// end namespace dronedoc</span>
 
-<span class="n">PLUGINLIB_EXPORT_CLASS</span><span class="p">(</span><span class="n">moveit_multi_dof_controller_manager</span><span class="o">::</span><span class="n">MoveItMultiDOFControllerManager</span><span class="p">,</span>
+<span class="n">PLUGINLIB_EXPORT_CLASS</span><span class="p">(</span><span class="n">dronedoc</span><span class="o">::</span><span class="n">MoveItMultiDOFControllerManager</span><span class="p">,</span>
                        <span class="n">moveit_controller_manager</span><span class="o">::</span><span class="n">MoveItControllerManager</span><span class="p">);</span>
 </pre></div>
 </td></tr></table></div>
@@ -923,7 +923,7 @@ ros_controlに関しては、以下のリンクが参考になります。</p>
 <span class="cp">#include</span> <span class="cpf">&lt;moveit_simple_controller_manager/action_based_controller_handle.h&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;moveit_msgs/ExecuteTrajectoryAction.h&gt;</span><span class="cp"></span>
 
-<span class="k">namespace</span> <span class="n">moveit_multi_dof_controller_manager</span>
+<span class="k">namespace</span> <span class="n">dronedoc</span>
 <span class="p">{</span>
 <span class="cm">/**</span>
 <span class="cm"> * @brief Controller for multi DOF joint trajectory</span>
@@ -1047,7 +1047,7 @@ ros_controlに関しては、以下のリンクが参考になります。</p>
   <span class="p">}</span>
 <span class="p">};</span>
 
-<span class="p">}</span>  <span class="c1">// end namespace moveit_multi_dof_controller_manager</span>
+<span class="p">}</span>  <span class="c1">// end namespace dronedoc</span>
 
 <span class="cp">#endif </span><span class="c1">// MOVEIT_PLUGINS_FOLLOW_MULTI_DOF_TRAJECTORY_CONTROLLER_HANDLE</span>
 </pre></div>
@@ -1727,8 +1727,10 @@ ros_controlに関しては、以下のリンクが参考になります。</p>
 </div>
 <p>コントローラマネージャをコンパイルしてライブラリをリンクするために以下の内容を追加します。
 コントローラマネージャはノードではなく、ライブラリなので、 <code class="docutils literal notranslate"><span class="pre">add_library</span></code> を使います。</p>
-<div class="highlight-cmake notranslate"><div class="highlight"><pre><span class="nb">add_library</span><span class="p">(</span><span class="s">moveit_multi_dof_controller_manager</span> <span class="s">src/moveit_multi_dof_controller_manager.cpp</span><span class="p">)</span>
-<span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">moveit_multi_dof_controller_manager</span> <span class="o">${</span><span class="nv">catkin_LIBRARIES</span><span class="o">}</span> <span class="o">${</span><span class="nv">Boost_LIBRARIES</span><span class="o">}</span><span class="p">)</span>
+<p>他のパッケージのライブラリと名前が重複しないようにライブラリ名の先頭に <code class="docutils literal notranslate"><span class="pre">${PROJECT_NAME}_</span></code> をつけます。
+今回のプロジェクト名は <code class="docutils literal notranslate"><span class="pre">dronedoc</span></code> なので、こうすることで <code class="docutils literal notranslate"><span class="pre">libdronedoc_moveit_multi_dof_controller_manager</span></code> という名前のライブラリができます。</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span class="nb">add_library</span><span class="p">(</span><span class="o">${</span><span class="nv">PROJECT_NAME</span><span class="o">}</span><span class="s">_moveit_multi_dof_controller_manager</span> <span class="s">src/moveit_multi_dof_controller_manager.cpp</span><span class="p">)</span>
+<span class="nb">target_link_libraries</span><span class="p">(</span><span class="o">${</span><span class="nv">PROJECT_NAME</span><span class="o">}</span><span class="s">_moveit_multi_dof_controller_manager</span> <span class="o">${</span><span class="nv">catkin_LIBRARIES</span><span class="o">}</span> <span class="o">${</span><span class="nv">Boost_LIBRARIES</span><span class="o">}</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>コントローラをコンパイルしてライブラリをリンクするために以下の内容を追加します。</p>
@@ -1765,7 +1767,7 @@ ros_controlに関しては、以下のリンクが参考になります。</p>
 <p>それぞれのタグ及びフィールドの意味は以下のとおりです。</p>
 <dl class="docutils">
 <dt><code class="docutils literal notranslate"><span class="pre">path</span></code></dt>
-<dd>ライブラリのパス。CMakeLists.txtの <code class="docutils literal notranslate"><span class="pre">add_library</span></code> 内で指定した名前の先頭に <code class="docutils literal notranslate"><span class="pre">lib</span></code> を追加したもの（今回の場合は <code class="docutils literal notranslate"><span class="pre">libmoveit_multi_dof_controller_manager</span></code> ）がライブラリ名になる。</dd>
+<dd>ライブラリのパス。CMakeLists.txtの <code class="docutils literal notranslate"><span class="pre">add_library</span></code> 内で指定した名前の先頭に <code class="docutils literal notranslate"><span class="pre">lib</span></code> を追加したもの（今回の場合は <code class="docutils literal notranslate"><span class="pre">libdronedoc_moveit_multi_dof_controller_manager</span></code> ）がライブラリ名になる。</dd>
 <dt><code class="docutils literal notranslate"><span class="pre">type</span></code></dt>
 <dd>プラグインの型名。名前空間から指定する必要がある。</dd>
 <dt><code class="docutils literal notranslate"><span class="pre">base_class</span></code></dt>
@@ -2026,7 +2028,7 @@ ros_controlに関しては、以下のリンクが参考になります。</p>
 6
 7</pre></div></td><td class="code"><div class="highlight"><pre><span class="nt">&lt;launch&gt;</span>
  <span class="c">&lt;!-- Set the param that trajectory_execution_manager needs to find the controller plugin --&gt;</span>
- <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;moveit_controller_manager&quot;</span> <span class="na">default=</span><span class="s">&quot;moveit_multi_dof_controller_manager/MoveItMultiDOFControllerManager&quot;</span> <span class="nt">/&gt;</span>
+ <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;moveit_controller_manager&quot;</span> <span class="na">default=</span><span class="s">&quot;dronedoc/MoveItMultiDOFControllerManager&quot;</span> <span class="nt">/&gt;</span>
  <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;moveit_controller_manager&quot;</span> <span class="na">value=</span><span class="s">&quot;$(arg moveit_controller_manager)&quot;</span><span class="nt">/&gt;</span>
  <span class="c">&lt;!-- load controller_list --&gt;</span>
  <span class="nt">&lt;rosparam</span> <span class="na">file=</span><span class="s">&quot;$(find iris_moveit_config)/config/controllers.yaml&quot;</span><span class="nt">/&gt;</span>

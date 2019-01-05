@@ -22,9 +22,9 @@
 
 .. code-block:: cpp
 
-    namespace moveit_multi_dof_controller_manager
+    namespace dronedoc
 
-``moveit_multi_dof_controller_manager`` 名前空間を使用します。
+``dronedoc`` 名前空間を使用します。
 
 .. code-block:: cpp
 
@@ -80,8 +80,8 @@
 
 .. code-block:: cpp
 
-    PLUGINLIB_EXPORT_CLASS(moveit_multi_dof_controller_manager::MoveItMultiDOFControllerManager,
-                        moveit_controller_manager::MoveItControllerManager);
+    PLUGINLIB_EXPORT_CLASS(dronedoc::MoveItMultiDOFControllerManager,
+                           moveit_controller_manager::MoveItControllerManager);
 
 ``PLUGINLIB_EXPORT_CLASS`` マクロを使ってクラスをプラグインとして登録します。
 第一引数には定義したクラスを、第二引数にはベースクラスを与えます。

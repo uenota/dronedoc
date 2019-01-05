@@ -9,7 +9,7 @@
 #include <sensor_msgs/JointState.h>
 #include <pluginlib/class_list_macros.hpp>
 
-namespace moveit_multi_dof_controller_manager
+namespace dronedoc
 {
 
 class MoveItMultiDOFControllerManager : public moveit_controller_manager::MoveItControllerManager
@@ -215,7 +215,7 @@ protected:
   moveit_simple_controller_manager::ActionBasedControllerHandleBasePtr controller_;
 };
 
-}  // end namespace moveit_multi_dof_controller_manager
+}  // end namespace dronedoc
 
-PLUGINLIB_EXPORT_CLASS(moveit_multi_dof_controller_manager::MoveItMultiDOFControllerManager,
+PLUGINLIB_EXPORT_CLASS(dronedoc::MoveItMultiDOFControllerManager,
                        moveit_controller_manager::MoveItControllerManager);
