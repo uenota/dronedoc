@@ -1,6 +1,6 @@
-<library path="libmoveit_multi_dof_controller_manager">
-  <class name="moveit_multi_dof_controller_manager/MoveItMultiDOFControllerManager"
-         type="moveit_multi_dof_controller_manager::MoveItMultiDOFControllerManager"
+<library path="libdronedoc_moveit_multi_dof_controller_manager">
+  <class name="dronedoc/MoveItMultiDOFControllerManager"
+         type="dronedoc::MoveItMultiDOFControllerManager"
          base_class_type="moveit_controller_manager::MoveItControllerManager">
     <description>
     </description>
