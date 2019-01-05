@@ -78,7 +78,6 @@
             
               <p class="caption"><span class="caption-text">SLAM</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">はじめに</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../px4sim/px4sim.html">PX4 SITLシミュレーション</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../runnode/runnodecpp.html">自作ノードを実行する（C++）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../runnode/runnodepy.html">自作ノードを実行する（Python）</a></li>
@@ -416,7 +415,7 @@
 <span class="cp">#include</span> <span class="cpf">&lt;sensor_msgs/JointState.h&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;pluginlib/class_list_macros.hpp&gt;</span><span class="cp"></span>
 
-<span class="k">namespace</span> <span class="n">moveit_multi_dof_controller_manager</span>
+<span class="k">namespace</span> <span class="n">dronedoc</span>
 <span class="p">{</span>
 
 <span class="k">class</span> <span class="nc">MoveItMultiDOFControllerManager</span> <span class="o">:</span> <span class="k">public</span> <span class="n">moveit_controller_manager</span><span class="o">::</span><span class="n">MoveItControllerManager</span>
@@ -622,9 +621,9 @@
   <span class="n">moveit_simple_controller_manager</span><span class="o">::</span><span class="n">ActionBasedControllerHandleBasePtr</span> <span class="n">controller_</span><span class="p">;</span>
 <span class="p">};</span>
 
-<span class="p">}</span>  <span class="c1">// end namespace moveit_multi_dof_controller_manager</span>
+<span class="p">}</span>  <span class="c1">// end namespace dronedoc</span>
 
-<span class="n">PLUGINLIB_EXPORT_CLASS</span><span class="p">(</span><span class="n">moveit_multi_dof_controller_manager</span><span class="o">::</span><span class="n">MoveItMultiDOFControllerManager</span><span class="p">,</span>
+<span class="n">PLUGINLIB_EXPORT_CLASS</span><span class="p">(</span><span class="n">dronedoc</span><span class="o">::</span><span class="n">MoveItMultiDOFControllerManager</span><span class="p">,</span>
                        <span class="n">moveit_controller_manager</span><span class="o">::</span><span class="n">MoveItControllerManager</span><span class="p">);</span>
 </pre></div>
 </td></tr></table></div>
@@ -640,10 +639,10 @@
 <p>必要なヘッダファイルをインクルードします。
 <code class="docutils literal notranslate"><span class="pre">follow_multi_dof_joint_trajectory_controller_handle.hpp</span></code> ヘッダは、 <code class="docutils literal notranslate"><span class="pre">FollowMultiDOFJointTrajectory</span></code> インターフェースを定義しています。
 また、MoveIt!のコントローラマネージャは、<a class="reference external" href="http://wiki.ros.org/pluginlib">pluginlib</a> を用いてプラグインとして登録して使用するので、pluginlibのヘッダをインクルードします。</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span class="k">namespace</span> <span class="n">moveit_multi_dof_controller_manager</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span class="k">namespace</span> <span class="n">dronedoc</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">moveit_multi_dof_controller_manager</span></code> 名前空間を使用します。</p>
+<p><code class="docutils literal notranslate"><span class="pre">dronedoc</span></code> 名前空間を使用します。</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span class="k">class</span> <span class="nc">MoveItMultiDOFControllerManager</span> <span class="o">:</span> <span class="k">public</span> <span class="n">moveit_controller_manager</span><span class="o">::</span><span class="n">MoveItControllerManager</span>
 </pre></div>
 </div>
@@ -685,8 +684,8 @@
 </div>
 <p>コントローラインターフェースへのポインタを返す関数です。
 コントローラインターフェースへのポインタを親クラスへのポインタへキャストして返しています。</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span class="n">PLUGINLIB_EXPORT_CLASS</span><span class="p">(</span><span class="n">moveit_multi_dof_controller_manager</span><span class="o">::</span><span class="n">MoveItMultiDOFControllerManager</span><span class="p">,</span>
-                    <span class="n">moveit_controller_manager</span><span class="o">::</span><span class="n">MoveItControllerManager</span><span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span class="n">PLUGINLIB_EXPORT_CLASS</span><span class="p">(</span><span class="n">dronedoc</span><span class="o">::</span><span class="n">MoveItMultiDOFControllerManager</span><span class="p">,</span>
+                       <span class="n">moveit_controller_manager</span><span class="o">::</span><span class="n">MoveItControllerManager</span><span class="p">);</span>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">PLUGINLIB_EXPORT_CLASS</span></code> マクロを使ってクラスをプラグインとして登録します。

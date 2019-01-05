@@ -78,7 +78,6 @@
             
               <p class="caption"><span class="caption-text">SLAM</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">はじめに</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../px4sim/px4sim.html">PX4 SITLシミュレーション</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../runnode/runnodecpp.html">自作ノードを実行する（C++）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../runnode/runnodepy.html">自作ノードを実行する（Python）</a></li>
@@ -333,7 +332,7 @@
 <span class="cp">#include</span> <span class="cpf">&lt;moveit_simple_controller_manager/action_based_controller_handle.h&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;moveit_msgs/ExecuteTrajectoryAction.h&gt;</span><span class="cp"></span>
 
-<span class="k">namespace</span> <span class="n">moveit_multi_dof_controller_manager</span>
+<span class="k">namespace</span> <span class="n">dronedoc</span>
 <span class="p">{</span>
 <span class="cm">/**</span>
 <span class="cm"> * @brief Controller for multi DOF joint trajectory</span>
@@ -457,7 +456,7 @@
   <span class="p">}</span>
 <span class="p">};</span>
 
-<span class="p">}</span>  <span class="c1">// end namespace moveit_multi_dof_controller_manager</span>
+<span class="p">}</span>  <span class="c1">// end namespace dronedoc</span>
 
 <span class="cp">#endif </span><span class="c1">// MOVEIT_PLUGINS_FOLLOW_MULTI_DOF_TRAJECTORY_CONTROLLER_HANDLE</span>
 </pre></div>
@@ -470,10 +469,10 @@
 </div>
 <p>必要なヘッダファイルをインクルードします。
 FollowMultiDOFJointTrajectoryインターフェースは、<a class="reference external" href="http://docs.ros.org/api/moveit_msgs/html/action/ExecuteTrajectory.html">ExecuteTrajectory</a> アクションを使用します。</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span class="k">namespace</span> <span class="n">moveit_multi_dof_controller_manager</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span class="k">namespace</span> <span class="n">dronedoc</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">moveit_multi_dof_controller_manager</span></code> 名前空間を使用します。</p>
+<p><code class="docutils literal notranslate"><span class="pre">dronedoc</span></code> 名前空間を使用します。</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span class="k">class</span> <span class="nc">FollowMultiDOFJointTrajectoryControllerHandle</span>
     <span class="o">:</span> <span class="k">public</span> <span class="n">moveit_simple_controller_manager</span><span class="o">::</span><span class="n">ActionBasedControllerHandle</span><span class="o">&lt;</span><span class="n">moveit_msgs</span><span class="o">::</span><span class="n">ExecuteTrajectoryAction</span><span class="o">&gt;</span>
 </pre></div>
