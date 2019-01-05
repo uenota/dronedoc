@@ -9,7 +9,7 @@
 #include <moveit_simple_controller_manager/action_based_controller_handle.h>
 #include <moveit_msgs/ExecuteTrajectoryAction.h>
 
-namespace moveit_multi_dof_controller_manager
+namespace dronedoc
 {
 /**
  * @brief Controller for multi DOF joint trajectory
@@ -133,6 +133,6 @@ protected:
   }
 };
 
-}  // end namespace moveit_multi_dof_controller_manager
+}  // end namespace dronedoc
 
 #endif // MOVEIT_PLUGINS_FOLLOW_MULTI_DOF_TRAJECTORY_CONTROLLER_HANDLE
