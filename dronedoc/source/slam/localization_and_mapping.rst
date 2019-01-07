@@ -24,7 +24,7 @@ amclノードがパブリッシュされた地図の情報とセンサー情報�
 gmappingとHector SLAM
 --------------------------------------------------------------------------------
 今回はHector SLAMアルゴリズムを用いて地図生成と自己位置推定を行います。
-:doc:`../tips/build_map_gmapping/build_map_gmapping` で使用したgmappingもSLAMアルゴリズムの一つです。
+:doc:`../build_map_gmapping/build_map_gmapping` で使用したgmappingもSLAMアルゴリズムの一つです。
 
 gmappingはロボットのオドメトリが必要である一方で、Hector SLAMはオドメトリフリーなSLAM手法です。
 ドローンを用いる場合には、オドメトリを得ることが難しいことが多いので、ドローン用のSLAM手法としては、Hector SLAMが適しているといえます。

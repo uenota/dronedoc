@@ -666,7 +666,7 @@ Offboardモードにする
 - `base_local_planner <http://wiki.ros.org/base_local_planner>`_
 - `global_planner <wiki.ros.org/global_planner>`_
 
-別のローカルプランナー使う方法については、 :doc:`../tips/change_local_planner/change_local_planner` を参考にしてください。
+別のローカルプランナー使う方法については、 :doc:`../change_local_planner/change_local_planner` を参考にしてください。
 
 参考
 =====================================
