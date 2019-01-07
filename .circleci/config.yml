@@ -1,0 +1,44 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/dronedoc/dronedoc
+    docker:
+      - image: circleci/python
+    steps:
+      - checkout
+      - run:
+        name: apt upgrade
+        command: apt update && apt -y upgrade
+      - run:
+          name: install pip
+          command: apt install python-pip
+      - run:
+          name: install sphinx and theme
+          command: pip3 install -U sphinx sphinx-rtd-theme
+      - run:
+          name: clean
+          command: make clean
+      - run:
+          name: touch nojekyll
+          command: touch ../docs/.nojekyll
+      - run:
+          name: build doc
+          command: make html
+      - run:
+          name: move doc
+          command: mv ~/docs/* ~/
+      - run:
+          name: change pwd
+          command: cd ~
+      - run:
+          name: remove all
+          command: rm -rf dronedoc docs iris_moveit_config
+      - run:
+          name: deploy to gh-pages
+          command: |
+            git config --global user.name "CircleCI"
+            git config --global user.email "circleci@ghpages.com"
+            git add .
+            git commit -m "Build document"
+            git checkout -B gh-pages
+            git push -u origin gh-pages --force
