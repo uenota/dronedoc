@@ -1,5 +1,6 @@
 .vscode
 _build
+docs
 
 devel/
 logs/
