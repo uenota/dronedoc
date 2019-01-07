@@ -1,5 +1,5 @@
 # dronedoc
-Tutorials are available at https://uenota.github.io/dronedoc/html/index.html.
+Tutorials are available at https://uenota.github.io/dronedoc/index.html.
 
 Please let me know if you have any problems from [Issues](https://github.com/uenota/dronedoc/issues).
 
