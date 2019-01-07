@@ -1,38 +1,50 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/dronedoc/dronedoc
+    branches:
+      only:
+        - master
     docker:
       - image: circleci/python
     steps:
       - checkout
       - run:
-        name: apt upgrade
-        command: apt update && apt -y upgrade
+          name: apt upgrade
+          command: sudo apt update && sudo apt -y upgrade
       - run:
           name: install pip
-          command: apt install python-pip
+          command: sudo apt install python-pip
       - run:
           name: install sphinx and theme
-          command: pip3 install -U sphinx sphinx-rtd-theme
+          command: sudo -H pip install -U sphinx sphinx-rtd-theme
+      - run:
+          name: install sphinxcontrib.youtube
+          command: |
+            git clone https://github.com/sphinx-contrib/youtube.git
+            cd youtube
+            sudo python setup.py install
+            cd ..
+            sudo rm -rf youtube
       - run:
           name: clean
           command: make clean
-      - run:
-          name: touch nojekyll
-          command: touch ../docs/.nojekyll
+          working_directory: ~/project/dronedoc
       - run:
           name: build doc
           command: make html
-      - run:
-          name: move doc
-          command: mv ~/docs/* ~/
-      - run:
-          name: change pwd
-          command: cd ~
+          working_directory: ~/project/dronedoc
       - run:
           name: remove all
-          command: rm -rf dronedoc docs iris_moveit_config
+          command: ls | grep -v -E "docs" | xargs rm -rf
+          working_directory: ~/project
+      - run:
+          name: move doc
+          command: |
+            shopt -s dotglob
+            mv docs/html/* .
+            shopt -u dotglob
+            rm -rf docs
+          working_directory: ~/project
       - run:
           name: deploy to gh-pages
           command: |
@@ -42,3 +54,4 @@ jobs:
             git commit -m "Build document"
             git checkout -B gh-pages
             git push -u origin gh-pages --force
+          working_directory: ~/project
