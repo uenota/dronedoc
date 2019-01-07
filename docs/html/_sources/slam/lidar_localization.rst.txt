@@ -10,9 +10,9 @@ LiDARとAMCLを用いた自己位置推定
 自己位置推定を行うには事前に地図を用意する必要があります。
 事前に用意した地図がない場合には、以下のどちらかの方法で地図を作成してください。
 
-:doc:`../tips/build_map_gazebo_plugin/build_map_gazebo_plugin`
+:doc:`../build_map_gazebo_plugin/build_map_gazebo_plugin`
   Gazebo Pluginを使用する
-:doc:`../tips/build_map_gmapping/build_map_gmapping`
+:doc:`../build_map_gmapping/build_map_gmapping`
   gmappingを使用する
 
 AMCLを使って自己位置推定を行う
