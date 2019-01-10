@@ -170,6 +170,7 @@ private:
      * @param start Start waypoint
      * @param goal Goal waypoint
      * @param step Step size of interpolation
+     * @return Vector of interpolated path
      */
     std::vector<geometry_msgs::PoseStamped> getBilinearPath(const geometry_msgs::PoseStamped &start,
                                                             const geometry_msgs::PoseStamped &goal,
@@ -215,9 +216,10 @@ private:
 
     /**
      * @brief Perform linear interpolation
-     * @p1 First point
-     * @p2 Second point
-     * @step Step size of interpolation
+     * @param p1 First point
+     * @param p2 Second point
+     * @param step Step size of interpolation
+     * @return Array of interpolated points in the shape of [x-points, y-points]
      */
     std::array<std::vector<double>, 2> linearInterp(const std::array<double, 2> &p1,
                                                     const std::array<double, 2> &p2, const double step)
@@ -263,6 +265,7 @@ private:
     /**
      * @brief Convert MultiDOFJointTrajectoryPoint message to PoseStamped message
      * @param trajectory_pt MultiDOFJointTrajectoryPoint message
+     * @return Pose converted from Trajectory msg
      */
     geometry_msgs::PoseStamped getPoseFromTrajectory(const trajectory_msgs::MultiDOFJointTrajectoryPoint &trajectory_pt)
     {
@@ -281,6 +284,7 @@ private:
      * @brief Returns true if drone is reached goal
      * @param goal
      * @param tolerance Consider drone reached goal if drone is within the circle with diameter of this value
+     * @return True if drone is reched goal, false if else
      */
     inline bool isGoalReached(const geometry_msgs::PoseStamped &goal, const double tolerance=0.1)
     {
