@@ -135,6 +135,7 @@ private:
                 while(not isGoalReached(pose) and not as_.isPreemptRequested())
                 {
                     cmd_pos_pub_.publish(pose);
+                    ros::spinOnce();
                     rate.sleep();
                 }
 
