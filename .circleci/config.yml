@@ -1,0 +1,57 @@
+version: 2
+jobs:
+  build:
+    branches:
+      only:
+        - master
+    docker:
+      - image: circleci/python
+    steps:
+      - checkout
+      - run:
+          name: apt upgrade
+          command: sudo apt update && sudo apt -y upgrade
+      - run:
+          name: install pip
+          command: sudo apt install python-pip
+      - run:
+          name: install sphinx and theme
+          command: sudo -H pip install -U sphinx sphinx-rtd-theme
+      - run:
+          name: install sphinxcontrib.youtube
+          command: |
+            git clone https://github.com/sphinx-contrib/youtube.git
+            cd youtube
+            sudo python setup.py install
+            cd ..
+            sudo rm -rf youtube
+      - run:
+          name: clean
+          command: make clean
+          working_directory: ~/project/dronedoc
+      - run:
+          name: build doc
+          command: make html
+          working_directory: ~/project/dronedoc
+      - run:
+          name: remove all
+          command: ls | grep -v -E "docs" | xargs rm -rf
+          working_directory: ~/project
+      - run:
+          name: move doc
+          command: |
+            shopt -s dotglob
+            mv docs/html/* .
+            shopt -u dotglob
+            rm -rf docs
+          working_directory: ~/project
+      - run:
+          name: deploy to gh-pages
+          command: |
+            git config --global user.name "CircleCI"
+            git config --global user.email "circleci@ghpages.com"
+            git add .
+            git commit -m "Build document"
+            git checkout -B gh-pages
+            git push -u origin gh-pages --force
+          working_directory: ~/project
