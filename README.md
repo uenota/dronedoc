@@ -1,4 +1,7 @@
 # dronedoc
+チュートリアルはhttps://uenota.github.io/dronedoc/index.html からアクセスできます。  
+問題がある場合は[Issues](https://github.com/uenota/dronedoc/issues)からお知らせください。
+
 Tutorials are available at https://uenota.github.io/dronedoc/index.html.
 
 Please let me know if you have any problems from [Issues](https://github.com/uenota/dronedoc/issues).
