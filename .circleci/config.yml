@@ -13,7 +13,10 @@ jobs:
           command: sudo apt update && sudo apt -y upgrade
       - run:
           name: install pip
-          command: sudo apt install -U python3-pip
+          command: sudo apt install python3-pip
+      - run:
+          name: update pip
+          command: sudo -H pip3 install -U pip
       - run:
           name: install sphinx and theme
           command: sudo -H pip3 install -U sphinx sphinx-rtd-theme
