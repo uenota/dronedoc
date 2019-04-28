@@ -13,16 +13,19 @@ jobs:
           command: sudo apt update && sudo apt -y upgrade
       - run:
           name: install pip
-          command: sudo apt install python-pip
+          command: sudo apt install -U python3-pip
       - run:
           name: install sphinx and theme
-          command: sudo -H pip install -U sphinx sphinx-rtd-theme
+          command: sudo -H pip3 install -U sphinx sphinx-rtd-theme
+      - run:
+          name: update setuptools
+          command: sudo -H pip3 install -U setuptools
       - run:
           name: install sphinxcontrib.youtube
           command: |
             git clone https://github.com/sphinx-contrib/youtube.git
             cd youtube
-            sudo python setup.py install
+            sudo python3 setup.py install
             cd ..
             sudo rm -rf youtube
       - run:
