@@ -18,8 +18,8 @@ jobs:
           name: update pip
           command: sudo -H pip3 install -U pip
       - run:
-          name: install sphinx and theme
-          command: sudo -H pip3 install -U sphinx sphinx-rtd-theme
+          name: install sphinx, sphinx-sitemap and rtd-theme
+          command: sudo -H pip3 install -U sphinx sphinx-rtd-theme sphinx-sitemap
       - run:
           name: update setuptools
           command: sudo -H pip3 install -U setuptools
