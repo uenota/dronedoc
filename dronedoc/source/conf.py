@@ -33,15 +33,18 @@ release = u'1.0.0'
 
 # If your documentation needs a minimal Sphinx version, state it here.
 #
-# needs_sphinx = '1.0'
+needs_sphinx = '2.0.1'
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
     'sphinx.ext.githubpages',
-    'sphinxcontrib.youtube'
+    'sphinxcontrib.youtube',
+    'sphinx_sitemap'
 ]
+
+html_baseurl='https://uenota.github.io/dronedoc/'
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -60,7 +63,7 @@ master_doc = 'index'
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-language = u'ja'
+#language = u'ja'
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
