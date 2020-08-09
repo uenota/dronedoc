@@ -34,6 +34,7 @@ SLAMセクションを最初から読んでいることが前提で書いてい�
 
 * Ubuntu 16.04 LTS
 * ROS Kinetic
+* Gazebo 7.4
 * PX4 Firmware v1.8.0
 
 ソースコード
