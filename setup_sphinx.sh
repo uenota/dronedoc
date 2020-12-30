@@ -6,7 +6,7 @@ sudo apt install python3-pip -y
 
 # update pip and other packages for sphinx
 sudo -H pip3 install -U pip
-sudo -H pip3 install -U sphinx sphinx-rtd-theme sphinx-sitemap
+sudo -H pip3 install -U sphinx sphinx-rtd-theme sphinx-sitemap sphinx-intl
 sudo -H pip3 install -U setuptools
 
 # install sphinx-contrib.youtube 

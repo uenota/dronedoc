@@ -36,18 +36,27 @@ jobs:
           command: make clean
           working_directory: ~/project/dronedoc
       - run:
-          name: build doc
-          command: make html
+          name: build doc (JP)
+          command: make html -e SPHINXOPTS='-D language="ja"' -e BUILDDIR='../docs/ja'
+          working_directory: ~/project/dronedoc
+      - run:
+          name: build doc (EN)
+          command: make html -e SPHINXOPTS='-D language="en"' -e BUILDDIR='../docs/en'
           working_directory: ~/project/dronedoc
       - run:
           name: remove all
           command: ls | grep -v -E "docs" | xargs rm -rf
           working_directory: ~/project
       - run:
+          name: make dirs
+          command: mkdir ja en
+          working_directory: ~/project
+      - run:
           name: move doc
           command: |
             shopt -s dotglob
-            mv docs/html/* .
+            mv docs/ja/html/* ja/
+            mv docs/en/html/* en/
             shopt -u dotglob
             rm -rf docs
           working_directory: ~/project
