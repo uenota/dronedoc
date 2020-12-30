@@ -1,0 +1,226 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2018, Takaki Ueno
+# This file is distributed under the same license as the Dronedoc package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Dronedoc \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-12-30 19:39+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.0\n"
+
+#: ../../dronedoc/source/slam/localization_and_mapping.rst:4
+msgid "LiDARを用いたSLAM"
+msgstr ""
+
+#: ../../dronedoc/source/slam/localization_and_mapping.rst:7
+msgid "SLAM"
+msgstr ""
+
+#: ../../dronedoc/source/slam/localization_and_mapping.rst:8
+msgid ""
+":doc:`lidar_localization` では、 :doc:`turtle_mapping` "
+"等で事前に作成した地図を利用して、自己位置推定を行いました。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/localization_and_mapping.rst:10
+msgid ""
+"ノードとトピックの概略図は以下のとおりです。 "
+"点線内は事前にマップを作る作業におけるノードの例で、この場合はcostmap_2dを用いた例を示しています。 "
+"costmap_2dはセンサ情報を元に作成した占有格子地図を ``/map`` "
+"トピックにパブリッシュするので、パブリッシュされた地図をmap_saverノードを用いてファイルに保存します。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/localization_and_mapping.rst:14
+msgid ""
+"map_serverノードはこのようにして作成された既存の地図を読み込んで ``/map`` トピックにパブリッシュします。 "
+"amclノードがパブリッシュされた地図の情報とセンサー情報をもとに自己位置推定を行い、TFをブロードキャストします。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/localization_and_mapping.rst:19
+msgid ""
+"点線内の地図作成と、点線の外の自己位置推定は同時に行われないことに注意してください。 これを同時に行うことをSLAM（Simultaneous "
+"Localization and Mapping）と言います。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/localization_and_mapping.rst:25
+msgid "gmappingとHector SLAM"
+msgstr ""
+
+#: ../../dronedoc/source/slam/localization_and_mapping.rst:26
+msgid ""
+"今回はHector SLAMアルゴリズムを用いて地図生成と自己位置推定を行います。 "
+":doc:`../build_map_gmapping/build_map_gmapping` "
+"で使用したgmappingもSLAMアルゴリズムの一つです。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/localization_and_mapping.rst:29
+msgid ""
+"gmappingはロボットのオドメトリが必要である一方で、Hector SLAMはオドメトリフリーなSLAM手法です。 "
+"ドローンを用いる場合には、オドメトリを得ることが難しいことが多いので、ドローン用のSLAM手法としては、Hector "
+"SLAMが適しているといえます。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/localization_and_mapping.rst:32
+msgid ""
+"ROSパッケージとして提供されているLiDARを用いたSLAMアルゴリズムの比較については、 `ROSのLidarSLAMまとめ - Qiita "
+"<https://qiita.com/nnn112358/items/814c0fb0d2075eb71da0>`_ が参考になります。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/localization_and_mapping.rst:35
+msgid "パッケージのインストール"
+msgstr ""
+
+#: ../../dronedoc/source/slam/localization_and_mapping.rst:36
+msgid ""
+"`hector_slam <http://wiki.ros.org/hector_slam>`_ "
+"パッケージを使用するので、以下のコマンドでインストールしましょう。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/localization_and_mapping.rst:43
+msgid "Launchファイル"
+msgstr ""
+
+#: ../../dronedoc/source/slam/localization_and_mapping.rst:45
+msgid "PX4 SITLシミュレータを起動する"
+msgstr ""
+
+#: ../../dronedoc/source/slam/localization_and_mapping.rst:46
+msgid ""
+"SITLシミュレータを起動するLaunchファイルは以下のとおりです。 mymodel_sitl_amcl.launchとほとんど同じですが、 "
+"``odom`` から ``base_link`` へのTFをパブリッシュする必要が無いので、パラメータを設定する部分を消してあります。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/localization_and_mapping.rst:49
+msgid "mymodel_sitl_hector.launch"
+msgstr ""
+
+#: ../../dronedoc/source/slam/localization_and_mapping.rst:75
+msgid "hector_mappingノードを起動する"
+msgstr ""
+
+#: ../../dronedoc/source/slam/localization_and_mapping.rst:76
+msgid ""
+"`hector_mapping <http://wiki.ros.org/hector_mapping>`_ "
+"パッケージのmapping_default.launchをベースに変更を行うので、 ``roscp`` コマンドを使ってファイルをコピーします。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/localization_and_mapping.rst:82
+msgid "変える必要があるのは、以下の3つの値だけです。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/localization_and_mapping.rst:84
+msgid "それぞれ、以下の通りなので、自分のロボットに適したように設定します。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/localization_and_mapping.rst:86
+msgid "``base_frame``"
+msgstr ""
+
+#: ../../dronedoc/source/slam/localization_and_mapping.rst:87
+msgid "ロボットのベース座標系（フレーム）"
+msgstr ""
+
+#: ../../dronedoc/source/slam/localization_and_mapping.rst:88
+msgid "``odom_frame``"
+msgstr ""
+
+#: ../../dronedoc/source/slam/localization_and_mapping.rst:89
+msgid "ロボットのオドメトリ座標系（フレーム）"
+msgstr ""
+
+#: ../../dronedoc/source/slam/localization_and_mapping.rst:91
+msgid "``scan_topic``"
+msgstr ""
+
+#: ../../dronedoc/source/slam/localization_and_mapping.rst:91
+msgid "レーザースキャンのパブリッシュされるトピック"
+msgstr ""
+
+#: ../../dronedoc/source/slam/localization_and_mapping.rst:93
+msgid "また、ロボットのオドメトリが得られない場合は、 ``base_frame`` の値と ``odom_frame`` の値を同じにします。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/localization_and_mapping.rst:95
+msgid ""
+"hector_mappingパッケージを使う際のTFの設定については `How to set up hector_slam for your "
+"robot <http://wiki.ros.org/hector_slam/Tutorials/SettingUpForYourRobot>`_"
+" に情報があるので、参考にしましょう。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/localization_and_mapping.rst:103
+msgid "今回は以下のとおりにします。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/localization_and_mapping.rst:111
+msgid "最終的に、Launchファイルは以下のとおりになります。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/localization_and_mapping.rst:113
+msgid "mapping_default.launch"
+msgstr ""
+
+#: ../../dronedoc/source/slam/localization_and_mapping.rst:119
+msgid "実行する"
+msgstr ""
+
+#: ../../dronedoc/source/slam/localization_and_mapping.rst:120
+msgid "はじめに、PX4 SITLシミュレータを起動します。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/localization_and_mapping.rst:126
+msgid "今回はゲームパッドを用いてドローンを操作するので、mavteleopノードを起動します。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/localization_and_mapping.rst:132
+msgid "ドローンを離陸させたあとに、hector_mappingノードを起動します。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/localization_and_mapping.rst:138
+msgid "Rvizを起動して、地図がきちんとできているか確認しましょう。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/localization_and_mapping.rst:144
+msgid "最後に、OFFBOARDモードに変更して、ドローンを飛行させてみましょう。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/localization_and_mapping.rst:153
+msgid "参考"
+msgstr ""
+
+#: ../../dronedoc/source/slam/localization_and_mapping.rst:154
+msgid ""
+"`ROS and Hector SLAM for Non-GPS Navigation "
+"<http://ardupilot.org/dev/docs/ros-slam.html>`_"
+msgstr ""
+
+#: ../../dronedoc/source/slam/localization_and_mapping.rst:155
+msgid "Hector SLAMを使った非GPS環境でのナビゲーション"
+msgstr ""
+
+#: ../../dronedoc/source/slam/localization_and_mapping.rst:156
+msgid ""
+"`A Flexible and Scalable SLAM System with Full 3D Motion Estimation "
+"<https://doi.org/10.1109/SSRR.2011.6106777>`_"
+msgstr ""
+
+#: ../../dronedoc/source/slam/localization_and_mapping.rst:157
+msgid "Hector SLAMアルゴリズムの論文"
+msgstr ""
+
+#: ../../dronedoc/source/slam/localization_and_mapping.rst:158
+msgid "`rosbash - ROS Wiki <http://wiki.ros.org/rosbash>`_"
+msgstr ""
+
+#: ../../dronedoc/source/slam/localization_and_mapping.rst:159
+msgid "ROS向けbashコマンド"
+msgstr ""
+

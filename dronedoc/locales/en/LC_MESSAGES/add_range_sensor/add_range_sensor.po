@@ -1,0 +1,249 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2018, Takaki Ueno
+# This file is distributed under the same license as the Dronedoc package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Dronedoc \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-12-30 19:39+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.0\n"
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:4
+msgid "ドローンに距離センサを搭載する"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:7
+msgid "距離センサをつける"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:9
+msgid "はじめに"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:10
+msgid ""
+"レーザー高度計（`Lidar Lite <https://docs.px4.io/en/sensor/lidar_lite.html>`_ "
+"など）とRayセンサ（Lidarなど）を同時に使用するとセグメンテーションフォールトでGazeboが起動できない（ `#9156 "
+"<https://github.com/PX4/Firmware/issues/9156>`_）ので今回は距離センサとして超音波センサを利用します。"
+" GpuRayセンサであれば問題なく起動できるらしいので、どうしてもレーザー高度計を使用したい場合にはGpuRayセンサを利用すると良いでしょう。"
+" ただし、GpuRayセンサはGPUを使用しない場合は正常に動作しないようなので、GPUがある場合に限って使用しましょう。"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:15
+msgid "SDFファイル"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:16
+msgid "iris_2d_lidarモデルをインクルードして超音波センサをつけても良いのですが、名前空間が煩雑（iris_2d_lidar::iris::base_linkとか）になり、TFの設定などが面倒なので、iris_2d_lidarモデルのSDFファイルをコピーして超音波センサを追加します。"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:18
+msgid "超音波センサを追加したモデルは以下のようになります。"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:20
+msgid "model.sdf"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:26
+msgid "configファイル"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:27
+msgid ""
+"以下のようなmodel.configも作成し、modelsディレクトリ以下にiris_sonarディレクトリを作ってその中に保存しましょう。 "
+"authorタグの中身は適宜変更してください。"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:30
+msgid "model.config"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:36
+msgid "モデルを表示する"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:37
+msgid "以下のようなLaunchファイルを作って、モデルがきちんと作成されているか確認してみましょう。"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:39
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:123
+msgid "mymodel_sonar.launch"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:54
+msgid "Launchファイルを起動します。"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:60
+msgid "地上にいる時はわかりませんが、離陸するときちんと超音波センサが取り付けられていることがわかります（青い円錐）。"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:65
+msgid "距離センサの値をパブリッシュする"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:66
+msgid ""
+"ドローンに搭載された距離センサの値をパブリッシュするには、 `mavros_extras "
+"<http://wiki.ros.org/mavros_extras>`_ パッケージのdistance_sensorプラグインを使用します。"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:68
+msgid ""
+"mavros_extrasパッケージには、他にも `px4_flow "
+"<https://docs.px4.io/en/sensor/px4flow.html>`_ "
+"からのデータをROSトピックにパブリッシュするプラグインなど、追加のセンサ用のプラグインが複数あります。"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:71
+msgid "プラグインをブラックリストから外す"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:72
+msgid ""
+"デフォルトではdistance_sensorプラグインはブラックリストに入っていて読み込まれないので、ブラックリストから外す必要があります。 "
+"プラグインのブラックリストおよびホワイトリストは、px4_pluginlists.yamlファイルに記述されています。 "
+"mavrosノードが起動するときに、このファイルの内容をROSパラメータとして読み込むことで、ブラックリストとホワイトリストが反映されます。"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:76
+msgid ""
+"mavrosパッケージ以下にあるpx4_pluginlists.yamlを直接編集してもいいのですが、これを変更すると他のLaunchファイルなどに影響を与える可能性があるので、すでにあるファイルをコピーして編集します。"
+" 以下のコマンドでmavrosパッケージのディレクトリ内にあるpx4_pluginlists.yamlをコピーします。"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:83
+msgid "以下のようにplugin_blacklist以下のdistance_sensorをコメントアウトします。"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:85
+msgid "px4_pluginlists.yaml"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:91
+msgid "パラメータの設定"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:92
+msgid "次に、distance_sensor用のROSパラメータを記述するファイルを作成します。"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:94
+msgid "それぞれのパラメータの意味は以下のとおりです。"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:96
+msgid "``sonar_pub``"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:97
+msgid "センサ名。このセンサからのデータは、``/mavros/distance_sensor/sonar_pub`` にパブリッシュされます。"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:98
+msgid "``id``"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:99
+msgid "センサのID。QGCのMAVLink InspectorのDISTANCE SENSORの項目から確認できます。"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:100
+msgid "``frame_id``"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:101
+msgid "センサのベースフレーム名。"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:102
+msgid "``field_of_view``"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:103
+msgid "センサーの視野（Field of View; FOV）"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:104
+msgid "``send_tf``"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:105
+msgid "センサのTFを送るかどうか"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:107
+msgid "``sensor_position``"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:107
+msgid "センサの位置。"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:109
+msgid "distance_sensor.yaml"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:114
+msgid "idは以下の動画のようにして確認できます。"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:119
+msgid "Launchファイルを作る"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:120
+msgid ""
+"以下のようなLaunchファイルを作成します。 "
+"TFをパブリッシュする設定などは省いているので、move_base等を使用する場合は適宜変更を加えてください。"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:173
+msgid "解説"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:179
+msgid "ドローンのベースフレームからLiDARと距離センサへのTFをブロードキャストするためのノードを起動します。"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:198
+msgid "PX4 SITLシミュレーションを起動します。 ソナー付きのIrisのモデルを指定しています。"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:201
+msgid "また、今回はmavrosを別で起動するので、mavros_posix_sitl.launchではなく、posix_sitl.launchをインクルードします。"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:227
+msgid ""
+"mavrosを起動します。 mavrosパッケージのpx4.launchと内容はほとんど同じですが、``fcu_url`` "
+"をシミュレーション用に、``pluginlists_yaml`` と ``config_yaml`` を作成した設定ファイルに変えています。"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:231
+msgid "実行する"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:232
+msgid "作成したLaunchファイルを実行します。"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:238
+msgid "距離センサのトピックの値を出力します。"
+msgstr ""
+
+#: ../../dronedoc/source/add_range_sensor/add_range_sensor.rst:244
+msgid "以下のような出力が得られれば設定が完了しています。"
+msgstr ""
+

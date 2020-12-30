@@ -1,0 +1,300 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2018, Takaki Ueno
+# This file is distributed under the same license as the Dronedoc package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Dronedoc \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-12-30 19:39+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.0\n"
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:4
+msgid "Turtlebotを使ってマップを作る"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:5
+msgid ""
+"このページではTurtlebotと `costmap_2d <http://wiki.ros.org/costmap_2d>`_ "
+"を用いてGazeboシミュレーション内の地図を生成する方法について扱います。 "
+"ドローンを使った場合には、姿勢の傾きによって正確な地図が作成できない恐れがあるので、今回はTurtlebotを使用します。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:8
+msgid ""
+"costmap_2dパッケージは、ロボットのナビゲーションに用いられる占有格子地図を生成するノードを提供するパッケージです。 "
+"占有格子地図はセンサ情報をもとに計算された障害物の存在確率を示す地図で、さらにロボットの形状や障害物の情報を考慮することでコストマップが生成されます。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:11
+msgid "costmap_2dパッケージについてはROS Wikiページに詳細な解説があるので参考にしてください。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:14
+msgid "Worldファイルを作る"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:15
+msgid "Gazeboを起動してWorldファイルを作ります。 すでにあるWorldファイルを使う場合はこの手順は必要ありません。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:18
+msgid ""
+"今回はGazeboモデルデータベース（http://models.gazebosim.org/）にあるWillow "
+"Garageモデルを利用します。 Willow GarageモデルはInsertタブから追加することができます。 "
+"モデルはデータベースから自動でダウンロードされますが、ダウンロードされるまでにしばらく時間がかかります。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:22
+msgid "以下のようなワールドを作り、Worldファイルとして保存します。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:27
+msgid "地図作成用のノードを作成する"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:28
+msgid ""
+"地図を保存するmap_saverノードは、 ``/map`` "
+"トピックのメッセージをサブスクライブするので、costmap_2dが地図をパブリッシュする ``costmap/costmap`` "
+"からリマップする必要があります。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:30
+msgid ""
+"また、コストマップを作成するためにcostmap_2d パッケージのcostmap_2d_nodeを使用します。 "
+"パラメータは前回と同様、設定ファイルに記述したものを ``rosparam`` タグ内でロードしています。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:33
+msgid "map_builder.launch"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:44
+msgid "costmap_2d_nodeのパラメータの設定ファイルは以下のようになっています。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:46
+msgid "costmap_params.yaml"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:51
+msgid "大部分は前章で解説しているので説明は省きますが、以下の点に注意してください。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:53
+msgid "``inflation_raduis``"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:54
+msgid "障害物から、この値の距離だけ離れた場所までコストを付加します。これは、ロボットの形状をコストマップに反映するためのものですが、今回は地図を生成したいので、0に設定します。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:55
+msgid "``publish_frequency``"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:56
+msgid "地図の表示用に情報をパブリッシュする周波数を設定しています。デフォルトでは0になっており、表示されないので注意してください。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:57
+msgid "``global_frame``"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:58
+msgid "今回はTurtlebotのホイールオドメトリを自己位置として用いるので、 ``odom`` に設定しています。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:59
+msgid "``laser_scan_sensor``"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:60
+msgid ""
+"今回使用するTurtlebotのノードは、RGBDカメラのDepth画像を擬似的なレーザースキャンとしてパブリッシュします。そのフレームが "
+"``camera_depth_frame`` 、トピックが ``/scan`` なので、それぞれ変更します。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:61
+msgid "``obstacle_range``"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:62
+msgid "この値の距離以下にある障害物のみが地図に反映されます。今回は地図作成の速度を向上させるために5 mにしてあります。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:64
+msgid "``rolling_window``"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:64
+msgid ""
+"生成される地図の領域を固定するために ``false`` に設定しています。 ``true`` "
+"にした場合にはロボットが移動すると地図の領域も一緒に移動します。また、willow_garage.world内の建物が地図の領域内に収まるように "
+"``origin_x`` と ``origin_y`` も変更しています。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:66
+msgid "地図の大きさが足りない場合は ``width`` 及び ``height`` パラメータを変更してください。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:69
+msgid "必要なノードを起動する"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:70
+msgid "今回はGazebo内のモデルの地図を作成するので、シミュレータを起動します."
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:76
+msgid ""
+"Teleopノードを起動します。 使用するコントローラに適したLaunchファイルを使ってください。 "
+"キーボードを使うときはkeyboard_teleop.launchファイルを使います。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:84
+msgid "地図作成用のノードを起動します。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:92
+msgid "地図を保存する"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:93
+#, python-format
+msgid ""
+"コントローラを使用する場合は `デッドマンスイッチ "
+"<https://ja.wikipedia.org/wiki/%E3%83%87%E3%83%83%E3%83%89%E3%83%9E%E3%83%B3%E8%A3%85%E7%BD%AE>`_"
+" に割り当てられたボタンを押しながらスティックを動かしてTurtlebotを操作します。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:95
+msgid "デッドマンスイッチは大抵LBボタンに割り当てられていますが、そうでない場合は :ref:`deadman` の手順で確認します。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:97
+msgid ""
+"Rvizで作成される地図を確認しながら作業を行うと良いでしょう。 今回は ``odom`` フレームが地図のベースフレームなので、Fixed "
+"Frameを ``odom`` に設定して地図を表示させます。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:106
+msgid ""
+"Turtlebotを走らせて一通り地図ができたら、`map_server <http://wiki.ros.org/map_server>`_ "
+"を使って地図を保存します。 以下のコマンドを実行するとホームディレクトリ以下に次の２つのファイルが生成されます。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:109
+msgid "my_map.pgm"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:110
+msgid "グリッドの占有状態を示す画像ファイル"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:112
+msgid "my_map.yaml"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:112
+msgid "マップのメタデータが記述されているファイル"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:118
+msgid ""
+"マップファイルのフォーマットについては `Map Format <http://wiki.ros.org/map_server>`_ "
+"を参照してください。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:121
+msgid "さいごに"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:122
+msgid ""
+"今回はTurtlebotのホイールオドメトリを用いて地図を作成しました。 "
+"本来はスリップや外乱などの影響で自己位置に誤差が生じるのですが、今回のようなシミュレーションの場合は無視できるので、このような方法で地図を作成することができます。"
+" 誤差が無視できない場合に、より高精度に自己位置を推定するために、次章で使うAMCLやカルマンフィルタなどの手法を使います。 "
+"また、これらの自己位置推定の手法と地図生成を同時に行うことをSimultaneous Localization and Mapping(SLAM)"
+" と言います。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:130
+msgid "補足: デッドマンスイッチを確認する"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:132
+msgid "``/joy`` トピック"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:133
+msgid "teleopノードを起動すると、 ``/joy`` トピックにジョイスティックの入力値がパブリッシュされます。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:135
+msgid "axesがスティックの入力、buttonsがボタンの入力です。 それぞれインデックスは0から始まるので注意してください。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:160
+msgid ""
+"このように、``/joy`` "
+"トピックを確認しながらジョイスティックを操作することでどのようにボタンやスティックがマッピングされているかを確認できます。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:164
+msgid "logitech.launchを使う場合"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:165
+msgid ""
+"logitech.launchを使う場合には、デッドマンスイッチは4番のIDを持つボタンに固定されています。 "
+"上記の手順でボタンのIDを確認して使用しましょう。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:169
+msgid "ps3_teleop.launchもしくはxbox360_teleop.launch"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:170
+msgid ""
+"これらのLaunchファイルを使う場合には、 ``axis_deadman`` パラメータにデッドマンスイッチのIDが格納されています。 "
+"以下のコマンドを使えば現在の設定値が確認できます。 パラメータの名前は環境によって異なる場合があるので適宜変更してください。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:178
+msgid "このようにして確認したIDがどのボタンにマッピングされているかを上記の手順で確認しても良いですし、以下のコマンドを使って自分の好きなIDに設定することもできます。"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:185
+msgid "参考"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:186
+msgid ""
+"`3.2.1. Occupancy Grid Map <https://ja.coursera.org/lecture/robotics-"
+"learning/3-2-1-occupancy-grid-map-0QuFW>`_"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:187
+msgid "CourseraのRoboticsコース"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:188
+msgid ""
+"`自律移動ロボットのためのグリッドマップ作成MATLAB, Pythonサンプルプログラム "
+"<https://myenigma.hatenablog.com/entry/20140714/1405343128>`_"
+msgstr ""
+
+#: ../../dronedoc/source/slam/turtle_mapping.rst:189
+msgid "グリッドマップのアルゴリズムとプログラム例"
+msgstr ""
+

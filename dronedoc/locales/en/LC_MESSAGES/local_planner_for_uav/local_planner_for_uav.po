@@ -1,0 +1,195 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2018, Takaki Ueno
+# This file is distributed under the same license as the Dronedoc package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Dronedoc \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-12-30 19:39+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.0\n"
+
+#: ../../dronedoc/source/local_planner_for_uav/local_planner_for_uav.rst:4
+msgid "UAV用のローカルプランナを実装する"
+msgstr ""
+
+#: ../../dronedoc/source/local_planner_for_uav/local_planner_for_uav.rst:6
+msgid ""
+"この章では、`Open Motion Planning Library (OMPL) "
+"<http://ompl.kavrakilab.org/>`_ を使ってドローン用のローカルプランナを実装します。"
+msgstr ""
+
+#: ../../dronedoc/source/local_planner_for_uav/local_planner_for_uav.rst:8
+msgid ""
+"OMPLはオープンソースの行動計画ライブラリで、マニピュレータやUGVなどの動作計画に用いられる `MoveIt! "
+"<https://moveit.ros.org/>`_ というライブラリもOMPLを使っています。"
+msgstr ""
+
+#: ../../dronedoc/source/local_planner_for_uav/local_planner_for_uav.rst:11
+msgid "インストール"
+msgstr ""
+
+#: ../../dronedoc/source/local_planner_for_uav/local_planner_for_uav.rst:12
+msgid "UbuntuにOMPLをインストールする方法は以下の3通りあります。"
+msgstr ""
+
+#: ../../dronedoc/source/local_planner_for_uav/local_planner_for_uav.rst:14
+msgid "ソースからインストールする"
+msgstr ""
+
+#: ../../dronedoc/source/local_planner_for_uav/local_planner_for_uav.rst:15
+msgid "ビルド済みバイナリをインストールする"
+msgstr ""
+
+#: ../../dronedoc/source/local_planner_for_uav/local_planner_for_uav.rst:16
+msgid "ROSバージョンのバイナリをインストールする"
+msgstr ""
+
+#: ../../dronedoc/source/local_planner_for_uav/local_planner_for_uav.rst:18
+msgid ""
+"今回はROSバージョンのバイナリをインストールします。 他の方法については、`OMPLのインストールガイド "
+"<http://ompl.kavrakilab.org/installation.html>`_ を見てください。"
+msgstr ""
+
+#: ../../dronedoc/source/local_planner_for_uav/local_planner_for_uav.rst:21
+msgid "はじめに、ROSのリポジトリをaptのデータ取得元に追加します。 すでにROSを使っている場合には必要ありません。"
+msgstr ""
+
+#: ../../dronedoc/source/local_planner_for_uav/local_planner_for_uav.rst:29
+msgid "追加できたら、OMPLをインストールします。"
+msgstr ""
+
+#: ../../dronedoc/source/local_planner_for_uav/local_planner_for_uav.rst:37
+msgid "ローカルプランナを実装する"
+msgstr ""
+
+#: ../../dronedoc/source/local_planner_for_uav/local_planner_for_uav.rst:38
+#, python-format
+msgid ""
+"以下では、`制御指令値を含むプラニング "
+"<https://robotics.naist.jp/edu/text/?Robotics%2FOMPL#PlanningWithControls>`_"
+" を参考にして作業を進めていきます。"
+msgstr ""
+
+#: ../../dronedoc/source/local_planner_for_uav/local_planner_for_uav.rst:41
+msgid "CMakeLists.txt"
+msgstr ""
+
+#: ../../dronedoc/source/local_planner_for_uav/local_planner_for_uav.rst:65
+msgid "ROSプラグイン"
+msgstr ""
+
+#: ../../dronedoc/source/local_planner_for_uav/local_planner_for_uav.rst:66
+msgid ""
+"ROSのパッケージの中には、処理の一部（画像処理や行動計画など）をプラグインとして作成し、後で変更可能になっているものがあります。 "
+"プラグインを作成、使用するためには `pluginlib <http://wiki.ros.org/pluginlib>`_ "
+"パッケージを使用します。 "
+"プラグインの仕組みを使うことで、特定のインターフェースに従ったクラスを作れば中身の実装は自由にできるので、既存のパッケージを拡張することが容易になります。"
+msgstr ""
+
+#: ../../dronedoc/source/local_planner_for_uav/local_planner_for_uav.rst:71
+msgid "navigationスタック"
+msgstr ""
+
+#: ../../dronedoc/source/local_planner_for_uav/local_planner_for_uav.rst:72
+msgid "navigationスタックは、move_baseやcostmap_2dなどを含むメタパッケージです。"
+msgstr ""
+
+#: ../../dronedoc/source/local_planner_for_uav/local_planner_for_uav.rst:74
+msgid ""
+"navigationスタックでは、pluginlibを使って作成したプラグインをローカルプランナやグローバルプランナとして使用することができるようになっています。"
+" navigationスタックのローカルプランナとして使用可能なクラスを作るためには、 `nav_core::BaseLocalPlanner "
+"<http://docs.ros.org/jade/api/nav_core/html/classnav__core_1_1BaseLocalPlanner.html>`_"
+" を継承したクラスを作る必要があります。"
+msgstr ""
+
+#: ../../dronedoc/source/local_planner_for_uav/local_planner_for_uav.rst:78
+msgid "ローカルプランナをプラグイン化する"
+msgstr ""
+
+#: ../../dronedoc/source/local_planner_for_uav/local_planner_for_uav.rst:82
+msgid "実行する"
+msgstr ""
+
+#: ../../dronedoc/source/local_planner_for_uav/local_planner_for_uav.rst:85
+msgid "参考"
+msgstr ""
+
+#: ../../dronedoc/source/local_planner_for_uav/local_planner_for_uav.rst:86
+#, python-format
+msgid ""
+"`Robotics/OMPL - NAIST::OnlineText "
+"<https://robotics.naist.jp/edu/text/?Robotics%2FOMPL>`_"
+msgstr ""
+
+#: ../../dronedoc/source/local_planner_for_uav/local_planner_for_uav.rst:87
+msgid "OMPLの日本語チュートリアル"
+msgstr ""
+
+#: ../../dronedoc/source/local_planner_for_uav/local_planner_for_uav.rst:88
+msgid ""
+"`Open Motion Planning Library: A Primer "
+"<http://ompl.kavrakilab.org/OMPL_Primer.pdf>`_"
+msgstr ""
+
+#: ../../dronedoc/source/local_planner_for_uav/local_planner_for_uav.rst:89
+msgid "OMPLの英語チュートリアル（PDF）"
+msgstr ""
+
+#: ../../dronedoc/source/local_planner_for_uav/local_planner_for_uav.rst:90
+msgid ""
+"`sources.list - APT のデータ取得元の設定リスト "
+"<http://manpages.ubuntu.com/manpages/xenial/ja/man5/sources.list.5.html>`_"
+msgstr ""
+
+#: ../../dronedoc/source/local_planner_for_uav/local_planner_for_uav.rst:91
+msgid "sources.listについて"
+msgstr ""
+
+#: ../../dronedoc/source/local_planner_for_uav/local_planner_for_uav.rst:92
+msgid ""
+"`navigationスタックで学ぶpluginlibの使い方 "
+"<http://makemove.hatenablog.com/entry/2015/09/29/001725>`_"
+msgstr ""
+
+#: ../../dronedoc/source/local_planner_for_uav/local_planner_for_uav.rst:93
+msgid "navigationスタック用のプラグインについて"
+msgstr ""
+
+#: ../../dronedoc/source/local_planner_for_uav/local_planner_for_uav.rst:94
+#, python-format
+msgid ""
+"`Writing A Global Path Planner As Plugin in ROS "
+"<http://wiki.ros.org/navigation/Tutorials/Writing%20A%20Global%20Path%20Planner%20As%20Plugin%20in%20ROS>`_"
+msgstr ""
+
+#: ../../dronedoc/source/local_planner_for_uav/local_planner_for_uav.rst:95
+msgid "navigationスタック用のグローバルプランナプラグインを作る"
+msgstr ""
+
+#: ../../dronedoc/source/local_planner_for_uav/local_planner_for_uav.rst:96
+msgid "`nav_core - ROS Wiki <http://wiki.ros.org/nav_core>`_"
+msgstr ""
+
+#: ../../dronedoc/source/local_planner_for_uav/local_planner_for_uav.rst:97
+msgid "nav_coreパッケージ"
+msgstr ""
+
+#: ../../dronedoc/source/local_planner_for_uav/local_planner_for_uav.rst:98
+msgid ""
+"`navigation/dwa_local_planner - GitHub <https://github.com/ros-"
+"planning/navigation/tree/melodic-devel/dwa_local_planner>`_"
+msgstr ""
+
+#: ../../dronedoc/source/local_planner_for_uav/local_planner_for_uav.rst:99
+msgid "dwa_local_plannerのソースコード"
+msgstr ""
+

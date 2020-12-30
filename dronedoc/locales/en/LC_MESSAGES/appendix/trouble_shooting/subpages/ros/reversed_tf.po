@@ -1,0 +1,59 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2018, Takaki Ueno
+# This file is distributed under the same license as the Dronedoc package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Dronedoc \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-12-30 19:39+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.0\n"
+
+#: ../../dronedoc/source/appendix/trouble_shooting/subpages/ros/reversed_tf.rst:2
+msgid "TFの向きが反対になっている"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/trouble_shooting/subpages/ros/reversed_tf.rst:4
+msgid "症状"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/trouble_shooting/subpages/ros/reversed_tf.rst:5
+msgid "TFの値の正負が逆転している"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/trouble_shooting/subpages/ros/reversed_tf.rst:6
+msgid "Rvizで見た時にTFが原点に対して反対に位置している"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/trouble_shooting/subpages/ros/reversed_tf.rst:9
+msgid "もしかして？"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/trouble_shooting/subpages/ros/reversed_tf.rst:10
+msgid "``lookupTransform`` のフレームの順序を変えるとなおるかもしれません。"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/trouble_shooting/subpages/ros/reversed_tf.rst:12
+msgid ""
+"``lookupTransform`` 関数は、 ``target_frame`` に指定したフレームから ``source_frame`` "
+"へのTFを ``transform`` へ格納します。"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/trouble_shooting/subpages/ros/reversed_tf.rst:22
+msgid "参考"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/trouble_shooting/subpages/ros/reversed_tf.rst:23
+msgid ""
+"`Is arguments of lookupTransform opposite? "
+"<https://github.com/ros/geometry/issues/108>`_"
+msgstr ""
+

@@ -1,0 +1,190 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2018, Takaki Ueno
+# This file is distributed under the same license as the Dronedoc package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Dronedoc \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-12-30 19:39+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.0\n"
+
+#: ../../dronedoc/source/filter_lidar/filter_lidar.rst:4
+msgid "LiDARのデータをフィルタリングする"
+msgstr ""
+
+#: ../../dronedoc/source/filter_lidar/filter_lidar.rst:7
+msgid "はじめに"
+msgstr ""
+
+#: ../../dronedoc/source/filter_lidar/filter_lidar.rst:8
+msgid ""
+"ロボットがLiDARの光線に干渉すると、ロボットの一部がスキャンデータに含まれてしまい、マッピングや自己位置推定の精度に影響を与える可能性があります。"
+" このページでは、LiDARのデータをフィルタリングすることでロボットとの干渉を排除する方法を学びます。"
+msgstr ""
+
+#: ../../dronedoc/source/filter_lidar/filter_lidar.rst:11
+msgid ""
+"LiDARのデータをフィルタリングするには、`laser_filters "
+"<http://wiki.ros.org/laser_filters>`_ パッケージを使います。 "
+"laser_filtersパッケージでは様々なタイプのフィルターが用意されており、これらを用いることで特定の距離の範囲のスキャンデータだけを抽出したり、特定の角度のスキャンデータだけを抽出したりできます。"
+" また、複数のフィルタをつなげてフィルターチェインを作ることもできます。"
+msgstr ""
+
+#: ../../dronedoc/source/filter_lidar/filter_lidar.rst:16
+msgid "設定ファイルを書く"
+msgstr ""
+
+#: ../../dronedoc/source/filter_lidar/filter_lidar.rst:17
+msgid "今回は特定の距離の範囲にあるスキャンデータを抽出するので、 `LaseScanRangeFilter` を使います。"
+msgstr ""
+
+#: ../../dronedoc/source/filter_lidar/filter_lidar.rst:19
+msgid ""
+"`LaserScanRangeFilter` は距離を元にフィルタリングを行うフィルタです。 "
+"ここでは、yamlファイル内に設定を記述して、Launchファイル内でそれをロードすることでROSのパラメータを設定します。"
+msgstr ""
+
+#: ../../dronedoc/source/filter_lidar/filter_lidar.rst:22
+msgid "以下の内容を、 config/laser_filter.yamlに保存します。"
+msgstr ""
+
+#: ../../dronedoc/source/filter_lidar/filter_lidar.rst:24
+msgid "laser_filter.yaml"
+msgstr ""
+
+#: ../../dronedoc/source/filter_lidar/filter_lidar.rst:29
+msgid "それぞれのパラメータの意味は以下のとおりです。"
+msgstr ""
+
+#: ../../dronedoc/source/filter_lidar/filter_lidar.rst:31
+msgid "`name`"
+msgstr ""
+
+#: ../../dronedoc/source/filter_lidar/filter_lidar.rst:32
+msgid "フィルタの名前"
+msgstr ""
+
+#: ../../dronedoc/source/filter_lidar/filter_lidar.rst:33
+msgid "`type`"
+msgstr ""
+
+#: ../../dronedoc/source/filter_lidar/filter_lidar.rst:34
+msgid "フィルタの種類"
+msgstr ""
+
+#: ../../dronedoc/source/filter_lidar/filter_lidar.rst:35
+msgid "`use_message_range_limits`"
+msgstr ""
+
+#: ../../dronedoc/source/filter_lidar/filter_lidar.rst:36
+msgid "レーザースキャンのメッセージで定義されている最大値、最小値を用いるかどうか"
+msgstr ""
+
+#: ../../dronedoc/source/filter_lidar/filter_lidar.rst:37
+msgid "`lower_threshold`"
+msgstr ""
+
+#: ../../dronedoc/source/filter_lidar/filter_lidar.rst:38
+msgid "小さい方の閾値。これ以下の距離のスキャンデータをフィルタする。"
+msgstr ""
+
+#: ../../dronedoc/source/filter_lidar/filter_lidar.rst:39
+msgid "`upper_threshold`"
+msgstr ""
+
+#: ../../dronedoc/source/filter_lidar/filter_lidar.rst:40
+msgid "大きい方の閾値。これ以上の距離のスキャンデータをフィルタする。"
+msgstr ""
+
+#: ../../dronedoc/source/filter_lidar/filter_lidar.rst:41
+msgid "`lower_replacement_value`"
+msgstr ""
+
+#: ../../dronedoc/source/filter_lidar/filter_lidar.rst:42
+msgid "`lower_threshold` 以下のスキャンデータにはこの値が使われる。"
+msgstr ""
+
+#: ../../dronedoc/source/filter_lidar/filter_lidar.rst:44
+msgid "`upper_replacement_value`"
+msgstr ""
+
+#: ../../dronedoc/source/filter_lidar/filter_lidar.rst:44
+msgid "`upper_threshold` 以上のスキャンデータにはこの値が使われる。"
+msgstr ""
+
+#: ../../dronedoc/source/filter_lidar/filter_lidar.rst:46
+msgid ""
+"パラメータの説明は `laser_filtersのROS Wikiページ "
+"<http://wiki.ros.org/laser_filters#LaserScanRangeFilter>`_ も参考にしてください。"
+msgstr ""
+
+#: ../../dronedoc/source/filter_lidar/filter_lidar.rst:48
+msgid ""
+"今回の例では、0.5m以下のスキャンデータが全てフィルタされて値が-.infになります。 "
+"上限値は.infにしてあるので、0.5m以上のスキャンデータが置き換えられることはありません。"
+msgstr ""
+
+#: ../../dronedoc/source/filter_lidar/filter_lidar.rst:52
+msgid "Launchファイルを作る"
+msgstr ""
+
+#: ../../dronedoc/source/filter_lidar/filter_lidar.rst:53
+msgid "今回もmymodel_sitl_tf.launchに追加する形で編集します。"
+msgstr ""
+
+#: ../../dronedoc/source/filter_lidar/filter_lidar.rst:55
+msgid "以下の内容をLaunchファイルに追加することでlaser_filterパッケージを使用することができます。"
+msgstr ""
+
+#: ../../dronedoc/source/filter_lidar/filter_lidar.rst:65
+msgid ""
+"`<node>` タグでlaser_filtersパッケージを起動しており、 `<rosparam>` "
+"タグで先ほど作成した設定ファイルをロードしています。 また、laser_filtersパッケージは `scan` "
+"トピックにパブリッシュされるスキャンデータをフィルタリングしますが、今回はLiDARから `laser/scan` "
+"トピックにデータがパブリッシュされるので、リマップをしておきます。 laser_filtersによってフィルタリングされたメッセージは "
+"`scan_filtered` トピックにパブリッシュされます。"
+msgstr ""
+
+#: ../../dronedoc/source/filter_lidar/filter_lidar.rst:69
+msgid "最終的に、mymodel_laser_filter.launchは以下のとおりになります。"
+msgstr ""
+
+#: ../../dronedoc/source/filter_lidar/filter_lidar.rst:71
+msgid "mymodel_laser_filter.launch"
+msgstr ""
+
+#: ../../dronedoc/source/filter_lidar/filter_lidar.rst:105
+msgid "試してみる"
+msgstr ""
+
+#: ../../dronedoc/source/filter_lidar/filter_lidar.rst:106
+msgid "ちゃんとフィルタリングされるかどうか試してみましょう。"
+msgstr ""
+
+#: ../../dronedoc/source/filter_lidar/filter_lidar.rst:112
+msgid "ピンク色の点がフィルタリング前の点で、白の点がフィルタリング後の点です。 近くに置いてある球体の点が除去されていることがわかります"
+msgstr ""
+
+#: ../../dronedoc/source/filter_lidar/filter_lidar.rst:118
+msgid "参考"
+msgstr ""
+
+#: ../../dronedoc/source/filter_lidar/filter_lidar.rst:119
+msgid ""
+"`Understanding ROS Services and Parameters "
+"<http://wiki.ros.org/ROS/Tutorials/UnderstandingServicesParams#Using_rosparam>`_"
+msgstr ""
+
+#: ../../dronedoc/source/filter_lidar/filter_lidar.rst:120
+msgid "ROSのパラメータの使い方"
+msgstr ""
+

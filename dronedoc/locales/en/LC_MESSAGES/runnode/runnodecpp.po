@@ -1,0 +1,235 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2018, Takaki Ueno
+# This file is distributed under the same license as the Dronedoc package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Dronedoc \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-12-30 19:39+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.0\n"
+
+#: ../../dronedoc/source/runnode/runnodecpp.rst:4
+msgid "自作ノードを実行する（C++）"
+msgstr ""
+
+#: ../../dronedoc/source/runnode/runnodecpp.rst:6
+msgid "この章ではシミュレーション上のドローンを操作するROSノードをC++で作成します。"
+msgstr ""
+
+#: ../../dronedoc/source/runnode/runnodecpp.rst:9
+msgid "ROSパッケージを作る"
+msgstr ""
+
+#: ../../dronedoc/source/runnode/runnodecpp.rst:10
+msgid ""
+"はじめに、自作ノードを格納するためのROSパッケージを作ります。 パッケージ名はpx4_sim_pkgとします。 "
+"また、roscpp、geometry_msgs、mavros_msgsパッケージを使用するので依存パッケージに追加しておきます。"
+msgstr ""
+
+#: ../../dronedoc/source/runnode/runnodecpp.rst:20
+msgid "ノードを書く"
+msgstr ""
+
+#: ../../dronedoc/source/runnode/runnodecpp.rst:21
+msgid ""
+"それでは実際にノードを書いてみましょう。 今回は、ドローンを2m上空に離陸させるノードを書きます。 以下のコードは、 `MAVROS "
+"Offboard control example - PX4 Developer Guide "
+"<https://dev.px4.io/en/ros/mavros_offboard.html>`_ にあるのと同じものです。"
+msgstr ""
+
+#: ../../dronedoc/source/runnode/runnodecpp.rst:25
+msgid "このコードを ``offboard_sample.cpp`` という名前で、 ``px4_sim_pkg/src`` に保存してください。"
+msgstr ""
+
+#: ../../dronedoc/source/runnode/runnodecpp.rst:27
+msgid ""
+"From `PX4 Developer Guide "
+"<https://dev.px4.io/en/ros/mavros_offboard.html>`_ (`CC BY 4.0 "
+"<https://creativecommons.org/licenses/by/4.0/deed>`_)"
+msgstr ""
+
+#: ../../dronedoc/source/runnode/runnodecpp.rst:33
+msgid "コードの解説"
+msgstr ""
+
+#: ../../dronedoc/source/runnode/runnodecpp.rst:43
+msgid "mavrosパッケージで提供されるトピックやサービスを使うためのメッセージは ``mavros_msgs`` パッケージで定義されています。"
+msgstr ""
+
+#: ../../dronedoc/source/runnode/runnodecpp.rst:50
+msgid "ROSノードを ``offb_node`` という名前で初期化しています。"
+msgstr ""
+
+#: ../../dronedoc/source/runnode/runnodecpp.rst:57
+msgid ""
+"``mavros/state`` トピックにパブリッシュされる、 ``mavros_msgs::State`` "
+"型のメッセージをサブスクライブするためのサブスクライバを初期化しています。 第二引数は受け取ったメッセージを保持しておくキューのサイズです。 "
+"第三引数の ``state_cb`` は受け取ったメッセージを処理するためのコールバック関数です。 ``state_cb`` "
+"は次のように定義されています。"
+msgstr ""
+
+#: ../../dronedoc/source/runnode/runnodecpp.rst:62
+msgid "``mavros_msgs::State`` 型のメッセージには、機体の接続状況やモータの動作状況などが格納されています。"
+msgstr ""
+
+#: ../../dronedoc/source/runnode/runnodecpp.rst:71
+msgid ""
+"``state_cb`` は ``const mavros_msgs::State::ConstPtr&`` 型の変数を受け取り、それを "
+"``mavros_msgs::State`` 型のグローバル変数 ``current_state`` に格納する関数です。 コールバック関数では、"
+" ``パッケージ名::メッセージ型::ConstPtr&`` のような型の変数を受け取るようにするのが一般的です。 "
+"細かいことはC++の本で勉強しましょう。"
+msgstr ""
+
+#: ../../dronedoc/source/runnode/runnodecpp.rst:80
+msgid ""
+"``mavros/setpoint_position/local`` トピックに ``geometry_msgs::PoseStamped`` "
+"型のメッセージをパブリッシュするパブリッシャを初期化しています。 第二引数は受け取ったメッセージを保持しておくキューのサイズです。"
+msgstr ""
+
+#: ../../dronedoc/source/runnode/runnodecpp.rst:90
+msgid ""
+"モータの起動に用いる ``mavros/cmd/arming`` と モードの変更に用いる ``mavros/set_mode`` "
+"サービスのクライアントを初期化しています。 それぞれ、 ``mavros_msgs::CommandBool`` 型と "
+"``mavros_msgs::SetMode`` 型のメッセージを使います。"
+msgstr ""
+
+#: ../../dronedoc/source/runnode/runnodecpp.rst:97
+msgid ""
+"Offboardコマンドのタイムアウト時間は500msなので、2Hz以上の周波数で機体にコマンドを送る必要があります。 "
+"また、Offboardコマンドがタイムアウトした場合は、その直前の飛行モードに切り替わるので、PositionモードからOffboardモードに切り替えるようにしておけば、Offboardモードへの移行が失敗してもその場にとどまってくれます。"
+msgstr ""
+
+#: ../../dronedoc/source/runnode/runnodecpp.rst:107
+msgid ""
+"FCUと接続するまで待ちます。 ``current_state.connected`` はFCUと接続されているときに ``true`` "
+"になるので、接続されるとwhileループから抜けます。 ``ros::spinOnce()`` "
+"を使ってループ中でもコールバック関数がきちんと呼ばれるようにします。 また、 ``rate.sleep()`` "
+"は、このノードが20Hzで動作するように必要な時間だけノードを停止します。"
+msgstr ""
+
+#: ../../dronedoc/source/runnode/runnodecpp.rst:126
+msgid ""
+"あらかじめ移動先の位置をパブリッシュしておきます。 移動先の位置をパブリッシュしておかないとOffboardモードへの移行がリジェクトされます。 "
+"ここでは、移動先の位置は上方向に2mとなっています。 ``geometry_msgs::PoseStamped`` の各フィールドについては "
+"`geometry_msgs/PoseStamped Message "
+"<http://docs.ros.org/lunar/api/geometry_msgs/html/msg/PoseStamped.html>`_"
+" を見てください。"
+msgstr ""
+
+#: ../../dronedoc/source/runnode/runnodecpp.rst:136
+msgid ""
+"``SetMode`` メッセージの ``custom_mode`` フィールドを ``OFFBOARD`` にします。 "
+"このメッセージをサービスサーバに送信することでモードの切り替えをおこないます。 ``mavros_msgs::SetMode`` "
+"メッセージの定義は `mavros_msgs/SetMode Service "
+"<http://docs.ros.org/api/mavros_msgs/html/srv/SetMode.html>`_ から見れます。"
+msgstr ""
+
+#: ../../dronedoc/source/runnode/runnodecpp.rst:145
+msgid ""
+"``/mavros/cmd/arming`` サービスへ送信するためのメッセージを作成します。 "
+"``mavros_msgs::CommandBool`` メッセージの定義は `mavros_msgs/CommandBool Service "
+"<http://docs.ros.org/api/mavros_msgs/html/srv/CommandBool.html>`_ にあります。 "
+"mavrosパッケージで使用するメッセージの定義は、 `mavrosのROS wikiページ "
+"<http://wiki.ros.org/mavros#Plugins>`_ から見ることができます。"
+msgstr ""
+
+#: ../../dronedoc/source/runnode/runnodecpp.rst:180
+msgid ""
+"最初のif節は現在のモードが ``OFFBOARD`` かつ、モード切替が行われたのが5秒以上前であるときに実行されます。 "
+"最後のモード切替からの経過時間は ``last_request`` 変数を使って判断しています。"
+msgstr ""
+
+#: ../../dronedoc/source/runnode/runnodecpp.rst:183
+msgid ""
+"``set_mode_client.call(offb_set_mode)`` で、 ``offb_set_mode`` 変数のメッセージを使って"
+" ``mavros/set_mode`` サービスをコールしています。 サービスをコールした場合、サービスコールが成功すると ``true`` "
+"が帰ってきて、失敗すると ``false`` が帰ってきます。なので、戻り値を調べることでサービスコールが成功したかを知ることができます。 "
+"また、サービスにはリクエストのフィールド（サービスコールの際に必要な情報を与えるために使う）と、レスポンスのフィールド（処理結果等を格納するのに使う）があり、今回はレスポンスの"
+" ``mode_sent`` を調べることでモード切り替えの命令がきちんと認識され、送信されたかを判断しています。"
+msgstr ""
+
+#: ../../dronedoc/source/runnode/runnodecpp.rst:187
+msgid ""
+"モードが ``OFFBOARD`` の時は機体にモータを起動するように命令を送っています。 "
+"この部分の処理はOffboardコマンドを送るところとほぼ同じです。"
+msgstr ""
+
+#: ../../dronedoc/source/runnode/runnodecpp.rst:190
+msgid "最後に、ループ毎に目標位置をパブリッシュしています。"
+msgstr ""
+
+#: ../../dronedoc/source/runnode/runnodecpp.rst:193
+msgid "CMakeLists.txtの編集"
+msgstr ""
+
+#: ../../dronedoc/source/runnode/runnodecpp.rst:194
+msgid "次にCMakeLists.txtの編集をおこないます。 CMakeLists.txtの末尾に以下の行を追加します。"
+msgstr ""
+
+#: ../../dronedoc/source/runnode/runnodecpp.rst:203
+msgid "ビルドする"
+msgstr ""
+
+#: ../../dronedoc/source/runnode/runnodecpp.rst:211
+msgid "ノードの起動"
+msgstr ""
+
+#: ../../dronedoc/source/runnode/runnodecpp.rst:212
+msgid ""
+"はじめにシミュレータを起動します。 ROSノードとの通信を行うためにはmavrosが必要なので、 "
+"``mavros_posix_sitl.launch`` を使います。"
+msgstr ""
+
+#: ../../dronedoc/source/runnode/runnodecpp.rst:219
+msgid "次に先ほど作成したノードを起動します。"
+msgstr ""
+
+#: ../../dronedoc/source/runnode/runnodecpp.rst:228
+msgid "launchファイルを書く"
+msgstr ""
+
+#: ../../dronedoc/source/runnode/runnodecpp.rst:229
+msgid "シミュレータとOffboardノードを別々に起動するのは面倒なので、launchファイルにまとめて一つのコマンドで起動できるようにしましょう。"
+msgstr ""
+
+#: ../../dronedoc/source/runnode/runnodecpp.rst:231
+msgid ""
+"``px4_sim_pkg/launch`` 以下に ``cpp_offb_sample.launch`` "
+"という名前で以下の内容を保存してください。"
+msgstr ""
+
+#: ../../dronedoc/source/runnode/runnodecpp.rst:242
+msgid "以下のコマンドを使ってこのlaunchファイルからシミュレータとOffboardノードを起動できます。"
+msgstr ""
+
+#: ../../dronedoc/source/runnode/runnodecpp.rst:249
+msgid "参考"
+msgstr ""
+
+#: ../../dronedoc/source/runnode/runnodecpp.rst:250
+msgid ""
+"`Callbacks and Spinning - ROS Wiki "
+"<http://wiki.ros.org/roscpp/Overview/Callbacks%20and%20Spinning>`_"
+msgstr ""
+
+#: ../../dronedoc/source/runnode/runnodecpp.rst:251
+msgid "ros::spinOnce()について"
+msgstr ""
+
+#: ../../dronedoc/source/runnode/runnodecpp.rst:252
+msgid "`mavros - ROS Wiki <http://wiki.ros.org/mavros>`_"
+msgstr ""
+
+#: ../../dronedoc/source/runnode/runnodecpp.rst:253
+msgid "mavrosのROS Wikiページ"
+msgstr ""
+

@@ -1,0 +1,146 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2018, Takaki Ueno
+# This file is distributed under the same license as the Dronedoc package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Dronedoc \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-12-30 19:39+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.0\n"
+
+#: ../../dronedoc/source/appendix/terms/terms.rst:2
+msgid "用語集"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/terms/terms.rst:5
+msgid "ドローン関連"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/terms/terms.rst:6
+msgid "FCU"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/terms/terms.rst:7
+#: ../../dronedoc/source/appendix/terms/terms.rst:9
+#: ../../dronedoc/source/appendix/terms/terms.rst:11
+#: ../../dronedoc/source/appendix/terms/terms.rst:40
+#: ../../dronedoc/source/appendix/terms/terms.rst:42
+#: ../../dronedoc/source/appendix/terms/terms.rst:44
+#: ../../dronedoc/source/appendix/terms/terms.rst:46
+#: ../../dronedoc/source/appendix/terms/terms.rst:51
+msgid "TODO"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/terms/terms.rst:8
+msgid "GCS"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/terms/terms.rst:11
+msgid "ESC"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/terms/terms.rst:14
+msgid "ファイルシステム関連"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/terms/terms.rst:16
+msgid "ディレクトリ"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/terms/terms.rst:16
+msgid "ファイルシステム上の位置のこと。 フォルダとほぼ同じ意味と考えてよい"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/terms/terms.rst:18
+msgid "カレントディレクトリ"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/terms/terms.rst:19
+msgid "現在のディレクトリのこと"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/terms/terms.rst:21
+msgid "パス"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/terms/terms.rst:21
+msgid "ファイルやディレクトリの場所を表す文字列 （ ``~/catkin_ws/src`` など）"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/terms/terms.rst:24
+msgid "相対パス"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/terms/terms.rst:24
+msgid "現在のディレクトリからの相対的な位置を示すパス （ ``../devel/setup.bash`` など）"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/terms/terms.rst:27
+msgid "絶対パス"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/terms/terms.rst:27
+msgid "ファイルやディレクトリの場所を省略せずに示したパス （ ``/home/robotics/catkin_ws/src`` など）"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/terms/terms.rst:29
+msgid "\\.."
+msgstr ""
+
+#: ../../dronedoc/source/appendix/terms/terms.rst:30
+msgid "一つ上のディレクトリを示す記号"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/terms/terms.rst:31
+msgid "\\."
+msgstr ""
+
+#: ../../dronedoc/source/appendix/terms/terms.rst:32
+msgid "カレントディレクトリを示す記号"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/terms/terms.rst:35
+msgid "~"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/terms/terms.rst:34
+msgid "ホームのディレクトリを示す記号"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/terms/terms.rst:38
+msgid "makeとかcmakeとか関連"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/terms/terms.rst:39
+msgid "make"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/terms/terms.rst:41
+msgid "Makefile"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/terms/terms.rst:43
+msgid "cmake"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/terms/terms.rst:46
+msgid "CMakeLists.txt"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/terms/terms.rst:49
+msgid "TODO:name"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/terms/terms.rst:50
+msgid "環境変数"
+msgstr ""
+

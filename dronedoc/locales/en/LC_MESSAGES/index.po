@@ -1,0 +1,173 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2018, Takaki Ueno
+# This file is distributed under the same license as the Dronedoc package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Dronedoc \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-12-30 19:39+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.0\n"
+
+#: ../../dronedoc/source/index.rst:44
+msgid "SLAM"
+msgstr ""
+
+#: ../../dronedoc/source/index.rst:60
+msgid "Mapping"
+msgstr ""
+
+#: ../../dronedoc/source/index.rst:68
+msgid "Motion Planning"
+msgstr ""
+
+#: ../../dronedoc/source/index.rst:75
+msgid "Tips"
+msgstr ""
+
+#: ../../dronedoc/source/index.rst:85
+msgid "Appendix"
+msgstr ""
+
+#: ../../dronedoc/source/index.rst:2
+msgid "PX4 SITL Tutorial"
+msgstr ""
+
+#: ../../dronedoc/source/index.rst:4
+msgid "このテキストについて"
+msgstr "Introduction"
+
+#: ../../dronedoc/source/index.rst:5
+msgid "このテキストはPX4 SITLシミュレーションを用いてドローンアプリケーション開発を行いたい人向けのチュートリアルです。 本テキスト内では、"
+msgstr "This document is tutorial of PX4 SITL simulaton. This tutorial describes the following topics."
+
+#: ../../dronedoc/source/index.rst:8
+msgid "シミュレーション環境の構築"
+msgstr "Building simulation environment"
+
+#: ../../dronedoc/source/index.rst:9
+msgid "シミュレーションの実行"
+msgstr "Running simulator"
+
+#: ../../dronedoc/source/index.rst:10
+msgid "自作ノードの実行"
+msgstr "Writing and running ROS node"
+
+#: ../../dronedoc/source/index.rst:11
+msgid "ドローンの自律移動"
+msgstr "Autonomous flight of UAV"
+
+#: ../../dronedoc/source/index.rst:12
+msgid "Octomapを用いた3D地図生成"
+msgstr "Map building with Octomap"
+
+#: ../../dronedoc/source/index.rst:13
+msgid "MoveIt!を用いた動作計画"
+msgstr "Motion planning with MoveIt!"
+
+#: ../../dronedoc/source/index.rst:15
+msgid "について説明をします。"
+msgstr " "
+
+#: ../../dronedoc/source/index.rst:17
+msgid "SLAMセクションを最初から読んでいることが前提で書いているので、 他のセクションから読み始めると内容がわからないことがあるかもしれません。"
+msgstr ""
+
+#: ../../dronedoc/source/index.rst:20
+msgid "また、読書案内のページで補足資料等をリストアップしてあるので、必要に応じて参考にしてください。"
+msgstr ""
+
+#: ../../dronedoc/source/index.rst:23
+msgid "対象読者"
+msgstr "Target Readers"
+
+#: ../../dronedoc/source/index.rst:24
+msgid "このテキストの対象読者は、"
+msgstr "This document assumes someone whom listed below as target readers."
+
+#: ../../dronedoc/source/index.rst:26
+msgid "PX4ファームウェアを用いてドローンアプリケーション開発を行いたい人"
+msgstr "Developer who wants to build UAV applicaiton using PX4 Firmware"
+
+#: ../../dronedoc/source/index.rst:27
+msgid "ドローンのシミュレーションを行いたい人"
+msgstr "Developer who wants to run UAV simulation"
+
+#: ../../dronedoc/source/index.rst:29
+msgid "です。"
+msgstr " "
+
+#: ../../dronedoc/source/index.rst:32
+msgid "環境"
+msgstr "Environment"
+
+#: ../../dronedoc/source/index.rst:33
+msgid "本テキストにおいては以下の環境を使用しています。"
+msgstr "The following are versions of softwares used in this tutorial."
+
+#: ../../dronedoc/source/index.rst:35
+msgid "Ubuntu 16.04 LTS"
+msgstr ""
+
+#: ../../dronedoc/source/index.rst:36
+msgid "ROS Kinetic"
+msgstr ""
+
+#: ../../dronedoc/source/index.rst:37
+msgid "Gazebo 7.4"
+msgstr ""
+
+#: ../../dronedoc/source/index.rst:38
+msgid "PX4 Firmware v1.8.0"
+msgstr ""
+
+#: ../../dronedoc/source/index.rst:41
+msgid "ソースコード"
+msgstr "Source Codes"
+
+#: ../../dronedoc/source/index.rst:42
+msgid ""
+"このチュートリアルで使用したプログラムやLaunchファイルなどは `dronedocリポジトリ "
+"<https://github.com/uenota/dronedoc>`_ にあります。"
+msgstr ""
+"You can find the programs and launch files used in this tutorial at `dronedoc repository "
+"<https://github.com/uenota/dronedoc>`_ ."
+
+#: ../../dronedoc/source/index.rst:100
+msgid "Issues & Pull Requests"
+msgstr ""
+
+#: ../../dronedoc/source/index.rst:101
+msgid "内容に問題があれば気軽にお知らせください。"
+msgstr "Please let me know if you have any problems."
+
+#: ../../dronedoc/source/index.rst:103
+msgid "https://github.com/uenota/dronedoc/issues"
+msgstr ""
+
+#: ../../dronedoc/source/index.rst:106
+msgid "Pull Requestも大歓迎です!!!"
+msgstr "Pull Requests are Wellcome!!!"
+
+#: ../../dronedoc/source/index.rst:108
+msgid "https://github.com/uenota/dronedoc/pulls"
+msgstr ""
+
+#: ../../dronedoc/source/index.rst:112
+msgid "License"
+msgstr ""
+
+#: ../../dronedoc/source/index.rst:118
+msgid ""
+"This work is licensed under a `Creative Commons Attribution 4.0 "
+"International License <http://creativecommons.org/licenses/by/4.0/>`_."
+msgstr ""
+

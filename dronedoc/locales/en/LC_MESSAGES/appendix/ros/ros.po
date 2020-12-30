@@ -1,0 +1,164 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2018, Takaki Ueno
+# This file is distributed under the same license as the Dronedoc package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Dronedoc \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-12-30 19:39+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.0\n"
+
+#: ../../dronedoc/source/appendix/ros/ros.rst:2
+msgid "ROSの基本"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/ros/ros.rst:5
+msgid "ROSコマンド"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/ros/ros.rst:8
+msgid "`ROS Command-line tools <http://wiki.ros.org/ROS/CommandLineTools>`_"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/ros/ros.rst:11
+msgid "パブリッシャとサブスクライバ"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/ros/ros.rst:12
+msgid ""
+"ノード同士はトピックを通じてメッセージを送受信することでやり取りしています。 ノードがトピックにメッセージを送信することをパブリッシュするといい、"
+" データをパブリッシュするノードをパブリッシャといいます。 また、ノードがトピックからメッセージを受け取ることをサブスクライブするといい、 "
+"データをサブスクライブするノードをサブスクライバといいます。"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/ros/ros.rst:21
+msgid "サーバとクライアント"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/ros/ros.rst:22
+msgid ""
+"`サービス <http://wiki.ros.org/Services>`_ は、2つのノードが1対1でやり取りするときに使われる仕組みです。 "
+"サービスの呼び出しでは、クライアントと呼ばれるノードがもう一方のノード（サーバ）に対してリクエストを送信し、 "
+"サーバが何らかの処理を行った後にクライアントに対してレスポンスを送信します。"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/ros/ros.rst:27
+msgid "``rosservice`` コマンド"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/ros/ros.rst:28
+msgid ""
+"`rosservice <http://wiki.ros.org/rosservice>`_ "
+"コマンドを使えばROSサービスをコールしたり、その情報を調べることができます。"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/ros/ros.rst:31
+msgid "サービスファイル(.srv)"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/ros/ros.rst:32
+msgid ""
+"ノードが提供するサービスについての決まり事が書いてあるファイルです。 具体的には、サービスのリクエストとレスポンスのデータ型が記載されています。 "
+"`srv`フォルダ以下に格納されます。 サービスファイルの文法などは `srv - ROS.org "
+"<http://wiki.ros.org/srv>`_ を参照してください。"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/ros/ros.rst:37
+msgid ""
+"以下はturtlesimのSpawn.srvファイルです。 turtleを新しく配置するときに使われるサービスです。 "
+"点線で区切られた上の部分がリクエスト、下の部分がレスポンスです。"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/ros/ros.rst:41
+msgid ""
+"turtleを配置する位置と角度、名前をリクエストとして与えると、 "
+"サーバがturtleを新しく配置して、配置したturtleの名前をレスポンスとして返してきます。"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/ros/ros.rst:53
+msgid "メッセージファイルと同様、 ``#`` 以降はコメントと判断されます。"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/ros/ros.rst:57
+msgid "TF"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/ros/ros.rst:60
+msgid "`tf/Tutorial - ROS Wiki <http://wiki.ros.org/ja/tf/Tutorials>`_"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/ros/ros.rst:63
+msgid "パラメータ"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/ros/ros.rst:64
+msgid "ROSノードは、再利用性を高めるためにパラメータを用いてその動作を変更できるようにしてあります。"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/ros/ros.rst:66
+msgid ""
+"ノード内でパラメータを利用する方法については、 `roscpp "
+"<http://wiki.ros.org/roscpp/Overview/Parameter%20Server>`_ と `rospy "
+"<http://wiki.ros.org/rospy/Overview/Parameter%20Server>`_ "
+"のドキュメンテーションを参考にしてください。"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/ros/ros.rst:69
+msgid "``rosparam`` コマンド"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/ros/ros.rst:70
+msgid ""
+"ノードのパラメータは ``rosparam`` コマンドを使って確認したり設定したりすることができます。 rosparamコマンドについては "
+"`rosparam - ROS Wiki <http://wiki.ros.org/rosparam>`_ を見てください。"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/ros/ros.rst:73
+msgid "また、Launchファイルからノードを起動した時は、以下のようにパラメータ一覧が表示されます。"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/ros/ros.rst:78
+msgid "参考"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/ros/ros.rst:79
+msgid "`Parameter Server - ROS Wiki <http://wiki.ros.org/ja/Parameter%20Server>`_"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/ros/ros.rst:82
+msgid "各種ファイルの書き方"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/ros/ros.rst:85
+msgid "Launchファイル"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/ros/ros.rst:88
+msgid "`roslaunch/XML <http://wiki.ros.org/roslaunch/XML>`_"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/ros/ros.rst:91
+msgid "package.xml"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/ros/ros.rst:94
+msgid "`catkin/package.xml <http://wiki.ros.org/catkin/package.xml>`_"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/ros/ros.rst:97
+msgid "CMakeLists.txt"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/ros/ros.rst:100
+msgid "`catkin/cmake <http://wiki.ros.org/catkin/CMakeLists.txt>`_"
+msgstr ""
+

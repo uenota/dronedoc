@@ -1,0 +1,255 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2018, Takaki Ueno
+# This file is distributed under the same license as the Dronedoc package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Dronedoc \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-12-30 19:39+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.0\n"
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:2
+msgid "基本的なBashの使い方"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:4
+msgid "はじめに"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:5
+msgid "ここでは基本的なbashコマンドとbash関連の設定等を解説します。"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:7
+msgid ""
+"大抵の場合 ``コマンド名 linux`` で検索すると出てきます。 ここに書いていないコマンドがあった場合は調べながら試してみるとよいでしょう。"
+" Linuxコマンドに関しては調べながら試してみるのが一番だと思います。"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:12
+msgid "基本的なコマンド"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:14
+msgid "ls"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:15
+msgid "ファイルやディレクトリの内容を表示する。"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:31
+msgid "cd"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:32
+msgid "カレントディレクトリを変更する。"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:42
+msgid "mkdir"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:43
+msgid "ディレクトリを作成する。"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:53
+msgid "echo"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:54
+msgid "メッセージを表示する。"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:64
+msgid "rm"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:65
+msgid "ファイル、ディレクトリを削除する。"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:79
+msgid "cp"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:80
+msgid "ファイル・ディレクトリをコピーする。"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:90
+msgid "mv"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:91
+msgid "ファイル・ディレクトリを移動・改名する"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:106
+msgid "ssh"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:107
+msgid "リモートマシンに接続する。"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:117
+msgid "scp"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:118
+msgid "リモートマシンとファイルをやり取りする。"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:132
+msgid "wget"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:133
+msgid "ファイルをダウンロードする。"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:141
+msgid "source"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:142
+msgid "指定したファイルに書いてあるコマンドを実行する。"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:150
+msgid "export"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:151
+msgid "環境変数やシェル変数を変更する。"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:162
+msgid "cat"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:163
+msgid "複数のファイルの内容を連結したり表示したりする。"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:173
+msgid "less"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:174
+msgid "テキストファイルの内容を1画面ずつ表示する。 スペースキーで画面を進め、qキーで終了できる。"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:183
+msgid "alias"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:184
+msgid "コマンドの別名（エイリアス）を定義する。"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:196
+msgid "リダイレクト"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:197
+msgid "Linuxでは、リダイレクトを使ってコマンドの出力先や入力先をターミナルからファイルへ変更したりできます。"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:213
+msgid "``>`` はファイルを上書きするので使用する際は注意すること。"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:215
+msgid ""
+"`リダイレクトの使い方 "
+"<https://tech.nikkeibp.co.jp/it/article/COLUMN/20060228/231012/>`_"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:216
+msgid ""
+"`bash: 標準出力、標準エラー出力をファイル、画面それぞれに出力する方法 "
+"<https://qiita.com/laikuaut/items/e1cc312ffc7ec2c872fc>`_"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:219
+msgid ".bashrc"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:220
+msgid ".bashrcはBashの設定スクリプトで、bashを起動した際に毎回内容が実行されます。 ターミナルの設定などはこのファイルに書くことが多いです。"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:224
+msgid "Tips"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:226
+msgid "set -o noclobber"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:227
+msgid "以下のコマンドを実行すれば、 ``>`` を使ったリダイレクトでファイルが上書きされなくなります。"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:229
+msgid "``>|`` を使えば強制的に上書きできる。 また、 ``set +o noclobber`` で上書き禁止を解除できる。"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:237
+msgid "cm, cs, cw"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:238
+msgid "catkin関連のコマンドのエイリアスを以下のように定義すると便利です。"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:250
+msgid "Git"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:251
+msgid "Gitはバージョン管理ソフトウェアの一種で、インストール済みであれば ``git`` コマンドから利用することができます。"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:254
+msgid "gitコマンドの使い方"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:255
+msgid "GitHub上にあるリポジトリは ``git`` コマンドを使ってローカルにクローン（複製）することができます。"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:257
+msgid "例えば、このチュートリアルのリポジトリであれば、"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:264
+msgid "GitHub上のROSパッケージを使う"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:265
+msgid "ROSパッケージはワークスペース以下の ``src`` ディレクトリにクローンしてビルドすれば通常のROSパッケージと同様に使用することができます。"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:276
+msgid "参考"
+msgstr ""
+
+#: ../../dronedoc/source/appendix/bash_commands/bash_commands.rst:277
+msgid ""
+"`Linuxコマンド集 | 日経 xTECH（クロステック） "
+"<https://tech.nikkeibp.co.jp/it/article/COLUMN/20060223/230520/>`_"
+msgstr ""
+
