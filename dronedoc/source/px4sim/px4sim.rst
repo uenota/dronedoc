@@ -26,8 +26,21 @@ PX4はドローンのフライトコントローラやファームウェアを�
 インストール
 ----------------------------------------------------------------
 シミュレーション環境はスクリプトを使うことで簡単に構築できます。
-はじめに、 `ubuntu_sim_ros_gazebo.sh <https://raw.githubusercontent.com/PX4/Devguide/master/build_scripts/ubuntu_sim_ros_gazebo.sh>`_ をダウンロードします。
-ダウンロードができたら、``ubuntu_sim_ros_gazebo.sh`` のあるディレクトリで以下のコマンドを実行します。
+はじめに、 `ubuntu_sim_ros_gazebo.sh <https://raw.githubusercontent.com/PX4/Devguide/v1.8.0/build_scripts/ubuntu_sim_ros_gazebo.sh>`_ をダウンロードします。
+
+ダウンロードしたままの状態だとリポジトリキーが違っていてROSパッケージをインストールできないので、 ``ubuntu_sim_ros_gazebo.sh`` の以下の部分を変更します。
+
+.. code-block:: bash
+
+    sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key 421C365BD9FF1F717815A3895523BAEEB01FA116
+
+以下が正しいリポジトリキーを設定するコマンドです。
+
+.. code-block:: bash
+
+    sudo apt-key adv --keyserver 'hkp://ha.pool.sks-keyservers.net:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
+
+``ubuntu_sim_ros_gazebo.sh`` のあるディレクトリで以下のコマンドを実行します。
 
 .. code-block:: bash
 
