@@ -47,51 +47,51 @@ msgstr "Introduction"
 
 #: ../../dronedoc/source/index.rst:5
 msgid "このテキストはPX4 SITLシミュレーションを用いてドローンアプリケーション開発を行いたい人向けのチュートリアルです。 本テキスト内では、"
-msgstr "This document is tutorial of PX4 SITL simulaton. This tutorial describes the following topics."
+msgstr "This document is tutorial of PX4 SITL simulaton. This tutorial describes how to"
 
 #: ../../dronedoc/source/index.rst:8
 msgid "シミュレーション環境の構築"
-msgstr "Building simulation environment"
+msgstr "Setup PX4 SITL simulation environment"
 
 #: ../../dronedoc/source/index.rst:9
 msgid "シミュレーションの実行"
-msgstr "Running simulator"
+msgstr "Run PX4 SITL simulation"
 
 #: ../../dronedoc/source/index.rst:10
 msgid "自作ノードの実行"
-msgstr "Writing and running ROS node"
+msgstr "Write and run ROS node"
 
 #: ../../dronedoc/source/index.rst:11
 msgid "ドローンの自律移動"
-msgstr "Autonomous flight of UAV"
+msgstr "Perform autonomous flight of UAV"
 
 #: ../../dronedoc/source/index.rst:12
 msgid "Octomapを用いた3D地図生成"
-msgstr "Map building with Octomap"
+msgstr "Build 3D map with Octomap"
 
 #: ../../dronedoc/source/index.rst:13
 msgid "MoveIt!を用いた動作計画"
-msgstr "Motion planning with MoveIt!"
+msgstr "Perform motion planning with MoveIt!"
 
 #: ../../dronedoc/source/index.rst:15
 msgid "について説明をします。"
-msgstr " "
+msgstr "​"
 
 #: ../../dronedoc/source/index.rst:17
 msgid "SLAMセクションを最初から読んでいることが前提で書いているので、 他のセクションから読み始めると内容がわからないことがあるかもしれません。"
-msgstr ""
+msgstr "​"
 
 #: ../../dronedoc/source/index.rst:20
 msgid "また、読書案内のページで補足資料等をリストアップしてあるので、必要に応じて参考にしてください。"
-msgstr ""
+msgstr "​"
 
 #: ../../dronedoc/source/index.rst:23
 msgid "対象読者"
-msgstr "Target Readers"
+msgstr "Target Reader"
 
 #: ../../dronedoc/source/index.rst:24
 msgid "このテキストの対象読者は、"
-msgstr "This document assumes someone whom listed below as target readers."
+msgstr "This document assumes someone whom listed below as target reader."
 
 #: ../../dronedoc/source/index.rst:26
 msgid "PX4ファームウェアを用いてドローンアプリケーション開発を行いたい人"
@@ -103,7 +103,7 @@ msgstr "Developer who wants to run UAV simulation"
 
 #: ../../dronedoc/source/index.rst:29
 msgid "です。"
-msgstr " "
+msgstr "​"
 
 #: ../../dronedoc/source/index.rst:32
 msgid "環境"
@@ -138,7 +138,7 @@ msgid ""
 "このチュートリアルで使用したプログラムやLaunchファイルなどは `dronedocリポジトリ "
 "<https://github.com/uenota/dronedoc>`_ にあります。"
 msgstr ""
-"You can find the programs and launch files used in this tutorial at `dronedoc repository "
+"You can find the programs and launch files used in this tutorial at  `dronedoc repository "
 "<https://github.com/uenota/dronedoc>`_ ."
 
 #: ../../dronedoc/source/index.rst:100
