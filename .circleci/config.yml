@@ -39,7 +39,7 @@ jobs:
           working_directory: ~/project/dronedoc
       - run:
           name: move doc (JP)
-          command:
+          command: |
             mkdir jp
             shopt -s dotglob
             mv docs/ja/html/* ja/
@@ -54,7 +54,7 @@ jobs:
           working_directory: ~/project/dronedoc
       - run:
           name: move doc (EN)
-          command:
+          command: |
             mkdir en
             shopt -s dotglob
             mv docs/en/html/* en/
