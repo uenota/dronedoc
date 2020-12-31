@@ -18,8 +18,8 @@ jobs:
           name: update pip
           command: sudo -H pip3 install -U pip
       - run:
-          name: install sphinx, sphinx-sitemap and rtd-theme
-          command: sudo -H pip3 install -U sphinx sphinx-rtd-theme sphinx-sitemap
+          name: install sphinx, sphinx-sitemap, sphinx-intl, and rtd-theme
+          command: sudo -H pip3 install -U sphinx sphinx-rtd-theme sphinx-sitemap sphinx-intl
       - run:
           name: update setuptools
           command: sudo -H pip3 install -U setuptools
@@ -48,6 +48,7 @@ jobs:
       - run:
           name: build doc (EN)
           command: |
+            sphinx-intl update -p locales -l en
             make clean
             make html -e SPHINXOPTS='-D language="en"' -e BUILDDIR='../docs/en'
           working_directory: ~/project/dronedoc
