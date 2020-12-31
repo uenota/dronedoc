@@ -28,6 +28,7 @@ devel_isolated/
 # Ignore generated docs
 *.dox
 *.wikidoc
+*.mo
 
 # eclipse stuff
 .project
