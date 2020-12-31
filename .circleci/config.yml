@@ -60,8 +60,11 @@ jobs:
             mv docs/en/html/* en/
             shopt -u dotglob 
             ls | grep -v -E "ja" | grep -v -E "en" | xargs rm -rf
-            touch .nojekyll
             rm -rf docs
+          working_directory: ~/project
+      - run:
+          name: make nojekyll
+          command: touch .nojekyll
           working_directory: ~/project
       - run:
           name: deploy to gh-pages
