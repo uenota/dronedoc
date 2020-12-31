@@ -39,8 +39,8 @@ msgid ""
 "<https://dev.px4.io/en/setup/dev_env_linux.html>`_ を参考にしています。 "
 "問題が起きた場合は最新版を確認するようにしてください。"
 msgstr ""
-"The following instructions are based on  `Development Environment on Linux - PX4 Developer Guide "
-"<https://dev.px4.io/en/setup/dev_env_linux.html>`_ ."
+"The following instructions are based on `Development Environment on Linux - PX4 Developer Guide "
+"<https://dev.px4.io/en/setup/dev_env_linux.html>`_."
 " If you have any problems, please refer the instruction on the official website."
 
 #: ../../dronedoc/source/px4sim/px4sim.rst:16
@@ -53,8 +53,8 @@ msgid ""
 "シリアルデバイスとの通信を行えるようにするためには、ユーザを ``dialout`` グループのメンバーにする必要があります。 ユーザを "
 "``dialout`` のメンバーにするには以下のコマンドを実行します。"
 msgstr ""
-"The user must be the member of  ``dialout``  group to communicate serial devices."
-" To make user the member of  ``dialout`` , run the following command."
+"The user must be the member of ``dialout`` group to communicate serial devices."
+" To make user the member of ``dialout``, run the following command."
 
 #: ../../dronedoc/source/px4sim/px4sim.rst:24
 msgid "コマンドを実行したら、設定を有効にするために一旦ログアウトしてから再度ログインします。"
@@ -71,8 +71,8 @@ msgid ""
 " をダウンロードします。"
 msgstr ""
 "You can setup the environment for PX4 simulation with the script provided by the official repo."
-" Firstly, download  `ubuntu_sim_ros_gazebo.sh "
-"<https://raw.githubusercontent.com/PX4/Devguide/v1.8.0/build_scripts/ubuntu_sim_ros_gazebo.sh>`_ ."
+" Firstly, download `ubuntu_sim_ros_gazebo.sh "
+"<https://raw.githubusercontent.com/PX4/Devguide/v1.8.0/build_scripts/ubuntu_sim_ros_gazebo.sh>`_."
 
 #: ../../dronedoc/source/px4sim/px4sim.rst:31
 msgid ""
@@ -80,7 +80,7 @@ msgid ""
 "``ubuntu_sim_ros_gazebo.sh`` の以下の部分を変更します。"
 msgstr ""
 "You can't install the ROS package with repository key in downloaded script."
-" To install ROS package, fix the following line in  ``ubuntu_sim_ros_gazebo.sh`` ."
+" To install ROS package, fix the following line in ``ubuntu_sim_ros_gazebo.sh``."
 
 #: ../../dronedoc/source/px4sim/px4sim.rst:37
 msgid "以下が正しいリポジトリキーを設定するコマンドです。"
@@ -88,7 +88,7 @@ msgstr "The following command fixes the key for the repository."
 
 #: ../../dronedoc/source/px4sim/px4sim.rst:43
 msgid "``ubuntu_sim_ros_gazebo.sh`` のあるディレクトリで以下のコマンドを実行します。"
-msgstr "Run the following command in the directory which contains  ``ubuntu_sim_ros_gazebo.sh`` ."
+msgstr "Run the following command in the directory which contains ``ubuntu_sim_ros_gazebo.sh``."
 
 #: ../../dronedoc/source/px4sim/px4sim.rst:49
 msgid "コマンドを実行すれば自動でインストールされます。 ROSがインストールされていない場合は、ROSもインストールされるのでしばらく時間がかかります。"
@@ -96,7 +96,7 @@ msgstr "Packages are automatically installed with the command. ROS will be insta
 
 #: ../../dronedoc/source/px4sim/px4sim.rst:52
 msgid "スクリプトの実行が終了したら、PX4のファームウェアが ``~/src/Firmware`` 以下に作成されています。"
-msgstr "After running the script, PX4 firmware is downloaded into  ``~/src/Firmware`` ."
+msgstr "After running the script, PX4 firmware is downloaded into ``~/src/Firmware``."
 
 #: ../../dronedoc/source/px4sim/px4sim.rst:57
 msgid "Gazeboシミュレーション"
@@ -104,7 +104,7 @@ msgstr "Simulation using Gazebo"
 
 #: ../../dronedoc/source/px4sim/px4sim.rst:58
 msgid "Gazeboを使ってシミュレーションを行うには、 ``~/src/Firmware`` 以下で次のコマンドを実行します。"
-msgstr "To run Gazebo simulation, run the following command in  ``~/src/Firmware`` ."
+msgstr "To run Gazebo simulation, run the following command in ``~/src/Firmware``."
 
 #: ../../dronedoc/source/px4sim/px4sim.rst:64
 msgid "初回実行の場合はしばらく時間がかかります。 ビルドが終わったらシミュレーションが起動し、以下のような画面が表示されます。 （ドローンは赤枠内）"
@@ -118,8 +118,8 @@ msgid ""
 "<https://dev.px4.io/en/simulation/gazebo.html#quadrotor>`_ を参考にしてください。"
 msgstr ""
 "There are other airframes available for simulation."
-" You can find available airframes  `here "
-"<https://dev.px4.io/en/simulation/gazebo.html#quadrotor>`_ ."
+" You can find available airframes `here "
+"<https://dev.px4.io/en/simulation/gazebo.html#quadrotor>`_."
 
 #: ../../dronedoc/source/px4sim/px4sim.rst:73
 msgid "シミュレータのターミナル内で以下のコマンドを実行すれば機体を離陸させることができます。"
@@ -127,7 +127,7 @@ msgstr "Run the following command in the terminal of SITL simulator to get UAV t
 
 #: ../../dronedoc/source/px4sim/px4sim.rst:81
 msgid "他にもコマンドがあるので試してみるとよいでしょう。 ``help`` コマンドを実行すれば実行可能なコマンドの一覧を表示できます。"
-msgstr "You can try the other commands. For the list of available commands, run  ``help``  command."
+msgstr "You can try the other commands. For the list of available commands, run ``help`` command."
 
 #: ../../dronedoc/source/px4sim/px4sim.rst:86
 msgid "ROSを使ってGazeboシミュレーションを行う"
@@ -142,8 +142,8 @@ msgid ""
 "ROSノードからシミュレータ内の機体に命令を送ったり、データを受信したりするには、`mavros "
 "<http://wiki.ros.org/mavros>`_ というROSパッケージを使います。"
 msgstr ""
-"We will use  `mavros "
-"<http://wiki.ros.org/mavros>`_  to exchange messages between ROS nodes and vehicles in the simulator."
+"We will use `mavros "
+"<http://wiki.ros.org/mavros>`_ to exchange messages between ROS nodes and vehicles in the simulator."
 
 #: ../../dronedoc/source/px4sim/px4sim.rst:92
 msgid ""
@@ -152,10 +152,10 @@ msgid ""
 " センサ情報や速度指令などはトピックを通じてやりとりでき、他にも離着陸用のサービスが用意されています。 利用可能なサービスやトピックの一覧は "
 "`ここ <http://wiki.ros.org/mavros#Plugins>`_ にあります。"
 msgstr ""
-"The vehicles in the simulator follows  `Mavlink <https://mavlink.io/en/>`_  protocol to communicate."
+"The vehicles in the simulator follows `Mavlink <https://mavlink.io/en/>`_ protocol to communicate."
 " MAVROS is the wrapper package of Mavlink protocol."
 " You can read sensor measurements and send controll messages like take off, landing, etc."
-" For the list of available services and topics, see  `here <http://wiki.ros.org/mavros#Plugins>`_ ."
+" For the list of available services and topics, see `here <http://wiki.ros.org/mavros#Plugins>`_."
 
 #: ../../dronedoc/source/px4sim/px4sim.rst:100
 msgid "mavrosを使って機体と通信する"
@@ -171,7 +171,7 @@ msgid ""
 "で解説しています。"
 msgstr ""
 "After starting up the simulator, run mavros by the following command."
-" See  :ref:`fcu_url`  for the details of fcu_url parameter."
+" See :ref:`fcu_url` for the details of fcu_url parameter."
 
 #: ../../dronedoc/source/px4sim/px4sim.rst:111
 msgid "起動できたら別のターミナル内で、"
@@ -179,7 +179,7 @@ msgstr "After starting up mavros, run the following command in the other termina
 
 #: ../../dronedoc/source/px4sim/px4sim.rst:117
 msgid "を実行してみましょう。 ``/mavros/...`` のようなトピックが現れていれば通信が出来ています。"
-msgstr "You can see topics like  ``/mavros/...``   when mavros communicates successfully."
+msgstr "You can see topics like ``/mavros/...`` when mavros communicates successfully."
 
 #: ../../dronedoc/source/px4sim/px4sim.rst:119
 msgid ""
@@ -187,7 +187,7 @@ msgid ""
 "true\"を送信することでドローンのモータを起動することができます。"
 msgstr ""
 "Let's use services which mavros provides."
-" You can start motors on the UAV by sending \"value: true\" message to  ``/mavros/cmd/arming``  service."
+" You can start motors on the UAV by sending \"value: true\" message to ``/mavros/cmd/arming`` service."
 
 #: ../../dronedoc/source/px4sim/px4sim.rst:126
 msgid ""
@@ -197,7 +197,7 @@ msgid ""
 "便利なので覚えておくといいかもしれません。"
 msgstr ""
 "You can try other services such as taking off, landing, etc."
-" Tapping TAB key twise after entering  ``/mavros``  gives you the list of available services."
+" Tapping TAB key twise after entering ``/mavros`` gives you the list of available services."
 " This feature is called \"Tab Completion\"."
 
 #: ../../dronedoc/source/px4sim/px4sim.rst:131
@@ -226,7 +226,7 @@ msgid ""
 "PX4 SITLシミュレータは ``roslaunch`` コマンドを使って起動することもできます。 "
 "以下のlaunchファイルを使ってシミュレータを起動できます。"
 msgstr ""
-"You can run PX4 SITL simulator by  ``roslaunch``  command."
+"You can run PX4 SITL simulator by ``roslaunch`` command."
 " The following launch file will run the simulator."
 
 #: ../../dronedoc/source/px4sim/px4sim.rst:149
@@ -255,7 +255,7 @@ msgid ""
 "ディレクトリに移動します。"
 msgstr ""
 "You need to set the environment variable to run simulator using these launch files."
-" Firstly, navigate to  ``~/src/Firmware`` ."
+" Firstly, navigate to ``~/src/Firmware``."
 
 #: ../../dronedoc/source/px4sim/px4sim.rst:167
 msgid ""
@@ -265,7 +265,7 @@ msgid ""
 msgstr ""
 "If you didn't do the procedure in  :ref:`gazebo-sim` , run the following command."
 " The following command generates files required to run simulator."
-" You need to run the following command in  ``~/src/Firmware"" ."
+" You need to run the following command in ``~/src/Firmware``."
 
 #: ../../dronedoc/source/px4sim/px4sim.rst:175
 msgid "次に、必要な設定スクリプトを実行します。 ROSの設定ができている場合は一行目は実行しなくても構いません。"
@@ -281,7 +281,7 @@ msgid ""
 "に以下の内容を書き込んでおくと、毎回この内容が設定されます。"
 msgstr ""
 "You need to run the commands everytime you run the simulator."
-" Instead of running the command, you can write the following commands to  ``~/.bashrc``  to run commands automatically."
+" Instead of running the command, you can write the following commands to ``~/.bashrc`` to run commands automatically."
 
 #: ../../dronedoc/source/px4sim/px4sim.rst:200
 msgid "シミュレータを起動する"
@@ -293,7 +293,7 @@ msgstr "The following command activates simulator"
 
 #: ../../dronedoc/source/px4sim/px4sim.rst:207
 msgid "mavrosも同時に起動したい場合には ``mavros_posix_sitl.launch`` を使います。"
-msgstr "Use  ``mavros_posix_sitl.launch``  to start mavros with simulator."
+msgstr "Use ``mavros_posix_sitl.launch`` to start mavros with simulator."
 
 #: ../../dronedoc/source/px4sim/px4sim.rst:213
 msgid ""
@@ -301,8 +301,8 @@ msgid ""
 "<https://dev.px4.io/en/simulation/gazebo.html>`_ "
 "にリストアップされている機体を使用することもできます。"
 msgstr ""
-"By the following command, you can use airframes listed in  `Gazebo Simulation - PX4 Developer Guide "
-"<https://dev.px4.io/en/simulation/gazebo.html>`_ ."
+"By the following command, you can use airframes listed in `Gazebo Simulation - PX4 Developer Guide "
+"<https://dev.px4.io/en/simulation/gazebo.html>`_."
 
 #: ../../dronedoc/source/px4sim/px4sim.rst:222
 msgid "補足: mavrosのfcu_url引数について"
@@ -322,8 +322,8 @@ msgid ""
 "fcu_url:=\"udp://:14540@127.0.0.1:14557\"`` とすることで ``fcu_url`` "
 "引数の内容を変更することができます。"
 msgstr ""
-"The following is the content of  ``px4.launch``."
-" You can set the value of  ``fcu_url``  with the command like  ``roslaunch mavros px4.launch fcu_url:=\"udp://:14540@127.0.0.1:14557\"`` ."
+"The following is the content of ``px4.launch``."
+" You can set the value of ``fcu_url`` with the command like ``roslaunch mavros px4.launch fcu_url:=\"udp://:14540@127.0.0.1:14557\"``."
 
 #: ../../dronedoc/source/px4sim/px4sim.rst:263
 msgid "fcu_urlについて"
@@ -335,8 +335,8 @@ msgid ""
 "``/dev/ttyACM0`` （環境によって異なる）にFCUが接続されているので、これを指定します。 "
 "コロンの後ろの数字はボーレート（baudrate）です。"
 msgstr ""
-"``fcu_url``  is the address of flight controller (FCU)."
-" If you use serial port such as USB connection for FCU connection, the address of FCU will be like  ``/dev/ttyACM0`` ."
+"``fcu_url`` is the address of flight controller (FCU)."
+" If you use serial port such as USB connection for FCU connection, the address of FCU will be like ``/dev/ttyACM0``."
 " The address slightly changes depending on the environment. The number after colon is baudrate."
 
 #: ../../dronedoc/source/px4sim/px4sim.rst:268
@@ -348,27 +348,27 @@ msgid ""
 "``bind_host`` はFCUのIPアドレスを指定します。デフォルトでは ``INADDR_ANY(0.0.0.0)`` "
 "となっており、mavrosはすべてのIPアドレスからのデータを受信します。"
 msgstr ""
-"``bind_host``  defines IP address of FCU. "
-" By default, it is  ``INADDR_ANY(0.0.0.0)``  and mavros receives data from any IP adress."
+"``bind_host`` defines IP address of FCU. "
+" By default, it is ``INADDR_ANY(0.0.0.0)`` and mavros receives data from any IP adress."
 
 #: ../../dronedoc/source/px4sim/px4sim.rst:276
 msgid "``port`` はROS側の待受ポートで、デフォルトでは ``14540`` です。"
-msgstr "``port``  is listening port of ROS node and it is ``14540``  by default."
+msgstr "``port`` is listening port of ROS node and it is ``14540`` by default."
 
 #: ../../dronedoc/source/px4sim/px4sim.rst:277
 msgid ""
 "``remote_host`` はリモートのPCのIPアドレスです。シミュレーションの場合は ``localhost`` もしくは "
 "``127.0.0.1`` を指定します。"
 msgstr ""
-"``remote_host``  is IP address of remote PC. In case of simulation, set  ``localhost``  or  ``127.0.0.1`` ,"
+"``remote_host`` is IP address of remote PC. In case of simulation, set ``localhost`` or ``127.0.0.1``."
 
 #: ../../dronedoc/source/px4sim/px4sim.rst:278
 msgid "次にある ``port`` はFCU側の待受ポート（ ``14557`` ）を指定します。"
-msgstr "The next  ``port``  is the port of FCU. It is  ``14557``  by default."
+msgstr "The next ``port`` is the port of FCU. It is ``14557`` by default."
 
 #: ../../dronedoc/source/px4sim/px4sim.rst:280
 msgid "それぞれの部分に数値を当てはめると ``fcu_url`` は次のようになります。"
-msgstr "``fcu_url``  will be like the following by assigning the values above."
+msgstr "``fcu_url`` will be like the following by assigning the values above."
 
 #: ../../dronedoc/source/px4sim/px4sim.rst:286
 msgid ""
@@ -377,10 +377,10 @@ msgid ""
 "の詳細については `mavros - ROS Wiki <http://wiki.ros.org/mavros#Connection_URL>`_"
 " を参考にしてください。"
 msgstr ""
-"For port settings, see  `ROS with Gazebo Simulation - PX4 Developer Guide "
-"<https://dev.px4.io/en/simulation/ros_interface.html>`_ ."
-" See  `mavros - ROS Wiki <http://wiki.ros.org/mavros#Connection_URL>`_"
-"  for the detailes of  ``fcu_url`` ."
+"For port settings, see `ROS with Gazebo Simulation - PX4 Developer Guide "
+"<https://dev.px4.io/en/simulation/ros_interface.html>`_."
+" See `mavros - ROS Wiki <http://wiki.ros.org/mavros#Connection_URL>`_"
+" for the detailes of ``fcu_url``."
 
 #: ../../dronedoc/source/px4sim/px4sim.rst:290
 msgid "参考"
