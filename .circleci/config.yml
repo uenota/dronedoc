@@ -55,8 +55,12 @@ jobs:
           name: move doc
           command: |
             shopt -s dotglob
-            mv docs/ja/html/* .
+            mv docs/ja/html/* ja/
+            mv ja/_images .
+            mv ja/_sources .
+            mv ja/_static .
             mv docs/en/html/* en/
+            rm -rf en/_*
             shopt -u dotglob
             rm -rf docs
           working_directory: ~/project
