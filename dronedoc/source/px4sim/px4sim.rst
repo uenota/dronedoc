@@ -9,7 +9,7 @@ PX4はドローンのフライトコントローラやファームウェアを�
 
 環境構築
 ================================================================
-以下の内容は `Development Environment on Linux - PX4 Developer Guide <https://dev.px4.io/en/setup/dev_env_linux.html>`_ を参考にしています。
+以下の内容は `Development Environment on Linux - PX4 Developer Guide <https://dev.px4.io/v1.8.0/en/setup/dev_env_linux.html>`_ を参考にしています。
 問題が起きた場合は最新版を確認するようにしてください。
 
 事前準備
@@ -68,7 +68,7 @@ Gazeboを使ってシミュレーションを行うには、 ``~/src/Firmware`` 
 .. image:: imgs/gazebosim.png
 
 他にも様々な機体のシミュレーションを行うことができます。
-興味があれば `シミュレーションで使える機体一覧 <https://dev.px4.io/en/simulation/gazebo.html#quadrotor>`_ を参考にしてください。
+興味があれば `シミュレーションで使える機体一覧 <https://dev.px4.io/v1.8.0/en/simulation/gazebo.html#quadrotor>`_ を参考にしてください。
 
 シミュレータのターミナル内で以下のコマンドを実行すれば機体を離陸させることができます。
 
@@ -210,7 +210,7 @@ mavrosも同時に起動したい場合には ``mavros_posix_sitl.launch`` を�
 
     roslaunch px4 mavros_posix_sitl.launch
 
-また、以下のようにすれば `Gazebo Simulation - PX4 Developer Guide <https://dev.px4.io/en/simulation/gazebo.html>`_ にリストアップされている機体を使用することもできます。
+また、以下のようにすれば `Gazebo Simulation - PX4 Developer Guide <https://dev.px4.io/v1.8.0/en/simulation/gazebo.html>`_ にリストアップされている機体を使用することもできます。
 
 .. code-block:: bash
 
@@ -283,18 +283,18 @@ UDPを使って通信する場合は次のような形式に従ってfcu_urlを�
 
     udp://:14540@127.0.0.1:14557
 
-ポートの設定については `ROS with Gazebo Simulation - PX4 Developer Guide <https://dev.px4.io/en/simulation/ros_interface.html>`_ を、 ``fcu_url`` の詳細については `mavros - ROS Wiki <http://wiki.ros.org/mavros#Connection_URL>`_ を参考にしてください。
+ポートの設定については `ROS with Gazebo Simulation - PX4 Developer Guide <https://dev.px4.io/v1.8.0/en/simulation/ros_interface.html>`_ を、 ``fcu_url`` の詳細については `mavros - ROS Wiki <http://wiki.ros.org/mavros#Connection_URL>`_ を参考にしてください。
 
 
 参考
 ===============================================================
-`PX4 Developer Guide <https://dev.px4.io/>`_
+`PX4 Developer Guide <https://dev.px4.io/v1.8.0/en/>`_
     PX4開発者Wiki。基本的な内容はここにあります
-`Development Environment on Linux - PX4 Developer Guide <https://dev.px4.io/en/setup/dev_env_linux.html>`_
+`Development Environment on Linux - PX4 Developer Guide <https://dev.px4.io/v1.8.0/en/setup/dev_env_linux.html>`_
     Linux向けPX4ファームウェアインストールガイド
-`Gazebo Simulation - PX4 Developer Guide <https://dev.px4.io/en/simulation/gazebo.html>`_
+`Gazebo Simulation - PX4 Developer Guide <https://dev.px4.io/v1.8.0/en/simulation/gazebo.html>`_
     Gazeboを使ってシミュレーションを行う
-`ROS with Gazebo Simulation <https://dev.px4.io/en/simulation/ros_interface.html>`_
+`ROS with Gazebo Simulation <https://dev.px4.io/v1.8.0/en/simulation/ros_interface.html>`_
     ROSとGazeboを使ってシミュレーションを行う
 `Linuxシステムの仕組みと運用、管理 <https://manual.atmark-techno.com/armadillo-guide/armadillo-guide-2_ja-2.1.0/ch03.html#sec_terminal>`_
     シリアル端末について
