@@ -40,6 +40,10 @@ jobs:
           command: make html -e SPHINXOPTS='-D language="ja"' -e BUILDDIR='../docs/ja'
           working_directory: ~/project/dronedoc
       - run:
+          name: clean
+          command: make clean
+          working_directory: ~/project/dronedoc
+      - run:
           name: build doc (EN)
           command: make html -e SPHINXOPTS='-D language="en"' -e BUILDDIR='../docs/en'
           working_directory: ~/project/dronedoc
