@@ -49,13 +49,14 @@ PX4はドローンのフライトコントローラやファームウェアを�
 コマンドを実行すれば自動でインストールされます。
 ROSがインストールされていない場合は、ROSもインストールされるのでしばらく時間がかかります。
 
+デフォルトのGazeboのバージョンは7.4よりも下なので、 `Install Gazebo using Ubuntu packages <http://gazebosim.org/tutorials?tut=install_ubuntu#Alternativeinstallation:step-by-step>`_ を参考にしてGazeboのインストールを行います。
+初めにインストールされているGazeboをアンインストールします。
+
 .. code-block:: bash
 
     sudo apt purge gazebo* libgazebo*
 
-デフォルトのGazeboのバージョンは7.4よりも下なので、 `Install Gazebo using Ubuntu packages <http://gazebosim.org/tutorials?tut=install_ubuntu#Alternativeinstallation:step-by-step>`_ を参考にしてGazeboのインストールを行います。
-
-最初に ``packages.osrfoundation.org`` からパッケージをインストールできるように設定します。
+次に ``packages.osrfoundation.org`` からパッケージをインストールできるように設定します。
 
 .. code-block:: bash
 
