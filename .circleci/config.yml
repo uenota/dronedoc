@@ -46,6 +46,12 @@ jobs:
             shopt -u dotglob
           working_directory: ~/project
       - run:
+          name: build and update po files
+          command: |
+            make gettext
+            sphinx-intl update -l en -p ../docs/gettext
+          working_directory: ~/project/dronedoc
+      - run:
           name: build doc (EN)
           command: |
             make clean

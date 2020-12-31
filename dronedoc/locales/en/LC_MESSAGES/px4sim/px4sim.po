@@ -36,7 +36,6 @@ msgid "環境構築"
 msgstr "Setup Environment"
 
 #: ../../dronedoc/source/px4sim/px4sim.rst:12
-#, fuzzy
 msgid ""
 "以下の内容は `Development Environment on Linux - PX4 Developer Guide "
 "<https://dev.px4.io/v1.8.0/en/setup/dev_env_linux.html>`_ を参考にしています。 "
@@ -108,21 +107,17 @@ msgstr ""
 " install ROS."
 
 #: ../../dronedoc/source/px4sim/px4sim.rst:52
-#, fuzzy
 msgid ""
 "デフォルトのGazeboのバージョンは7.4よりも下なので、 `Install Gazebo using Ubuntu packages "
 "<http://gazebosim.org/tutorials?tut=install_ubuntu#Alternativeinstallation"
 ":step-by-step>`_ を参考にしてGazeboのインストールを行います。 "
 "初めにインストールされているGazeboをアンインストールします。"
 msgstr ""
-"Update Gazebo installed by PX4 installation script by using `Install "
-"Gazebo using Ubuntu packages "
-"<http://gazebosim.org/tutorials?tut=install_ubuntu#Alternativeinstallation"
-":step-by-step>`_."
-"Firstly, remove installed Gazebo."
+"Update Gazebo installed by PX4 installation script."
+" The following command is based on `Install Gazebo using Ubuntu packages <http://gazebosim.org/tutorials?tut=install_ubuntu#Alternativeinstallation:step-by-step>`_."
+" Firstly, remove installed Gazebo."
 
 #: ../../dronedoc/source/px4sim/px4sim.rst:59
-#, fuzzy
 msgid "次に ``packages.osrfoundation.org`` からパッケージをインストールできるように設定します。"
 msgstr ""
 "Then add setting to accept packages from "
@@ -157,7 +152,6 @@ msgstr ""
 "like the following image appears. UAV is in the red rectangle."
 
 #: ../../dronedoc/source/px4sim/px4sim.rst:97
-#, fuzzy
 msgid ""
 "他にも様々な機体のシミュレーションを行うことができます。 興味があれば `シミュレーションで使える機体一覧 "
 "<https://dev.px4.io/v1.8.0/en/simulation/gazebo.html#quadrotor>`_ "
@@ -360,7 +354,6 @@ msgid "mavrosも同時に起動したい場合には ``mavros_posix_sitl.launch`
 msgstr "Use ``mavros_posix_sitl.launch`` to start mavros with simulator."
 
 #: ../../dronedoc/source/px4sim/px4sim.rst:240
-#, fuzzy
 msgid ""
 "また、以下のようにすれば `Gazebo Simulation - PX4 Developer Guide "
 "<https://dev.px4.io/v1.8.0/en/simulation/gazebo.html>`_ "
@@ -444,7 +437,6 @@ msgid "それぞれの部分に数値を当てはめると ``fcu_url`` は次の
 msgstr "``fcu_url`` will be like the following by assigning the values above."
 
 #: ../../dronedoc/source/px4sim/px4sim.rst:313
-#, fuzzy
 msgid ""
 "ポートの設定については `ROS with Gazebo Simulation - PX4 Developer Guide "
 "<https://dev.px4.io/v1.8.0/en/simulation/ros_interface.html>`_ を、 "
@@ -469,7 +461,6 @@ msgid "PX4開発者Wiki。基本的な内容はここにあります"
 msgstr "Developer wiki of PX4. You can find basic knowledge here"
 
 #: ../../dronedoc/source/px4sim/px4sim.rst:320
-#, fuzzy
 msgid ""
 "`Development Environment on Linux - PX4 Developer Guide "
 "<https://dev.px4.io/v1.8.0/en/setup/dev_env_linux.html>`_"
@@ -484,7 +475,6 @@ msgid "Linux向けPX4ファームウェアインストールガイド"
 msgstr "Installation Guide of PX4 Firmware for Linux"
 
 #: ../../dronedoc/source/px4sim/px4sim.rst:322
-#, fuzzy
 msgid ""
 "`Gazebo Simulation - PX4 Developer Guide "
 "<https://dev.px4.io/v1.8.0/en/simulation/gazebo.html>`_"
