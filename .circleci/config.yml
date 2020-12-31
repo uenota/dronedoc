@@ -32,37 +32,35 @@ jobs:
             cd ..
             sudo rm -rf youtube
       - run:
-          name: clean
-          command: make clean
-          working_directory: ~/project/dronedoc
-      - run:
           name: build doc (JP)
-          command: make html -e SPHINXOPTS='-D language="ja"' -e BUILDDIR='../docs/ja'
-          working_directory: ~/project/dronedoc
-      - run:
-          name: clean
-          command: make clean
-          working_directory: ~/project/dronedoc
-      - run:
-          name: build doc (EN)
-          command: make html -e SPHINXOPTS='-D language="en"' -e BUILDDIR='../docs/en'
-          working_directory: ~/project/dronedoc
-      - run:
-          name: remove all
-          command: ls | grep -v -E "docs" | xargs rm -rf
-          working_directory: ~/project
-      - run:
-          name: make dirs
-          command: mkdir ja en
-          working_directory: ~/project
-      - run:
-          name: move doc
           command: |
+            make clean
+            make html -e SPHINXOPTS='-D language="ja"' -e BUILDDIR='../docs/ja'
+          working_directory: ~/project/dronedoc
+      - run:
+          name: move doc (JP)
+          command:
+            mkdir jp
             shopt -s dotglob
             mv docs/ja/html/* ja/
-            mv docs/en/html/* en/
-            touch .nojekyll
             shopt -u dotglob
+            ls | grep -v -E "ja" | xargs rm -rf
+          working_directory: ~/project
+      - run:
+          name: build doc (EN)
+          command: |
+            make clean
+            make html -e SPHINXOPTS='-D language="en"' -e BUILDDIR='../docs/en'
+          working_directory: ~/project/dronedoc
+      - run:
+          name: move doc (EN)
+          command:
+            mkdir en
+            shopt -s dotglob
+            mv docs/en/html/* en/
+            shopt -u dotglob 
+            ls | grep -v -E "ja" | grep -v -E "en" | xargs rm -rf
+            touch .nojekyll
             rm -rf docs
           working_directory: ~/project
       - run:
