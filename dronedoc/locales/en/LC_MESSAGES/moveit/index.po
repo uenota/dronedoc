@@ -23,19 +23,20 @@ msgstr ""
 
 #: ../../dronedoc/source/moveit/index.rst:2
 msgid "MoveIt!を使ってドローンの経路計画を行う"
-msgstr ""
+msgstr "Perform motion planning of UAV with MoveIt!"
 
 #: ../../dronedoc/source/moveit/index.rst:3
 msgid ""
 "このチュートリアルでは、ロボット用の経路計画ライブラリである、`MoveIt! <https://moveit.ros.org/>`_ "
 "を使ってドローンの経路計画を行う手順について解説します。"
 msgstr ""
+"This tutorial explains the way to perform motion planning of UAV with  `MoveIt! <https://moveit.ros.org/>`_ ; motion planning library for robots."
 
 #: ../../dronedoc/source/moveit/index.rst:5
 msgid "**インストール**"
-msgstr ""
+msgstr "**Installation**"
 
 #: ../../dronedoc/source/moveit/index.rst:7
 msgid "以下のコマンドでMoveIt!関連のパッケージをインストールします。"
-msgstr ""
+msgstr "To install packages required to perform motion planning with MoveIt!, run the following command."
 
