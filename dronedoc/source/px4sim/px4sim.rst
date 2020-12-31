@@ -49,6 +49,32 @@ PX4はドローンのフライトコントローラやファームウェアを�
 コマンドを実行すれば自動でインストールされます。
 ROSがインストールされていない場合は、ROSもインストールされるのでしばらく時間がかかります。
 
+.. code-block:: bash
+
+    sudo apt purge gazebo* libgazebo*
+
+デフォルトのGazeboのバージョンは7.4よりも下なので、 `Install Gazebo using Ubuntu packages <http://gazebosim.org/tutorials?tut=install_ubuntu#Alternativeinstallation:step-by-step>`_ を参考にしてGazeboのインストールを行います。
+
+最初に ``packages.osrfoundation.org`` からパッケージをインストールできるように設定します。
+
+.. code-block:: bash
+
+    sudo sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list'
+
+次にリポジトリの鍵の設定を行います。
+
+.. code-block:: bash
+
+    wget https://packages.osrfoundation.org/gazebo.key -O - | sudo apt-key add -
+
+最後にGazebo7をインストールします。
+
+.. code-block:: bash
+
+    sudo apt update
+    sudo apt install gazebo7
+    sudo apt install libgazebo7-dev
+
 スクリプトの実行が終了したら、PX4のファームウェアが ``~/src/Firmware`` 以下に作成されています。
 
 .. _gazebo-sim:

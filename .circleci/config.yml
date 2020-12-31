@@ -48,7 +48,6 @@ jobs:
       - run:
           name: build doc (EN)
           command: |
-            sphinx-intl update -p locales -l en
             make clean
             make html -e SPHINXOPTS='-D language="en"' -e BUILDDIR='../docs/en'
           working_directory: ~/project/dronedoc
