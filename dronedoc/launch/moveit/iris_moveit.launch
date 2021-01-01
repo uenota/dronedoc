@@ -18,7 +18,9 @@
 
     <!-- PX4 configs -->
     <arg name="est" default="ekf2"/>
+    <arg name="base_vehicle" default="iris"/>
     <arg name="vehicle" default="iris_2d_lidar"/>
+    <arg name="rcS" default="$(find px4)/posix-configs/SITL/init/$(arg est)/$(arg base_vehicle)"/>
     <arg name="interactive" default="true"/>
     <env name="PX4_SIM_MODEL" value="$(arg vehicle)" />
     <env name="PX4_ESTIMATOR" value="$(arg est)" />
@@ -26,7 +28,7 @@
     <arg unless="$(arg interactive)" name="px4_command_arg1" value="-d"/>
     <arg     if="$(arg interactive)" name="px4_command_arg1" value=""/>
     <node name="sitl" pkg="px4" type="px4" output="screen"
-        args="$(find px4)/ROMFS/px4fmu_common -s etc/init.d-posix/rcS $(arg px4_command_arg1)" required="true"/>
+        args="$(find px4)/ROMFS/px4fmu_common $(arg rcS) $(arg px4_command_arg1)" required="true"/>
 
     <!-- Launching gazebo -->
     <arg name="world" default="$(find mavlink_sitl_gazebo)/worlds/empty.world"/>
