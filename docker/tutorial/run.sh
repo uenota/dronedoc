@@ -4,10 +4,10 @@ PROGNAME=$(basename $0)
 
 usage() {
     echo "Usage: $PROGNAME -h | --help"
-    echo "Usage: $PROGNAME --image image_name --uname user_name"
+    echo "Usage: $PROGNAME --imname image_name --uname user_name"
     echo
     echo "  -h, --help: Print usage"
-    echo "  --image   : Name of docker image to use"
+    echo "  --imname   : Name of docker image to use"
     echo "  --uname   : User name in docker container"
     echo
 }
@@ -20,8 +20,8 @@ do
             usage
             exit 0
             ;;
-        --image)
-            image=$2
+        --imname)
+            imname=$2
             shift 2
             ;;
         --uname)
@@ -32,10 +32,10 @@ do
 done
 
 # checks if all arguments are defined
-if [ -z "$image" ]; then
+if [ -z "$imname" ]; then
     usage
     echo
-    echo "[ERROR] Docker image name (--image) is not defined."
+    echo "[ERROR] Docker image name (--imname) is not defined."
     exit 1
 fi
 
@@ -58,5 +58,5 @@ docker run -it --rm \
         --env="XAUTHORITY=${XAUTH}" \
         --env="DISPLAY" \
         --user=$uname \
-    $image \
+    $imname \
     bash
