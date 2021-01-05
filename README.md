@@ -37,6 +37,11 @@ Note that this container will be removed after exiting from the container.
 
 This command will run docker container from image with name of `uenot/dronedoc`.
 
+If your machine have GPU, add `--gpu` option.
+```bash
+./run.sh --imname uenot/dronedoc --gpu
+```
+
 ### References
 See http://wiki.ros.org/docker/Tutorials/GUI#The_isolated_way for the details of Dockerfile and run.sh script.
 

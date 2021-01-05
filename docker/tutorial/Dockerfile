@@ -1,4 +1,4 @@
-FROM ros:kinetic
+FROM nvidia/opengl:1.0-glvnd-runtime-ubuntu16.04
 
 LABEL maintainer "Takaki Ueno <ueknot@gmail.com>"
 
@@ -20,8 +20,16 @@ RUN useradd -m $username && \
 # add user to dialout group
 RUN usermod -a -G dialout $username
 
-# install full ROS kinetic
-RUN apt update && apt upgrade -y 
+# upgrade packages
+RUN apt update && apt upgrade -y
+RUN apt install -y lsb-release
+
+# setup ROS repository key
+RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+RUN apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
+
+# install ROS kinetic
+RUN apt update
 RUN apt install -y ros-kinetic-desktop-full \
                    python-rosinstall
 RUN apt install -y python-wstool \
@@ -34,6 +42,7 @@ RUN curl -sSL https://raw.githubusercontent.com/PX4/Devguide/v1.8.0/build_script
 # update rosdep
 RUN rm -rf /etc/ros/rosdep/sources.list.d/20-default.list
 RUN rosdep init
+RUN rosdep update
 
 # switch user not to run rosdep update with root privilege
 USER ${username}
@@ -44,8 +53,8 @@ WORKDIR /home/${username}/catkin_ws
 
 RUN wstool init /home/${username}/catkin_ws/src
 
-RUN rosinstall_generator --upstream mavros | tee /tmp/mavros.rosinstall
-RUN rosinstall_generator mavlink | tee -a /tmp/mavros.rosinstall
+RUN rosinstall_generator --rosdistro kinetic --upstream mavros | tee /tmp/mavros.rosinstall
+RUN rosinstall_generator --rosdistro kinetic mavlink | tee -a /tmp/mavros.rosinstall
 RUN wstool merge -t src /tmp/mavros.rosinstall
 RUN wstool update -t src
 
@@ -150,6 +159,12 @@ RUN echo 'ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:$HOME/src/Firmware/Tools/sitl_gazeb
 # add Gazebo models from PX4 Firmware and dronedoc to Gazebo model path
 RUN echo 'export GAZEBO_MODEL_PATH=$HOME/src/Firmware/Tools/sitl_gazebo/models:$GAZEBO_MODEL_PATH' >> /home/${username}/.bashrc
 RUN echo 'export GAZEBO_MODEL_PATH=$HOME/catkin_ws/src/dronedoc/models:$GAZEBO_MODEL_PATH' >> /home/${username}/.bashrc
+
+# nvidia-container-runtime
+ENV NVIDIA_VISIBLE_DEVICES \
+    ${NVIDIA_VISIBLE_DEVICES:-all}
+ENV NVIDIA_DRIVER_CAPABILITIES \
+    ${NVIDIA_DRIVER_CAPABILITIES:+$NVIDIA_DRIVER_CAPABILITIES,}graphics
 
 # install packages for test and development
 USER root
