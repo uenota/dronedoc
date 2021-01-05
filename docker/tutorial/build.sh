@@ -3,7 +3,7 @@ PROGNAME=$(basename $0)
 
 usage() {
     echo "Usage: $PROGNAME -h | --help"
-    echo "Usage: $PROGNAME --imname image_name --uname user_name"
+    echo "Usage: $PROGNAME --imname image_name [--uname user_name]"
     echo
     echo "  -h, --help: Print usage"
     echo "  --imname  : Name of docker image to be built"
@@ -39,10 +39,8 @@ if [ -z "$imname" ]; then
 fi
 
 if [ -z "$uname" ]; then
-    usage
-    echo
-    echo "[ERROR] Username in docker container (--uname) is not defined."
-    exit 1
+    uname=developer
+    echo "[INFO] --uname not specified. Use \"$uname\" instead."
 fi
 
 # use uid and gid of the current user
@@ -56,4 +54,4 @@ if [[ $? -ne 0 ]]; then
     echo "[ERROR] Build Failed."
     exit 1
 fi
-echo "[INFO] Image Built (UID: $userid, GID: $groupid)"
+echo "[INFO] Image Built (UID: $userid, GID: $groupid, username: $uname)"

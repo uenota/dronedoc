@@ -19,10 +19,10 @@ You can use `docker/tutorial/build.sh` to build docker image.
 The following command will build docker image for tutorial.
 
 ```bash
-./build.sh --imname uenot/dronedoc --uname uenot
+./build.sh --imname uenot/dronedoc
 ```
 
-This command will build docker image with name of `uenot/dronedoc`. `--uname` option defines username used in docker container. Username is required to run GUI application in docker using X window system.
+This command will build docker image with name of `uenot/dronedoc`.
 
 You can change the name of docker image by changing argument of `--imname` option. 
 
@@ -32,10 +32,13 @@ The following command will start up docker container for tutorial.
 Note that this container will be removed after exiting from the container.
 
 ```bash
-./run.sh --imname uenot/dronedoc --uname uenot
+./run.sh --imname uenot/dronedoc
 ```
 
-This command will run docker container from image with name of `uenot/dronedoc`. User with the name defined by `--uname` option is used in the docker container. The username must be the same as username used to build docker image.
+This command will run docker container from image with name of `uenot/dronedoc`.
+
+### References
+See http://wiki.ros.org/docker/Tutorials/GUI#The_isolated_way for the details of Dockerfile and run.sh script.
 
 ## License
 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
