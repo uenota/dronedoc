@@ -1,9 +1,0 @@
-EBandPlannerROS:
-  # Goal
-  xy_goal_torelance: 0.5
-
-  # Trajectory
-  max_vel_lin: 0.2
-  max_vel_th: 1.0
-  min_vel_lin: -0.2
-  min_vel_th: -1.0

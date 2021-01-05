@@ -1,7 +1,0 @@
-distance_sensor:
-  sonar_pub:
-    id: 0
-    frame_id: "sonar_model::link"
-    field_of_view: 0
-    send_tf: false
-    sensor_position: {x: 0.0, y: 0.0, z: -0.04}

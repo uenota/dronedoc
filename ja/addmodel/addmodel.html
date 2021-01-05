@@ -1,0 +1,791 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>新しいモデルを追加する &mdash; Dronedoc 1.0.0 ドキュメント</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+    <link rel="canonical" href="https://uenota.github.io/dronedoc/addmodel/addmodel.html" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="自律飛行とSLAM" href="../slam/slam.html" />
+    <link rel="prev" title="自作ノードを実行する（Python）" href="../runnode/runnodepy.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Dronedoc
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">SLAM</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../px4sim/px4sim.html">PX4 SITLシミュレーション</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../runnode/runnodecpp.html">自作ノードを実行する（C++）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../runnode/runnodepy.html">自作ノードを実行する（Python）</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">新しいモデルを追加する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/slam.html">自律飛行とSLAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/gps_nav.html">GPSを用いた自律飛行</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/turtle_mapping.html">Turtlebotを使ってマップを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../teleop/teleop.html">ゲームパッドを使ってドローンを操作する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/lidar_localization.html">LiDARとAMCLを用いた自己位置推定</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/localization_and_mapping.html">LiDARを用いたSLAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/lidar_nav.html">LiDARを用いた自律移動</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Mapping</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../octomap/octomap.html">Octomapを使って3Dマップを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../build_map_gmapping/build_map_gmapping.html">Gmappingを使って地図を生成する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../build_map_gazebo_plugin/build_map_gazebo_plugin.html">Gazebo Pluginを使って地図を作成する</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Motion Planning</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../moveit/index.html">MoveIt!を使ってドローンの経路計画を行う</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../local_planner_for_uav/local_planner_for_uav.html">UAV用のローカルプランナを実装する</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Tips</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../qgc_intro/qgc_intro.html">QGroundControl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../add_range_sensor/add_range_sensor.html">ドローンに距離センサを搭載する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../filter_lidar/filter_lidar.html">LiDARのデータをフィルタリングする</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../change_local_planner/change_local_planner.html">move_baseのローカルプランナーを変更する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../airsim/airsim.html">AirSimシミュレータを使う</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/bash_commands/bash_commands.html">基本的なBashの使い方</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/ros/ros.html">ROSの基本</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/terms/terms.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/archive/archive.html">読書案内</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/trouble_shooting/index.html">トラブルシューティング</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Dronedoc</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>新しいモデルを追加する</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/addmodel/addmodel.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1>新しいモデルを追加する<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>この章では、次の章で使用する、2D Lidar付きのIrisのモデルを作成します。</p>
+<p>はじめに、Irisのモデルを格納するディレクトリを作成します。
+今回は、iris_2d_lidarというフォルダに格納することにします。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> ~/catkin_ws/src/px4_sim_pkg
+mkdir -p models/iris_2d_lidar
+</pre></div>
+</div>
+<div class="section" id="sdf">
+<h2>SDFファイルを作る<a class="headerlink" href="#sdf" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id2">
+<h3>SDFとは<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>Gazeboでは、SDFというフォーマットを使用してロボットのモデルを定義します。
+SDFとURDFの関係については <a class="reference external" href="https://qiita.com/RyodoTanaka/items/174e82f06b10f9885265">Gazebo + ROS で自分だけのロボットをつくる 4.URDFファイルをつくる</a> を参照してください。
+また、GazeboでURDFを使う場合には <a class="reference external" href="http://gazebosim.org/tutorials/?tut=ros_urdf">Tutorial: Using a URDF in Gazebo</a> が参考になります。</p>
+</div>
+<div class="section" id="model-sdf">
+<h3>model.sdf<a class="headerlink" href="#model-sdf" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>先ほど作ったiris_2d_lidarフォルダ以下にmodel.sdfファイルを作成します。
+これがロボットの物理モデルや形状を定義するファイルです。</p>
+<div class="section" id="id3">
+<h4>既存のモデルをインクルードする<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>SDFでは既存のモデルをインクルードして再利用することができます。
+以下のように記述することで既存のモデルをインクルードできます。</p>
+<div class="highlight-xml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nt">&lt;include&gt;</span>
+  <span class="nt">&lt;uri&gt;</span>model://iris<span class="nt">&lt;/uri&gt;</span>
+<span class="nt">&lt;/include&gt;</span>
+</pre></div>
+</td></tr></table></div>
+<p>今回はPX4 Firmwareにあるirisのモデルを使用します。
+このようにインクルードする場合には、 <code class="docutils literal notranslate"><span class="pre">GAZEBO_MODEL_PATH</span></code> に使用するモデルのパスが設定されていないといけません。
+このチュートリアル通りに環境構築をしている場合にはすでにモデルのパスが設定されているはずですが、必要な場合は以下のコマンドを実行してください。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">GAZEBO_MODEL_PATH</span><span class="o">=</span><span class="nv">$HOME</span>/src/Firmware/Tools/sitl_gazebo/models:<span class="nv">$GAZEBO_MODEL_PATH</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="lidar">
+<h4>LiDARのリンクを定義する<a class="headerlink" href="#lidar" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>リンク（ <code class="docutils literal notranslate"><span class="pre">&lt;link&gt;&lt;/link&gt;</span></code> ）はモデルの物理特性を定義するために使います。
+できるだけ少ない数のリンクでモデルを構築したほうがシミュレーションのパフォーマンスや安定性が向上します。</p>
+<p>model.sdfファイル内では、以下のようにLiDARのリンクを定義しています。</p>
+<div class="highlight-xml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62</pre></div></td><td class="code"><div class="highlight"><pre><span></span>    <span class="nt">&lt;link</span> <span class="na">name=</span><span class="s">&quot;lidar_link&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;pose&gt;</span>0 0 0.05 0 -0.0085 0<span class="nt">&lt;/pose&gt;</span>
+
+      <span class="nt">&lt;inertial&gt;</span>
+        <span class="nt">&lt;pose&gt;</span>0 0 0 0 -0 0<span class="nt">&lt;/pose&gt;</span>
+        <span class="nt">&lt;mass&gt;</span>0.01<span class="nt">&lt;/mass&gt;</span>
+        <span class="nt">&lt;inertia&gt;</span>
+          <span class="nt">&lt;ixx&gt;</span>2.1733e-6<span class="nt">&lt;/ixx&gt;</span>
+          <span class="nt">&lt;ixy&gt;</span>0<span class="nt">&lt;/ixy&gt;</span>
+          <span class="nt">&lt;ixz&gt;</span>0<span class="nt">&lt;/ixz&gt;</span>
+          <span class="nt">&lt;iyy&gt;</span>2.1733e-6<span class="nt">&lt;/iyy&gt;</span>
+          <span class="nt">&lt;iyz&gt;</span>0<span class="nt">&lt;/iyz&gt;</span>
+          <span class="nt">&lt;izz&gt;</span>1.8e-7<span class="nt">&lt;/izz&gt;</span>
+        <span class="nt">&lt;/inertia&gt;</span>
+      <span class="nt">&lt;/inertial&gt;</span>
+
+      <span class="nt">&lt;visual</span> <span class="na">name=</span><span class="s">&quot;lidar_visual&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;geometry&gt;</span>
+          <span class="nt">&lt;cylinder&gt;</span>
+            <span class="nt">&lt;radius&gt;</span>0.01<span class="nt">&lt;/radius&gt;</span>
+            <span class="nt">&lt;length&gt;</span>0.05<span class="nt">&lt;/length&gt;</span>
+          <span class="nt">&lt;/cylinder&gt;</span>
+        <span class="nt">&lt;/geometry&gt;</span>
+        <span class="nt">&lt;material&gt;</span>
+          <span class="nt">&lt;script&gt;</span>
+            <span class="nt">&lt;name&gt;</span>Gazebo/DarkGrey<span class="nt">&lt;/name&gt;</span>
+            <span class="nt">&lt;uri&gt;</span>file://media/materials/scripts/gazebo.material<span class="nt">&lt;/uri&gt;</span>
+          <span class="nt">&lt;/script&gt;</span>
+        <span class="nt">&lt;/material&gt;</span>
+      <span class="nt">&lt;/visual&gt;</span>
+
+      <span class="nt">&lt;sensor</span> <span class="na">name=</span><span class="s">&quot;laser&quot;</span> <span class="na">type=</span><span class="s">&quot;ray&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;pose&gt;</span>0 0 0.02 0 0 0<span class="nt">&lt;/pose&gt;</span>
+        <span class="nt">&lt;ray&gt;</span>
+          <span class="nt">&lt;scan&gt;</span>
+            <span class="nt">&lt;horizontal&gt;</span>
+              <span class="nt">&lt;samples&gt;</span>720<span class="nt">&lt;/samples&gt;</span>
+              <span class="nt">&lt;resolution&gt;</span>1<span class="nt">&lt;/resolution&gt;</span>
+              <span class="nt">&lt;min_angle&gt;</span>-2.0944<span class="nt">&lt;/min_angle&gt;</span>
+              <span class="nt">&lt;max_angle&gt;</span>2.0944<span class="nt">&lt;/max_angle&gt;</span>
+            <span class="nt">&lt;/horizontal&gt;</span>
+          <span class="nt">&lt;/scan&gt;</span>
+          <span class="nt">&lt;range&gt;</span>
+            <span class="nt">&lt;min&gt;</span>0.1<span class="nt">&lt;/min&gt;</span>
+            <span class="nt">&lt;max&gt;</span>15<span class="nt">&lt;/max&gt;</span>
+            <span class="nt">&lt;resolution&gt;</span>0.01<span class="nt">&lt;/resolution&gt;</span>
+          <span class="nt">&lt;/range&gt;</span>
+          <span class="nt">&lt;noise&gt;</span>
+            <span class="nt">&lt;type&gt;</span>gaussian<span class="nt">&lt;/type&gt;</span>
+            <span class="nt">&lt;mean&gt;</span>0.0<span class="nt">&lt;/mean&gt;</span>
+            <span class="nt">&lt;stddev&gt;</span>0.01<span class="nt">&lt;/stddev&gt;</span>
+          <span class="nt">&lt;/noise&gt;</span>
+        <span class="nt">&lt;/ray&gt;</span>
+        <span class="nt">&lt;plugin</span> <span class="na">name=</span><span class="s">&quot;LaserPlugin&quot;</span> <span class="na">filename=</span><span class="s">&quot;libgazebo_ros_laser.so&quot;</span><span class="nt">&gt;</span>
+	        <span class="nt">&lt;topicName&gt;</span>/laser/scan<span class="nt">&lt;/topicName&gt;</span>
+	        <span class="nt">&lt;frameName&gt;</span>/lidar_link<span class="nt">&lt;/frameName&gt;</span>
+	      <span class="nt">&lt;/plugin&gt;</span>
+        <span class="nt">&lt;always_on&gt;</span>1<span class="nt">&lt;/always_on&gt;</span>
+        <span class="nt">&lt;update_rate&gt;</span>40<span class="nt">&lt;/update_rate&gt;</span>
+        <span class="nt">&lt;visualize&gt;</span>true<span class="nt">&lt;/visualize&gt;</span>
+      <span class="nt">&lt;/sensor&gt;</span>
+    <span class="nt">&lt;/link&gt;</span>
+</pre></div>
+</td></tr></table></div>
+<p>それぞれの要素について見ていきましょう。</p>
+<dl class="simple">
+<dt>inertial</dt><dd><p>質量や慣性モーメントなどの動力学的特性を指定します。</p>
+</dd>
+<dt>visual</dt><dd><p>形状やテクスチャなどの外見を指定します。 <code class="docutils literal notranslate"><span class="pre">geometry</span></code> で形状、 <code class="docutils literal notranslate"><span class="pre">material</span></code> でテクスチャを指定します。形状には円柱や直方体の他に、3D CADなどで作成したメッシュを指定できます。</p>
+</dd>
+<dt>sensor</dt><dd><p>センサの仕様や使うプラグインを指定します。使えるセンサにはLiDARやカメラ、IMU等があります。</p>
+</dd>
+<dt>collision</dt><dd><p>接触判定に使われるリンクの形状を指定します。 <code class="docutils literal notranslate"><span class="pre">visual</span></code> タグと同様にシンプルな形状の他にメッシュを指定することもできます。複雑なコリジョンの指定はパフォーマンスに影響を与えるので、円柱や直方体など、できるだけシンプルな形にしましょう。シミュレーション内のセンサの値が狂う場合もあります。今回のモデルでは使われていません。</p>
+</dd>
+<dt>plugin</dt><dd><p>センサの動作をシミュレートするためのものです。今回はレーザのプラグインを使っています。詳細は <a class="reference external" href="http://gazebosim.org/tutorials?tut=ros_gzplugins#GPULaser">Tutorial: Using Gazebo plugins with ROS</a> を見てください。</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="lidarbase-link">
+<h4>LiDARとbase_linkのジョイントを定義する<a class="headerlink" href="#lidarbase-link" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>ジョイントは2つのリンクを接続するための要素です。
+今回はirisのbase_linkリンクとLiDARのlidar_linkリンクを接続します。</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;child&gt;</span></code> タグで子リンクを指定し、 <code class="docutils literal notranslate"><span class="pre">&lt;parent&gt;</span></code> タグで親リンクを指定しています。
+irisのbase_linkのような、インクルードしたモデルのリンクを指定する際には、 <code class="docutils literal notranslate"><span class="pre">iris::base_link</span></code> のように、どのモデルのリンクであるかを指定してやる必要があります。</p>
+<div class="highlight-xml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span>    <span class="nt">&lt;joint</span> <span class="na">name=</span><span class="s">&quot;lidar_joint&quot;</span> <span class="na">type=</span><span class="s">&quot;fixed&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;child&gt;</span>lidar_link<span class="nt">&lt;/child&gt;</span>
+      <span class="nt">&lt;parent&gt;</span>iris::base_link<span class="nt">&lt;/parent&gt;</span>
+    <span class="nt">&lt;/joint&gt;</span>
+</pre></div>
+</td></tr></table></div>
+<p>今回は固定関節を使っていますが、他にも回転関節や直動関節などが使えます。</p>
+</div>
+<div class="section" id="id4">
+<h4>model.sdf<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>最終的なmodel.sdfファイルは以下のようになります。</p>
+<div class="literal-block-wrapper docutils container" id="id10">
+<div class="code-block-caption"><span class="caption-text">model.sdf</span><a class="headerlink" href="#id10" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-xml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&#39;1.0&#39;?&gt;</span>
+<span class="nt">&lt;sdf</span> <span class="na">version=</span><span class="s">&#39;1.6&#39;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;model</span> <span class="na">name=</span><span class="s">&#39;iris_2d_lidar&#39;</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;include&gt;</span>
+      <span class="nt">&lt;uri&gt;</span>model://iris<span class="nt">&lt;/uri&gt;</span>
+    <span class="nt">&lt;/include&gt;</span>
+
+    <span class="nt">&lt;link</span> <span class="na">name=</span><span class="s">&quot;lidar_link&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;pose&gt;</span>0 0 0.05 0 -0.0085 0<span class="nt">&lt;/pose&gt;</span>
+
+      <span class="nt">&lt;inertial&gt;</span>
+        <span class="nt">&lt;pose&gt;</span>0 0 0 0 -0 0<span class="nt">&lt;/pose&gt;</span>
+        <span class="nt">&lt;mass&gt;</span>0.01<span class="nt">&lt;/mass&gt;</span>
+        <span class="nt">&lt;inertia&gt;</span>
+          <span class="nt">&lt;ixx&gt;</span>2.1733e-6<span class="nt">&lt;/ixx&gt;</span>
+          <span class="nt">&lt;ixy&gt;</span>0<span class="nt">&lt;/ixy&gt;</span>
+          <span class="nt">&lt;ixz&gt;</span>0<span class="nt">&lt;/ixz&gt;</span>
+          <span class="nt">&lt;iyy&gt;</span>2.1733e-6<span class="nt">&lt;/iyy&gt;</span>
+          <span class="nt">&lt;iyz&gt;</span>0<span class="nt">&lt;/iyz&gt;</span>
+          <span class="nt">&lt;izz&gt;</span>1.8e-7<span class="nt">&lt;/izz&gt;</span>
+        <span class="nt">&lt;/inertia&gt;</span>
+      <span class="nt">&lt;/inertial&gt;</span>
+
+      <span class="nt">&lt;visual</span> <span class="na">name=</span><span class="s">&quot;lidar_visual&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;geometry&gt;</span>
+          <span class="nt">&lt;cylinder&gt;</span>
+            <span class="nt">&lt;radius&gt;</span>0.01<span class="nt">&lt;/radius&gt;</span>
+            <span class="nt">&lt;length&gt;</span>0.05<span class="nt">&lt;/length&gt;</span>
+          <span class="nt">&lt;/cylinder&gt;</span>
+        <span class="nt">&lt;/geometry&gt;</span>
+        <span class="nt">&lt;material&gt;</span>
+          <span class="nt">&lt;script&gt;</span>
+            <span class="nt">&lt;name&gt;</span>Gazebo/DarkGrey<span class="nt">&lt;/name&gt;</span>
+            <span class="nt">&lt;uri&gt;</span>file://media/materials/scripts/gazebo.material<span class="nt">&lt;/uri&gt;</span>
+          <span class="nt">&lt;/script&gt;</span>
+        <span class="nt">&lt;/material&gt;</span>
+      <span class="nt">&lt;/visual&gt;</span>
+
+      <span class="nt">&lt;sensor</span> <span class="na">name=</span><span class="s">&quot;laser&quot;</span> <span class="na">type=</span><span class="s">&quot;ray&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;pose&gt;</span>0 0 0.02 0 0 0<span class="nt">&lt;/pose&gt;</span>
+        <span class="nt">&lt;ray&gt;</span>
+          <span class="nt">&lt;scan&gt;</span>
+            <span class="nt">&lt;horizontal&gt;</span>
+              <span class="nt">&lt;samples&gt;</span>720<span class="nt">&lt;/samples&gt;</span>
+              <span class="nt">&lt;resolution&gt;</span>1<span class="nt">&lt;/resolution&gt;</span>
+              <span class="nt">&lt;min_angle&gt;</span>-2.0944<span class="nt">&lt;/min_angle&gt;</span>
+              <span class="nt">&lt;max_angle&gt;</span>2.0944<span class="nt">&lt;/max_angle&gt;</span>
+            <span class="nt">&lt;/horizontal&gt;</span>
+          <span class="nt">&lt;/scan&gt;</span>
+          <span class="nt">&lt;range&gt;</span>
+            <span class="nt">&lt;min&gt;</span>0.1<span class="nt">&lt;/min&gt;</span>
+            <span class="nt">&lt;max&gt;</span>15<span class="nt">&lt;/max&gt;</span>
+            <span class="nt">&lt;resolution&gt;</span>0.01<span class="nt">&lt;/resolution&gt;</span>
+          <span class="nt">&lt;/range&gt;</span>
+          <span class="nt">&lt;noise&gt;</span>
+            <span class="nt">&lt;type&gt;</span>gaussian<span class="nt">&lt;/type&gt;</span>
+            <span class="nt">&lt;mean&gt;</span>0.0<span class="nt">&lt;/mean&gt;</span>
+            <span class="nt">&lt;stddev&gt;</span>0.01<span class="nt">&lt;/stddev&gt;</span>
+          <span class="nt">&lt;/noise&gt;</span>
+        <span class="nt">&lt;/ray&gt;</span>
+        <span class="nt">&lt;plugin</span> <span class="na">name=</span><span class="s">&quot;LaserPlugin&quot;</span> <span class="na">filename=</span><span class="s">&quot;libgazebo_ros_laser.so&quot;</span><span class="nt">&gt;</span>
+	        <span class="nt">&lt;topicName&gt;</span>/laser/scan<span class="nt">&lt;/topicName&gt;</span>
+	        <span class="nt">&lt;frameName&gt;</span>/lidar_link<span class="nt">&lt;/frameName&gt;</span>
+	      <span class="nt">&lt;/plugin&gt;</span>
+        <span class="nt">&lt;always_on&gt;</span>1<span class="nt">&lt;/always_on&gt;</span>
+        <span class="nt">&lt;update_rate&gt;</span>40<span class="nt">&lt;/update_rate&gt;</span>
+        <span class="nt">&lt;visualize&gt;</span>true<span class="nt">&lt;/visualize&gt;</span>
+      <span class="nt">&lt;/sensor&gt;</span>
+    <span class="nt">&lt;/link&gt;</span>
+
+    <span class="nt">&lt;joint</span> <span class="na">name=</span><span class="s">&quot;lidar_joint&quot;</span> <span class="na">type=</span><span class="s">&quot;fixed&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;child&gt;</span>lidar_link<span class="nt">&lt;/child&gt;</span>
+      <span class="nt">&lt;parent&gt;</span>iris::base_link<span class="nt">&lt;/parent&gt;</span>
+    <span class="nt">&lt;/joint&gt;</span>
+
+  <span class="nt">&lt;/model&gt;</span>
+<span class="nt">&lt;/sdf&gt;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<p>lidarのリンクの姿勢は、</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;pose&gt;</span>0 0 0.05 0 -0.0085 0<span class="nt">&lt;/pose&gt;</span>
+</pre></div>
+</div>
+<p>のように、少し後ろに傾けて定義してあります。
+これは、ドローン自身に光線が干渉するのを防ぐためです。</p>
+<p>SDFのタグ一覧は <a class="reference external" href="http://sdformat.org/spec">ここ</a> から見ることができます。</p>
+<p>LiDARのモデルも別のファイルで記述してインクルードするという形にすると、モデルの記述がすっきりしていいかもしれません。
+その場合は、 <code class="docutils literal notranslate"><span class="pre">&lt;link</span> <span class="pre">name=&quot;lidar_link&gt;..&lt;/link&gt;</span></code> で囲まれている部分を別のモデルに分離して、インクルードするという形になります。
+ジョイントはリンク同士の接続を定義しているので、そのままにします。</p>
+<p>例えばこんな感じです。</p>
+<div class="highlight-xml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&#39;1.0&#39;?&gt;</span>
+<span class="nt">&lt;sdf</span> <span class="na">version=</span><span class="s">&#39;1.6&#39;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;model</span> <span class="na">name=</span><span class="s">&#39;iris_2d_lidar&#39;</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;include&gt;</span>
+    <span class="nt">&lt;uri&gt;</span>model://iris<span class="nt">&lt;/uri&gt;</span>
+    <span class="nt">&lt;/include&gt;</span>
+
+    <span class="nt">&lt;include&gt;</span>
+    <span class="nt">&lt;uri&gt;</span>model://lidar_2d<span class="nt">&lt;/uri&gt;</span>
+    <span class="nt">&lt;pose&gt;</span>0 0 0.07 0 0 0<span class="nt">&lt;/pose&gt;</span>
+    <span class="nt">&lt;/include&gt;</span>
+
+    <span class="nt">&lt;joint</span> <span class="na">name=</span><span class="s">&quot;lidar_joint&quot;</span> <span class="na">type=</span><span class="s">&quot;fixed&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;child&gt;</span>lidar_2d::lidar_link<span class="nt">&lt;/child&gt;</span>
+    <span class="nt">&lt;parent&gt;</span>iris::base_link<span class="nt">&lt;/parent&gt;</span>
+    <span class="nt">&lt;axis&gt;</span>
+        <span class="nt">&lt;xyz&gt;</span>0 0 1<span class="nt">&lt;/xyz&gt;</span>
+        <span class="nt">&lt;limit&gt;</span>
+        <span class="nt">&lt;upper&gt;</span>0<span class="nt">&lt;/upper&gt;</span>
+        <span class="nt">&lt;lower&gt;</span>0<span class="nt">&lt;/lower&gt;</span>
+        <span class="nt">&lt;/limit&gt;</span>
+    <span class="nt">&lt;/axis&gt;</span>
+    <span class="nt">&lt;/joint&gt;</span>
+
+<span class="nt">&lt;/model&gt;</span>
+<span class="nt">&lt;/sdf&gt;</span>
+</pre></div>
+</td></tr></table></div>
+<p>この例ではLiDARはlidar_2dというモデルに分離しています。
+別のファイルにモデルを分割する場合は、 <code class="docutils literal notranslate"><span class="pre">GAZEBO_MODEL_PATH</span></code> にモデルがあるパスを追加することを忘れないでください。
+例えば、 <code class="docutils literal notranslate"><span class="pre">px4_sim_pkg/models</span></code> 以下にlidar_2dモデルを置いた場合には、以下のコマンドを実行して設定を行います。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">GAZEBO_MODEL_PATH</span><span class="o">=</span><span class="nv">$HOME</span>/catkin_ws/src/px4_sim_pkg/models:<span class="nv">$GAZEBO_MODEL_PATH</span>
+</pre></div>
+</div>
+<p>ターミナルからコマンドを実行して設定を行った場合は毎回設定する必要がありますが、.bashrcにこの内容を記述しておけば、ターミナルを起動した時に自動で設定されます。</p>
+</div>
+</div>
+</div>
+<div class="section" id="config">
+<h2>configファイルを作る<a class="headerlink" href="#config" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>モデルには、名前や作成者などのモデルの情報を記したmodel.configファイルが必要です。
+基本的には以下のような形になります。
+タグの詳細については <a class="reference external" href="http://gazebosim.org/tutorials?tut=model_structure">Model structure and requirements</a> で確認してください。</p>
+<div class="literal-block-wrapper docutils container" id="id11">
+<div class="code-block-caption"><span class="caption-text">model.config</span><a class="headerlink" href="#id11" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-xml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot;?&gt;</span>
+<span class="nt">&lt;model&gt;</span>
+  <span class="nt">&lt;name&gt;</span>iris_2d_lidar<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;version&gt;</span>1.0<span class="nt">&lt;/version&gt;</span>
+  <span class="nt">&lt;sdf&gt;</span>model.sdf<span class="nt">&lt;/sdf&gt;</span>
+
+  <span class="nt">&lt;author&gt;</span>
+   <span class="nt">&lt;name&gt;</span>Takaki Ueno<span class="nt">&lt;/name&gt;</span>
+   <span class="nt">&lt;email&gt;</span>t_ueno@eis.hokudai.ac.jp<span class="nt">&lt;/email&gt;</span>
+  <span class="nt">&lt;/author&gt;</span>
+
+  <span class="nt">&lt;description&gt;</span>
+    Iris with 2d horizontal lidar.
+  <span class="nt">&lt;/description&gt;</span>
+<span class="nt">&lt;/model&gt;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+</div>
+<div class="section" id="id6">
+<h2>パスを設定する<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>GazeboのGUIからモデルを追加したり、SDFファイルからインクルードするためには、作成したモデルのパスが通っていないといけません。
+モデルのパスは <code class="docutils literal notranslate"><span class="pre">~/catkin_ws/src/px4_sim_pkg/models</span></code> なので、次のコマンドを実行してモデルのパスを設定します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">GAZEBO_MODEL_PATH</span><span class="o">=</span><span class="nv">$HOME</span>/catkin_ws/src/px4_sim_pkg/models:<span class="nv">$GAZEBO_MODEL_PATH</span>
+</pre></div>
+</div>
+<p>もしくは、上のコマンドをそのまま <code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code> に書いても構いません。</p>
+</div>
+<div class="section" id="id7">
+<h2>モデルを確認する<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>GazeboのGUIからモデルを読み込んで確認してみましょう。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gazebo
+</pre></div>
+</div>
+<img alt="../_images/model1.png" src="../_images/model1.png" />
+<p>赤枠内のInsertタブからiris_2d_lidarを選択してモデルを追加しましょう。</p>
+<img alt="../_images/model2.png" src="../_images/model2.png" />
+<p>LiDAR付きのIrisのモデルがきちんと作成されたことが確認できました。</p>
+</div>
+<div class="section" id="sitl">
+<h2>SITLシミュレーションでモデルを使う<a class="headerlink" href="#sitl" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>次のコマンドを実行すると今回作成したモデルをSITLシミュレーションで使うことができます。
+コマンドラインからlaunchファイルに引数を与える方法については、 <a class="reference external" href="http://wiki.ros.org/roslaunch/XML/arg#Passing_an_argument_via_the_command-line">ROS Wiki</a> を見てください。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch px4 posix_sitl.launch sdf:<span class="o">=</span><span class="nv">$HOME</span>/catkin_ws/src/px4_sim_pkg/models/iris_2d_lidar/model.sdf
+</pre></div>
+</div>
+<p>mavros_posix_sitl.launchを使う場合には以下のようにします。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch px4 mavros_posix_sitl.launch sdf:<span class="o">=</span><span class="nv">$HOME</span>/catkin_ws/src/px4_sim_pkg/models/iris_2d_lidar/model.sdf
+</pre></div>
+</div>
+<img alt="../_images/sitl.png" src="../_images/sitl.png" />
+<p>もしくは、このようなlaunchファイルを書いてもいいでしょう。</p>
+<div class="highlight-xml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nt">&lt;launch&gt;</span>
+
+    <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;sdf&quot;</span> <span class="na">default=</span><span class="s">&quot;$(find dronedoc)/models/iris_2d_lidar/model.sdf&quot;</span> <span class="nt">/&gt;</span>
+
+    <span class="nt">&lt;include</span> <span class="na">file=</span><span class="s">&quot;$(find px4)/launch/mavros_posix_sitl.launch&quot;</span> <span class="nt">&gt;</span>
+        <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;sdf&quot;</span> <span class="na">value=</span><span class="s">&quot;$(arg sdf)&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/include&gt;</span>
+
+<span class="nt">&lt;/launch&gt;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="id8">
+<h2>参考<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<dl class="simple">
+<dt><a class="reference external" href="http://gazebosim.org/tutorials?tut=build_model">Make a Model</a></dt><dd><p>Gazeboモデルの作成について</p>
+</dd>
+<dt><a class="reference external" href="gazebosim.org/tutorials?tut=build_robot">Make a Mobile Robot</a></dt><dd><p>モバイルロボットの作成について</p>
+</dd>
+<dt><a class="reference external" href="http://gazebosim.org/tutorials?tut=model_structure">Model structure and requirements</a></dt><dd><p>モデルのファイル構成について</p>
+</dd>
+<dt><a class="reference external" href="http://gazebosim.org/tutorials?tut=components#EnvironmentVariables">Gazebo Components</a></dt><dd><p>GAZEBO_MODEL_PATHについて</p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../slam/slam.html" class="btn btn-neutral float-right" title="自律飛行とSLAM" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../runnode/runnodepy.html" class="btn btn-neutral float-left" title="自作ノードを実行する（Python）" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2018, Takaki Ueno.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

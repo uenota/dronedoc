@@ -1,7 +1,0 @@
-TrajectoryPlannerROS:
-  max_vel_x: 0.4
-  min_vel_x: -0.1
-  meter_scoring: true
-  pdist_scale: 0.9
-  xy_goal_tolerance: 1.0
-  holonomic_robot: true

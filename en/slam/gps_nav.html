@@ -1,0 +1,1218 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>GPSを用いた自律飛行 &mdash; Dronedoc 1.0.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+    <link rel="canonical" href="https://uenota.github.io/dronedoc/slam/gps_nav.html" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Turtlebotを使ってマップを作る" href="turtle_mapping.html" />
+    <link rel="prev" title="自律飛行とSLAM" href="slam.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Dronedoc
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">SLAM</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../px4sim/px4sim.html">PX4 SITL Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../runnode/runnodecpp.html">自作ノードを実行する（C++）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../runnode/runnodepy.html">自作ノードを実行する（Python）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../addmodel/addmodel.html">新しいモデルを追加する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slam.html">自律飛行とSLAM</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">GPSを用いた自律飛行</a></li>
+<li class="toctree-l1"><a class="reference internal" href="turtle_mapping.html">Turtlebotを使ってマップを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../teleop/teleop.html">ゲームパッドを使ってドローンを操作する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lidar_localization.html">LiDARとAMCLを用いた自己位置推定</a></li>
+<li class="toctree-l1"><a class="reference internal" href="localization_and_mapping.html">LiDARを用いたSLAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lidar_nav.html">LiDARを用いた自律移動</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Mapping</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../octomap/octomap.html">Octomapを使って3Dマップを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../build_map_gmapping/build_map_gmapping.html">Gmappingを使って地図を生成する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../build_map_gazebo_plugin/build_map_gazebo_plugin.html">Gazebo Pluginを使って地図を作成する</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Motion Planning</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../moveit/index.html">Perform motion planning of UAV with MoveIt!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../local_planner_for_uav/local_planner_for_uav.html">UAV用のローカルプランナを実装する</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Tips</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../qgc_intro/qgc_intro.html">QGroundControl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../add_range_sensor/add_range_sensor.html">ドローンに距離センサを搭載する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../filter_lidar/filter_lidar.html">LiDARのデータをフィルタリングする</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../change_local_planner/change_local_planner.html">move_baseのローカルプランナーを変更する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../airsim/airsim.html">AirSimシミュレータを使う</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/bash_commands/bash_commands.html">基本的なBashの使い方</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/ros/ros.html">ROSの基本</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/terms/terms.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/archive/archive.html">読書案内</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/trouble_shooting/index.html">トラブルシューティング</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Dronedoc</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>GPSを用いた自律飛行</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/slam/gps_nav.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="gps">
+<h1>GPSを用いた自律飛行<a class="headerlink" href="#gps" title="Permalink to this headline">¶</a></h1>
+<p>このページの内容は <a class="reference external" href="http://wiki.ros.org/navigation/Tutorials/RobotSetup">Setup and Configuration of the Navigation Stack on a Robot</a> を参考にしています。</p>
+<p>以下の赤枠内の部分が経路計画と障害物回避に必要な部分です。
+経路計画と障害物回避を含む自律飛行を行うためには、</p>
+<ol class="arabic simple">
+<li><p>ロボットのベースフレーム( <code class="docutils literal notranslate"><span class="pre">base_link</span></code> など)と使用するセンサのフレームの間のTFがブロードキャストされていること</p></li>
+<li><p>センサデータがパブリッシュされていること</p></li>
+<li><p>オドメトリ情報がTFとnav_msgs/Odometryメッセージでパブリッシュされていること</p></li>
+<li><p>geometry_msgs/Twistメッセージを使ってロボットを操作できること</p></li>
+</ol>
+<p>が必要です。
+以降ではそれぞれの設定について見ていきます。</p>
+<div class="figure align-default" id="id31">
+<img alt="../_images/overview_tf_gps.png" src="../_images/overview_tf_gps.png" />
+<p class="caption"><span class="caption-text">From <a class="reference external" href="http://wiki.ros.org/navigation/Tutorials/RobotSetup">ROS Wiki</a> (<a class="reference external" href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>)</span><a class="headerlink" href="#id31" title="Permalink to this image">¶</a></p>
+</div>
+<div class="section" id="tf">
+<h2>TF<a class="headerlink" href="#tf" title="Permalink to this headline">¶</a></h2>
+<p>今回はLiDARを使用するので、LiDARとロボットの位置関係がわかるように、ロボットのベースフレームからLiDARのフレームへのTFを定義してあげる必要があります。
+今回はロボットのベースフレームは <code class="docutils literal notranslate"><span class="pre">base_link</span></code> 、LiDARのフレームは <code class="docutils literal notranslate"><span class="pre">lidar_link</span></code> となっています。
+自分のロボットの設定をモデルなどを参照して確認して、必要な場合は適宜変更してください。</p>
+<p>静的なTFをパブリッシュするにはtfパッケージの <a class="reference external" href="http://wiki.ros.org/tf#static_transform_publisher">static_transform_publisher</a> を使います。
+そのために、mymodel_sitl.launchをコピーして新しくmymodel_sitl_tf.launchというファイルを作って、以下の内容を追加してください。</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;node</span> <span class="na">pkg=</span><span class="s">&quot;tf&quot;</span> <span class="na">name=</span><span class="s">&quot;base2lidar&quot;</span> <span class="na">type=</span><span class="s">&quot;static_transform_publisher&quot;</span> <span class="na">args=</span><span class="s">&quot;0 0 0.1 0 0 0 base_link lidar_link 100&quot;</span><span class="nt">/&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id1">
+<h2>センサ情報<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>今回は障害物の検出に2D LiDARを使います。
+<code class="docutils literal notranslate"><span class="pre">models/iris_2d_lidar/model.sdf</span></code> 内でLiDARの設定を以下のようにしたので、
+LiDARの点群データは <code class="docutils literal notranslate"><span class="pre">/laser/scan</span></code> トピックにパブリッシュされます。</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;plugin</span> <span class="na">name=</span><span class="s">&quot;LaserPlugin&quot;</span> <span class="na">filename=</span><span class="s">&quot;libgazebo_ros_laser.so&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;topicName&gt;</span>/laser/scan<span class="nt">&lt;/topicName&gt;</span>
+  <span class="nt">&lt;frameName&gt;</span>lidar_link<span class="nt">&lt;/frameName&gt;</span>
+<span class="nt">&lt;/plugin&gt;</span>
+</pre></div>
+</div>
+<p>また、LiDARの設置してあるフレームは <code class="docutils literal notranslate"><span class="pre">lidar_link</span></code> です。
+このフレームは <code class="docutils literal notranslate"><span class="pre">base_link</span></code> フレームの子要素になっています。
+つまり、 <code class="docutils literal notranslate"><span class="pre">base_link</span></code> → <code class="docutils literal notranslate"><span class="pre">lidar_link</span></code> のようにTFがパブリッシュされています。</p>
+</div>
+<div class="section" id="id2">
+<h2>オドメトリ情報<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h3>TFをパブリッシュする<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>move_baseでは、障害物回避と経路計画のためにグローバルとローカルの２つのコストマップを使っています。
+今回の設定ではローカルコストマップは <code class="docutils literal notranslate"><span class="pre">odom</span></code> フレームを参照し、グローバルコストマップは <code class="docutils literal notranslate"><span class="pre">map</span></code> フレームを参照するようになっているので、それぞれのフレームからの <code class="docutils literal notranslate"><span class="pre">base_link</span></code> へのTFを定義する必要があります。</p>
+<p><code class="docutils literal notranslate"><span class="pre">odom</span></code> フレームは一般的にロボットのローカルフレームとして使用され、 <code class="docutils literal notranslate"><span class="pre">map</span></code> フレームは一般的にグローバルフレームとして使用されます。
+今回もその慣習に従って、ローカルフレームのTFを <code class="docutils literal notranslate"><span class="pre">odom</span></code> フレーム内で、グローバルフレームのTFを <code class="docutils literal notranslate"><span class="pre">map</span></code> フレーム内でブロードキャストすることにします。</p>
+<p>フレームについての詳細は <a class="reference external" href="http://www.ros.org/reps/rep-0105.html">REP105 – Coordinate Frames for Mobile Platforms</a> に記述されています。</p>
+<div class="figure align-default">
+<img alt="../_images/coordsystems_img.png" src="../_images/coordsystems_img.png" />
+</div>
+<p>From <a class="reference external" href="http://wiki.ros.org/hector_slam/Tutorials/SettingUpForYourRobot">ROS Wiki</a> (<a class="reference external" href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>)</p>
+<div class="section" id="odom-base-link">
+<h4>odom-&gt;base_link<a class="headerlink" href="#odom-base-link" title="Permalink to this headline">¶</a></h4>
+<p>機体のTFはmavrosを使ってパブリッシュすることができます。
+しかし、mavros_posix_sitl.launchを使った場合は、デフォルトではTFがパブリッシュされません。</p>
+<p>TFがパブリッシュされるようにするには、 <code class="docutils literal notranslate"><span class="pre">/mavros/local_position/tf/send</span></code> パラメータの値を <code class="docutils literal notranslate"><span class="pre">true</span></code> にする必要があります。</p>
+<p>また、以降でmove_baseを使うための設定として、 <code class="docutils literal notranslate"><span class="pre">/mavros/local_position/tf/frame_id</span></code> と、 <code class="docutils literal notranslate"><span class="pre">/mavros/local_position/tf/frame_id</span></code> のパラメータの値を <code class="docutils literal notranslate"><span class="pre">odom</span></code> にしておきます。</p>
+<p>以下の内容をmymodel_sitl_tf.launchの最後に追加してください。</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;/mavros/local_position/tf/send&quot;</span> <span class="na">type=</span><span class="s">&quot;bool&quot;</span> <span class="na">value=</span><span class="s">&quot;true&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;/mavros/local_position/frame_id&quot;</span> <span class="na">type=</span><span class="s">&quot;str&quot;</span> <span class="na">value=</span><span class="s">&quot;odom&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;/mavros/local_position/tf/frame_id&quot;</span> <span class="na">type=</span><span class="s">&quot;str&quot;</span> <span class="na">value=</span><span class="s">&quot;odom&quot;</span> <span class="nt">/&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="map-odom">
+<h4>map-&gt;odom<a class="headerlink" href="#map-odom" title="Permalink to this headline">¶</a></h4>
+<p>本来、 <code class="docutils literal notranslate"><span class="pre">odom</span></code> フレームからのTFはホイールオドメトリなどを用いて計算し、 <code class="docutils literal notranslate"><span class="pre">map</span></code> フレームからのTFはGPSやLiDARなどのセンサ情報を用いて更新されるのですが、今回はどちらもGPSを用いている上に基点も同じなので、次のようにして <code class="docutils literal notranslate"><span class="pre">map</span></code> から <code class="docutils literal notranslate"><span class="pre">odom</span></code> へのTFをブロードキャストすることにします。
+以下の内容をmymodel_sitl_tf.launchに追加してください。</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;node</span> <span class="na">pkg=</span><span class="s">&quot;tf&quot;</span> <span class="na">name=</span><span class="s">&quot;map2odom&quot;</span> <span class="na">type=</span><span class="s">&quot;static_transform_publisher&quot;</span> <span class="na">args=</span><span class="s">&quot;0 0 0 0 0 0 map odom 100&quot;</span><span class="nt">/&gt;</span>
+</pre></div>
+</div>
+<p>最終的には、 <code class="docutils literal notranslate"><span class="pre">map</span></code> から <code class="docutils literal notranslate"><span class="pre">lidar_link</span></code> までのTFは下図のようになります。</p>
+<div class="figure align-default">
+<img alt="../_images/frames.png" src="../_images/frames.png" />
+</div>
+<p>今回は <code class="docutils literal notranslate"><span class="pre">odom</span></code> フレームと <code class="docutils literal notranslate"><span class="pre">map</span></code> フレームについて解説するために <code class="docutils literal notranslate"><span class="pre">map</span></code> から <code class="docutils literal notranslate"><span class="pre">odom</span></code> へのTFを無理やりブロードキャストしていますが、どちらかのフレームしか利用できない場合は、片方のフレームだけでも問題ありません。</p>
+</div>
+</div>
+<div class="section" id="nav-msgs-odometry">
+<h3>nav_msgs/Odometryをパブリッシュする<a class="headerlink" href="#nav-msgs-odometry" title="Permalink to this headline">¶</a></h3>
+<p>nav_msgs/Odometryメッセージがパブリッシュされるトピックはmavrosには用意されていないので、自分で用意する必要があります。</p>
+<p><a class="reference external" href="http://wiki.ros.org/navigation/Tutorials/RobotSetup/Odom">ROS Wikiのチュートリアル</a> を参考にしてノードを作成しましょう。</p>
+<p><code class="docutils literal notranslate"><span class="pre">map</span></code> から <code class="docutils literal notranslate"><span class="pre">base_link</span></code> へのTFはすでにパブリッシュされているので、今回は <code class="docutils literal notranslate"><span class="pre">nav_msgs::Odometry</span></code> メッセージのパブリッシャを書くだけで構いません。</p>
+<p>Pythonのコード例は、<a class="reference internal" href="odom_pub_py.html"><span class="doc">odom_publisher.py</span></a> を参考にしてください。</p>
+<div class="literal-block-wrapper docutils container" id="id32">
+<div class="code-block-caption"><span class="caption-text">odom_publisher.cpp</span><a class="headerlink" href="#id32" title="Permalink to this code">¶</a></div>
+<div class="highlight-cpp notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * @file odom_publisher.cpp</span>
+<span class="cm"> * @brief Node for publishing odom topic and TF to base_footprint from odom</span>
+<span class="cm"> * @author Takaki Ueno</span>
+<span class="cm"> */</span>
+
+<span class="c1">// roscpp</span>
+<span class="cp">#include</span> <span class="cpf">&lt;ros/ros.h&gt;</span><span class="cp"></span>
+
+<span class="c1">// nav_msgs</span>
+<span class="cp">#include</span> <span class="cpf">&lt;nav_msgs/Odometry.h&gt;</span><span class="cp"></span>
+
+<span class="c1">// geomtery_msgs</span>
+<span class="cp">#include</span> <span class="cpf">&lt;geometry_msgs/PoseStamped.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;geometry_msgs/TwistStamped.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;geometry_msgs/Quaternion.h&gt;</span><span class="cp"></span>
+
+<span class="c1">// tf</span>
+<span class="cp">#include</span> <span class="cpf">&lt;tf/transform_datatypes.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;tf/transform_listener.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;tf/transform_broadcaster.h&gt;</span><span class="cp"></span>
+
+<span class="c1">//! Storage for local position</span>
+<span class="n">geometry_msgs</span><span class="o">::</span><span class="n">PoseStamped</span> <span class="n">local_pos</span><span class="p">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * @brief Callback function for local position</span>
+<span class="cm"> * @param msg Incaming msg</span>
+<span class="cm"> */</span>
+<span class="kt">void</span> <span class="nf">local_pos_cb</span><span class="p">(</span><span class="k">const</span> <span class="n">geometry_msgs</span><span class="o">::</span><span class="n">PoseStamped</span><span class="o">::</span><span class="n">ConstPtr</span><span class="o">&amp;</span> <span class="n">msg</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">local_pos</span> <span class="o">=</span> <span class="o">*</span><span class="n">msg</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">//! Storage for local velocity</span>
+<span class="n">geometry_msgs</span><span class="o">::</span><span class="n">TwistStamped</span> <span class="n">local_vel</span><span class="p">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * @brief Callback for local velocity</span>
+<span class="cm"> * @param msg Incoming message</span>
+<span class="cm"> */</span>
+
+<span class="kt">void</span> <span class="nf">local_vel_cb</span><span class="p">(</span><span class="k">const</span> <span class="n">geometry_msgs</span><span class="o">::</span><span class="n">TwistStamped</span><span class="o">::</span><span class="n">ConstPtr</span><span class="o">&amp;</span> <span class="n">msg</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">local_vel</span> <span class="o">=</span> <span class="o">*</span><span class="n">msg</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span> <span class="n">argv</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">ros</span><span class="o">::</span><span class="n">init</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">,</span> <span class="s">&quot;odom_publisher&quot;</span><span class="p">);</span>
+  <span class="n">ros</span><span class="o">::</span><span class="n">NodeHandle</span> <span class="n">nh</span><span class="p">;</span>
+  <span class="n">ros</span><span class="o">::</span><span class="n">Rate</span> <span class="n">rate</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>
+
+  <span class="c1">// Publisher</span>
+  <span class="n">ros</span><span class="o">::</span><span class="n">Publisher</span> <span class="n">odom_pub</span> <span class="o">=</span> <span class="n">nh</span><span class="p">.</span><span class="n">advertise</span><span class="o">&lt;</span><span class="n">nav_msgs</span><span class="o">::</span><span class="n">Odometry</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;odom&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">);</span>
+  <span class="c1">// Subscriber</span>
+  <span class="n">ros</span><span class="o">::</span><span class="n">Subscriber</span> <span class="n">local_pos_sub</span> <span class="o">=</span> <span class="n">nh</span><span class="p">.</span><span class="n">subscribe</span><span class="o">&lt;</span><span class="n">geometry_msgs</span><span class="o">::</span><span class="n">PoseStamped</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;mavros/local_position/pose&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="n">local_pos_cb</span><span class="p">);</span>
+  <span class="n">ros</span><span class="o">::</span><span class="n">Subscriber</span> <span class="n">local_vel_sub</span> <span class="o">=</span> <span class="n">nh</span><span class="p">.</span><span class="n">subscribe</span><span class="o">&lt;</span><span class="n">geometry_msgs</span><span class="o">::</span><span class="n">TwistStamped</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;mavros/local_position/velocity&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="n">local_vel_cb</span><span class="p">);</span>
+
+  <span class="k">while</span><span class="p">(</span><span class="n">ros</span><span class="o">::</span><span class="n">ok</span><span class="p">())</span>
+  <span class="p">{</span>
+    <span class="n">ros</span><span class="o">::</span><span class="n">spinOnce</span><span class="p">();</span>
+
+    <span class="n">tf</span><span class="o">::</span><span class="n">Quaternion</span> <span class="n">tf_quat</span> <span class="o">=</span> <span class="n">tf</span><span class="o">::</span><span class="n">createQuaternionFromYaw</span><span class="p">(</span><span class="n">local_pos</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">orientation</span><span class="p">.</span><span class="n">z</span><span class="p">);</span>
+
+    <span class="n">geometry_msgs</span><span class="o">::</span><span class="n">Quaternion</span> <span class="n">odom_quat</span><span class="p">;</span>
+    <span class="n">tf</span><span class="o">::</span><span class="n">quaternionTFToMsg</span><span class="p">(</span><span class="n">tf_quat</span><span class="p">,</span> <span class="n">odom_quat</span><span class="p">);</span>
+
+    <span class="n">nav_msgs</span><span class="o">::</span><span class="n">Odometry</span> <span class="n">odom</span><span class="p">;</span>
+    <span class="n">odom</span><span class="p">.</span><span class="n">header</span><span class="p">.</span><span class="n">stamp</span> <span class="o">=</span> <span class="n">ros</span><span class="o">::</span><span class="n">Time</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+    <span class="n">odom</span><span class="p">.</span><span class="n">header</span><span class="p">.</span><span class="n">frame_id</span> <span class="o">=</span> <span class="s">&quot;odom&quot;</span><span class="p">;</span>
+
+    <span class="n">odom</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">local_pos</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+    <span class="n">odom</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">local_pos</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
+    <span class="n">odom</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">z</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
+    <span class="n">odom</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">orientation</span> <span class="o">=</span> <span class="n">odom_quat</span><span class="p">;</span>
+
+    <span class="n">odom</span><span class="p">.</span><span class="n">child_frame_id</span> <span class="o">=</span> <span class="s">&quot;base_link&quot;</span><span class="p">;</span>
+    <span class="n">odom</span><span class="p">.</span><span class="n">twist</span><span class="p">.</span><span class="n">twist</span><span class="p">.</span><span class="n">linear</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">local_vel</span><span class="p">.</span><span class="n">twist</span><span class="p">.</span><span class="n">linear</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+    <span class="n">odom</span><span class="p">.</span><span class="n">twist</span><span class="p">.</span><span class="n">twist</span><span class="p">.</span><span class="n">linear</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">local_vel</span><span class="p">.</span><span class="n">twist</span><span class="p">.</span><span class="n">linear</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
+    <span class="n">odom</span><span class="p">.</span><span class="n">twist</span><span class="p">.</span><span class="n">twist</span><span class="p">.</span><span class="n">angular</span><span class="p">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">local_vel</span><span class="p">.</span><span class="n">twist</span><span class="p">.</span><span class="n">angular</span><span class="p">.</span><span class="n">z</span><span class="p">;</span>
+
+    <span class="n">odom_pub</span><span class="p">.</span><span class="n">publish</span><span class="p">(</span><span class="n">odom</span><span class="p">);</span>
+    <span class="n">rate</span><span class="p">.</span><span class="n">sleep</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="id7">
+<h4>コード解説<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;ros/ros.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;nav_msgs/Odometry.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;geometry_msgs/PoseStamped.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;geometry_msgs/TwistStamped.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;geometry_msgs/Quaternion.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;tf/transform_datatypes.h&gt;</span><span class="cp"></span>
+</pre></div>
+</div>
+<p>使用するメッセージを使うのに必要なヘッダファイルをインクルードしています。
+<code class="docutils literal notranslate"><span class="pre">tf/transform_datatypes.h</span></code> は、 <code class="docutils literal notranslate"><span class="pre">createQuaternionFromYaw</span></code> 関数を使用するために必要です。</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ros</span><span class="o">::</span><span class="n">Publisher</span> <span class="n">odom_pub</span> <span class="o">=</span> <span class="n">nh</span><span class="p">.</span><span class="n">advertise</span><span class="o">&lt;</span><span class="n">nav_msgs</span><span class="o">::</span><span class="n">Odometry</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;odom&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">nav_msgs/Odometry</span></code> メッセージのパブリッシャです。</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ros</span><span class="o">::</span><span class="n">Subscriber</span> <span class="n">local_pos_sub</span> <span class="o">=</span> <span class="n">nh</span><span class="p">.</span><span class="n">subscribe</span><span class="o">&lt;</span><span class="n">geometry_msgs</span><span class="o">::</span><span class="n">PoseStamped</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;mavros/local_position/pose&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="n">local_pos_cb</span><span class="p">);</span>
+<span class="n">ros</span><span class="o">::</span><span class="n">Subscriber</span> <span class="n">local_vel_sub</span> <span class="o">=</span> <span class="n">nh</span><span class="p">.</span><span class="n">subscribe</span><span class="o">&lt;</span><span class="n">geometry_msgs</span><span class="o">::</span><span class="n">TwistStamped</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;mavros/local_position/velocity&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="n">local_vel_cb</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">nav_msgs/Odometry</span></code> メッセージのフィールドで使われる位置と速度のサブスクライバです。</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">geometry_msgs</span><span class="o">::</span><span class="n">PoseStamped</span> <span class="n">local_pos</span><span class="p">;</span>
+<span class="kt">void</span> <span class="nf">local_pos_cb</span><span class="p">(</span><span class="k">const</span> <span class="n">geometry_msgs</span><span class="o">::</span><span class="n">PoseStamped</span><span class="o">::</span><span class="n">ConstPtr</span><span class="o">&amp;</span> <span class="n">msg</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">local_pos</span> <span class="o">=</span> <span class="o">*</span><span class="n">msg</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">geometry_msgs</span><span class="o">::</span><span class="n">TwistStamped</span> <span class="n">local_vel</span><span class="p">;</span>
+<span class="kt">void</span> <span class="nf">local_vel_cb</span><span class="p">(</span><span class="k">const</span> <span class="n">geometry_msgs</span><span class="o">::</span><span class="n">TwistStamped</span><span class="o">::</span><span class="n">ConstPtr</span><span class="o">&amp;</span> <span class="n">msg</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">local_vel</span> <span class="o">=</span> <span class="o">*</span><span class="n">msg</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>それぞれのサブスクライバのコールバック関数です。
+グローバル変数にメッセージを格納するだけのシンプルなものです。</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">tf</span><span class="o">::</span><span class="n">Quaternion</span> <span class="n">tf_quat</span> <span class="o">=</span> <span class="n">tf</span><span class="o">::</span><span class="n">createQuaternionFromYaw</span><span class="p">(</span><span class="n">local_pos</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">orientation</span><span class="p">.</span><span class="n">z</span><span class="p">);</span>
+
+<span class="n">geometry_msgs</span><span class="o">::</span><span class="n">Quaternion</span> <span class="n">odom_quat</span><span class="p">;</span>
+<span class="n">tf</span><span class="o">::</span><span class="n">quaternionTFToMsg</span><span class="p">(</span><span class="n">tf_quat</span><span class="p">,</span> <span class="n">odom_quat</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>z軸周りの回転（Yaw）からTFのクォータニオンを生成して、それをROSメッセージに変換しています。</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">nav_msgs</span><span class="o">::</span><span class="n">Odometry</span> <span class="n">odom</span><span class="p">;</span>
+<span class="n">odom</span><span class="p">.</span><span class="n">header</span><span class="p">.</span><span class="n">stamp</span> <span class="o">=</span> <span class="n">ros</span><span class="o">::</span><span class="n">Time</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+<span class="n">odom</span><span class="p">.</span><span class="n">header</span><span class="p">.</span><span class="n">frame_id</span> <span class="o">=</span> <span class="s">&quot;odom&quot;</span><span class="p">;</span>
+
+<span class="n">odom</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">local_pos</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+<span class="n">odom</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">local_pos</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
+<span class="n">odom</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">z</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
+<span class="n">odom</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">orientation</span> <span class="o">=</span> <span class="n">odom_quat</span><span class="p">;</span>
+
+<span class="n">odom</span><span class="p">.</span><span class="n">child_frame_id</span> <span class="o">=</span> <span class="s">&quot;base_link&quot;</span><span class="p">;</span>
+<span class="n">odom</span><span class="p">.</span><span class="n">twist</span><span class="p">.</span><span class="n">twist</span><span class="p">.</span><span class="n">linear</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">local_vel</span><span class="p">.</span><span class="n">twist</span><span class="p">.</span><span class="n">linear</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+<span class="n">odom</span><span class="p">.</span><span class="n">twist</span><span class="p">.</span><span class="n">twist</span><span class="p">.</span><span class="n">linear</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">local_vel</span><span class="p">.</span><span class="n">twist</span><span class="p">.</span><span class="n">linear</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
+<span class="n">odom</span><span class="p">.</span><span class="n">twist</span><span class="p">.</span><span class="n">twist</span><span class="p">.</span><span class="n">angular</span><span class="p">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">local_vel</span><span class="p">.</span><span class="n">twist</span><span class="p">.</span><span class="n">angular</span><span class="p">.</span><span class="n">z</span><span class="p">;</span>
+
+<span class="n">odom_pub</span><span class="p">.</span><span class="n">publish</span><span class="p">(</span><span class="n">odom</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">nav_msgs/Odometry</span></code> メッセージの各フィールドを埋めてパブリッシュしています。
+<code class="docutils literal notranslate"><span class="pre">nav_msgs/Odometry</span></code> メッセージのフィールドについては、 <a class="reference external" href="http://docs.ros.org/melodic/api/nav_msgs/html/msg/Odometry.html">nav_msgs/Odometry Message</a> を見てください。</p>
+</div>
+</div>
+</div>
+<div class="section" id="id8">
+<h2>速度指令<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="cmd-vel">
+<h3>cmd_velトピック<a class="headerlink" href="#cmd-vel" title="Permalink to this headline">¶</a></h3>
+<p>mavrosを使えば、 <code class="docutils literal notranslate"><span class="pre">/mavros/setpoint_velocity/cmd_vel_unstamped</span></code> トピックもしくは、 <code class="docutils literal notranslate"><span class="pre">/mavros/setpoint_velocity/cmd_vel</span></code> トピックに速度指令を送信することでドローンを移動させることができます。
+これらのトピックはメッセージの型によって分けられており、 <code class="docutils literal notranslate"><span class="pre">cmd_vel_unstamped</span></code> は <code class="docutils literal notranslate"><span class="pre">Twist</span></code> 型、 <code class="docutils literal notranslate"><span class="pre">cmd_vel</span></code> は <code class="docutils literal notranslate"><span class="pre">TwistStamped</span></code> 型のメッセージを使います。
+move_baseは <code class="docutils literal notranslate"><span class="pre">Twist</span></code> 型のメッセージをパブリッシュするので、今回は <code class="docutils literal notranslate"><span class="pre">/mavros/setpoint_velocity/cmd_vel_unstamped</span></code> トピックを利用します。</p>
+<p>また、move_baseは <code class="docutils literal notranslate"><span class="pre">/cmd_vel</span></code> トピックに速度指令をパブリッシュするようになっているので、Launchファイル内で次のように <a class="reference external" href="http://wiki.ros.org/roslaunch/XML/remap">リマップ</a> することでmove_baseからの速度指令がドローンに送られるようにします。</p>
+<p>Launchファイルについては、後述の <a class="reference internal" href="#navigation-launch"><span class="std std-ref">navigation.launch</span></a> の項を参照してください。</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;remap</span> <span class="na">from=</span><span class="s">&quot;/cmd_vel&quot;</span> <span class="na">to=</span><span class="s">&quot;/mavros/setpoint_velocity/cmd_vel_unstamped&quot;</span> <span class="nt">/&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="mav-frame">
+<h3>mav_frameパラメータ<a class="headerlink" href="#mav-frame" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">cmd_vel</span></code> トピックもしくは、 <code class="docutils literal notranslate"><span class="pre">cmd_vel_unstamped</span></code> トピックを使う場合の速度指令は、デフォルトではドローンのベースフレームではなく、ドローンの位置の基準となるフレーム（ <code class="docutils literal notranslate"><span class="pre">odom</span></code> や <code class="docutils literal notranslate"><span class="pre">map</span></code> など）を基準とした速度を使用しています。</p>
+<p>以下の画像のように、速度指令の基準となるフレームが異なる場合には、同じ値の速度指令値を入力しても、ロボットの速度（太い矢印）は異なります。</p>
+<img alt="../_images/mav_frame.png" src="../_images/mav_frame.png" />
+<p>move_baseがパブリッシュする速度指令は、ロボットのベースフレームを基準としたものです。
+そのため、今回は速度指令の基準となるフレームをロボットのベースフレームに設定しなければなりません。</p>
+<p><code class="docutils literal notranslate"><span class="pre">cmd_vel</span></code> トピックによる速度指令が基準とするフレームを変更するには、 <code class="docutils literal notranslate"><span class="pre">/mavros/setpoint_velocity/mav_frame</span></code> パラメータの設定を変える必要があります。
+ドローンのベースフレームを基準にする場合は、このパラメータの値を <code class="docutils literal notranslate"><span class="pre">BODY_NED</span></code> に変更します。
+デフォルトでは <code class="docutils literal notranslate"><span class="pre">LOCAL_NED</span></code> になっています。</p>
+<p>以下の内容をmymodel_sitl_tf.launchに追加することで、このパラメータの値を変更できます。</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;/mavros/setpoint_velocity/mav_frame&quot;</span>  <span class="na">type=</span><span class="s">&quot;str&quot;</span> <span class="na">value=</span><span class="s">&quot;BODY_NED&quot;</span> <span class="nt">/&gt;</span>
+</pre></div>
+</div>
+<p>他の利用可能なフレームについては <a class="reference external" href="http://wiki.ros.org/mavros/Enumerations">mavros/Enumerations</a> にリストがあります。</p>
+</div>
+</div>
+<div class="section" id="id10">
+<h2>設定ファイルを書く<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id11">
+<h3>大域的経路計画と局所的経路計画<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<p>コストマップは事前に与えられた地図情報やセンサから得られた障害物の情報をもとに構築される地図で、経路計画に用いられます。（ <a class="reference external" href="https://qiita.com/MoriKen/items/d5cd6208143d6c40caff#%E5%A4%A7%E5%9F%9F%E3%81%A8%E5%B1%80%E6%89%80%E3%81%AE%E6%AF%94%E8%BC%83">参考</a> ）</p>
+<p>大域的経路計画では、スタートからゴールまでの経路を計画します。
+大域的経路計画においては、グローバル（大域的）コストマップが使われます。</p>
+<p>局所的経路計画では、障害物回避のための経路を計画します。
+局所的経路計画を行うために、ローカル（局所的）コストマップが使用されます。</p>
+<p>大域的経路計画を行う経路計画手法のことをグローバルプランナー、局所的経路計画を行う手法のことをローカルプランナーといいます。
+グローバルプランナーにはダイクストラ法やA*法が、ローカルプランナーにはDynamic Window Approach（DWA）などがあります。</p>
+</div>
+<div class="section" id="id13">
+<h3>コストマップの設定<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<p>コストマップの設定はyamlファイルに記述します。
+共通の設定、大域的コストマップの設定、局所的コストマップの設定用の3つの設定ファイルを以下のように準備します。</p>
+<p>コストマップのパラメータの設定はグローバルプランナーやローカルプランナーが生成する経路にも影響を与えます。
+生成されるグローバルパスやローカルパスが満足の行くものでない場合には、コストマップのパラメータを変更することも検討するとよいかもしれません。</p>
+<p>以下の設定は必要最小限のものです。
+他の設定やコストマップの詳細については <a class="reference external" href="http://wiki.ros.org/costmap_2d">costmap_2dのROS Wikiページ</a> を見てください。</p>
+<div class="section" id="id14">
+<h4>共通設定<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h4>
+<div class="literal-block-wrapper docutils container" id="id33">
+<div class="code-block-caption"><span class="caption-text">costmap_common_params.yaml</span><a class="headerlink" href="#id33" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nt">obstacle_range</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">3.0</span>
+<span class="nt">raytrace_range</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">2.0</span>
+<span class="nt">footprint</span><span class="p">:</span> <span class="p p-Indicator">[[</span><span class="nv">0.3</span><span class="p p-Indicator">,</span> <span class="nv">0.3</span><span class="p p-Indicator">],</span> <span class="p p-Indicator">[</span><span class="nv">0.3</span><span class="p p-Indicator">,</span> <span class="nv">-0.3</span><span class="p p-Indicator">],</span> <span class="p p-Indicator">[</span><span class="nv">-0.3</span><span class="p p-Indicator">,</span> <span class="nv">-0.3</span><span class="p p-Indicator">],</span> <span class="p p-Indicator">[</span><span class="nv">-0.3</span><span class="p p-Indicator">,</span> <span class="nv">0.3</span><span class="p p-Indicator">]]</span>
+<span class="nt">inflation_radius</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.5</span>
+
+<span class="nt">observation_sources</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">laser_scan_sensor</span>
+
+<span class="nt">laser_scan_sensor</span><span class="p">:</span> <span class="p p-Indicator">{</span>
+<span class="nt">    sensor_frame</span><span class="p">:</span> <span class="nv">lidar_link</span><span class="p p-Indicator">,</span>
+<span class="nt">    data_type</span><span class="p">:</span> <span class="nv">LaserScan</span><span class="p p-Indicator">,</span>
+<span class="nt">    topic</span><span class="p">:</span> <span class="nv">/laser/scan</span><span class="p p-Indicator">,</span>
+<span class="nt">    marking</span><span class="p">:</span> <span class="nv">true</span><span class="p p-Indicator">,</span>
+<span class="nt">    clearing</span><span class="p">:</span> <span class="nv">true</span>
+  <span class="p p-Indicator">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<p>それぞれのパラメータの意味は以下のとおりです。</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">obstacle_range</span></code></dt><dd><p>コストマップに反映する障害物の距離。
+この例では3.0 mより近くにある障害物がコストマップに反映されます。</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">raytrace_range</span></code></dt><dd><p>センサデータがこの数値以上の場合には、ロボットからこの数値の距離までの間に障害物はないと判断します。</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">footprint</span></code></dt><dd><p>ロボットの形状を多角形で指定します。中心は <code class="docutils literal notranslate"><span class="pre">(0.0,</span> <span class="pre">0.0)</span></code> です。
+ロボットの外形が円である場合には、 <code class="docutils literal notranslate"><span class="pre">robot_radius</span></code> パラメータを使います。</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">inflation_radius</span></code></dt><dd><p>このパラメータで指定された値の距離よりも障害物に近いグリッドには、コストが付与されます。</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">observation_sources</span></code></dt><dd><p>コストマップに渡される情報を得るセンサを設定します。</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">sensor_frame</span></code></dt><dd><p>センサーの座標系（フレーム）です。</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">data_type</span></code></dt><dd><p>トピックにパブリッシュされているメッセージの型（今回は <code class="docutils literal notranslate"><span class="pre">sensor_msgs/LaserScan</span></code> ）です。</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">topic</span></code></dt><dd><p>センサデータがパブリッシュされているトピックです。</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">marking</span></code></dt><dd><p><code class="docutils literal notranslate"><span class="pre">true</span></code> の場合には、障害物をコストマップに追加する際にこのセンサの情報が使用されます。</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">clearing</span></code></dt><dd><p><code class="docutils literal notranslate"><span class="pre">true</span></code> の場合には、障害物をコストマップから除去する際にこのセンサの情報が使用されます。</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="id15">
+<h4>大域的コストマップの設定<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h4>
+<div class="literal-block-wrapper docutils container" id="id34">
+<div class="code-block-caption"><span class="caption-text">global_costmap_params.yaml</span><a class="headerlink" href="#id34" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nt">global_costmap</span><span class="p">:</span>
+  <span class="nt">global_frame</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">map</span>
+  <span class="nt">robot_base_frame</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">base_link</span>
+  <span class="nt">publish_frequency</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1.0</span>
+  <span class="nt">update_frequency</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5.0</span>
+  <span class="nt">static_map</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+  <span class="nt">rolling_window</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+  <span class="nt">width</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">20.0</span>
+  <span class="nt">height</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">20.0</span>
+  <span class="nt">resolution</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.1</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">global_frame</span></code></dt><dd><p>大域的コストマップの座標系（フレーム）を設定します。先述したように、 <code class="docutils literal notranslate"><span class="pre">odom</span></code> フレームからのTFしか得られない場合はここを <code class="docutils literal notranslate"><span class="pre">odom</span></code> にしても構いません。</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">robot_base_frame</span></code></dt><dd><p>（コストマップが参照する）ロボットのベース座標系（フレーム）を設定します</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">update_frequency</span></code></dt><dd><p>コストマップの更新周期（Hz）を定義します</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">static_map</span></code></dt><dd><p><code class="docutils literal notranslate"><span class="pre">true</span></code> にすると、既存のマップもしくはmap_severから提供されるマップを使ってコストマップを初期化されます。
+マップを使わずに初期化する際には <code class="docutils literal notranslate"><span class="pre">false</span></code> にします。</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">rolling_window</span></code></dt><dd><p><code class="docutils literal notranslate"><span class="pre">true</span></code> にすると、ロボットが移動しても局所的コストマップの中心がロボットに追従するようになります。 <code class="docutils literal notranslate"><span class="pre">static_map</span></code> パラメータをfalseにした際には <code class="docutils literal notranslate"><span class="pre">true</span></code> にする必要があります。</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">width</span></code></dt><dd><p>コストマップの幅（m）</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">height</span></code></dt><dd><p>コストマップの高さ（m）</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">resolution</span></code></dt><dd><p>コストマップの解像度（cell/m）</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="id16">
+<h4>局所的コストマップの設定<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h4>
+<div class="literal-block-wrapper docutils container" id="id35">
+<div class="code-block-caption"><span class="caption-text">local_costmap_params.yaml</span><a class="headerlink" href="#id35" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nt">local_costmap</span><span class="p">:</span>
+  <span class="nt">global_frame</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">odom</span>
+  <span class="nt">robot_base_frame</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">base_link</span>
+  <span class="nt">update_frequency</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10.0</span>
+  <span class="nt">publish_frequency</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5.0</span>
+  <span class="nt">static_map</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+  <span class="nt">rolling_window</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+  <span class="nt">width</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">6.0</span>
+  <span class="nt">height</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">6.0</span>
+  <span class="nt">resolution</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.05</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<p>ほとんどの内容は大域的コストマップの設定と同じです。</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">publish_frequency</span></code></dt><dd><p>コストマップを表示するためのデータをパブリッシュする周波数（Hz）です</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="id17">
+<h3>ローカルプランナーの設定<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<p>ロボットのベースに与える速度指令を計算するためにローカルプランナーを使用します。
+パラメータの詳細やローカルプランナーの概要については <a class="reference external" href="http://wiki.ros.org/base_local_planner">base_local_plannerのROS Wikiページ</a> を見てください。</p>
+<p>以下の設定ファイルではロボットの速度と加速度の最大値、最小値等を定義しています。</p>
+<p><code class="docutils literal notranslate"><span class="pre">holonomic_robot</span></code> パラメータはロボットがホロノミックかどうかを定義します。
+ロボットの制御可能な自由度が全体の自由度と等しい場合にはホロノミックであるといい、そうでない場合はノンホロノミック（もしくは非ホロノミック）であるといいます。
+例えば、自動車は全体の自由度が3（x, y, yaw）ですが、制御可能な自由度は2（x, yaw）であり、ノンホロノミックなシステムであるといえます。
+ドローンの場合は制御可能な自由度（x, y, z, roll, pitch, yaw）が全体の自由度と等しいのでホロノミックなシステムです。</p>
+<div class="literal-block-wrapper docutils container" id="id36">
+<div class="code-block-caption"><span class="caption-text">base_local_planner_params.yaml</span><a class="headerlink" href="#id36" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nt">TrajectoryPlannerROS</span><span class="p">:</span>
+  <span class="nt">max_vel_x</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.4</span>
+  <span class="nt">min_vel_x</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">-0.1</span>
+  <span class="nt">meter_scoring</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+  <span class="nt">pdist_scale</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.9</span>
+  <span class="nt">xy_goal_tolerance</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1.0</span>
+  <span class="nt">holonomic_robot</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+</div>
+</div>
+<div class="section" id="id18">
+<h2>ドローンのパラメータの変更<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h2>
+<p>二次元の自己位置推定やマッピングの精度を高めるためには、できるだけセンサを水平に保つ必要があります。
+ドローンのパラメータを設定してピッチ角とロール角が一定以上にならないようにしましょう。</p>
+<p>また、デフォルトではGCS（Ground Control Station）及びRCとの接続が切れた場合と、OFFBOARDコントロールが切れた場合に自動でホームポジションに戻るようになっているので、フェイルセーフを無効化しておきます。
+実機でフェイルセーフを解除する場合には十分に注意して行いましょう。</p>
+<p>以下のパラメータの設定を変更します。
+利用可能なパラメータ一覧は <a class="reference external" href="https://docs.px4.io/en/advanced_config/parameter_reference.html">Parameter Reference</a> を参照してください。</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>パラメータ名</p></th>
+<th class="head"><p>min &gt; max (Incr.)</p></th>
+<th class="head"><p>デフォルト</p></th>
+<th class="head"><p>単位</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>FW_P_LIM_MAX</p></td>
+<td><p>0.0 &gt; 60.0 (0.5)</p></td>
+<td><p>45.0</p></td>
+<td><p>deg</p></td>
+</tr>
+<tr class="row-odd"><td><p>FW_P_LIM_MIN</p></td>
+<td><p>-60.0 &gt; 0.0 (0.5)</p></td>
+<td><p>-45.0</p></td>
+<td><p>deg</p></td>
+</tr>
+<tr class="row-even"><td><p>FW_R_LIM</p></td>
+<td><p>35.0 &gt; 65.0 (0.5)</p></td>
+<td><p>50.0</p></td>
+<td><p>deg</p></td>
+</tr>
+<tr class="row-odd"><td><p>NAV_DLL_ACT</p></td>
+<td><p>0 &gt; 6</p></td>
+<td><p>0</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>NAV_RCL_ACT</p></td>
+<td><p>0 &gt; 6</p></td>
+<td><p>2</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>COM_OBL_ACT</p></td>
+<td><p>0 &gt; 2</p></td>
+<td><p>0</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>パラメータを設定する方法は以下の2種類があります。</p>
+<ul class="simple">
+<li><p>コマンドで設定する</p></li>
+<li><p>設定ファイルを使う</p></li>
+</ul>
+<p>コマンドで設定する方法は簡単ですが、毎回設定しなければなりません。
+設定ファイルを使う方法は準備が必要ですが、基本的に一度準備すれば毎回設定し直す必要はありません。</p>
+<div class="section" id="id19">
+<h3>コマンドで設定する<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
+<p>PX4シミュレータが起動したら、以下のコマンドを実行します。
+今回は試しに以下の数値を設定してみます。
+数値は適宜変更してください。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>param set FW_P_LIM_MAX 10.0
+param set FW_P_LIM_MIN -10.0
+param set FW_R_LIM 40.0
+param set NAV_DLL_ACT 0
+param set NAV_RCL_ACT 0
+param set COM_OBL_ACT 0
+</pre></div>
+</div>
+<p>コマンドが成功したら次のように表示されます。
+以下はFW_R_LIMの例です。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>FW_R_LIM: curr: 50.0000 -&gt; new: 40.0000
+</pre></div>
+</div>
+<p>パラメータの設定を行うコマンドの記法は以下のとおりです。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>param set パラメータ名 値
+</pre></div>
+</div>
+</div>
+<div class="section" id="id20">
+<h3>設定ファイルを使う<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
+<p>PX4シミュレーションの起動は、起動スクリプト（ <code class="docutils literal notranslate"><span class="pre">~/.ros/etc/init.d-posix/rcS</span></code> ）によって行われ、その中で設定スクリプトが読み込まれることで機体のパラメータなどが設定されます。</p>
+<p>シミュレーションで使われる機体の設定スクリプトは、 <code class="docutils literal notranslate"><span class="pre">~/.ros/etc/init.d-posix</span></code> 以下にあり、ここからロードされます。
+なので、設定ファイルを作成した後にこのディレクトリに移動、もしくはシンボリックリンクを貼る必要があります。
+手動でファイルを移動させても良いのですが、更新したあとに移動し忘れたり、初期設定の際に移動し忘れたりする恐れがあります。
+そこで、今回はCMakeLists.txtを編集することでビルドしたら自動で移動してくれるようにします。</p>
+<p>この節では設定スクリプトの作成とCMakeLists.txtへの記述の追加を行います。</p>
+<p>以下のような内容の設定スクリプトを <code class="docutils literal notranslate"><span class="pre">px4_sim_pkg/posix_airframes</span></code> 以下に、 <code class="docutils literal notranslate"><span class="pre">70010_iris_2d_lidar</span></code> という名前で保存します。
+説明されていないパラメータについてはパラメータ一覧を見てください。
+設定スクリプトについては、 <a class="reference external" href="https://dev.px4.io/en/airframes/adding_a_new_frame.html">Adding a New Airframe Configuration - PX4 Developer Guide</a> に説明があります。</p>
+<div class="literal-block-wrapper docutils container" id="id37">
+<div class="code-block-caption"><span class="caption-text">70010_iris_2d_lidar</span><a class="headerlink" href="#id37" title="Permalink to this code">¶</a></div>
+<div class="highlight-default notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># For detail of parameters,</span>
+<span class="c1"># see https://dev.px4.io/en/advanced/parameter_reference.html</span>
+
+<span class="n">sh</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="o">.</span><span class="n">d</span><span class="o">-</span><span class="n">posix</span><span class="o">/</span><span class="mi">10016</span><span class="n">_iris</span>
+
+<span class="c1"># Setting MAVLink airframe type</span>
+<span class="n">param</span> <span class="nb">set</span> <span class="n">MAV_TYPE</span> <span class="mi">2</span>
+
+<span class="n">param</span> <span class="nb">set</span> <span class="n">SYS_AUTOSTART</span> <span class="mi">70010</span>
+<span class="n">param</span> <span class="nb">set</span> <span class="n">SYS_RESTART_TYPE</span> <span class="mi">2</span>
+<span class="n">param</span> <span class="nb">set</span> <span class="n">BAT_N_CELLS</span> <span class="mi">3</span>
+
+<span class="c1"># Takeoff altitude</span>
+<span class="n">param</span> <span class="nb">set</span> <span class="n">MIS_TAKEOFF_ALT</span> <span class="mf">2.0</span>
+
+<span class="c1"># Setting tilt angle limit</span>
+<span class="n">param</span> <span class="nb">set</span> <span class="n">FW_P_LIM_MAX</span> <span class="mf">10.0</span>
+<span class="n">param</span> <span class="nb">set</span> <span class="n">FW_P_LIM_MIN</span> <span class="o">-</span><span class="mf">10.0</span>
+<span class="n">param</span> <span class="nb">set</span> <span class="n">FW_R_LIM</span> <span class="mf">35.0</span>
+
+<span class="c1"># Setting failsafe action</span>
+<span class="n">param</span> <span class="nb">set</span> <span class="n">NAV_DLL_ACT</span> <span class="mi">0</span>
+<span class="n">param</span> <span class="nb">set</span> <span class="n">NAV_RCL_ACT</span> <span class="mi">0</span>
+<span class="n">param</span> <span class="nb">set</span> <span class="n">COM_OBL_ACT</span> <span class="mi">1</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<p>また、以下の内容をCMakeLists.txtに追加します。
+以下では、 <code class="docutils literal notranslate"><span class="pre">add_custom_target</span></code> を使って、 <code class="docutils literal notranslate"><span class="pre">iris_2d_lidar</span></code> という、シンボリックリンクを作成するターゲットを作成しています。</p>
+<p>PX4 Firmwareがインストールされていないとエラーが出るので、PX4 Firmwareがインストールされていて、シミュレーションが起動することを確認してからビルドしてください。</p>
+<div class="highlight-cmake notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nb">set</span><span class="p">(</span><span class="s">PACK_AIRFRAME_DIR</span> <span class="o">${</span><span class="nv">CMAKE_CURRENT_SOURCE_DIR</span><span class="o">}</span><span class="s">/posix_airframes</span><span class="p">)</span>
+<span class="nb">set</span><span class="p">(</span><span class="s">LOCAL_AIRFRAME_DIR</span> <span class="o">$ENV{</span><span class="nv">HOME</span><span class="o">}</span><span class="s">/.ros/etc/init.d-posix</span><span class="p">)</span>
+<span class="nb">add_custom_target</span><span class="p">(</span><span class="s">iris_2d_lidar</span>
+                  <span class="s">ALL</span> <span class="s">ln</span> <span class="s">-s</span> <span class="s">-b</span> <span class="o">${</span><span class="nv">PACK_AIRFRAME_DIR</span><span class="o">}</span><span class="s">/70010_iris_2d_lidar</span> <span class="o">${</span><span class="nv">LOCAL_AIRFRAME_DIR</span><span class="o">}</span><span class="s">/</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+<p>また、mymodel_sitl.launchの以下の部分を</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;sdf&quot;</span> <span class="na">default=</span><span class="s">&quot;$(find px4_sim_pkg)/models/iris_2d_lidar/model.sdf&quot;</span> <span class="nt">/&gt;</span>
+
+<span class="nt">&lt;include</span> <span class="na">file=</span><span class="s">&quot;$(find px4)/launch/mavros_posix_sitl.launch&quot;</span> <span class="nt">&gt;</span>
+    <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;sdf&quot;</span> <span class="na">value=</span><span class="s">&quot;$(arg sdf)&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/include&gt;</span>
+</pre></div>
+</div>
+<p>次のように変更してください。</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;vehicle&quot;</span> <span class="na">default=</span><span class="s">&quot;iris_2d_lidar&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;sdf&quot;</span> <span class="na">default=</span><span class="s">&quot;$(find px4_sim_pkg)/models/iris_2d_lidar/model.sdf&quot;</span> <span class="nt">/&gt;</span>
+
+<span class="nt">&lt;include</span> <span class="na">file=</span><span class="s">&quot;$(find px4)/launch/mavros_posix_sitl.launch&quot;</span> <span class="nt">&gt;</span>
+    <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;sdf&quot;</span> <span class="na">value=</span><span class="s">&quot;$(arg sdf)&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;vehicle&quot;</span> <span class="na">value=</span><span class="s">&quot;$(arg vehicle)&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/include&gt;</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">vehicle</span></code> に指定された機体名と一致する設定スクリプトがPX4 SITLによって読み込まれます。</p>
+</div>
+</div>
+<div class="section" id="launch">
+<h2>Launchファイルを書く<a class="headerlink" href="#launch" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="navigation-launch">
+<span id="id21"></span><h3>navigation.launch<a class="headerlink" href="#navigation-launch" title="Permalink to this headline">¶</a></h3>
+<p>このLaunchファイルでは、コストマップ等の設定ファイルをすべて <code class="docutils literal notranslate"><span class="pre">px4_sim_pkg/config</span></code> 以下に保存していることを想定しています。</p>
+<p>以下の内容を、 <code class="docutils literal notranslate"><span class="pre">px4_sim_pkg/launch</span></code> 以下に、navigation.launchとして保存してください。</p>
+<div class="literal-block-wrapper docutils container" id="id38">
+<div class="code-block-caption"><span class="caption-text">navigation.launch</span><a class="headerlink" href="#id38" title="Permalink to this code">¶</a></div>
+<div class="highlight-xml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nt">&lt;launch&gt;</span>
+
+  <span class="nt">&lt;node</span> <span class="na">pkg=</span><span class="s">&quot;px4_sim_pkg&quot;</span> <span class="na">type=</span><span class="s">&quot;odom_publisher&quot;</span> <span class="na">name=</span><span class="s">&quot;odom_publisher&quot;</span><span class="nt">/&gt;</span>
+
+  <span class="nt">&lt;remap</span> <span class="na">from=</span><span class="s">&quot;/cmd_vel&quot;</span> <span class="na">to=</span><span class="s">&quot;/mavros/setpoint_velocity/cmd_vel_unstamped&quot;</span><span class="nt">/&gt;</span>
+
+  <span class="nt">&lt;node</span> <span class="na">pkg=</span><span class="s">&quot;move_base&quot;</span> <span class="na">type=</span><span class="s">&quot;move_base&quot;</span> <span class="na">name=</span><span class="s">&quot;move_base&quot;</span> <span class="na">respawn=</span><span class="s">&quot;false&quot;</span> <span class="na">output=</span><span class="s">&quot;screen&quot;</span><span class="nt">&gt;</span>
+
+    <span class="c">&lt;!-- update frequency of global plan --&gt;</span>
+    <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;planner_frequency&quot;</span> <span class="na">value=</span><span class="s">&quot;2.0&quot;</span><span class="nt">/&gt;</span>
+
+    <span class="c">&lt;!-- Common params for costmap --&gt;</span>
+    <span class="nt">&lt;rosparam</span> <span class="na">command=</span><span class="s">&quot;load&quot;</span> <span class="na">ns=</span><span class="s">&quot;global_costmap&quot;</span> <span class="na">file=</span><span class="s">&quot;$(find px4_sim_pkg)/config/costmap_common_params.yaml&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;rosparam</span> <span class="na">command=</span><span class="s">&quot;load&quot;</span> <span class="na">ns=</span><span class="s">&quot;local_costmap&quot;</span> <span class="na">file=</span><span class="s">&quot;$(find px4_sim_pkg)/config/costmap_common_params.yaml&quot;</span><span class="nt">/&gt;</span>
+
+    <span class="c">&lt;!-- Params for global costmap --&gt;</span>
+    <span class="nt">&lt;rosparam</span> <span class="na">command=</span><span class="s">&quot;load&quot;</span> <span class="na">file=</span><span class="s">&quot;$(find px4_sim_pkg)/config/global_costmap_params.yaml&quot;</span><span class="nt">/&gt;</span>
+
+    <span class="c">&lt;!-- Params for local costmap --&gt;</span>
+    <span class="nt">&lt;rosparam</span> <span class="na">command=</span><span class="s">&quot;load&quot;</span> <span class="na">file=</span><span class="s">&quot;$(find px4_sim_pkg)/config/local_costmap_params.yaml&quot;</span><span class="nt">/&gt;</span>
+
+    <span class="c">&lt;!-- Params for local planner --&gt;</span>
+    <span class="nt">&lt;rosparam</span> <span class="na">command=</span><span class="s">&quot;load&quot;</span> <span class="na">file=</span><span class="s">&quot;$(find px4_sim_pkg)/config/base_local_planner_params.yaml&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/node&gt;</span>
+
+<span class="nt">&lt;/launch&gt;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+</div>
+<div class="section" id="mymodel-sitl-tf-launch">
+<h3>mymodel_sitl_tf.launch<a class="headerlink" href="#mymodel-sitl-tf-launch" title="Permalink to this headline">¶</a></h3>
+<p>最終的な mymodel_sitl_tf.launchは以下のようになります。</p>
+<div class="highlight-xml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nt">&lt;launch&gt;</span>
+
+    <span class="nt">&lt;node</span> <span class="na">pkg=</span><span class="s">&quot;tf&quot;</span> <span class="na">name=</span><span class="s">&quot;base2lidar&quot;</span> <span class="na">type=</span><span class="s">&quot;static_transform_publisher&quot;</span> <span class="na">args=</span><span class="s">&quot;0 0 0.1 0 0 0 base_link lidar_link 100&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;node</span> <span class="na">pkg=</span><span class="s">&quot;tf&quot;</span> <span class="na">name=</span><span class="s">&quot;map2odom&quot;</span> <span class="na">type=</span><span class="s">&quot;static_transform_publisher&quot;</span> <span class="na">args=</span><span class="s">&quot;0 0 0 0 0 0 map odom 100&quot;</span><span class="nt">/&gt;</span>
+
+    <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;vehicle&quot;</span> <span class="na">default=</span><span class="s">&quot;iris_2d_lidar&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;sdf&quot;</span> <span class="na">default=</span><span class="s">&quot;$(find px4_sim_pkg)/models/iris_2d_lidar/model.sdf&quot;</span> <span class="nt">/&gt;</span>
+
+    <span class="nt">&lt;include</span> <span class="na">file=</span><span class="s">&quot;$(find px4)/launch/mavros_posix_sitl.launch&quot;</span> <span class="nt">&gt;</span>
+        <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;sdf&quot;</span> <span class="na">value=</span><span class="s">&quot;$(arg sdf)&quot;</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;vehicle&quot;</span> <span class="na">value=</span><span class="s">&quot;$(arg vehicle)&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/include&gt;</span>
+
+    <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;/mavros/local_position/tf/send&quot;</span> <span class="na">type=</span><span class="s">&quot;bool&quot;</span> <span class="na">value=</span><span class="s">&quot;true&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;/mavros/local_position/frame_id&quot;</span> <span class="na">type=</span><span class="s">&quot;str&quot;</span> <span class="na">value=</span><span class="s">&quot;odom&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;/mavros/local_position/tf/frame_id&quot;</span> <span class="na">type=</span><span class="s">&quot;str&quot;</span> <span class="na">value=</span><span class="s">&quot;odom&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;/mavros/setpoint_velocity/mav_frame&quot;</span>  <span class="na">type=</span><span class="s">&quot;str&quot;</span> <span class="na">value=</span><span class="s">&quot;BODY_NED&quot;</span> <span class="nt">/&gt;</span>
+
+<span class="nt">&lt;/launch&gt;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+</div>
+<div class="section" id="id22">
+<h2>実行してみる<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id23">
+<h3>ビルドする<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h3>
+<p>オドメトリをパブリッシュするためのノードをビルドします。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> ~/catkin_ws
+catkin_make
+</pre></div>
+</div>
+<p>CMakeLists.txtに以下の内容を追加するのを忘れないようにしましょう。</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">add_executable</span><span class="p">(</span><span class="s">odom_publisher</span> <span class="s">src/odom_publisher.cpp</span><span class="p">)</span>
+<span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">odom_publisher</span> <span class="o">${</span><span class="nv">catkin_LIBRARIES</span><span class="o">}</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Pythonノードを使う場合には忘れずに実行権限を与えておきます。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>chmod +x odom_publisher.py
+</pre></div>
+</div>
+</div>
+<div class="section" id="id24">
+<h3>ノードを起動する<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h3>
+<p>以下のコマンドを用いてLaunchファイルを起動します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch px4_sim_pkg mymodel_sitl.launch
+roslaunch px4_sim_pkg navigation.launch
+</pre></div>
+</div>
+<img alt="../_images/gazebomymodel.png" src="../_images/gazebomymodel.png" />
+</div>
+<div class="section" id="id25">
+<h3>ゴールを送信する<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id26">
+<h4>ドローンを離陸させる<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h4>
+<p>ゴールを送信する前にドローンを離陸させます。
+シミュレーションのノードを起動しているターミナルで以下のコマンドを実行すると離陸します。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>commander takeoff
+</pre></div>
+</div>
+<p>ROSサービスを利用しても構いません。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rosservice call /mavros/cmd/takeoff <span class="s2">&quot;{min_pitch: 0.0, yaw: 0.0, latitude: 47.3977506, longitude: 8.5456074, altitude: 5}&quot;</span>
+</pre></div>
+</div>
+<p>もしくは、mavrosの提供するノードを使って、以下のように離陸させることもできます。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rosrun mavros mavcmd takeoffcur -a <span class="m">0</span> <span class="m">0</span> <span class="m">5</span>
+</pre></div>
+</div>
+<p>mavrosの提供するサービスやコマンドについては <a class="reference external" href="http://wiki.ros.org/mavros">mavrosのROS Wikiページ</a> に一覧があります。</p>
+</div>
+<div class="section" id="rviz">
+<h4>Rvizを使ってゴールを送信する<a class="headerlink" href="#rviz" title="Permalink to this headline">¶</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">move_base/goal</span></code> トピックに <code class="docutils literal notranslate"><span class="pre">move_base_msgs/MoveBaseActionGoal</span></code> 型のメッセージを送ってもゴールを設定することができるのですが、Rvizを使ったほうが簡単なので今回はRvizを使用してゴールを送信します。</p>
+<p>以下の画像のように、Rvizを使ってmove_baseのゴールを設定することができます。
+赤枠内の2D Nav Goalをクリックして選択したあとに、目標位置をクリックして決定します。
+クリックしたままマウスカーソルを移動させると目標位置の向きも指定することができます。</p>
+<img alt="../_images/rviz_goal.gif" src="../_images/rviz_goal.gif" />
+</div>
+<div class="section" id="offboard">
+<h4>Offboardモードにする<a class="headerlink" href="#offboard" title="Permalink to this headline">¶</a></h4>
+<p>また、Offboardモードになっていないと <code class="docutils literal notranslate"><span class="pre">cmd_vel_unstamped</span></code> トピックを使って操作できないので、Offboardモードにします。
+以下のコマンドを使えばドローンの飛行モードがOffboardになります。
+<code class="docutils literal notranslate"><span class="pre">/mavros/setpoint_velocity/cmd_vel_unstamped</span></code> にトピックがパブリッシュされていないとOffboardモードに切り替わらないので、ゴールを指示してからOffboardモードにします。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rosservice call /mavros/set_mode <span class="s2">&quot;base_mode: 0</span>
+<span class="s2">custom_mode: &#39;OFFBOARD&#39;&quot;</span>
+</pre></div>
+</div>
+<p>もしくは、先ほどと同様にmavrosのノードを使用しても構いません。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rosrun mavros mavsys mode -c OFFBOARD
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id27">
+<h3>実行結果<a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h3>
+<p>上記の手順を踏んで実行した結果が以下の動画です。
+ゴールを指定するとゴールに向かって飛行していることがわかります。</p>
+<img alt="../_images/nav_gps.gif" src="../_images/nav_gps.gif" />
+<p>この動画内のRvizではTF以外に、以下のトピックにパブリッシュされているメッセージを表示しています。</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">/move_base/current_goal</span></code></dt><dd><p>現在の目標姿勢</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">/move_base/local_costmap/footprint</span></code></dt><dd><p>ロボットの外形</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">/move_base/local_costmap/costmap</span></code></dt><dd><p>局所的コストマップ</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">/move_base/TrajectoryPlannerROS/local_plan</span></code></dt><dd><p>ローカルパス</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">/move_base/TrajectoryPlannerROS/global_plan</span></code></dt><dd><p>グローバルパス</p>
+</dd>
+</dl>
+<p>これらのメッセージは、”Add”ボタンで表示されるメッセージの追加ウィンドウの、”By Topic”タブからも追加できます。</p>
+<img alt="../_images/choose_topic.png" src="../_images/choose_topic.png" />
+</div>
+<div class="section" id="id28">
+<h3>障害物回避<a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h3>
+<p>ドローンの進路に障害物をおいた場合には迂回する経路が生成されます。</p>
+<img alt="../_images/obstacle.gif" src="../_images/obstacle.gif" />
+<p>この例では更に以下のメッセージをRvizで可視化しています。</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">/move_base/global_costmap/costmap</span></code></dt><dd><p>大域的コストマップ</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">/laser/scan</span></code></dt><dd><p>LiDARの計測データ</p>
+</dd>
+</dl>
+<p>この動画では、コストマップのカラースキームを、”map”から、”costmap”に変更してあります。</p>
+<img alt="../_images/color_scheme.png" src="../_images/color_scheme.png" />
+<p>経路の障害物からの距離や、コストマップのサイズ、解像度などはコンフィグファイル内のパラメータを変更することで調節できます。
+また、他のパラメータについては、costmap_2dパッケージや、base_local_plannerパッケージのWikiページを参照してください。</p>
+</div>
+</div>
+<div class="section" id="id29">
+<h2>まとめ<a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h2>
+<p>お疲れ様でした。
+以上までで、ドローンに目標位置を指定して、障害物を考慮した経路計画を実行し、経路上を移動して目標位置まで移動させることができました。</p>
+<p>以下のページを参考にしてパラメータをチューニングしたり、別のローカルプランナーを使用してナビゲーションの性能を向上させてもよいでしょう。</p>
+<ul class="simple">
+<li><p><a class="reference external" href="http://wiki.ros.org/costmap_2d">costmap_2d</a></p></li>
+<li><p><a class="reference external" href="http://wiki.ros.org/base_local_planner">base_local_planner</a></p></li>
+<li><p><a class="reference external" href="wiki.ros.org/global_planner">global_planner</a></p></li>
+</ul>
+<p>別のローカルプランナー使う方法については、 <a class="reference internal" href="../change_local_planner/change_local_planner.html"><span class="doc">move_baseのローカルプランナーを変更する</span></a> を参考にしてください。</p>
+</div>
+<div class="section" id="id30">
+<h2>参考<a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h2>
+<dl class="simple">
+<dt><a class="reference external" href="http://wiki.ros.org/move_base">move_base - ROS Wiki</a></dt><dd><p>move_baseパッケージ</p>
+</dd>
+<dt><a class="reference external" href="http://wiki.ros.org/navigation/Tutorials/RobotSetup/Odom">Publishing Odometry Information over ROS</a></dt><dd><p>オドメトリをパブリッシュするノードを書く（ROS Wiki）</p>
+</dd>
+<dt><a class="reference external" href="http://daily-tech.hatenablog.com/entry/2017/02/11/182916">ROS Navigation Stack について2 ~ Odometry生成ノードの作成 ~</a></dt><dd><p>オドメトリをパブリッシュするノードを書く</p>
+</dd>
+<dt><a class="reference external" href="https://answers.ros.org/question/105171/how-to-listen-to-tf-inside-a-callback-loop/">How to listen to tf inside a callback loop?</a></dt><dd><p>コールバック関数内でTFをルックアップする方法</p>
+</dd>
+<dt><a class="reference external" href="https://answers.ros.org/question/72265/obstacle_range-raytrace_range-precise-explanation/">obstacle_range &amp; raytrace_range - precise explanation?</a></dt><dd><p>obstacle_rangeとraytrace_rangeの意味について</p>
+</dd>
+<dt><a class="reference external" href="http://wiki.ros.org/costmap_2d#Map_Types">costmap_2d - ROS Wiki</a></dt><dd><p>static_mapパラメータとrolling_windowパラメータについて</p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="turtle_mapping.html" class="btn btn-neutral float-right" title="Turtlebotを使ってマップを作る" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="slam.html" class="btn btn-neutral float-left" title="自律飛行とSLAM" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2018, Takaki Ueno.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

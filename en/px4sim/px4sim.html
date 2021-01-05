@@ -1,0 +1,476 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>PX4 SITL Simulation &mdash; Dronedoc 1.0.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+    <link rel="canonical" href="https://uenota.github.io/dronedoc/px4sim/px4sim.html" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="自作ノードを実行する（C++）" href="../runnode/runnodecpp.html" />
+    <link rel="prev" title="PX4 SITL Tutorial" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Dronedoc
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">SLAM</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">PX4 SITL Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../runnode/runnodecpp.html">自作ノードを実行する（C++）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../runnode/runnodepy.html">自作ノードを実行する（Python）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../addmodel/addmodel.html">新しいモデルを追加する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/slam.html">自律飛行とSLAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/gps_nav.html">GPSを用いた自律飛行</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/turtle_mapping.html">Turtlebotを使ってマップを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../teleop/teleop.html">ゲームパッドを使ってドローンを操作する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/lidar_localization.html">LiDARとAMCLを用いた自己位置推定</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/localization_and_mapping.html">LiDARを用いたSLAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/lidar_nav.html">LiDARを用いた自律移動</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Mapping</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../octomap/octomap.html">Octomapを使って3Dマップを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../build_map_gmapping/build_map_gmapping.html">Gmappingを使って地図を生成する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../build_map_gazebo_plugin/build_map_gazebo_plugin.html">Gazebo Pluginを使って地図を作成する</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Motion Planning</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../moveit/index.html">Perform motion planning of UAV with MoveIt!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../local_planner_for_uav/local_planner_for_uav.html">UAV用のローカルプランナを実装する</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Tips</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../qgc_intro/qgc_intro.html">QGroundControl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../add_range_sensor/add_range_sensor.html">ドローンに距離センサを搭載する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../filter_lidar/filter_lidar.html">LiDARのデータをフィルタリングする</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../change_local_planner/change_local_planner.html">move_baseのローカルプランナーを変更する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../airsim/airsim.html">AirSimシミュレータを使う</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/bash_commands/bash_commands.html">基本的なBashの使い方</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/ros/ros.html">ROSの基本</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/terms/terms.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/archive/archive.html">読書案内</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/trouble_shooting/index.html">トラブルシューティング</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Dronedoc</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>PX4 SITL Simulation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/px4sim/px4sim.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="px4-sitl">
+<h1>PX4 SITL Simulation<a class="headerlink" href="#px4-sitl" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="px4">
+<h2>PX4<a class="headerlink" href="#px4" title="Permalink to this headline">¶</a></h2>
+<p>PX4 is an OSS project which develops flight controllers and firmware for UAVs.</p>
+</div>
+<div class="section" id="id1">
+<h2>Setup Environment<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>The following instructions are based on <a class="reference external" href="https://dev.px4.io/v1.8.0/en/setup/dev_env_linux.html">Development Environment on Linux - PX4 Developer Guide</a>. If you have any problems, please refer the instruction on the official website.</p>
+<div class="section" id="id2">
+<h3>Setup<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>The user must be the member of <code class="docutils literal notranslate"><span class="pre">dialout</span></code> group to communicate serial devices. To make user the member of <code class="docutils literal notranslate"><span class="pre">dialout</span></code>, run the following command.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo usermod -a -G dialout <span class="nv">$USER</span>
+</pre></div>
+</div>
+<p>After running the command, log out from the current user and log in again to enable group setting.</p>
+</div>
+<div class="section" id="id3">
+<h3>Installation<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>You can setup the environment for PX4 simulation with the script provided by the official repo. Firstly, download <a class="reference external" href="https://raw.githubusercontent.com/PX4/Devguide/v1.8.0/build_scripts/ubuntu_sim_ros_gazebo.sh">ubuntu_sim_ros_gazebo.sh</a>.</p>
+<p>You can’t install the ROS package with repository key in downloaded script. To install ROS package, fix the following line in <code class="docutils literal notranslate"><span class="pre">ubuntu_sim_ros_gazebo.sh</span></code>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key 421C365BD9FF1F717815A3895523BAEEB01FA116
+</pre></div>
+</div>
+<p>The following command fixes the key for the repository.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt-key adv --keyserver <span class="s1">&#39;hkp://ha.pool.sks-keyservers.net:80&#39;</span> --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
+</pre></div>
+</div>
+<p>Run the following command in the directory which contains <code class="docutils literal notranslate"><span class="pre">ubuntu_sim_ros_gazebo.sh</span></code>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> ubuntu_sim_ros_gazebo.sh
+</pre></div>
+</div>
+<p>Packages are automatically installed with the command. ROS will be installed if ROS is not installed in your system. It will take a while to install ROS.</p>
+<p>Update Gazebo installed by PX4 installation script. The following command is based on <a class="reference external" href="http://gazebosim.org/tutorials?tut=install_ubuntu#Alternativeinstallation:step-by-step">Install Gazebo using Ubuntu packages</a>. Firstly, remove installed Gazebo.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt purge gazebo* libgazebo*
+</pre></div>
+</div>
+<p>Then add setting to accept packages from <code class="docutils literal notranslate"><span class="pre">packages.osrfoundation.org</span></code>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo sh -c <span class="s1">&#39;echo &quot;deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main&quot; &gt; /etc/apt/sources.list.d/gazebo-stable.list&#39;</span>
+</pre></div>
+</div>
+<p>Then add repository key.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wget https://packages.osrfoundation.org/gazebo.key -O - <span class="p">|</span> sudo apt-key add -
+</pre></div>
+</div>
+<p>Finally, update Gazebo7.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt update
+sudo apt install gazebo7
+sudo apt install libgazebo7-dev
+</pre></div>
+</div>
+<p>After running the script, PX4 firmware is downloaded into <code class="docutils literal notranslate"><span class="pre">~/src/Firmware</span></code>.</p>
+</div>
+</div>
+<div class="section" id="gazebo">
+<span id="gazebo-sim"></span><h2>Simulation using Gazebo<a class="headerlink" href="#gazebo" title="Permalink to this headline">¶</a></h2>
+<p>To run Gazebo simulation, run the following command in <code class="docutils literal notranslate"><span class="pre">~/src/Firmware</span></code>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make posix_sitl_default gazebo
+</pre></div>
+</div>
+<p>It takes a while to start Gazebo if it is first time to run. The window like the following image appears. UAV is in the red rectangle.</p>
+<img alt="../_images/gazebosim1.png" src="../_images/gazebosim1.png" />
+<p>There are other airframes available for simulation. You can find available airframes <a class="reference external" href="https://dev.px4.io/v1.8.0/en/simulation/gazebo.html#quadrotor">here</a>.</p>
+<p>Run the following command in the terminal of SITL simulator to get UAV take off.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>commander takeoff
+</pre></div>
+</div>
+<img alt="../_images/commander.png" src="../_images/commander.png" />
+<p>You can try the other commands. For the list of available commands, run <code class="docutils literal notranslate"><span class="pre">help</span></code> command.</p>
+</div>
+<div class="section" id="rosgazebo">
+<h2>Simulation with Gazebo and ROS<a class="headerlink" href="#rosgazebo" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="mavros">
+<h3>mavros<a class="headerlink" href="#mavros" title="Permalink to this headline">¶</a></h3>
+<p>We will use <a class="reference external" href="http://wiki.ros.org/mavros">mavros</a> to exchange messages between ROS nodes and vehicles in the simulator.</p>
+<p>The vehicles in the simulator follows <a class="reference external" href="https://mavlink.io/en/">Mavlink</a> protocol to communicate. MAVROS is the wrapper package of Mavlink protocol. You can read sensor measurements and send controll messages like take off, landing, etc. For the list of available services and topics, see <a class="reference external" href="http://wiki.ros.org/mavros#Plugins">here</a>.</p>
+<img alt="../_images/gazebo_mavros.png" src="../_images/gazebo_mavros.png" />
+</div>
+<div class="section" id="id7">
+<h3>Communicate with vehicle via mavros<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>Let’s communicate with the vehicle in the simulator using mavros. Run the simulator by following the instruction described in  <a class="reference internal" href="#gazebo-sim"><span class="std std-ref">Simulation using Gazebo</span></a> .</p>
+<p>After starting up the simulator, run mavros by the following command. See <a class="reference internal" href="#fcu-url"><span class="std std-ref">Appendix: fcu_url argument of mavros</span></a> for the details of fcu_url parameter.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch mavros px4.launch fcu_url:<span class="o">=</span><span class="s2">&quot;udp://:14540@127.0.0.1:14557&quot;</span>
+</pre></div>
+</div>
+<p>After starting up mavros, run the following command in the other terminal.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rostopic list
+</pre></div>
+</div>
+<p>You can see topics like <code class="docutils literal notranslate"><span class="pre">/mavros/...</span></code> when mavros communicates successfully.</p>
+<p>Let’s use services which mavros provides. You can start motors on the UAV by sending “value: true” message to <code class="docutils literal notranslate"><span class="pre">/mavros/cmd/arming</span></code> service.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rosservice call /mavros/cmd/arming <span class="s2">&quot;value: true&quot;</span>
+</pre></div>
+</div>
+<p>You can try other services such as taking off, landing, etc. Tapping TAB key twise after entering <code class="docutils literal notranslate"><span class="pre">/mavros</span></code> gives you the list of available services. This feature is called “Tab Completion”.</p>
+<p>Using tab completion after entering service name, you can get the template of required ROS message of the service. You need to change the values in the template of message, because they are set to default value. After starting up the motors by the command above, run the following command to get UAV take off to 5m from the ground.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rosservice call /mavros/cmd/takeoff <span class="s2">&quot;{min_pitch: 0.0, yaw: 0.0, latitude: 47.3977506, longitude: 8.5456074, altitude: 5}&quot;</span>
+</pre></div>
+</div>
+<img alt="../_images/service_takeoff.png" src="../_images/service_takeoff.png" />
+<p>The command get UAV to the point of latitude 47.3977506, longitude 8.5456074, and attitude 5.</p>
+</div>
+<div class="section" id="ros">
+<h3>Launch simulator with ROS wrapper<a class="headerlink" href="#ros" title="Permalink to this headline">¶</a></h3>
+<p>You can run PX4 SITL simulator by <code class="docutils literal notranslate"><span class="pre">roslaunch</span></code> command. The following launch file will run the simulator.</p>
+<dl class="simple">
+<dt>posix_sitl.launch</dt><dd><p>Launch SITL Simulator</p>
+</dd>
+<dt>mavros_posix_sitl.launch</dt><dd><p>Launch SITL and Mavros</p>
+</dd>
+</dl>
+<p>Mavros, ROS node, and simulator communicate like the following in this case.</p>
+<img alt="../_images/rossim.png" src="../_images/rossim.png" />
+<div class="section" id="id8">
+<h4>Setup<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
+<p>You need to set the environment variable to run simulator using these launch files. Firstly, navigate to <code class="docutils literal notranslate"><span class="pre">~/src/Firmware</span></code>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> ~/src/Firmware
+</pre></div>
+</div>
+<p>If you didn’t do the procedure in  <a class="reference internal" href="#gazebo-sim"><span class="std std-ref">Simulation using Gazebo</span></a> , run the following command. The following command generates files required to run simulator. You need to run the following command in <code class="docutils literal notranslate"><span class="pre">~/src/Firmware</span></code>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make posix_sitl_default gazebo
+</pre></div>
+</div>
+<p>Then, run the scripts to configure settings. You don’t need to run the first line if ROS environment is already prepared.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> ~/catkin_ws/devel/setup.bash
+<span class="nb">source</span> Tools/setup_gazebo.bash <span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span> <span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/build/posix_sitl_default
+</pre></div>
+</div>
+<p>Then, set environment variables.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">ROS_PACKAGE_PATH</span><span class="o">=</span><span class="nv">$ROS_PACKAGE_PATH</span>:<span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>
+<span class="nb">export</span> <span class="nv">ROS_PACKAGE_PATH</span><span class="o">=</span><span class="nv">$ROS_PACKAGE_PATH</span>:<span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/Tools/sitl_gazebo
+</pre></div>
+</div>
+<p>You need to run the commands everytime you run the simulator. Instead of running the command, you can write the following commands to <code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code> to run commands automatically.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> <span class="nv">$HOME</span>/src/Firmware/Tools/setup_gazebo.bash <span class="nv">$HOME</span>/src/Firmware <span class="nv">$HOME</span>/src/Firmware/build/posix_sitl_default &gt; /dev/null
+<span class="nb">export</span> <span class="nv">ROS_PACKAGE_PATH</span><span class="o">=</span><span class="nv">$ROS_PACKAGE_PATH</span>:<span class="nv">$HOME</span>/src/Firmware
+<span class="nb">export</span> <span class="nv">ROS_PACKAGE_PATH</span><span class="o">=</span><span class="nv">$ROS_PACKAGE_PATH</span>:<span class="nv">$HOME</span>/src/Firmware/Tools/sitl_gazebo
+</pre></div>
+</div>
+</div>
+<div class="section" id="id9">
+<h4>Run simulator<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
+<p>The following command activates simulator</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch px4 posix_sitl.launch
+</pre></div>
+</div>
+<p>Use <code class="docutils literal notranslate"><span class="pre">mavros_posix_sitl.launch</span></code> to start mavros with simulator.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch px4 mavros_posix_sitl.launch
+</pre></div>
+</div>
+<p>By the following command, you can use airframes listed in <a class="reference external" href="https://dev.px4.io/v1.8.0/en/simulation/gazebo.html">Gazebo Simulation - PX4 Developer Guide</a>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch px4 mavros_posix_sitl.launch vehicle:<span class="o">=</span>vehicle_name
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="mavrosfcu-url">
+<span id="fcu-url"></span><h2>Appendix: fcu_url argument of mavros<a class="headerlink" href="#mavrosfcu-url" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="roslaunch">
+<h3>roslaunch command<a class="headerlink" href="#roslaunch" title="Permalink to this headline">¶</a></h3>
+<p>In ROS, you can set values to variables in launch file in the following way.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch package file.launch arg:<span class="o">=</span>value
+</pre></div>
+</div>
+<p>The following is the content of <code class="docutils literal notranslate"><span class="pre">px4.launch</span></code>. You can set the value of <code class="docutils literal notranslate"><span class="pre">fcu_url</span></code> with the command like <code class="docutils literal notranslate"><span class="pre">roslaunch</span> <span class="pre">mavros</span> <span class="pre">px4.launch</span> <span class="pre">fcu_url:=&quot;udp://:14540&#64;127.0.0.1:14557&quot;</span></code>.</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;launch&gt;</span>
+<span class="c">&lt;!-- vim: set ft=xml noet : --&gt;</span>
+<span class="c">&lt;!-- example launch script for PX4 based FCU&#39;s --&gt;</span>
+
+<span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;fcu_url&quot;</span> <span class="na">default=</span><span class="s">&quot;/dev/ttyACM0:57600&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;gcs_url&quot;</span> <span class="na">default=</span><span class="s">&quot;&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;tgt_system&quot;</span> <span class="na">default=</span><span class="s">&quot;1&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;tgt_component&quot;</span> <span class="na">default=</span><span class="s">&quot;1&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;log_output&quot;</span> <span class="na">default=</span><span class="s">&quot;screen&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;fcu_protocol&quot;</span> <span class="na">default=</span><span class="s">&quot;v2.0&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;respawn_mavros&quot;</span> <span class="na">default=</span><span class="s">&quot;false&quot;</span> <span class="nt">/&gt;</span>
+
+<span class="nt">&lt;include</span> <span class="na">file=</span><span class="s">&quot;$(find mavros)/launch/node.launch&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;pluginlists_yaml&quot;</span> <span class="na">value=</span><span class="s">&quot;$(find mavros)/launch/px4_pluginlists.yaml&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;config_yaml&quot;</span> <span class="na">value=</span><span class="s">&quot;$(find mavros)/launch/px4_config.yaml&quot;</span> <span class="nt">/&gt;</span>
+
+    <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;fcu_url&quot;</span> <span class="na">value=</span><span class="s">&quot;$(arg fcu_url)&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;gcs_url&quot;</span> <span class="na">value=</span><span class="s">&quot;$(arg gcs_url)&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;tgt_system&quot;</span> <span class="na">value=</span><span class="s">&quot;$(arg tgt_system)&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;tgt_component&quot;</span> <span class="na">value=</span><span class="s">&quot;$(arg tgt_component)&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;log_output&quot;</span> <span class="na">value=</span><span class="s">&quot;$(arg log_output)&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;fcu_protocol&quot;</span> <span class="na">value=</span><span class="s">&quot;$(arg fcu_protocol)&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;respawn_mavros&quot;</span> <span class="na">default=</span><span class="s">&quot;$(arg respawn_mavros)&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/include&gt;</span>
+<span class="nt">&lt;/launch&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id10">
+<h3>fcu_url<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">fcu_url</span></code> is the address of flight controller (FCU). If you use serial port such as USB connection for FCU connection, the address of FCU will be like <code class="docutils literal notranslate"><span class="pre">/dev/ttyACM0</span></code>. The address slightly changes depending on the environment. The number after colon is baudrate.</p>
+<p>In case of simulation, we use UDP for communication. Set fcu_url like the following when using UDP.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>udp://[bind_host][:port]@[remote_host][:port]
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">bind_host</span></code> defines IP address of FCU.  By default, it is <code class="docutils literal notranslate"><span class="pre">INADDR_ANY(0.0.0.0)</span></code> and mavros receives data from any IP adress.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">port</span></code> is listening port of ROS node and it is <code class="docutils literal notranslate"><span class="pre">14540</span></code> by default.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">remote_host</span></code> is IP address of remote PC. In case of simulation, set <code class="docutils literal notranslate"><span class="pre">localhost</span></code> or <code class="docutils literal notranslate"><span class="pre">127.0.0.1</span></code>.</p></li>
+<li><p>The next <code class="docutils literal notranslate"><span class="pre">port</span></code> is the port of FCU. It is <code class="docutils literal notranslate"><span class="pre">14557</span></code> by default.</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">fcu_url</span></code> will be like the following by assigning the values above.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>udp://:14540@127.0.0.1:14557
+</pre></div>
+</div>
+<p>For port settings, see <a class="reference external" href="https://dev.px4.io/v1.8.0/en/simulation/ros_interface.html">ROS with Gazebo Simulation - PX4 Developer Guide</a>. See <a class="reference external" href="http://wiki.ros.org/mavros#Connection_URL">mavros - ROS Wiki</a> for the detailes of <code class="docutils literal notranslate"><span class="pre">fcu_url</span></code>.</p>
+</div>
+</div>
+<div class="section" id="id11">
+<h2>References<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
+<dl class="simple">
+<dt><a class="reference external" href="https://dev.px4.io/v1.8.0/en/">PX4 Developer Guide</a></dt><dd><p>Developer wiki of PX4. You can find basic knowledge here</p>
+</dd>
+<dt>The following instructions are based on <a class="reference external" href="https://dev.px4.io/v1.8.0/en/setup/dev_env_linux.html">Development Environment on Linux - PX4 Developer Guide</a>. If you have any problems, please refer the instruction on the official website.</dt><dd><p>Installation Guide of PX4 Firmware for Linux</p>
+</dd>
+<dt>By the following command, you can use airframes listed in <a class="reference external" href="https://dev.px4.io/v1.8.0/en/simulation/gazebo.html">Gazebo Simulation - PX4 Developer Guide</a>.</dt><dd><p>Simulation with Gazebo</p>
+</dd>
+<dt><a class="reference external" href="https://dev.px4.io/v1.8.0/en/simulation/ros_interface.html">ROS with Gazebo Simulation</a></dt><dd><p>Simulation with ROS and Gazebo</p>
+</dd>
+<dt><a class="reference external" href="https://manual.atmark-techno.com/armadillo-guide/armadillo-guide-2_ja-2.1.0/ch03.html#sec_terminal">Linuxシステムの仕組みと運用、管理</a></dt><dd><p>About serial devices</p>
+</dd>
+<dt><a class="reference external" href="http://wiki.ros.org/ROS/Tutorials/UnderstandingServicesParams#Using_rosparam">Understanding ROS Services and Parameters</a></dt><dd><p>About ROS Service</p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../runnode/runnodecpp.html" class="btn btn-neutral float-right" title="自作ノードを実行する（C++）" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../index.html" class="btn btn-neutral float-left" title="PX4 SITL Tutorial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2018, Takaki Ueno.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

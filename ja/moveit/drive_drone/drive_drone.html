@@ -1,0 +1,2203 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>MoveIt!を使ってGazeboモデルを動かす &mdash; Dronedoc 1.0.0 ドキュメント</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+    <link rel="canonical" href="https://uenota.github.io/dronedoc/moveit/drive_drone/drive_drone.html" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="検索" href="../../search.html" />
+    <link rel="next" title="UAV用のローカルプランナを実装する" href="../../local_planner_for_uav/local_planner_for_uav.html" />
+    <link rel="prev" title="MoveIt!のRvizデモを試す" href="../run_demo/run_demo.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Dronedoc
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">SLAM</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../px4sim/px4sim.html">PX4 SITLシミュレーション</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../runnode/runnodecpp.html">自作ノードを実行する（C++）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../runnode/runnodepy.html">自作ノードを実行する（Python）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../addmodel/addmodel.html">新しいモデルを追加する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../slam/slam.html">自律飛行とSLAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../slam/gps_nav.html">GPSを用いた自律飛行</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../slam/turtle_mapping.html">Turtlebotを使ってマップを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../teleop/teleop.html">ゲームパッドを使ってドローンを操作する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../slam/lidar_localization.html">LiDARとAMCLを用いた自己位置推定</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../slam/localization_and_mapping.html">LiDARを用いたSLAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../slam/lidar_nav.html">LiDARを用いた自律移動</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Mapping</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../octomap/octomap.html">Octomapを使って3Dマップを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../build_map_gmapping/build_map_gmapping.html">Gmappingを使って地図を生成する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../build_map_gazebo_plugin/build_map_gazebo_plugin.html">Gazebo Pluginを使って地図を作成する</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Motion Planning</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">MoveIt!を使ってドローンの経路計画を行う</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../create_config_pkg/create_config_pkg.html">iris_moveit_configパッケージを作る</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../run_demo/run_demo.html">MoveIt!のRvizデモを試す</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">MoveIt!を使ってGazeboモデルを動かす</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#moveit">MoveIt!を用いてロボットを動かす方法</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">コントローラマネージャを使う</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ros-control">ros_control</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">アプリケーションの構成</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#rviz">RViz</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">マネージャ</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id8">インターフェース</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id9">コントローラ</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#cmakelists-txt">CMakeLists.txt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#moveit-multi-dof-controller-manager-plugin-description-xml">moveit_multi_dof_controller_manager_plugin_description.xml</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#package-xml">package.xml</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#launch-files">Launch files</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#iris-moveit-launch">iris_moveit.launch</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#iris-moveit-controller-manager-launch-xml">iris_moveit_controller_manager.launch.xml</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#controller-yaml">controller.yaml</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#trajectory-execution-launch-xml">trajectory_execution.launch.xml</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#execution">Execution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id12">まとめ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id13">参考</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pluginlib">pluginlib関連</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id14">Move Group Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id15">マニピュレータの制御</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../local_planner_for_uav/local_planner_for_uav.html">UAV用のローカルプランナを実装する</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Tips</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../qgc_intro/qgc_intro.html">QGroundControl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../add_range_sensor/add_range_sensor.html">ドローンに距離センサを搭載する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../filter_lidar/filter_lidar.html">LiDARのデータをフィルタリングする</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../change_local_planner/change_local_planner.html">move_baseのローカルプランナーを変更する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../airsim/airsim.html">AirSimシミュレータを使う</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/bash_commands/bash_commands.html">基本的なBashの使い方</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/ros/ros.html">ROSの基本</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/terms/terms.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/archive/archive.html">読書案内</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendix/trouble_shooting/index.html">トラブルシューティング</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Dronedoc</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">MoveIt!を使ってドローンの経路計画を行う</a> &raquo;</li>
+        
+      <li>MoveIt!を使ってGazeboモデルを動かす</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../_sources/moveit/drive_drone/drive_drone.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="moveit-gazebo">
+<h1>MoveIt!を使ってGazeboモデルを動かす<a class="headerlink" href="#moveit-gazebo" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>この記事では、前回までに作成したiris_moveit_configパッケージとMoveIt! RVizプラグインを使って動作計画を行い、ドローンの制御を行います。</p>
+<p>ドローンを移動させられるようにするには、プラグインやアクションサーバーなどを実装する必要があるので、はじめにMoveIt!を用いてロボットを動かす方法と、今回使用するアプリケーションの概要を説明します。</p>
+<div class="section" id="moveit">
+<h2>MoveIt!を用いてロボットを動かす方法<a class="headerlink" href="#moveit" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>MoveIt!を用いてロボットを動かすには、主に、</p>
+<ol class="arabic simple">
+<li><p>MoveIt!の提供するコントローラマネージャを使う</p></li>
+<li><p>ros_controlを使う</p></li>
+</ol>
+<p>の２つの方法があります。
+以下では、これら２つの方法について説明します。</p>
+<div class="section" id="id1">
+<h3>コントローラマネージャを使う<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p><a class="reference internal" href="../run_demo/run_demo.html"><span class="doc">MoveIt!のRvizデモを試す</span></a> では、RVizを用いてドローンの動作計画を行いました。
+動作計画を行うと、生成されたドローンの動作がRVizに表示されましたが、RVizで表示されるのは計画だけなので実際にロボットを動かすには制御入力などをロボットに送るコントローラーが必要になります。</p>
+<p>ロボットを制御するのに必要な制御則や入力は、ロボットの種類によって異なるので、違うロボットには違うコントローラを使わなければなりません。
+しかし、異なるロボットのコントローラを全てMoveIt!の開発者が実装したり、誰かが実装したコントローラをその都度MoveIt!に取り入れるのは現実的ではありません。
+そこで、MoveIt!では、<a class="reference external" href="http://wiki.ros.org/actionlib">ROSアクション</a> の仕組みを用いることで、MoveIt!の提供するアクションに対応するコントローラであればどのようなものでも使用できるようにしてあります。</p>
+<p>ROSアクションは、ROSサービスに似た、ノードが一対一で通信するための仕組みです。
+サービスは、クライアントがサーバにリクエストを送信すると、結果が帰ってくるまではサーバーからのフィードバックは一切ありませんが、アクションでは実行状況に応じてフィードバックが帰ってきます。
+また、アクションは途中で中断することも可能で、ロボットをスタートからゴールに移動させるような、時間のかかる処理に適しています。</p>
+<p>MoveIt!では、下図のように、コントローラインターフェース（以下インターフェース）内で定義されたアクションクライアントが、アクションの目的であるアクションゴールを、コントローラ内で定義されたアクションサーバに送信し、それを受け取ったアクションサーバがロボットへ制御指令を入力するような形をとっています。
+使用するアクションの種類によって、用いるインターフェースが異なります。</p>
+<p>下図中のコントローラマネージャ（以下マネージャ）は、インターフェースをMoveIt!に登録する役割があります。
+MoveIt!にインターフェースを登録することで、生成された動作を実行する命令を受けた際に、動作の情報がインターフェースへと送られ、そこからコントローラへと送信されるようになります。
+マネージャにはいくつかの種類があり、種類によって使用できるインターフェースが異なります。</p>
+<img alt="../../_images/moveit_manager.png" src="../../_images/moveit_manager.png" />
+<p>生成された動作を実行する際の流れを図示すると以下のようになります。</p>
+<ol class="arabic simple">
+<li><p>インターフェースに実行する動作の情報が送信される</p></li>
+<li><p>インターフェースがアクションサーバに対してアクションゴール（目標）を送信する</p></li>
+<li><p>アクションゴールを受け取ったコントローラがロボットに制御入力を送る</p></li>
+</ol>
+<img alt="../../_images/moveit_flow.png" src="../../_images/moveit_flow.png" />
+<p>以上をまとめると、MoveIt!では、インターフェースが実行する動作の情報をコントローラへ送信し、それを受け取ったコントローラが、ロボットを動作させるための制御入力をロボットに送信する、といった形になっています。
+インターフェースが、実行される動作の情報をコントローラへ送信できるようにするためには、マネージャがインターフェースをMoveIt!に登録する必要があります。</p>
+<p>以下では、マネージャ、インターフェース、コントローラのそれぞれの要素について更に詳しく見ていきます。</p>
+<div class="section" id="id2">
+<h4>マネージャ<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>MoveIt!がデフォルトで提供しているマネージャには、以下の２つのものがあります。</p>
+<ul class="simple">
+<li><p>MoveItFakeControllerManager</p></li>
+<li><p>MoveItSimpleControllerManager</p></li>
+</ul>
+<p>MoveItFakeControllerManagerは、シミュレーションで用いられるマネージャで、RVizを使って動作を可視化するときなどに使われています。
+MoveItSimpleControllerManagerは、FollowJointTrajectoryとGripperCommandの２つのインターフェースをサポートしており、これらは実際にロボットを制御する際に使うことができます。</p>
+<p>マネージャは <code class="docutils literal notranslate"><span class="pre">controller_list</span></code> パラメータに指定されたインターフェースをMoveIt!に登録します。
+同時に、制御される関節などの情報も与えられ、これをもとにロボットの制御が行われます。
+パラメータに関しては、<a class="reference external" href="http://docs.ros.org/kinetic/api/moveit_tutorials/html/doc/controller_configuration/controller_configuration_tutorial.html">Low Level Controllers</a> を見てください。</p>
+<p>また、使用するマネージャは、 <code class="docutils literal notranslate"><span class="pre">moveit_controller_manager</span></code> の値を変更することで指定できます。</p>
+</div>
+<div class="section" id="id3">
+<h4>インターフェース<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>MoveIt!がデフォルトで提供するインターフェースは以下の２つです。</p>
+<dl class="simple">
+<dt>FollowJointTrajectoryインターフェース</dt><dd><p>アームもしくはロボット自体の制御</p>
+</dd>
+<dt>GripperCommandインターフェース</dt><dd><p>グリッパーの制御</p>
+</dd>
+</dl>
+<p>それぞれ、<a class="reference external" href="http://docs.ros.org/api/control_msgs/html/action/FollowJointTrajectory.html">FollowJointTrajectory</a> アクションと、<a class="reference external" href="https://www.google.com/search?client=ubuntu&amp;channel=fs&amp;q=gripper+command+action&amp;ie=utf-8&amp;oe=utf-8">GripperCommand</a> アクションを使用します。</p>
+</div>
+<div class="section" id="id4">
+<h4>コントローラ<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>MoveItSimpleControllerManagerを使用する場合には、コントローラは自分で実装する必要があります。</p>
+<p>上述の通り、FollowJointTrajectoryインターフェースはFollowJointTrajectoryアクションを、GripperCommandは、GripperCommandアクションを使うので、これらのインターフェースを使う場合には適したアクションサーバーを実装する必要があります。</p>
+<p>アクションサーバーの実装に関しては、<a class="reference external" href="http://wiki.ros.org/actionlib/Tutorials">actionlibのチュートリアル</a> を参照してください。</p>
+</div>
+</div>
+<div class="section" id="ros-control">
+<h3>ros_control<a class="headerlink" href="#ros-control" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p><a class="reference external" href="https://github.com/ros-controls/ros_control/wiki">ros_control</a> には、関節の速度制御や力制御、位置制御などを行うためのプラグインが複数用意されています。
+ros_controlに関しては、以下のリンクが参考になります。</p>
+<ul class="simple">
+<li><p><a class="reference external" href="http://gazebosim.org/tutorials?tut=ros_control">Tutorial: ROS Control</a></p></li>
+<li><p><a class="reference external" href="https://qiita.com/MoriKen/items/613635b90f3a98042dc5">Controller と HardwareInterface との間の処理の仕組み（1. ロボットモデルの定義と登録）- Qiita</a></p></li>
+<li><p><a class="reference external" href="https://qiita.com/MoriKen/items/5cab7436c1b36c25e0ce">Controller と HardwareInterface との間の処理の仕組み（2. RobotHWSimのプラグインについて）- Qiita</a></p></li>
+<li><p><a class="reference external" href="https://qiita.com/MoriKen/items/c29f653d03baffe5f0e2">Controller と HardwareInterface との間の処理の仕組み（3. Controllerについて）- Qiita</a></p></li>
+<li><p><a class="reference external" href="https://github.com/Nishida-Lab/motoman_project/issues/46">実機を動かす時の仕様について · Issue #46 · Nishida-Lab/motoman_project</a></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="id6">
+<h2>アプリケーションの構成<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>今回使用するアプリケーション全体の構成は以下のようになっています。</p>
+<img alt="../../_images/moveit_uav.png" src="../../_images/moveit_uav.png" />
+<p>上で説明した基本の構成に、動作計画の設定を行うRVizとドローンのシミュレーションを行うPX4 SITLシミュレータが追加されています。
+この構成では、コントローラはROSアクションを通じて生成された動作の情報を受け取り、生成した経由点を <code class="docutils literal notranslate"><span class="pre">/mavros/setpoint_position/local</span></code> トピックにパブリッシュすることでドローンを制御します。</p>
+<div class="section" id="rviz">
+<h3>RViz<a class="headerlink" href="#rviz" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>RVizは <a class="reference internal" href="../run_demo/run_demo.html"><span class="doc">MoveIt!のRvizデモを試す</span></a> で見たように、経路の設定をMoveIt!側に送り、MoveIt!が生成した経路の情報を元に可視化を行います。</p>
+</div>
+<div class="section" id="id7">
+<h3>マネージャ<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>MoveItSimpleControllerManagerは、FollowJointTrajectoryインターフェースとGripperCommandインターフェースにしか対応しておらず、FollowJointTrajectoryインターフェースは多自由度の関節の制御には使えないので、新たなマネージャを作成する必要があります。</p>
+<p>今回はMoveItMultiDOFControllerManagerという名前の新しいマネージャを作成します。
+コードの詳細については、<a class="reference internal" href="ctrl_manager.html"><span class="doc">コード解説（マネージャ)</span></a> を参照してください。</p>
+<div class="literal-block-wrapper docutils container" id="id17">
+<div class="code-block-caption"><span class="caption-text">moveit_multi_dof_controller_manager.cpp</span><a class="headerlink" href="#id17" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-cpp notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * @file moveit_multi_dof_controller_manager.cpp</span>
+<span class="cm"> * @brief Controller manager for multi DOF joint</span>
+<span class="cm"> */</span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;ros/ros.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;moveit/controller_manager/controller_manager.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;dronedoc/follow_multi_dof_joint_trajectory_controller_handle.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;sensor_msgs/JointState.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;pluginlib/class_list_macros.hpp&gt;</span><span class="cp"></span>
+
+<span class="k">namespace</span> <span class="n">dronedoc</span>
+<span class="p">{</span>
+
+<span class="k">class</span> <span class="nc">MoveItMultiDOFControllerManager</span> <span class="o">:</span> <span class="k">public</span> <span class="n">moveit_controller_manager</span><span class="o">::</span><span class="n">MoveItControllerManager</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+
+  <span class="cm">/**</span>
+<span class="cm">   * @brief Default constructor</span>
+<span class="cm">   */</span>
+  <span class="n">MoveItMultiDOFControllerManager</span><span class="p">()</span> <span class="o">:</span> <span class="n">node_handle_</span><span class="p">(</span><span class="s">&quot;~&quot;</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="c1">// Error if controller_list param is not set</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">node_handle_</span><span class="p">.</span><span class="n">hasParam</span><span class="p">(</span><span class="s">&quot;controller_list&quot;</span><span class="p">))</span>
+    <span class="p">{</span>
+      <span class="n">ROS_ERROR_STREAM_NAMED</span><span class="p">(</span><span class="s">&quot;manager&quot;</span><span class="p">,</span> <span class="s">&quot;No controller_list specified.&quot;</span><span class="p">);</span>
+      <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">XmlRpc</span><span class="o">::</span><span class="n">XmlRpcValue</span> <span class="n">controller_list</span><span class="p">;</span>
+    <span class="n">node_handle_</span><span class="p">.</span><span class="n">getParam</span><span class="p">(</span><span class="s">&quot;controller_list&quot;</span><span class="p">,</span> <span class="n">controller_list</span><span class="p">);</span>
+
+    <span class="c1">// Error if controller_list is not an array</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">controller_list</span><span class="p">.</span><span class="n">getType</span><span class="p">()</span> <span class="o">!=</span> <span class="n">XmlRpc</span><span class="o">::</span><span class="n">XmlRpcValue</span><span class="o">::</span><span class="n">TypeArray</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="n">ROS_ERROR</span><span class="p">(</span><span class="s">&quot;Parameter controller_list should be specified as an array&quot;</span><span class="p">);</span>
+      <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Error if multiple controller is defined</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">controller_list</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="n">ROS_ERROR</span><span class="p">(</span><span class="s">&quot;This controller manager expects only one controller.&quot;</span><span class="p">);</span>
+      <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Error if controller not have required fields</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">controller_list</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">hasMember</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">)</span> <span class="o">||</span> <span class="o">!</span><span class="n">controller_list</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">hasMember</span><span class="p">(</span><span class="s">&quot;joints&quot;</span><span class="p">))</span>
+    <span class="p">{</span>
+      <span class="n">ROS_ERROR_STREAM_NAMED</span><span class="p">(</span><span class="s">&quot;manager&quot;</span><span class="p">,</span> <span class="s">&quot;Name and joints must be specifed for each controller&quot;</span><span class="p">);</span>
+      <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">try</span>
+    <span class="p">{</span>
+      <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">name</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="n">controller_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s">&quot;name&quot;</span><span class="p">]);</span>
+
+      <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">action_ns</span><span class="p">;</span>
+
+      <span class="c1">// Warn if controller has &quot;ns&quot; field</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">controller_list</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">hasMember</span><span class="p">(</span><span class="s">&quot;ns&quot;</span><span class="p">))</span>
+      <span class="p">{</span>
+        <span class="n">action_ns</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="n">controller_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s">&quot;ns&quot;</span><span class="p">]);</span>
+        <span class="n">ROS_WARN_NAMED</span><span class="p">(</span><span class="s">&quot;manager&quot;</span><span class="p">,</span> <span class="s">&quot;Use of &#39;ns&#39; is deprecated, use &#39;action_ns&#39; instead.&quot;</span><span class="p">);</span>
+      <span class="p">}</span> <span class="c1">// Set action namespace</span>
+      <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">controller_list</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">hasMember</span><span class="p">(</span><span class="s">&quot;action_ns&quot;</span><span class="p">))</span>
+        <span class="n">action_ns</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="n">controller_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s">&quot;action_ns&quot;</span><span class="p">]);</span>
+      <span class="k">else</span> <span class="c1">// Warn if &quot;action_ns&quot; not specified</span>
+        <span class="n">ROS_WARN_NAMED</span><span class="p">(</span><span class="s">&quot;manager&quot;</span><span class="p">,</span> <span class="s">&quot;Please note that &#39;action_ns&#39; no longer has a default value.&quot;</span><span class="p">);</span>
+
+      <span class="c1">// Error if &quot;joints&quot; field is not array</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">controller_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s">&quot;joints&quot;</span><span class="p">].</span><span class="n">getType</span><span class="p">()</span> <span class="o">!=</span> <span class="n">XmlRpc</span><span class="o">::</span><span class="n">XmlRpcValue</span><span class="o">::</span><span class="n">TypeArray</span><span class="p">)</span>
+      <span class="p">{</span>
+        <span class="n">ROS_ERROR_STREAM_NAMED</span><span class="p">(</span><span class="s">&quot;manager&quot;</span><span class="p">,</span> <span class="s">&quot;The list of joints for controller &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">name</span>
+                                                                               <span class="o">&lt;&lt;</span> <span class="s">&quot; is not specified as an array&quot;</span><span class="p">);</span>
+        <span class="k">return</span><span class="p">;</span>
+      <span class="p">}</span>
+
+      <span class="c1">// Error if controller not have &quot;type&quot; field</span>
+      <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">controller_list</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">hasMember</span><span class="p">(</span><span class="s">&quot;type&quot;</span><span class="p">))</span>
+      <span class="p">{</span>
+        <span class="n">ROS_ERROR_STREAM_NAMED</span><span class="p">(</span><span class="s">&quot;manager&quot;</span><span class="p">,</span> <span class="s">&quot;No type specified for controller &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">name</span><span class="p">);</span>
+        <span class="k">return</span><span class="p">;</span>
+      <span class="p">}</span>
+
+      <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">type</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="n">controller_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s">&quot;type&quot;</span><span class="p">]);</span>
+
+      <span class="c1">// Set controller handle if &quot;type&quot; is FollowMultiDOFJointTrajectory</span>
+      <span class="n">moveit_simple_controller_manager</span><span class="o">::</span><span class="n">ActionBasedControllerHandleBasePtr</span> <span class="n">new_handle</span><span class="p">;</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">type</span> <span class="o">==</span> <span class="s">&quot;FollowMultiDOFJointTrajectory&quot;</span><span class="p">)</span>
+      <span class="p">{</span>
+        <span class="n">new_handle</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="k">new</span> <span class="n">FollowMultiDOFJointTrajectoryControllerHandle</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">action_ns</span><span class="p">));</span>
+        <span class="k">if</span> <span class="p">(</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">FollowMultiDOFJointTrajectoryControllerHandle</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">new_handle</span><span class="p">.</span><span class="n">get</span><span class="p">())</span><span class="o">-&gt;</span><span class="n">isConnected</span><span class="p">())</span>
+        <span class="p">{</span>
+          <span class="n">ROS_INFO_STREAM_NAMED</span><span class="p">(</span><span class="s">&quot;manager&quot;</span><span class="p">,</span> <span class="s">&quot;Added FollowJointTrajectory controller for &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">name</span><span class="p">);</span>
+          <span class="n">controller_</span> <span class="o">=</span> <span class="n">new_handle</span><span class="p">;</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+      <span class="k">else</span>
+      <span class="p">{</span>
+        <span class="n">ROS_ERROR_STREAM_NAMED</span><span class="p">(</span><span class="s">&quot;manager&quot;</span><span class="p">,</span> <span class="s">&quot;Unknown controller type: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">type</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
+        <span class="k">return</span><span class="p">;</span>
+      <span class="p">}</span>
+
+      <span class="cm">/* add list of joints, used by controller manager and MoveIt! */</span>
+      <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">controller_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s">&quot;joints&quot;</span><span class="p">].</span><span class="n">size</span><span class="p">();</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">controller_</span><span class="o">-&gt;</span><span class="n">addJoint</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="n">controller_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s">&quot;joints&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">]));</span>
+    <span class="p">}</span>
+    <span class="k">catch</span> <span class="p">(...)</span>
+    <span class="p">{</span>
+      <span class="n">ROS_ERROR_STREAM_NAMED</span><span class="p">(</span><span class="s">&quot;manager&quot;</span><span class="p">,</span> <span class="s">&quot;Caught unknown exception while parsing controller information&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="cm">/**</span>
+<span class="cm">   * @brief Destructor</span>
+<span class="cm">   */</span>
+  <span class="o">~</span><span class="n">MoveItMultiDOFControllerManager</span><span class="p">()</span> <span class="k">override</span>
+  <span class="p">{</span>
+  <span class="p">}</span>
+
+  <span class="cm">/**</span>
+<span class="cm">   * @brief Returns pointer to controller handle</span>
+<span class="cm">   * @param name</span>
+<span class="cm">   */</span>
+  <span class="n">moveit_controller_manager</span><span class="o">::</span><span class="n">MoveItControllerHandlePtr</span> <span class="n">getControllerHandle</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">name</span><span class="p">)</span> <span class="k">override</span>
+  <span class="p">{</span>
+    <span class="k">return</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="n">moveit_controller_manager</span><span class="o">::</span><span class="n">MoveItControllerHandlePtr</span><span class="o">&gt;</span><span class="p">(</span><span class="n">controller_</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="cm">/**</span>
+<span class="cm">   * @brief Add FollowMultiDOFJointTrajectory to controller list</span>
+<span class="cm">   * @param names</span>
+<span class="cm">   *</span>
+<span class="cm">   * This manager only deals FollowMultiDOFJointTrajectory controller</span>
+<span class="cm">   */</span>
+  <span class="kt">void</span> <span class="n">getControllersList</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;&amp;</span> <span class="n">names</span><span class="p">)</span> <span class="k">override</span>
+  <span class="p">{</span>
+    <span class="n">names</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="s">&quot;FollowMultiDOFJointTrajectory&quot;</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="cm">/**</span>
+<span class="cm">   * @brief Get all controllers</span>
+<span class="cm">   * @param names</span>
+<span class="cm">   *</span>
+<span class="cm">   * This plugin assumes that all controllers are already active -- and if they are not, well, it has no way to deal</span>
+<span class="cm">   * with it anyways!</span>
+<span class="cm">   */</span>
+  <span class="kt">void</span> <span class="n">getActiveControllers</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;&amp;</span> <span class="n">names</span><span class="p">)</span> <span class="k">override</span>
+  <span class="p">{</span>
+    <span class="n">getControllersList</span><span class="p">(</span><span class="n">names</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="cm">/**</span>
+<span class="cm">   * @brief Get all controllers</span>
+<span class="cm">   * @param names</span>
+<span class="cm">   *</span>
+<span class="cm">   * Controller must be loaded to be active, see comment above about active controllers...</span>
+<span class="cm">   */</span>
+  <span class="k">virtual</span> <span class="kt">void</span> <span class="n">getLoadedControllers</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;&amp;</span> <span class="n">names</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">getControllersList</span><span class="p">(</span><span class="n">names</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="cm">/**</span>
+<span class="cm">   * @brief Get the list of joints that a controller can control.</span>
+<span class="cm">   * @param name Controller name</span>
+<span class="cm">   * @param joints List of joints</span>
+<span class="cm">   */</span>
+  <span class="kt">void</span> <span class="n">getControllerJoints</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">name</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;&amp;</span> <span class="n">joints</span><span class="p">)</span> <span class="k">override</span>
+  <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">name</span> <span class="o">==</span> <span class="s">&quot;FollowMultiDOFJointTrajectory&quot;</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="n">controller_</span><span class="o">-&gt;</span><span class="n">getJoints</span><span class="p">(</span><span class="n">joints</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">else</span>
+    <span class="p">{</span>
+      <span class="n">ROS_WARN_NAMED</span><span class="p">(</span><span class="s">&quot;manager&quot;</span><span class="p">,</span> <span class="s">&quot;The joints for controller &#39;%s&#39; are not known. Perhaps the controller configuration is &quot;</span>
+                                <span class="s">&quot;not loaded on the param server?&quot;</span><span class="p">,</span>
+                     <span class="n">name</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
+      <span class="n">joints</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="cm">/**</span>
+<span class="cm">   * @brief Get state of controller specified by name</span>
+<span class="cm">   * @param name</span>
+<span class="cm">   *</span>
+<span class="cm">   * Controllers are all active and default.</span>
+<span class="cm">   */</span>
+  <span class="n">moveit_controller_manager</span><span class="o">::</span><span class="n">MoveItControllerManager</span><span class="o">::</span><span class="n">ControllerState</span>
+  <span class="n">getControllerState</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">name</span><span class="p">)</span> <span class="k">override</span>
+  <span class="p">{</span>
+    <span class="n">moveit_controller_manager</span><span class="o">::</span><span class="n">MoveItControllerManager</span><span class="o">::</span><span class="n">ControllerState</span> <span class="n">state</span><span class="p">;</span>
+    <span class="n">state</span><span class="p">.</span><span class="n">active_</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="n">state</span><span class="p">.</span><span class="n">default_</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">state</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="cm">/**</span>
+<span class="cm">   * @brief Switch controllers</span>
+<span class="cm">   * @param activate</span>
+<span class="cm">   * @param deactivate</span>
+<span class="cm">   *</span>
+<span class="cm">   * Cannot switch our controllers</span>
+<span class="cm">   */</span>
+  <span class="kt">bool</span> <span class="n">switchControllers</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;&amp;</span> <span class="n">activate</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;&amp;</span> <span class="n">deactivate</span><span class="p">)</span> <span class="k">override</span>
+  <span class="p">{</span>
+    <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+  <span class="p">}</span>
+
+<span class="k">protected</span><span class="o">:</span>
+  <span class="n">ros</span><span class="o">::</span><span class="n">NodeHandle</span> <span class="n">node_handle_</span><span class="p">;</span>
+  <span class="n">moveit_simple_controller_manager</span><span class="o">::</span><span class="n">ActionBasedControllerHandleBasePtr</span> <span class="n">controller_</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="p">}</span>  <span class="c1">// end namespace dronedoc</span>
+
+<span class="n">PLUGINLIB_EXPORT_CLASS</span><span class="p">(</span><span class="n">dronedoc</span><span class="o">::</span><span class="n">MoveItMultiDOFControllerManager</span><span class="p">,</span>
+                       <span class="n">moveit_controller_manager</span><span class="o">::</span><span class="n">MoveItControllerManager</span><span class="p">);</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+</div>
+<div class="section" id="id8">
+<h3>インターフェース<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>上述の通り、FollowJointTrajectoryは他自由度の関節の制御には使えないので、他自由度の関節用のFollowMultiDOFJointTrajectoryインターフェースを新しく作成します。</p>
+<p>インターフェースはsrcディレクトリではなく、include/&lt;package_name&gt;ディレクトリに保存します。
+&lt;package_name&gt;の部分は自分の環境に合わせて変更してください。</p>
+<p>コードの詳細については、<a class="reference internal" href="ctrl_interface.html"><span class="doc">コード解説（インターフェース)</span></a> を参照してください。</p>
+<div class="literal-block-wrapper docutils container" id="id18">
+<div class="code-block-caption"><span class="caption-text">follow_multi_dof_joint_trajectory_controller_handle.hpp</span><a class="headerlink" href="#id18" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-cpp notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * @file follow_multi_dof_joint_trajectory_controller_handle.cpp</span>
+<span class="cm"> * @brief Action client for ExecuteTrajectory action</span>
+<span class="cm"> */</span>
+
+<span class="cp">#ifndef MOVEIT_PLUGINS_FOLLOW_MULTI_DOF_TRAJECTORY_CONTROLLER_HANDLE</span>
+<span class="cp">#define MOVEIT_PLUGINS_FOLLOW_MULTI_DOF_TRAJECTORY_CONTROLLER_HANDLE</span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;moveit_simple_controller_manager/action_based_controller_handle.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;moveit_msgs/ExecuteTrajectoryAction.h&gt;</span><span class="cp"></span>
+
+<span class="k">namespace</span> <span class="n">dronedoc</span>
+<span class="p">{</span>
+<span class="cm">/**</span>
+<span class="cm"> * @brief Controller for multi DOF joint trajectory</span>
+<span class="cm"> *</span>
+<span class="cm"> * This is generally used for arms, but could also be used for multi-dof hands,</span>
+<span class="cm"> * or anything using a control_mgs/FollowJointTrajectoryAction.</span>
+<span class="cm"> */</span>
+<span class="k">class</span> <span class="nc">FollowMultiDOFJointTrajectoryControllerHandle</span>
+    <span class="o">:</span> <span class="k">public</span> <span class="n">moveit_simple_controller_manager</span><span class="o">::</span><span class="n">ActionBasedControllerHandle</span><span class="o">&lt;</span><span class="n">moveit_msgs</span><span class="o">::</span><span class="n">ExecuteTrajectoryAction</span><span class="o">&gt;</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+
+  <span class="cm">/**</span>
+<span class="cm">   * @brief Constructor</span>
+<span class="cm">   * @param name</span>
+<span class="cm">   * @param action_ns</span>
+<span class="cm">   */</span>
+  <span class="n">FollowMultiDOFJointTrajectoryControllerHandle</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">name</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">action_ns</span><span class="p">)</span>
+    <span class="o">:</span> <span class="n">ActionBasedControllerHandle</span><span class="o">&lt;</span><span class="n">moveit_msgs</span><span class="o">::</span><span class="n">ExecuteTrajectoryAction</span><span class="o">&gt;</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">action_ns</span><span class="p">)</span>
+  <span class="p">{</span>
+  <span class="p">}</span>
+
+  <span class="cm">/**</span>
+<span class="cm">   * @brief Send ExecuteTrajectoryGoal message to action server</span>
+<span class="cm">   * @param trajectory Trajectory to follow</span>
+<span class="cm">   */</span>
+  <span class="kt">bool</span> <span class="n">sendTrajectory</span><span class="p">(</span><span class="k">const</span> <span class="n">moveit_msgs</span><span class="o">::</span><span class="n">RobotTrajectory</span><span class="o">&amp;</span> <span class="n">trajectory</span><span class="p">)</span> <span class="k">override</span>
+  <span class="p">{</span>
+    <span class="n">ROS_DEBUG_STREAM_NAMED</span><span class="p">(</span><span class="s">&quot;FollowMultiDOFJointTrajectoryController&quot;</span><span class="p">,</span> <span class="s">&quot;new trajectory to &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">name_</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">controller_action_client_</span><span class="p">)</span>
+      <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">trajectory</span><span class="p">.</span><span class="n">joint_trajectory</span><span class="p">.</span><span class="n">points</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span>
+    <span class="p">{</span>
+      <span class="n">ROS_WARN_NAMED</span><span class="p">(</span><span class="s">&quot;FollowMultiDOFJointTrajectoryController&quot;</span><span class="p">,</span> <span class="s">&quot;%s cannot execute trajectories(trajectory_msgs/JointTrajectory).&quot;</span><span class="p">,</span> <span class="n">name_</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">done_</span><span class="p">)</span>
+      <span class="n">ROS_DEBUG_STREAM_NAMED</span><span class="p">(</span><span class="s">&quot;FollowMultiDOFJointTrajectoryController&quot;</span><span class="p">,</span> <span class="s">&quot;sending trajectory to &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">name_</span><span class="p">);</span>
+    <span class="k">else</span>
+      <span class="nf">ROS_DEBUG_STREAM_NAMED</span><span class="p">(</span><span class="s">&quot;FollowMultiDOFJointTrajectoryController&quot;</span><span class="p">,</span>
+                             <span class="s">&quot;sending continuation for the currently executed trajectory to &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">name_</span><span class="p">);</span>
+
+    <span class="c1">// Send ExecuteTrajectoryGoal message</span>
+    <span class="n">moveit_msgs</span><span class="o">::</span><span class="n">ExecuteTrajectoryGoal</span> <span class="n">goal</span><span class="p">;</span>
+    <span class="n">goal</span><span class="p">.</span><span class="n">trajectory</span> <span class="o">=</span> <span class="n">trajectory</span><span class="p">;</span>
+    <span class="n">controller_action_client_</span><span class="o">-&gt;</span><span class="n">sendGoal</span><span class="p">(</span>
+        <span class="n">goal</span><span class="p">,</span> <span class="n">boost</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="o">&amp;</span><span class="n">FollowMultiDOFJointTrajectoryControllerHandle</span><span class="o">::</span><span class="n">controllerDoneCallback</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="n">_1</span><span class="p">,</span> <span class="n">_2</span><span class="p">),</span>
+        <span class="n">boost</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="o">&amp;</span><span class="n">FollowMultiDOFJointTrajectoryControllerHandle</span><span class="o">::</span><span class="n">controllerActiveCallback</span><span class="p">,</span> <span class="k">this</span><span class="p">),</span>
+        <span class="n">boost</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="o">&amp;</span><span class="n">FollowMultiDOFJointTrajectoryControllerHandle</span><span class="o">::</span><span class="n">controllerFeedbackCallback</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="n">_1</span><span class="p">));</span>
+    <span class="n">done_</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="n">last_exec_</span> <span class="o">=</span> <span class="n">moveit_controller_manager</span><span class="o">::</span><span class="n">ExecutionStatus</span><span class="o">::</span><span class="n">RUNNING</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="cm">/**</span>
+<span class="cm">   * @brief Cancel trajecotry execution</span>
+<span class="cm">   */</span>
+  <span class="kt">bool</span> <span class="n">cancelExecution</span><span class="p">()</span> <span class="k">override</span>
+  <span class="p">{</span>
+    <span class="c1">// do whatever is needed to cancel execution</span>
+    <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="cm">/**</span>
+<span class="cm">   * @brief Wait trajectory execution</span>
+<span class="cm">   * @param duration</span>
+<span class="cm">   */</span>
+  <span class="kt">bool</span> <span class="n">waitForExecution</span><span class="p">(</span><span class="k">const</span> <span class="n">ros</span><span class="o">::</span><span class="n">Duration</span><span class="o">&amp;</span> <span class="n">duration</span><span class="p">)</span> <span class="k">override</span>
+  <span class="p">{</span>
+    <span class="c1">// wait for the current execution to finish</span>
+    <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+  <span class="p">}</span>
+
+<span class="k">protected</span><span class="o">:</span>
+
+  <span class="cm">/**</span>
+<span class="cm">   * @brief Called when server complete action</span>
+<span class="cm">   * @param state</span>
+<span class="cm">   * @param result</span>
+<span class="cm">   */</span>
+  <span class="kt">void</span> <span class="n">controllerDoneCallback</span><span class="p">(</span><span class="k">const</span> <span class="n">actionlib</span><span class="o">::</span><span class="n">SimpleClientGoalState</span><span class="o">&amp;</span> <span class="n">state</span><span class="p">,</span>
+                              <span class="k">const</span> <span class="n">moveit_msgs</span><span class="o">::</span><span class="n">ExecuteTrajectoryResultConstPtr</span><span class="o">&amp;</span> <span class="n">result</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="c1">// Output custom error message for FollowJointTrajectoryResult if necessary</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="k">if</span><span class="p">(</span><span class="n">result</span><span class="o">-&gt;</span><span class="n">error_code</span><span class="p">.</span><span class="n">val</span> <span class="o">==</span> <span class="n">moveit_msgs</span><span class="o">::</span><span class="n">MoveItErrorCodes</span><span class="o">::</span><span class="n">SUCCESS</span><span class="p">)</span>
+      <span class="p">{</span>
+        <span class="n">ROS_INFO_NAMED</span><span class="p">(</span><span class="s">&quot;FollowMultiDOFTrajectoryContoller&quot;</span><span class="p">,</span> <span class="s">&quot;Execution Succeeded.&quot;</span><span class="p">);</span>
+      <span class="p">}</span>
+      <span class="k">else</span>
+      <span class="p">{</span>
+        <span class="n">ROS_ERROR</span><span class="p">(</span><span class="s">&quot;Returned Error Code %d&quot;</span><span class="p">,</span> <span class="n">result</span><span class="o">-&gt;</span><span class="n">error_code</span><span class="p">.</span><span class="n">val</span><span class="p">);</span>
+        <span class="n">ROS_ERROR</span><span class="p">(</span><span class="s">&quot;For Detailse of Error Code, see moveit_msgs/MoveItErrorCodes.msg&quot;</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">else</span>
+    <span class="p">{</span>
+      <span class="n">ROS_WARN_STREAM</span><span class="p">(</span><span class="s">&quot;Controller &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">name_</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;: no result returned&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="n">finishControllerExecution</span><span class="p">(</span><span class="n">state</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="cm">/**</span>
+<span class="cm">   * @brief Called when goal become active</span>
+<span class="cm">   */</span>
+  <span class="kt">void</span> <span class="n">controllerActiveCallback</span><span class="p">()</span>
+  <span class="p">{</span>
+    <span class="n">ROS_DEBUG_STREAM_NAMED</span><span class="p">(</span><span class="s">&quot;FollowMultiDOFJointTrajectoryController&quot;</span><span class="p">,</span> <span class="n">name_</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; started execution&quot;</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="cm">/**</span>
+<span class="cm">   * @brief Called when feedback arrived from server</span>
+<span class="cm">   * @param feedback</span>
+<span class="cm">   */</span>
+  <span class="kt">void</span> <span class="n">controllerFeedbackCallback</span><span class="p">(</span><span class="k">const</span> <span class="n">moveit_msgs</span><span class="o">::</span><span class="n">ExecuteTrajectoryFeedbackConstPtr</span><span class="o">&amp;</span> <span class="n">feedback</span><span class="p">)</span>
+  <span class="p">{</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="p">}</span>  <span class="c1">// end namespace dronedoc</span>
+
+<span class="cp">#endif </span><span class="c1">// MOVEIT_PLUGINS_FOLLOW_MULTI_DOF_TRAJECTORY_CONTROLLER_HANDLE</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+</div>
+<div class="section" id="id9">
+<h3>コントローラ<a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>今回は、 <code class="docutils literal notranslate"><span class="pre">FollowMultiDOFJointTrajectory</span></code> アクションのGoalを受け取り、それをドローンに目標位置として送信するノードをコントローラーとして用います。</p>
+<p>コードの詳細については、<a class="reference internal" href="controller.html"><span class="doc">コード解説（コントローラ)</span></a> を参照してください。</p>
+<div class="literal-block-wrapper docutils container" id="id19">
+<div class="code-block-caption"><span class="caption-text">drone_controller.cpp</span><a class="headerlink" href="#id19" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-cpp notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * @file drone_controller.cpp</span>
+<span class="cm"> * @brief PX4 based UAV controller for moveit</span>
+<span class="cm"> */</span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;array&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;cmath&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;ros/ros.h&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;geometry_msgs/Transform.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;geometry_msgs/PoseStamped.h&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;moveit_msgs/ExecuteTrajectoryAction.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;moveit_msgs/RobotTrajectory.h&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;mavros_msgs/State.h&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;trajectory_msgs/MultiDOFJointTrajectory.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;trajectory_msgs/MultiDOFJointTrajectoryPoint.h&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;actionlib/server/simple_action_server.h&gt;</span><span class="cp"></span>
+
+<span class="k">class</span> <span class="nc">DroneController</span><span class="p">{</span>
+
+<span class="k">private</span><span class="o">:</span>
+    <span class="n">ros</span><span class="o">::</span><span class="n">NodeHandle</span> <span class="n">nh_</span><span class="p">;</span>
+    <span class="c1">//! Action name of ExecuteTrajectory</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">action_name_</span><span class="p">;</span>
+    <span class="c1">//! Server of ExecuteTrajectoryAction</span>
+    <span class="n">actionlib</span><span class="o">::</span><span class="n">SimpleActionServer</span><span class="o">&lt;</span><span class="n">moveit_msgs</span><span class="o">::</span><span class="n">ExecuteTrajectoryAction</span><span class="o">&gt;</span> <span class="n">as_</span><span class="p">;</span>
+    <span class="c1">//! Feedback message of ExecuteTrajectoryAction</span>
+    <span class="n">moveit_msgs</span><span class="o">::</span><span class="n">ExecuteTrajectoryFeedback</span> <span class="n">feedback_</span><span class="p">;</span>
+    <span class="c1">//! Result message of ExecuteTrajectoryAction</span>
+    <span class="n">moveit_msgs</span><span class="o">::</span><span class="n">ExecuteTrajectoryResult</span> <span class="n">result_</span><span class="p">;</span>
+    <span class="c1">//! Position command publisher</span>
+    <span class="n">ros</span><span class="o">::</span><span class="n">Publisher</span> <span class="n">cmd_pos_pub_</span><span class="p">;</span>
+    <span class="c1">//! Subscriber of local position</span>
+    <span class="n">ros</span><span class="o">::</span><span class="n">Subscriber</span> <span class="n">local_pos_sub_</span><span class="p">;</span>
+    <span class="c1">//! Subscriber of UAV state</span>
+    <span class="n">ros</span><span class="o">::</span><span class="n">Subscriber</span> <span class="n">state_sub_</span><span class="p">;</span>
+    <span class="c1">//! Current pose of UAV</span>
+    <span class="n">geometry_msgs</span><span class="o">::</span><span class="n">PoseStamped</span> <span class="n">current_pose_</span><span class="p">;</span>
+    <span class="c1">//! Current state of UAV</span>
+    <span class="n">mavros_msgs</span><span class="o">::</span><span class="n">State</span> <span class="n">current_state_</span><span class="p">;</span>
+
+<span class="k">public</span><span class="o">:</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * @brief Constructor</span>
+<span class="cm">     * @param action_name Action name</span>
+<span class="cm">     */</span>
+    <span class="n">DroneController</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">action_name</span><span class="p">)</span> <span class="o">:</span>
+        <span class="n">action_name_</span><span class="p">(</span><span class="n">action_name</span><span class="p">),</span>
+        <span class="n">as_</span><span class="p">(</span><span class="n">nh_</span><span class="p">,</span> <span class="n">action_name</span><span class="p">,</span> <span class="n">boost</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="o">&amp;</span><span class="n">DroneController</span><span class="o">::</span><span class="n">executeCb</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="n">_1</span><span class="p">),</span> <span class="nb">false</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">as_</span><span class="p">.</span><span class="n">start</span><span class="p">();</span>
+
+        <span class="c1">// Position command publisher setup</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">cmd_pos_topic</span><span class="p">;</span>
+        <span class="n">nh_</span><span class="p">.</span><span class="n">param</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;mavros_setpoint_topic&quot;</span><span class="p">,</span> <span class="n">cmd_pos_topic</span><span class="p">,</span> <span class="s">&quot;/mavros/setpoint_position/local&quot;</span><span class="p">);</span>
+        <span class="n">cmd_pos_pub_</span> <span class="o">=</span> <span class="n">nh_</span><span class="p">.</span><span class="n">advertise</span><span class="o">&lt;</span><span class="n">geometry_msgs</span><span class="o">::</span><span class="n">PoseStamped</span><span class="o">&gt;</span><span class="p">(</span><span class="n">cmd_pos_topic</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+
+        <span class="c1">// Local position subscriber setup</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">local_pos_topic</span><span class="p">;</span>
+        <span class="n">nh_</span><span class="p">.</span><span class="n">param</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;mavros_localpos_topic&quot;</span><span class="p">,</span> <span class="n">local_pos_topic</span><span class="p">,</span> <span class="s">&quot;/mavros/local_position/pose&quot;</span><span class="p">);</span>
+        <span class="k">auto</span> <span class="n">local_pos_cb</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="o">&amp;</span><span class="n">DroneController</span><span class="o">::</span><span class="n">localPosCb</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="n">_1</span><span class="p">);</span>
+        <span class="n">local_pos_sub_</span> <span class="o">=</span> <span class="n">nh_</span><span class="p">.</span><span class="n">subscribe</span><span class="o">&lt;</span><span class="n">geometry_msgs</span><span class="o">::</span><span class="n">PoseStamped</span><span class="o">&gt;</span><span class="p">(</span><span class="n">local_pos_topic</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">local_pos_cb</span><span class="p">);</span>
+
+        <span class="c1">// UAV state subscriber setup</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">state_topic</span><span class="p">;</span>
+        <span class="n">nh_</span><span class="p">.</span><span class="n">param</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;mavros_state_topic&quot;</span><span class="p">,</span> <span class="n">state_topic</span><span class="p">,</span> <span class="s">&quot;/mavros/state&quot;</span><span class="p">);</span>
+        <span class="k">auto</span> <span class="n">state_cb</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="o">&amp;</span><span class="n">DroneController</span><span class="o">::</span><span class="n">stateCb</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="n">_1</span><span class="p">);</span>
+        <span class="n">state_sub_</span> <span class="o">=</span> <span class="n">nh_</span><span class="p">.</span><span class="n">subscribe</span><span class="o">&lt;</span><span class="n">mavros_msgs</span><span class="o">::</span><span class="n">State</span><span class="o">&gt;</span><span class="p">(</span><span class="n">state_topic</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">state_cb</span><span class="p">);</span>
+        <span class="n">ROS_INFO</span><span class="p">(</span><span class="s">&quot;Action server initialized.&quot;</span><span class="p">);</span>
+    <span class="p">};</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * @brief Destructor</span>
+<span class="cm">     */</span>
+    <span class="o">~</span><span class="n">DroneController</span><span class="p">()</span>
+    <span class="p">{</span>
+    <span class="p">};</span>
+
+<span class="k">private</span><span class="o">:</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * @brief Callback of ExecuteTrajectory action</span>
+<span class="cm">     * @param goal Goal of ExecuteTrajectory action</span>
+<span class="cm">     */</span>
+    <span class="kt">void</span> <span class="n">executeCb</span><span class="p">(</span><span class="k">const</span> <span class="n">moveit_msgs</span><span class="o">::</span><span class="n">ExecuteTrajectoryGoalConstPtr</span> <span class="o">&amp;</span><span class="n">goal</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">ROS_INFO</span><span class="p">(</span><span class="s">&quot;Action received.&quot;</span><span class="p">);</span>
+        <span class="n">ros</span><span class="o">::</span><span class="n">Rate</span> <span class="n">rate</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>
+
+        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">trajectory_msgs</span><span class="o">::</span><span class="n">MultiDOFJointTrajectoryPoint</span><span class="o">&gt;</span> <span class="n">trajectory</span><span class="p">;</span>
+        <span class="n">trajectory</span> <span class="o">=</span> <span class="n">goal</span><span class="o">-&gt;</span><span class="n">trajectory</span><span class="p">.</span><span class="n">multi_dof_joint_trajectory</span><span class="p">.</span><span class="n">points</span><span class="p">;</span>
+
+        <span class="c1">// Wait for connection</span>
+        <span class="n">ROS_INFO</span><span class="p">(</span><span class="s">&quot;Waiting for FCU connection...&quot;</span><span class="p">);</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">ros</span><span class="o">::</span><span class="n">ok</span><span class="p">()</span> <span class="n">and</span> <span class="n">not</span> <span class="n">current_state_</span><span class="p">.</span><span class="n">connected</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">ros</span><span class="o">::</span><span class="n">spinOnce</span><span class="p">();</span>
+            <span class="n">rate</span><span class="p">.</span><span class="n">sleep</span><span class="p">();</span>
+        <span class="p">}</span>
+        <span class="n">ROS_INFO</span><span class="p">(</span><span class="s">&quot;FCU connection established.&quot;</span><span class="p">);</span>
+
+        <span class="c1">// Position command need to be published to switch mode to OFFBOARD</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="mi">10</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">cmd_pos_pub_</span><span class="p">.</span><span class="n">publish</span><span class="p">(</span><span class="n">getPoseFromTrajectory</span><span class="p">(</span><span class="n">trajectory</span><span class="p">.</span><span class="n">front</span><span class="p">()));</span>
+        <span class="p">}</span>
+
+
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">trajectory</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="mi">-1</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">ROS_INFO</span><span class="p">(</span><span class="s">&quot;Moving to waypoint No. %d&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+
+            <span class="c1">// Send feedback (progress of path)</span>
+            <span class="n">feedback_</span><span class="p">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+            <span class="n">as_</span><span class="p">.</span><span class="n">publishFeedback</span><span class="p">(</span><span class="n">feedback_</span><span class="p">);</span>
+
+            <span class="c1">// Get PoseStamped message from MultiDOFJointTrajectoryPoint</span>
+            <span class="n">geometry_msgs</span><span class="o">::</span><span class="n">PoseStamped</span> <span class="n">start</span> <span class="o">=</span> <span class="n">getPoseFromTrajectory</span><span class="p">(</span><span class="n">trajectory</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">i</span><span class="p">));</span>
+            <span class="n">geometry_msgs</span><span class="o">::</span><span class="n">PoseStamped</span> <span class="n">goal</span> <span class="o">=</span> <span class="n">getPoseFromTrajectory</span><span class="p">(</span><span class="n">trajectory</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">));</span>
+            <span class="c1">// Get interpolated path from two waypoints</span>
+            <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">geometry_msgs</span><span class="o">::</span><span class="n">PoseStamped</span><span class="o">&gt;</span> <span class="n">path</span> <span class="o">=</span> <span class="n">getBilinearPath</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">goal</span><span class="p">);</span>
+
+            <span class="c1">// Publish all interpolated points</span>
+            <span class="k">for</span><span class="p">(</span><span class="k">auto</span> <span class="nl">pose</span><span class="p">:</span> <span class="n">path</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="c1">// Publish same message till drone arrives to local goal</span>
+                <span class="k">while</span><span class="p">(</span><span class="n">not</span> <span class="n">isGoalReached</span><span class="p">(</span><span class="n">pose</span><span class="p">)</span> <span class="n">and</span> <span class="n">not</span> <span class="n">as_</span><span class="p">.</span><span class="n">isPreemptRequested</span><span class="p">())</span>
+                <span class="p">{</span>
+                    <span class="n">cmd_pos_pub_</span><span class="p">.</span><span class="n">publish</span><span class="p">(</span><span class="n">pose</span><span class="p">);</span>
+                    <span class="n">ros</span><span class="o">::</span><span class="n">spinOnce</span><span class="p">();</span>
+                    <span class="n">rate</span><span class="p">.</span><span class="n">sleep</span><span class="p">();</span>
+                <span class="p">}</span>
+
+                <span class="c1">// Exit loop if new action arrived</span>
+                <span class="k">if</span><span class="p">(</span><span class="n">as_</span><span class="p">.</span><span class="n">isPreemptRequested</span><span class="p">()</span> <span class="n">or</span> <span class="n">not</span> <span class="n">ros</span><span class="o">::</span><span class="n">ok</span><span class="p">())</span>
+                <span class="p">{</span>
+                    <span class="n">result_</span><span class="p">.</span><span class="n">error_code</span><span class="p">.</span><span class="n">val</span> <span class="o">=</span> <span class="n">moveit_msgs</span><span class="o">::</span><span class="n">MoveItErrorCodes</span><span class="o">::</span><span class="n">PREEMPTED</span><span class="p">;</span>
+                    <span class="n">as_</span><span class="p">.</span><span class="n">setPreempted</span><span class="p">();</span>
+                    <span class="n">ROS_INFO</span><span class="p">(</span><span class="s">&quot;Action preempted.&quot;</span><span class="p">);</span>
+                    <span class="k">break</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+
+            <span class="c1">// Exit loop if new action arrived</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">as_</span><span class="p">.</span><span class="n">isPreemptRequested</span><span class="p">()</span> <span class="n">or</span> <span class="n">not</span> <span class="n">ros</span><span class="o">::</span><span class="n">ok</span><span class="p">())</span>
+            <span class="p">{</span>
+                <span class="n">result_</span><span class="p">.</span><span class="n">error_code</span><span class="p">.</span><span class="n">val</span> <span class="o">=</span> <span class="n">moveit_msgs</span><span class="o">::</span><span class="n">MoveItErrorCodes</span><span class="o">::</span><span class="n">PREEMPTED</span><span class="p">;</span>
+                <span class="n">as_</span><span class="p">.</span><span class="n">setPreempted</span><span class="p">();</span>
+                <span class="n">ROS_INFO</span><span class="p">(</span><span class="s">&quot;Action preempted.&quot;</span><span class="p">);</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="n">rate</span><span class="p">.</span><span class="n">sleep</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Success</span>
+        <span class="n">result_</span><span class="p">.</span><span class="n">error_code</span><span class="p">.</span><span class="n">val</span> <span class="o">=</span> <span class="n">moveit_msgs</span><span class="o">::</span><span class="n">MoveItErrorCodes</span><span class="o">::</span><span class="n">SUCCESS</span><span class="p">;</span>
+        <span class="n">as_</span><span class="p">.</span><span class="n">setSucceeded</span><span class="p">(</span><span class="n">result_</span><span class="p">);</span>
+        <span class="n">ROS_INFO</span><span class="p">(</span><span class="s">&quot;Action completed.&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * @brief Return interpolated path using bilinear interpolation from two waypoints</span>
+<span class="cm">     * @param start Start waypoint</span>
+<span class="cm">     * @param goal Goal waypoint</span>
+<span class="cm">     * @param step Step size of interpolation</span>
+<span class="cm">     * @return Vector of interpolated path</span>
+<span class="cm">     */</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">geometry_msgs</span><span class="o">::</span><span class="n">PoseStamped</span><span class="o">&gt;</span> <span class="n">getBilinearPath</span><span class="p">(</span><span class="k">const</span> <span class="n">geometry_msgs</span><span class="o">::</span><span class="n">PoseStamped</span> <span class="o">&amp;</span><span class="n">start</span><span class="p">,</span>
+                                                            <span class="k">const</span> <span class="n">geometry_msgs</span><span class="o">::</span><span class="n">PoseStamped</span> <span class="o">&amp;</span><span class="n">goal</span><span class="p">,</span>
+                                                            <span class="k">const</span> <span class="kt">double</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">geometry_msgs</span><span class="o">::</span><span class="n">PoseStamped</span><span class="o">&gt;</span> <span class="n">bilinear_path</span><span class="p">;</span>
+
+        <span class="c1">// Store x-y and x-z coordinates of start point</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">,</span> <span class="mi">2</span><span class="o">&gt;</span> <span class="n">start_xy</span> <span class="o">=</span> <span class="p">{</span><span class="n">start</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">start</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">y</span><span class="p">};</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">,</span> <span class="mi">2</span><span class="o">&gt;</span> <span class="n">start_xz</span> <span class="o">=</span> <span class="p">{</span><span class="n">start</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">start</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">z</span><span class="p">};</span>
+        <span class="c1">// Store x-y and x-z coordinates of goal point</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">,</span> <span class="mi">2</span><span class="o">&gt;</span> <span class="n">goal_xy</span> <span class="o">=</span> <span class="p">{</span><span class="n">goal</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">goal</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">y</span><span class="p">};</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">,</span> <span class="mi">2</span><span class="o">&gt;</span> <span class="n">goal_xz</span> <span class="o">=</span> <span class="p">{</span><span class="n">goal</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">goal</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">z</span><span class="p">};</span>
+
+        <span class="c1">// x-y and x-z coordinates of interpolated points</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">,</span> <span class="mi">2</span><span class="o">&gt;</span> <span class="n">points_xy</span> <span class="o">=</span> <span class="n">linearInterp</span><span class="p">(</span><span class="n">start_xy</span><span class="p">,</span> <span class="n">goal_xy</span><span class="p">,</span> <span class="n">step</span><span class="p">);</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">,</span> <span class="mi">2</span><span class="o">&gt;</span> <span class="n">points_xz</span> <span class="o">=</span> <span class="n">linearInterp</span><span class="p">(</span><span class="n">start_xz</span><span class="p">,</span> <span class="n">goal_xz</span><span class="p">,</span> <span class="n">step</span><span class="p">);</span>
+
+        <span class="c1">// Number of generated points by interpolation</span>
+        <span class="kt">int</span> <span class="n">num_points</span> <span class="o">=</span> <span class="n">points_xy</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="n">size</span><span class="p">();</span>
+
+        <span class="k">try</span>
+        <span class="p">{</span>
+            <span class="c1">// Generate PoseStamped message from std::array</span>
+            <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">num_points</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">geometry_msgs</span><span class="o">::</span><span class="n">PoseStamped</span> <span class="n">pose</span><span class="p">;</span>
+                <span class="n">pose</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">orientation</span> <span class="o">=</span> <span class="n">start</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">orientation</span><span class="p">;</span>
+                <span class="n">pose</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">points_xy</span><span class="p">.</span><span class="n">front</span><span class="p">().</span><span class="n">at</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+                <span class="n">pose</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">points_xy</span><span class="p">.</span><span class="n">back</span><span class="p">().</span><span class="n">at</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+                <span class="n">pose</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">points_xz</span><span class="p">.</span><span class="n">back</span><span class="p">().</span><span class="n">at</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+
+                <span class="n">bilinear_path</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">pose</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">catch</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">out_of_range</span> <span class="o">&amp;</span><span class="n">ex</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">ROS_ERROR</span><span class="p">(</span><span class="s">&quot;%s&quot;</span><span class="p">,</span> <span class="n">ex</span><span class="p">.</span><span class="n">what</span><span class="p">());</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">bilinear_path</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * @brief Perform linear interpolation</span>
+<span class="cm">     * @param p1 First point</span>
+<span class="cm">     * @param p2 Second point</span>
+<span class="cm">     * @param step Step size of interpolation</span>
+<span class="cm">     * @return Array of interpolated points in the shape of [x-points, y-points]</span>
+<span class="cm">     */</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">,</span> <span class="mi">2</span><span class="o">&gt;</span> <span class="n">linearInterp</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">,</span> <span class="mi">2</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">p1</span><span class="p">,</span>
+                                                    <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">,</span> <span class="mi">2</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">p2</span><span class="p">,</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">step</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// Gradient</span>
+        <span class="kt">double</span> <span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="n">p1</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">p2</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="n">p1</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">-</span> <span class="n">p2</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
+        <span class="c1">// Intercept</span>
+        <span class="kt">double</span> <span class="n">b</span> <span class="o">=</span> <span class="n">p1</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">a</span><span class="o">*</span><span class="n">p1</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+
+        <span class="c1">// Number of steps</span>
+        <span class="kt">int</span> <span class="n">num_steps</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">floor</span><span class="p">((</span><span class="n">p2</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">-</span> <span class="n">p1</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span><span class="o">/</span><span class="n">step</span><span class="p">);</span>
+
+        <span class="c1">// Initialize container for interpolated points</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">points_x</span><span class="p">(</span><span class="n">num_steps</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+
+        <span class="c1">// Set interpolated points</span>
+        <span class="n">points_x</span><span class="p">.</span><span class="n">front</span><span class="p">()</span> <span class="o">=</span> <span class="n">p1</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">num_steps</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">points_x</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">step</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="n">p1</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="n">points_x</span><span class="p">.</span><span class="n">back</span><span class="p">()</span> <span class="o">=</span> <span class="n">p2</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+
+        <span class="c1">// Initialize container for interpolated points</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">points_y</span><span class="p">(</span><span class="n">num_steps</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+
+        <span class="c1">// Set interpolated points</span>
+        <span class="n">points_y</span><span class="p">.</span><span class="n">front</span><span class="p">()</span> <span class="o">=</span> <span class="n">p1</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">num_steps</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">points_y</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">a</span><span class="o">*</span><span class="p">(</span><span class="n">p1</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">i</span><span class="o">*</span><span class="n">step</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">points_y</span><span class="p">.</span><span class="n">back</span><span class="p">()</span> <span class="o">=</span> <span class="n">p2</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+
+        <span class="c1">// Initialize container for vector of points</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">,</span> <span class="mi">2</span><span class="o">&gt;</span> <span class="n">points</span><span class="p">;</span>
+        <span class="n">points</span><span class="p">.</span><span class="n">front</span><span class="p">()</span> <span class="o">=</span> <span class="n">points_x</span><span class="p">;</span>
+        <span class="n">points</span><span class="p">.</span><span class="n">back</span><span class="p">()</span> <span class="o">=</span> <span class="n">points_y</span><span class="p">;</span>
+
+        <span class="k">return</span> <span class="n">points</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * @brief Convert MultiDOFJointTrajectoryPoint message to PoseStamped message</span>
+<span class="cm">     * @param trajectory_pt MultiDOFJointTrajectoryPoint message</span>
+<span class="cm">     * @return Pose converted from Trajectory msg</span>
+<span class="cm">     */</span>
+    <span class="n">geometry_msgs</span><span class="o">::</span><span class="n">PoseStamped</span> <span class="n">getPoseFromTrajectory</span><span class="p">(</span><span class="k">const</span> <span class="n">trajectory_msgs</span><span class="o">::</span><span class="n">MultiDOFJointTrajectoryPoint</span> <span class="o">&amp;</span><span class="n">trajectory_pt</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">geometry_msgs</span><span class="o">::</span><span class="n">PoseStamped</span> <span class="n">pose</span><span class="p">;</span>
+
+        <span class="n">pose</span><span class="p">.</span><span class="n">header</span><span class="p">.</span><span class="n">stamp</span> <span class="o">=</span> <span class="n">ros</span><span class="o">::</span><span class="n">Time</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+        <span class="n">pose</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">trajectory_pt</span><span class="p">.</span><span class="n">transforms</span><span class="p">.</span><span class="n">front</span><span class="p">().</span><span class="n">translation</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+        <span class="n">pose</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">trajectory_pt</span><span class="p">.</span><span class="n">transforms</span><span class="p">.</span><span class="n">front</span><span class="p">().</span><span class="n">translation</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
+        <span class="n">pose</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">trajectory_pt</span><span class="p">.</span><span class="n">transforms</span><span class="p">.</span><span class="n">front</span><span class="p">().</span><span class="n">translation</span><span class="p">.</span><span class="n">z</span><span class="p">;</span>
+        <span class="n">pose</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">orientation</span> <span class="o">=</span> <span class="n">trajectory_pt</span><span class="p">.</span><span class="n">transforms</span><span class="p">.</span><span class="n">front</span><span class="p">().</span><span class="n">rotation</span><span class="p">;</span>
+
+        <span class="k">return</span> <span class="n">pose</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * @brief Returns true if drone is reached goal</span>
+<span class="cm">     * @param goal</span>
+<span class="cm">     * @param tolerance Consider drone reached goal if drone is within the circle with diameter of this value</span>
+<span class="cm">     * @return True if drone is reched goal, false if else</span>
+<span class="cm">     */</span>
+    <span class="kr">inline</span> <span class="kt">bool</span> <span class="n">isGoalReached</span><span class="p">(</span><span class="k">const</span> <span class="n">geometry_msgs</span><span class="o">::</span><span class="n">PoseStamped</span> <span class="o">&amp;</span><span class="n">goal</span><span class="p">,</span> <span class="k">const</span> <span class="kt">double</span> <span class="n">tolerance</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">double</span> <span class="n">error</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">sqrt</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">pow</span><span class="p">(</span><span class="n">goal</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span> <span class="o">-</span> <span class="n">current_pose_</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+                                 <span class="o">+</span> <span class="n">std</span><span class="o">::</span><span class="n">pow</span><span class="p">(</span><span class="n">goal</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">current_pose_</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+                                 <span class="o">+</span> <span class="n">std</span><span class="o">::</span><span class="n">pow</span><span class="p">(</span><span class="n">goal</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">z</span> <span class="o">-</span> <span class="n">current_pose_</span><span class="p">.</span><span class="n">pose</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">z</span><span class="p">,</span> <span class="mi">2</span><span class="p">));</span>
+        <span class="k">return</span> <span class="n">error</span> <span class="o">&lt;</span> <span class="n">tolerance</span> <span class="o">?</span> <span class="nb">true</span> <span class="o">:</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * @brief Callback for local position subscriber</span>
+<span class="cm">     * @msg Incoming message</span>
+<span class="cm">     */</span>
+    <span class="kt">void</span> <span class="n">localPosCb</span><span class="p">(</span><span class="k">const</span> <span class="n">geometry_msgs</span><span class="o">::</span><span class="n">PoseStamped</span><span class="o">::</span><span class="n">ConstPtr</span> <span class="o">&amp;</span><span class="n">msg</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">current_pose_</span> <span class="o">=</span> <span class="o">*</span><span class="n">msg</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * @brief Callback for state subscriber</span>
+<span class="cm">     * @msg Incoming message</span>
+<span class="cm">     */</span>
+    <span class="kt">void</span> <span class="n">stateCb</span><span class="p">(</span><span class="k">const</span> <span class="n">mavros_msgs</span><span class="o">::</span><span class="n">State</span><span class="o">::</span><span class="n">ConstPtr</span> <span class="o">&amp;</span><span class="n">msg</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">current_state_</span> <span class="o">=</span> <span class="o">*</span><span class="n">msg</span><span class="p">;</span>
+    <span class="p">}</span>
+
+<span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argv</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argc</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">ros</span><span class="o">::</span><span class="n">init</span><span class="p">(</span><span class="n">argv</span><span class="p">,</span> <span class="n">argc</span><span class="p">,</span> <span class="s">&quot;drone_controller&quot;</span><span class="p">);</span>
+
+    <span class="n">DroneController</span> <span class="n">controller</span><span class="p">(</span><span class="s">&quot;iris_group_controller/follow_multi_dof_joint_trajectory&quot;</span><span class="p">);</span>
+    <span class="n">ros</span><span class="o">::</span><span class="n">spin</span><span class="p">();</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+</div>
+<div class="section" id="cmakelists-txt">
+<h3>CMakeLists.txt<a class="headerlink" href="#cmakelists-txt" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">find_package</span></code> に使用するパッケージを追加します。</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">find_package</span><span class="p">(</span><span class="s">catkin</span> <span class="s">REQUIRED</span> <span class="s">COMPONENTS</span>
+    <span class="s">...</span>
+    <span class="s">actionlib</span>
+    <span class="s">trajectory_msgs</span>
+    <span class="s">pluginlib</span>
+    <span class="s">moveit_msgs</span>
+    <span class="s">moveit_core</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>コントローラインターフェースをインクルードできるように、インクルードディレクトリを指定します。</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">catkin_package</span><span class="p">(</span>
+    <span class="s">INCLUDE_DIRS</span> <span class="s">include</span>
+    <span class="s">...</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>コントローラマネージャをコンパイルしてライブラリをリンクするために以下の内容を追加します。
+コントローラマネージャはノードではなく、ライブラリなので、 <code class="docutils literal notranslate"><span class="pre">add_library</span></code> を使います。</p>
+<p>他のパッケージのライブラリと名前が重複しないようにライブラリ名の先頭に <code class="docutils literal notranslate"><span class="pre">${PROJECT_NAME}_</span></code> をつけます。
+今回のプロジェクト名は <code class="docutils literal notranslate"><span class="pre">dronedoc</span></code> なので、こうすることで <code class="docutils literal notranslate"><span class="pre">libdronedoc_moveit_multi_dof_controller_manager</span></code> という名前のライブラリができます。</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">add_library</span><span class="p">(</span><span class="o">${</span><span class="nv">PROJECT_NAME</span><span class="o">}</span><span class="s">_moveit_multi_dof_controller_manager</span> <span class="s">src/moveit_multi_dof_controller_manager.cpp</span><span class="p">)</span>
+<span class="nb">target_link_libraries</span><span class="p">(</span><span class="o">${</span><span class="nv">PROJECT_NAME</span><span class="o">}</span><span class="s">_moveit_multi_dof_controller_manager</span> <span class="o">${</span><span class="nv">catkin_LIBRARIES</span><span class="o">}</span> <span class="o">${</span><span class="nv">Boost_LIBRARIES</span><span class="o">}</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>コントローラをコンパイルしてライブラリをリンクするために以下の内容を追加します。</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">add_executable</span><span class="p">(</span><span class="s">drone_controller</span> <span class="s">src/drone_controller.cpp</span><span class="p">)</span>
+<span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">drone_controller</span> <span class="o">${</span><span class="nv">catkin_LIBRARIES</span><span class="o">}</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="moveit-multi-dof-controller-manager-plugin-description-xml">
+<h3>moveit_multi_dof_controller_manager_plugin_description.xml<a class="headerlink" href="#moveit-multi-dof-controller-manager-plugin-description-xml" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>プラグインローダーがプラグインを見つけられるように、プラグインの情報を記述するファイルを作成します。</p>
+<div class="literal-block-wrapper docutils container" id="id20">
+<div class="code-block-caption"><span class="caption-text">moveit_multi_dof_controller_manager_plugin_description.xml</span><a class="headerlink" href="#id20" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-xml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nt">&lt;library</span> <span class="na">path=</span><span class="s">&quot;libdronedoc_moveit_multi_dof_controller_manager&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;class</span> <span class="na">name=</span><span class="s">&quot;dronedoc/MoveItMultiDOFControllerManager&quot;</span>
+         <span class="na">type=</span><span class="s">&quot;dronedoc::MoveItMultiDOFControllerManager&quot;</span>
+         <span class="na">base_class_type=</span><span class="s">&quot;moveit_controller_manager::MoveItControllerManager&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;description&gt;</span>
+    <span class="nt">&lt;/description&gt;</span>
+  <span class="nt">&lt;/class&gt;</span>
+
+<span class="nt">&lt;/library&gt;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<p>それぞれのタグ及びフィールドの意味は以下のとおりです。</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">path</span></code></dt><dd><p>ライブラリのパス。CMakeLists.txtの <code class="docutils literal notranslate"><span class="pre">add_library</span></code> 内で指定した名前の先頭に <code class="docutils literal notranslate"><span class="pre">lib</span></code> を追加したもの（今回の場合は <code class="docutils literal notranslate"><span class="pre">libdronedoc_moveit_multi_dof_controller_manager</span></code> ）がライブラリ名になる。</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">type</span></code></dt><dd><p>プラグインの型名。名前空間から指定する必要がある。</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">base_class</span></code></dt><dd><p>プラグインのベースクラスの型名。名前空間から指定する必要がある。</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">name</span></code></dt><dd><p>プラグイン名</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">description</span></code></dt><dd><p>プラグインの説明</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="package-xml">
+<h3>package.xml<a class="headerlink" href="#package-xml" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>pluginlibを使用するので、package.xmlの依存パッケージにpluginlibを追加します。</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;depend&gt;</span>pluginlib<span class="nt">&lt;/depend&gt;</span>
+</pre></div>
+</div>
+<p>また、<code class="docutils literal notranslate"><span class="pre">&lt;export&gt;</span></code> タグ内でプラグインをエクスポートします。
+<code class="docutils literal notranslate"><span class="pre">moveit_core</span></code> の部分は、プラグインのベースクラスが定義されているパッケージ名を指定します。
+今回は <code class="docutils literal notranslate"><span class="pre">moveit_core</span></code> パッケージで <code class="docutils literal notranslate"><span class="pre">MoveItSimpleControllerManager</span></code> が定義されているので、これを指定します。</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;export&gt;</span>
+  <span class="nt">&lt;moveit_core</span> <span class="na">plugin=</span><span class="s">&quot;${prefix}/moveit_multi_dof_controller_manager_plugin_description.xml&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/export&gt;</span>
+</pre></div>
+</div>
+<p>プラグインが登録されているかを確認するには、パッケージをビルドしたあとに、以下のように <code class="docutils literal notranslate"><span class="pre">rospack</span></code> コマンドを使用します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rospack plugins --attrib<span class="o">=</span>plugin moveit_core
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="launch-files">
+<h2>Launch files<a class="headerlink" href="#launch-files" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>今まで構築してきたアプリケーションを実行するためにいくつかのLaunchファイルを作成・編集します。</p>
+<div class="section" id="iris-moveit-launch">
+<h3>iris_moveit.launch<a class="headerlink" href="#iris-moveit-launch" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>iris_moveit.launchは、シミュレーション環境（Gazebo+PX4 SITL+MAVROS）とMoveIt!のノード、コントローラの起動を行います。</p>
+<div class="literal-block-wrapper docutils container" id="id21">
+<div class="code-block-caption"><span class="caption-text">iris_moveit.launch</span><a class="headerlink" href="#id21" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-xml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nt">&lt;launch&gt;</span>
+
+    <span class="c">&lt;!-- robot description for px4 sitl --&gt;</span>
+    <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;model_sitl&quot;</span> <span class="na">default=</span><span class="s">&quot;$(find px4_sim_pkg)/models/iris_depth_camera/xacro_sitl/urdf/iris_base.xacro&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;mavlink_udp_port&quot;</span> <span class="na">default=</span><span class="s">&quot;14560&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;rotors_description_dir_sitl&quot;</span> <span class="na">default=</span><span class="s">&quot;$(find px4_sim_pkg)/models/iris_depth_camera/xacro_sitl&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;cmd_sitl&quot;</span> <span class="na">default=</span><span class="s">&quot;$(find xacro)/xacro $(arg model_sitl) rotors_description_dir:=$(arg rotors_description_dir_sitl) mavlink_udp_port:=$(arg mavlink_udp_port) --inorder&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;param</span> <span class="na">command=</span><span class="s">&quot;$(arg cmd_sitl)&quot;</span> <span class="na">name=</span><span class="s">&quot;robot_description_sitl&quot;</span> <span class="nt">/&gt;</span>
+
+    <span class="c">&lt;!-- robot description for moveit --&gt;</span>
+    <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;model&quot;</span> <span class="na">default=</span><span class="s">&quot;$(find px4_sim_pkg)/models/iris_depth_camera/xacro/urdf/iris_base.xacro&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;rotors_description_dir&quot;</span> <span class="na">default=</span><span class="s">&quot;$(find px4_sim_pkg)/models/iris_depth_camera/xacro&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;cmd&quot;</span> <span class="na">default=</span><span class="s">&quot;$(find xacro)/xacro $(arg model) rotors_description_dir:=$(arg rotors_description_dir) mavlink_udp_port:=$(arg mavlink_udp_port) --inorder&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;param</span> <span class="na">command=</span><span class="s">&quot;$(arg cmd)&quot;</span> <span class="na">name=</span><span class="s">&quot;robot_description&quot;</span> <span class="nt">/&gt;</span>
+
+    <span class="nt">&lt;node</span> <span class="na">name=</span><span class="s">&quot;joint_state_publisher&quot;</span> <span class="na">pkg=</span><span class="s">&quot;joint_state_publisher&quot;</span> <span class="na">type=</span><span class="s">&quot;joint_state_publisher&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;node</span> <span class="na">name=</span><span class="s">&quot;robot_state_publisher&quot;</span> <span class="na">pkg=</span><span class="s">&quot;robot_state_publisher&quot;</span> <span class="na">type=</span><span class="s">&quot;state_publisher&quot;</span> <span class="nt">/&gt;</span>
+
+    <span class="c">&lt;!-- PX4 configs --&gt;</span>
+    <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;est&quot;</span> <span class="na">default=</span><span class="s">&quot;ekf2&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;vehicle&quot;</span> <span class="na">default=</span><span class="s">&quot;iris_2d_lidar&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;interactive&quot;</span> <span class="na">default=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;env</span> <span class="na">name=</span><span class="s">&quot;PX4_SIM_MODEL&quot;</span> <span class="na">value=</span><span class="s">&quot;$(arg vehicle)&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;env</span> <span class="na">name=</span><span class="s">&quot;PX4_ESTIMATOR&quot;</span> <span class="na">value=</span><span class="s">&quot;$(arg est)&quot;</span> <span class="nt">/&gt;</span>
+    <span class="c">&lt;!-- PX4 SITL and Gazebo --&gt;</span>
+    <span class="nt">&lt;arg</span> <span class="na">unless=</span><span class="s">&quot;$(arg interactive)&quot;</span> <span class="na">name=</span><span class="s">&quot;px4_command_arg1&quot;</span> <span class="na">value=</span><span class="s">&quot;-d&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;arg</span>     <span class="na">if=</span><span class="s">&quot;$(arg interactive)&quot;</span> <span class="na">name=</span><span class="s">&quot;px4_command_arg1&quot;</span> <span class="na">value=</span><span class="s">&quot;&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;node</span> <span class="na">name=</span><span class="s">&quot;sitl&quot;</span> <span class="na">pkg=</span><span class="s">&quot;px4&quot;</span> <span class="na">type=</span><span class="s">&quot;px4&quot;</span> <span class="na">output=</span><span class="s">&quot;screen&quot;</span>
+        <span class="na">args=</span><span class="s">&quot;$(find px4)/ROMFS/px4fmu_common -s etc/init.d-posix/rcS $(arg px4_command_arg1)&quot;</span> <span class="na">required=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+
+    <span class="c">&lt;!-- Launching gazebo --&gt;</span>
+    <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;world&quot;</span> <span class="na">default=</span><span class="s">&quot;$(find mavlink_sitl_gazebo)/worlds/empty.world&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;debug&quot;</span> <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;verbose&quot;</span> <span class="na">default=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;gui&quot;</span> <span class="na">default=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;include</span> <span class="na">file=</span><span class="s">&quot;$(find gazebo_ros)/launch/empty_world.launch&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;world_name&quot;</span> <span class="na">value=</span><span class="s">&quot;$(arg world)&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;verbose&quot;</span> <span class="na">value=</span><span class="s">&quot;$(arg verbose)&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;gui&quot;</span> <span class="na">value=</span><span class="s">&quot;$(arg gui)&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;debug&quot;</span> <span class="na">value=</span><span class="s">&quot;$(arg debug)&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/include&gt;</span>
+
+    <span class="c">&lt;!-- MAVROS --&gt;</span>
+    <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;fcu_url&quot;</span> <span class="na">default=</span><span class="s">&quot;udp://:14540@localhost:14557&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;gcs_url&quot;</span> <span class="na">default=</span><span class="s">&quot;&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;respawn_mavros&quot;</span> <span class="na">default=</span><span class="s">&quot;false&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;include</span> <span class="na">file=</span><span class="s">&quot;$(find mavros)/launch/px4.launch&quot;</span><span class="nt">&gt;</span>
+        <span class="c">&lt;!-- GCS link is provided by SITL --&gt;</span>
+        <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;gcs_url&quot;</span> <span class="na">value=</span><span class="s">&quot;&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;fcu_url&quot;</span> <span class="na">value=</span><span class="s">&quot;$(arg fcu_url)&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;respawn_mavros&quot;</span> <span class="na">value=</span><span class="s">&quot;$(arg respawn_mavros)&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/include&gt;</span>
+    <span class="c">&lt;!-- mavros --&gt;</span>
+    <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;/mavros/local_position/tf/send&quot;</span> <span class="na">type=</span><span class="s">&quot;bool&quot;</span> <span class="na">value=</span><span class="s">&quot;true&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;/mavros/local_position/frame_id&quot;</span> <span class="na">type=</span><span class="s">&quot;str&quot;</span> <span class="na">value=</span><span class="s">&quot;base_link&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;/mavros/local_position/tf/frame_id&quot;</span> <span class="na">type=</span><span class="s">&quot;str&quot;</span> <span class="na">value=</span><span class="s">&quot;map&quot;</span> <span class="nt">/&gt;</span>
+
+    <span class="c">&lt;!-- spawn robot --&gt;</span>
+    <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;x&quot;</span> <span class="na">default=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;y&quot;</span> <span class="na">default=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;z&quot;</span> <span class="na">default=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;R&quot;</span> <span class="na">default=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;P&quot;</span> <span class="na">default=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;Y&quot;</span> <span class="na">default=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;node</span> <span class="na">name=</span><span class="s">&quot;$(anon vehicle_spawn)&quot;</span> <span class="na">pkg=</span><span class="s">&quot;gazebo_ros&quot;</span> <span class="na">type=</span><span class="s">&quot;spawn_model&quot;</span> <span class="na">output=</span><span class="s">&quot;screen&quot;</span> <span class="na">args=</span><span class="s">&quot;-param robot_description_sitl -urdf -model $(arg vehicle) -package_to_model -x $(arg x) -y $(arg y) -z $(arg z) -R $(arg R) -P $(arg P) -Y $(arg Y)&quot;</span><span class="nt">/&gt;</span>
+
+    <span class="c">&lt;!-- static tf from map to world which is base frame for planning --&gt;</span>
+    <span class="nt">&lt;node</span> <span class="na">pkg=</span><span class="s">&quot;tf&quot;</span> <span class="na">name=</span><span class="s">&quot;map2world&quot;</span> <span class="na">type=</span><span class="s">&quot;static_transform_publisher&quot;</span> <span class="na">args=</span><span class="s">&quot;0 0 0 0 0 0 map world 100&quot;</span><span class="nt">/&gt;</span>
+    <span class="c">&lt;!-- publish tf to supress warnings --&gt;</span>
+    <span class="nt">&lt;node</span> <span class="na">pkg=</span><span class="s">&quot;tf&quot;</span> <span class="na">name=</span><span class="s">&quot;map2origin&quot;</span> <span class="na">type=</span><span class="s">&quot;static_transform_publisher&quot;</span> <span class="na">args=</span><span class="s">&quot;0 0 0 0 0 0 map local_origin 100&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;node</span> <span class="na">pkg=</span><span class="s">&quot;tf&quot;</span> <span class="na">name=</span><span class="s">&quot;base2fcu&quot;</span> <span class="na">type=</span><span class="s">&quot;static_transform_publisher&quot;</span> <span class="na">args=</span><span class="s">&quot;0 0 0 0 0 0 base_link fcu 100&quot;</span><span class="nt">/&gt;</span>
+    <span class="c">&lt;!-- Moveit --&gt;</span>
+    <span class="nt">&lt;include</span> <span class="na">file=</span><span class="s">&quot;$(find iris_moveit_config)/launch/move_group.launch&quot;</span> <span class="nt">&gt;</span>
+        <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;fake_execution&quot;</span> <span class="na">value=</span><span class="s">&quot;false&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/include&gt;</span>
+
+    <span class="nt">&lt;node</span> <span class="na">pkg=</span><span class="s">&quot;px4_sim_pkg&quot;</span> <span class="na">name=</span><span class="s">&quot;drone_controller&quot;</span> <span class="na">type=</span><span class="s">&quot;drone_controller&quot;</span> <span class="na">output=</span><span class="s">&quot;screen&quot;</span><span class="nt">/&gt;</span>
+
+<span class="nt">&lt;/launch&gt;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="id10">
+<h4>解説<a class="headerlink" href="#id10" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>PX4 SITLシミュレーションで使用するURDFをxacroファイルから生成します。
+<a class="reference internal" href="../create_config_pkg/create_config_pkg.html"><span class="doc">iris_moveit_configパッケージを作る</span></a> で説明したように、PX4 SITLシミュレーションで使用するxacroファイルとMoveIt!で使用するxacroファイルは同じものを使えないので、それぞれ別にロードします。</p>
+<p><a class="reference internal" href="../create_config_pkg/create_config_pkg.html"><span class="doc">iris_moveit_configパッケージを作る</span></a> では、multirotor_base.xacroファイル内の、 <code class="docutils literal notranslate"><span class="pre">package://rotors_description</span></code> を、全て <code class="docutils literal notranslate"><span class="pre">package://mavlink_sitl_gazebo/models/rotors_description/</span></code> に置き換えましたが、xacro_sitlディレクトリに置き換えなかったパターンのものを用意し、それをロードします。</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;model_sitl&quot;</span> <span class="na">default=</span><span class="s">&quot;$(find px4_sim_pkg)/models/iris_depth_camera/xacro_sitl/urdf/iris_base.xacro&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;mavlink_udp_port&quot;</span> <span class="na">default=</span><span class="s">&quot;14560&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;rotors_description_dir_sitl&quot;</span> <span class="na">default=</span><span class="s">&quot;$(find px4_sim_pkg)/models/iris_depth_camera/xacro_sitl&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;cmd_sitl&quot;</span> <span class="na">default=</span><span class="s">&quot;$(find xacro)/xacro $(arg model_sitl) rotors_description_dir:=$(arg rotors_description_dir_sitl) mavlink_udp_port:=$(arg mavlink_udp_port) --inorder&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;param</span> <span class="na">command=</span><span class="s">&quot;$(arg cmd_sitl)&quot;</span> <span class="na">name=</span><span class="s">&quot;robot_description_sitl&quot;</span> <span class="nt">/&gt;</span>
+</pre></div>
+</div>
+<p>MoveIt!用のURDFをロードし、joint_state_publisherノードとrobot_state_publisherノードを使ってロボットの関節やフレームの状態をTFとしてパブリッシュします。</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;model&quot;</span> <span class="na">default=</span><span class="s">&quot;$(find px4_sim_pkg)/models/iris_depth_camera/xacro/urdf/iris_base.xacro&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;rotors_description_dir&quot;</span> <span class="na">default=</span><span class="s">&quot;$(find px4_sim_pkg)/models/iris_depth_camera/xacro&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;cmd&quot;</span> <span class="na">default=</span><span class="s">&quot;$(find xacro)/xacro $(arg model) rotors_description_dir:=$(arg rotors_description_dir) mavlink_udp_port:=$(arg mavlink_udp_port) --inorder&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;param</span> <span class="na">command=</span><span class="s">&quot;$(arg cmd)&quot;</span> <span class="na">name=</span><span class="s">&quot;robot_description&quot;</span> <span class="nt">/&gt;</span>
+
+<span class="nt">&lt;node</span> <span class="na">name=</span><span class="s">&quot;joint_state_publisher&quot;</span> <span class="na">pkg=</span><span class="s">&quot;joint_state_publisher&quot;</span> <span class="na">type=</span><span class="s">&quot;joint_state_publisher&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;node</span> <span class="na">name=</span><span class="s">&quot;robot_state_publisher&quot;</span> <span class="na">pkg=</span><span class="s">&quot;robot_state_publisher&quot;</span> <span class="na">type=</span><span class="s">&quot;state_publisher&quot;</span> <span class="nt">/&gt;</span>
+</pre></div>
+</div>
+<p>ベースリンクへのTFを送信するように設定します。</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;/mavros/local_position/tf/send&quot;</span> <span class="na">type=</span><span class="s">&quot;bool&quot;</span> <span class="na">value=</span><span class="s">&quot;true&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;/mavros/local_position/frame_id&quot;</span> <span class="na">type=</span><span class="s">&quot;str&quot;</span> <span class="na">value=</span><span class="s">&quot;base_link&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;/mavros/local_position/tf/frame_id&quot;</span> <span class="na">type=</span><span class="s">&quot;str&quot;</span> <span class="na">value=</span><span class="s">&quot;map&quot;</span> <span class="nt">/&gt;</span>
+</pre></div>
+</div>
+<p>iris_groupの親フレームは <code class="docutils literal notranslate"><span class="pre">world</span></code> になっていたので、 <code class="docutils literal notranslate"><span class="pre">map</span></code> から <code class="docutils literal notranslate"><span class="pre">world</span></code> へのTFを定義して、 <code class="docutils literal notranslate"><span class="pre">world</span></code> から <code class="docutils literal notranslate"><span class="pre">base_link</span></code> へのTFを利用できるようにします。</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;node</span> <span class="na">pkg=</span><span class="s">&quot;tf&quot;</span> <span class="na">name=</span><span class="s">&quot;map2world&quot;</span> <span class="na">type=</span><span class="s">&quot;static_transform_publisher&quot;</span> <span class="na">args=</span><span class="s">&quot;0 0 0 0 0 0 map world 100&quot;</span><span class="nt">/&gt;</span>
+</pre></div>
+</div>
+<p>TFが利用不可能であるという警告が出るので、以下のTFを定義して警告が出ないようにします。
+なくても構いません。</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;node</span> <span class="na">pkg=</span><span class="s">&quot;tf&quot;</span> <span class="na">name=</span><span class="s">&quot;map2origin&quot;</span> <span class="na">type=</span><span class="s">&quot;static_transform_publisher&quot;</span> <span class="na">args=</span><span class="s">&quot;0 0 0 0 0 0 map local_origin 100&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;node</span> <span class="na">pkg=</span><span class="s">&quot;tf&quot;</span> <span class="na">name=</span><span class="s">&quot;base2fcu&quot;</span> <span class="na">type=</span><span class="s">&quot;static_transform_publisher&quot;</span> <span class="na">args=</span><span class="s">&quot;0 0 0 0 0 0 base_link fcu 100&quot;</span><span class="nt">/&gt;</span>
+</pre></div>
+</div>
+<p>MoveIt!のノードを起動します。
+実際のロボットに指令を送信するので、<code class="docutils literal notranslate"><span class="pre">fake_execution</span></code> を <code class="docutils literal notranslate"><span class="pre">false</span></code> にします。</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;include</span> <span class="na">file=</span><span class="s">&quot;$(find iris_moveit_config)/launch/move_group.launch&quot;</span> <span class="nt">&gt;</span>
+    <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;fake_execution&quot;</span> <span class="na">value=</span><span class="s">&quot;false&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/include&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="iris-moveit-controller-manager-launch-xml">
+<h3>iris_moveit_controller_manager.launch.xml<a class="headerlink" href="#iris-moveit-controller-manager-launch-xml" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>iris_moveit_controller_manager.launch.xmlは、コントローラマネージャの指定とパラメータのロードを行います。</p>
+<p><code class="docutils literal notranslate"><span class="pre">moveit_controller_manager</span></code> パラメータを変更して、作成したコントローラマネージャを使用するようにします。
+また、後述のcontrollers.yamlファイルをロードしてコントローラマネージャ用のパラメータをロードします。</p>
+<div class="literal-block-wrapper docutils container" id="id22">
+<div class="code-block-caption"><span class="caption-text">iris_moveit_config/launch/iris_moveit_controller_manager.launch.xml</span><a class="headerlink" href="#id22" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-xml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nt">&lt;launch&gt;</span>
+ <span class="c">&lt;!-- Set the param that trajectory_execution_manager needs to find the controller plugin --&gt;</span>
+ <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;moveit_controller_manager&quot;</span> <span class="na">default=</span><span class="s">&quot;dronedoc/MoveItMultiDOFControllerManager&quot;</span> <span class="nt">/&gt;</span>
+ <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;moveit_controller_manager&quot;</span> <span class="na">value=</span><span class="s">&quot;$(arg moveit_controller_manager)&quot;</span><span class="nt">/&gt;</span>
+ <span class="c">&lt;!-- load controller_list --&gt;</span>
+ <span class="nt">&lt;rosparam</span> <span class="na">file=</span><span class="s">&quot;$(find iris_moveit_config)/config/controllers.yaml&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/launch&gt;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+</div>
+<div class="section" id="controller-yaml">
+<h3>controller.yaml<a class="headerlink" href="#controller-yaml" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>コントローラマネージャが使用するパラメータを記述してあるファイルです。
+パラメータに関しては、<a class="reference external" href="http://docs.ros.org/kinetic/api/moveit_tutorials/html/doc/controller_configuration/controller_configuration_tutorial.html">Low Level Controllers</a> を見てください。</p>
+<div class="literal-block-wrapper docutils container" id="id23">
+<div class="code-block-caption"><span class="caption-text">iris_moveit_config/config/controllers.yaml</span><a class="headerlink" href="#id23" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-yaml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nt">controller_list</span><span class="p">:</span>
+ <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">iris_group_controller</span>
+   <span class="nt">action_ns</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">follow_multi_dof_joint_trajectory</span>
+   <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">FollowMultiDOFJointTrajectory</span>
+   <span class="nt">default</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+   <span class="nt">joints</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">virtual_joint</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+</div>
+<div class="section" id="trajectory-execution-launch-xml">
+<h3>trajectory_execution.launch.xml<a class="headerlink" href="#trajectory-execution-launch-xml" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>trajectory_execution.launch.xmlは、動作の実行に関するパラメータを設定しています。</p>
+<p>現在位置がスタート位置から離れているとエラーが出て動作の実行ができません。
+デフォルトでは1cm離れていたら実行できないので、 <code class="docutils literal notranslate"><span class="pre">trajectory_execution/allowed_start_tolerance</span></code> パラメータの数値を変更してある程度離れていても動作の実行ができるようにします。</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;trajectory_execution/allowed_start_tolerance&quot;</span> <span class="na">value=</span><span class="s">&quot;0.1&quot;</span><span class="nt">/&gt;</span>
+</pre></div>
+</div>
+<p>また、デフォルトでは動作の実行が始まってからある程度時間が経つと動作の実行が中断されるので、<code class="docutils literal notranslate"><span class="pre">trajectory_execution/execution_duration_monitoring</span></code> パラメータを <code class="docutils literal notranslate"><span class="pre">false</span></code> にすることでタイムアウトしないようにします。</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;trajectory_execution/execution_duration_monitoring&quot;</span> <span class="na">value=</span><span class="s">&quot;false&quot;</span> <span class="nt">/&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="execution">
+<h2>Execution<a class="headerlink" href="#execution" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>シミュレーション環境とMoveIt!のノードを起動します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch px4_sim_pkg iris_moveit.launch
+</pre></div>
+</div>
+<p>経路計画用にMoveIt!のプラグインを含むRVizを起動します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch iris_moveit_config moveit_rviz.launch config:<span class="o">=</span><span class="nb">true</span>
+</pre></div>
+</div>
+<p>ドローンを離陸させてから設定を行い、&quot;Planning&quot;タブから&quot;Plan&quot;をクリックすると生成されたパスがRVizに表示されます。
+スタートが離陸前の位置になっている場合には、&quot;Planning&quot;タブの&quot;Query&quot;にある、&quot;Select Start State&quot;のプルダウンメニューを&quot;current&quot;にして&quot;Update&quot;ボタンを押して現在の位置をスタートとして設定します。</p>
+<p>&quot;Execute&quot;ボタンを押すと、<code class="docutils literal notranslate"><span class="pre">follow_multi_dof_joint_trajectory</span></code> アクションのサーバーにゴールが送信され、アクションサーバーがmavrosのトピックを通じて目標位置を送信し始めます。
+<code class="docutils literal notranslate"><span class="pre">/mavros/setpoint_position/local</span></code> トピックのメッセージを使ってドローンを制御するために、モードをOFFBOARDに変更します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rosrun mavros mavsys mode -c OFFBOARD
+</pre></div>
+</div>
+<p>以下のようにドローンが目標位置に移動すれば成功です。</p>
+<img alt="../../_images/planning.gif" src="../../_images/planning.gif" />
+<p>障害物がある場合にはそれを回避する経路を生成してくれます。</p>
+<img alt="../../_images/collision.gif" src="../../_images/collision.gif" />
+<p>現状では経路計画の際にロール角やピッチ角の制限を課していないので、ドローンが取ることのできない姿勢が出力されることがあります。
+<code class="docutils literal notranslate"><span class="pre">setpoint_position/local</span></code> トピックを用いた制御では、ヨー角のみが反映されるのでドローンの姿勢が異常になることは無いのですが、MoveIt!によって生成された動作を忠実に実行できないので、RVizの表示では回避できている障害物に衝突することがあります。
+<a class="reference external" href="http://docs.ros.org/kinetic/api/moveit_tutorials/html/doc/move_group_interface/move_group_interface_tutorial.html#planning-with-path-constraints">Move Group Interface</a> を使えば経路の制限をすることができるので、これを使ってもいいかもしれません。</p>
+</div>
+<div class="section" id="id12">
+<h2>まとめ<a class="headerlink" href="#id12" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>この記事では、MoveIt!を用いて計画した経路の経由点をmavros経由でドローンに送ることでドローンを移動させました。</p>
+<p>今回は生成された経路を線形補間を用いて補間し、それを <code class="docutils literal notranslate"><span class="pre">setpoint_position</span></code> トピックに与えることでドローンを制御しましたが、<a class="reference external" href="http://wiki.ros.org/mavros#mavros.2BAC8-Plugins.waypoint">waypoint</a> を用いたドローンの位置制御を試してみてもいいかもしれません。</p>
+</div>
+<div class="section" id="id13">
+<h2>参考<a class="headerlink" href="#id13" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="pluginlib">
+<h3>pluginlib関連<a class="headerlink" href="#pluginlib" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="http://wiki.ros.org/pluginlib/Troubleshooting">pluginlib/Troubleshooting</a></p></li>
+<li><p><a class="reference external" href="http://makemove.hatenablog.com/entry/2015/09/29/001725">navigationスタックで学ぶpluginlibの使い方</a></p></li>
+</ul>
+</div>
+<div class="section" id="id14">
+<h3>Move Group Interface<a class="headerlink" href="#id14" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>今回はRVizからゴールやプランナの設定等を行いましたが、C++やPythonのコードからこれらの設定を行うためのインターフェースが用意されています。</p>
+<ul class="simple">
+<li><p><a class="reference external" href="http://docs.ros.org/kinetic/api/moveit_tutorials/html/doc/move_group_interface/move_group_interface_tutorial.html">Move Group C++ Interface</a></p></li>
+<li><p><a class="reference external" href="http://docs.ros.org/kinetic/api/moveit_tutorials/html/doc/move_group_python_interface/move_group_python_interface_tutorial.html">Move Group Python Interface</a></p></li>
+</ul>
+</div>
+<div class="section" id="id15">
+<h3>マニピュレータの制御<a class="headerlink" href="#id15" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://sites.google.com/site/robotlabo/time-tracker/ros/ros-manipulator">ROSによるマニピュレータの制御</a></p></li>
+<li><p><a class="reference external" href="https://sites.google.com/site/robotlabo/time-tracker/ros/gazebo_mani">Gazeboによるマニピュレータのシミュレーション</a></p></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../../local_planner_for_uav/local_planner_for_uav.html" class="btn btn-neutral float-right" title="UAV用のローカルプランナを実装する" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../run_demo/run_demo.html" class="btn btn-neutral float-left" title="MoveIt!のRvizデモを試す" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2018, Takaki Ueno.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

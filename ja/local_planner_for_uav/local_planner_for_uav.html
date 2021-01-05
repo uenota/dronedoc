@@ -1,0 +1,334 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>UAV用のローカルプランナを実装する &mdash; Dronedoc 1.0.0 ドキュメント</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+    <link rel="canonical" href="https://uenota.github.io/dronedoc/local_planner_for_uav/local_planner_for_uav.html" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="QGroundControl" href="../qgc_intro/qgc_intro.html" />
+    <link rel="prev" title="MoveIt!を使ってGazeboモデルを動かす" href="../moveit/drive_drone/drive_drone.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Dronedoc
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">SLAM</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../px4sim/px4sim.html">PX4 SITLシミュレーション</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../runnode/runnodecpp.html">自作ノードを実行する（C++）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../runnode/runnodepy.html">自作ノードを実行する（Python）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../addmodel/addmodel.html">新しいモデルを追加する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/slam.html">自律飛行とSLAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/gps_nav.html">GPSを用いた自律飛行</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/turtle_mapping.html">Turtlebotを使ってマップを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../teleop/teleop.html">ゲームパッドを使ってドローンを操作する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/lidar_localization.html">LiDARとAMCLを用いた自己位置推定</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/localization_and_mapping.html">LiDARを用いたSLAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../slam/lidar_nav.html">LiDARを用いた自律移動</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Mapping</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../octomap/octomap.html">Octomapを使って3Dマップを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../build_map_gmapping/build_map_gmapping.html">Gmappingを使って地図を生成する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../build_map_gazebo_plugin/build_map_gazebo_plugin.html">Gazebo Pluginを使って地図を作成する</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Motion Planning</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../moveit/index.html">MoveIt!を使ってドローンの経路計画を行う</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">UAV用のローカルプランナを実装する</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Tips</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../qgc_intro/qgc_intro.html">QGroundControl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../add_range_sensor/add_range_sensor.html">ドローンに距離センサを搭載する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../filter_lidar/filter_lidar.html">LiDARのデータをフィルタリングする</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../change_local_planner/change_local_planner.html">move_baseのローカルプランナーを変更する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../airsim/airsim.html">AirSimシミュレータを使う</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/bash_commands/bash_commands.html">基本的なBashの使い方</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/ros/ros.html">ROSの基本</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/terms/terms.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/archive/archive.html">読書案内</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/trouble_shooting/index.html">トラブルシューティング</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Dronedoc</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>UAV用のローカルプランナを実装する</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/local_planner_for_uav/local_planner_for_uav.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="uav">
+<h1>UAV用のローカルプランナを実装する<a class="headerlink" href="#uav" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>この章では、<a class="reference external" href="http://ompl.kavrakilab.org/">Open Motion Planning Library (OMPL)</a> を使ってドローン用のローカルプランナを実装します。</p>
+<p>OMPLはオープンソースの行動計画ライブラリで、マニピュレータやUGVなどの動作計画に用いられる <a class="reference external" href="https://moveit.ros.org/">MoveIt!</a> というライブラリもOMPLを使っています。</p>
+<div class="section" id="id1">
+<h2>インストール<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>UbuntuにOMPLをインストールする方法は以下の3通りあります。</p>
+<ul class="simple">
+<li><p>ソースからインストールする</p></li>
+<li><p>ビルド済みバイナリをインストールする</p></li>
+<li><p>ROSバージョンのバイナリをインストールする</p></li>
+</ul>
+<p>今回はROSバージョンのバイナリをインストールします。
+他の方法については、<a class="reference external" href="http://ompl.kavrakilab.org/installation.html">OMPLのインストールガイド</a> を見てください。</p>
+<p>はじめに、ROSのリポジトリをaptのデータ取得元に追加します。
+すでにROSを使っている場合には必要ありません。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo sh -c <span class="s1">&#39;echo &quot;deb http://packages.ros.org/ros/ubuntu `lsb_release -sc` main&quot; &gt; /etc/apt/sources.list.d/ros-latest.list&#39;</span>
+wget http://packages.ros.org/ros.key -O - <span class="p">|</span> sudo apt-key add -
+</pre></div>
+</div>
+<p>追加できたら、OMPLをインストールします。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt update
+sudo apt install ros-kinetic-ompl
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>ローカルプランナを実装する<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>以下では、<a class="reference external" href="https://robotics.naist.jp/edu/text/?Robotics%2FOMPL#PlanningWithControls">制御指令値を含むプラニング</a> を参考にして作業を進めていきます。</p>
+<div class="section" id="cmakelists-txt">
+<h3>CMakeLists.txt<a class="headerlink" href="#cmakelists-txt" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">find_package</span><span class="p">(</span><span class="s">catkin</span> <span class="s">REQUIRED</span> <span class="s">COMPONENTS</span>
+    <span class="s">roscpp</span>
+    <span class="s">...</span>
+    <span class="s">nav_core</span>    <span class="c"># add</span>
+    <span class="s">tf</span>          <span class="c"># add</span>
+    <span class="s">costmap_2d</span>  <span class="c"># add</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">find_package</span><span class="p">(</span><span class="s">OMPL</span> <span class="s">REQUIRED</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">add_executable</span><span class="p">(</span><span class="s">rrt_planner</span> <span class="s">src/rrt_planner.cpp</span><span class="p">)</span>
+<span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">rrt_planner</span> <span class="o">${</span><span class="nv">catkin_LIBRARIES</span><span class="o">}</span>
+                                  <span class="o">${</span><span class="nv">OMPL_LIBRARIES</span><span class="o">}</span>
+                                  <span class="o">${</span><span class="nv">Boost_LIBRARIES</span><span class="o">}</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="ros">
+<h2>ROSプラグイン<a class="headerlink" href="#ros" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>ROSのパッケージの中には、処理の一部（画像処理や行動計画など）をプラグインとして作成し、後で変更可能になっているものがあります。
+プラグインを作成、使用するためには <a class="reference external" href="http://wiki.ros.org/pluginlib">pluginlib</a> パッケージを使用します。
+プラグインの仕組みを使うことで、特定のインターフェースに従ったクラスを作れば中身の実装は自由にできるので、既存のパッケージを拡張することが容易になります。</p>
+<div class="section" id="navigation">
+<h3>navigationスタック<a class="headerlink" href="#navigation" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>navigationスタックは、move_baseやcostmap_2dなどを含むメタパッケージです。</p>
+<p>navigationスタックでは、pluginlibを使って作成したプラグインをローカルプランナやグローバルプランナとして使用することができるようになっています。
+navigationスタックのローカルプランナとして使用可能なクラスを作るためには、 <a class="reference external" href="http://docs.ros.org/jade/api/nav_core/html/classnav__core_1_1BaseLocalPlanner.html">nav_core::BaseLocalPlanner</a> を継承したクラスを作る必要があります。</p>
+</div>
+<div class="section" id="id4">
+<h3>ローカルプランナをプラグイン化する<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h3>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>実行する<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="id6">
+<h2>参考<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<dl class="simple">
+<dt><a class="reference external" href="https://robotics.naist.jp/edu/text/?Robotics%2FOMPL">Robotics/OMPL - NAIST::OnlineText</a></dt><dd><p>OMPLの日本語チュートリアル</p>
+</dd>
+<dt><a class="reference external" href="http://ompl.kavrakilab.org/OMPL_Primer.pdf">Open Motion Planning Library: A Primer</a></dt><dd><p>OMPLの英語チュートリアル（PDF）</p>
+</dd>
+<dt><a class="reference external" href="http://manpages.ubuntu.com/manpages/xenial/ja/man5/sources.list.5.html">sources.list - APT のデータ取得元の設定リスト</a></dt><dd><p>sources.listについて</p>
+</dd>
+<dt><a class="reference external" href="http://makemove.hatenablog.com/entry/2015/09/29/001725">navigationスタックで学ぶpluginlibの使い方</a></dt><dd><p>navigationスタック用のプラグインについて</p>
+</dd>
+<dt><a class="reference external" href="http://wiki.ros.org/navigation/Tutorials/Writing%20A%20Global%20Path%20Planner%20As%20Plugin%20in%20ROS">Writing A Global Path Planner As Plugin in ROS</a></dt><dd><p>navigationスタック用のグローバルプランナプラグインを作る</p>
+</dd>
+<dt><a class="reference external" href="http://wiki.ros.org/nav_core">nav_core - ROS Wiki</a></dt><dd><p>nav_coreパッケージ</p>
+</dd>
+<dt><a class="reference external" href="https://github.com/ros-planning/navigation/tree/melodic-devel/dwa_local_planner">navigation/dwa_local_planner - GitHub</a></dt><dd><p>dwa_local_plannerのソースコード</p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../qgc_intro/qgc_intro.html" class="btn btn-neutral float-right" title="QGroundControl" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../moveit/drive_drone/drive_drone.html" class="btn btn-neutral float-left" title="MoveIt!を使ってGazeboモデルを動かす" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2018, Takaki Ueno.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

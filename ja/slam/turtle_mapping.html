@@ -1,0 +1,459 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Turtlebotを使ってマップを作る &mdash; Dronedoc 1.0.0 ドキュメント</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+    <link rel="canonical" href="https://uenota.github.io/dronedoc/slam/turtle_mapping.html" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="ゲームパッドを使ってドローンを操作する" href="../teleop/teleop.html" />
+    <link rel="prev" title="GPSを用いた自律飛行" href="gps_nav.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Dronedoc
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">SLAM</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../px4sim/px4sim.html">PX4 SITLシミュレーション</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../runnode/runnodecpp.html">自作ノードを実行する（C++）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../runnode/runnodepy.html">自作ノードを実行する（Python）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../addmodel/addmodel.html">新しいモデルを追加する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slam.html">自律飛行とSLAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gps_nav.html">GPSを用いた自律飛行</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Turtlebotを使ってマップを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../teleop/teleop.html">ゲームパッドを使ってドローンを操作する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lidar_localization.html">LiDARとAMCLを用いた自己位置推定</a></li>
+<li class="toctree-l1"><a class="reference internal" href="localization_and_mapping.html">LiDARを用いたSLAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lidar_nav.html">LiDARを用いた自律移動</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Mapping</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../octomap/octomap.html">Octomapを使って3Dマップを作る</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../build_map_gmapping/build_map_gmapping.html">Gmappingを使って地図を生成する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../build_map_gazebo_plugin/build_map_gazebo_plugin.html">Gazebo Pluginを使って地図を作成する</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Motion Planning</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../moveit/index.html">MoveIt!を使ってドローンの経路計画を行う</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../local_planner_for_uav/local_planner_for_uav.html">UAV用のローカルプランナを実装する</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Tips</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../qgc_intro/qgc_intro.html">QGroundControl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../add_range_sensor/add_range_sensor.html">ドローンに距離センサを搭載する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../filter_lidar/filter_lidar.html">LiDARのデータをフィルタリングする</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../change_local_planner/change_local_planner.html">move_baseのローカルプランナーを変更する</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../airsim/airsim.html">AirSimシミュレータを使う</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/bash_commands/bash_commands.html">基本的なBashの使い方</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/ros/ros.html">ROSの基本</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/terms/terms.html">用語集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/archive/archive.html">読書案内</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/trouble_shooting/index.html">トラブルシューティング</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Dronedoc</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Turtlebotを使ってマップを作る</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/slam/turtle_mapping.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="turtlebot">
+<h1>Turtlebotを使ってマップを作る<a class="headerlink" href="#turtlebot" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>このページではTurtlebotと <a class="reference external" href="http://wiki.ros.org/costmap_2d">costmap_2d</a> を用いてGazeboシミュレーション内の地図を生成する方法について扱います。
+ドローンを使った場合には、姿勢の傾きによって正確な地図が作成できない恐れがあるので、今回はTurtlebotを使用します。</p>
+<p>costmap_2dパッケージは、ロボットのナビゲーションに用いられる占有格子地図を生成するノードを提供するパッケージです。
+占有格子地図はセンサ情報をもとに計算された障害物の存在確率を示す地図で、さらにロボットの形状や障害物の情報を考慮することでコストマップが生成されます。</p>
+<p>costmap_2dパッケージについてはROS Wikiページに詳細な解説があるので参考にしてください。</p>
+<div class="section" id="world">
+<h2>Worldファイルを作る<a class="headerlink" href="#world" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Gazeboを起動してWorldファイルを作ります。
+すでにあるWorldファイルを使う場合はこの手順は必要ありません。</p>
+<p>今回はGazeboモデルデータベース（<a class="reference external" href="http://models.gazebosim.org/">http://models.gazebosim.org/</a>）にあるWillow Garageモデルを利用します。
+Willow GarageモデルはInsertタブから追加することができます。
+モデルはデータベースから自動でダウンロードされますが、ダウンロードされるまでにしばらく時間がかかります。</p>
+<p>以下のようなワールドを作り、Worldファイルとして保存します。</p>
+<img alt="../_images/willow_garage2.png" src="../_images/willow_garage2.png" />
+<div class="section" id="id1">
+<h3>地図作成用のノードを作成する<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>地図を保存するmap_saverノードは、 <code class="docutils literal notranslate"><span class="pre">/map</span></code> トピックのメッセージをサブスクライブするので、costmap_2dが地図をパブリッシュする <code class="docutils literal notranslate"><span class="pre">costmap/costmap</span></code> からリマップする必要があります。</p>
+<p>また、コストマップを作成するためにcostmap_2d パッケージのcostmap_2d_nodeを使用します。
+パラメータは前回と同様、設定ファイルに記述したものを <code class="docutils literal notranslate"><span class="pre">rosparam</span></code> タグ内でロードしています。</p>
+<div class="literal-block-wrapper docutils container" id="id8">
+<div class="code-block-caption"><span class="caption-text">map_builder.launch</span><a class="headerlink" href="#id8" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-xml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nt">&lt;launch&gt;</span>
+    <span class="nt">&lt;remap</span> <span class="na">from=</span><span class="s">&quot;/costmap_node/costmap/costmap&quot;</span> <span class="na">to=</span><span class="s">&quot;map&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;node</span> <span class="na">pkg=</span><span class="s">&quot;costmap_2d&quot;</span> <span class="na">type=</span><span class="s">&quot;costmap_2d_node&quot;</span> <span class="na">name=</span><span class="s">&quot;costmap_node&quot;</span> <span class="na">respawn=</span><span class="s">&quot;false&quot;</span> <span class="na">output=</span><span class="s">&quot;screen&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;rosparam</span> <span class="na">command=</span><span class="s">&quot;load&quot;</span> <span class="na">ns=</span><span class="s">&quot;costmap&quot;</span> <span class="na">file=</span><span class="s">&quot;$(find px4_sim_pkg)/config/costmap_params.yaml&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/node&gt;</span>
+<span class="nt">&lt;/launch&gt;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<p>costmap_2d_nodeのパラメータの設定ファイルは以下のようになっています。</p>
+<div class="literal-block-wrapper docutils container" id="id9">
+<div class="code-block-caption"><span class="caption-text">costmap_params.yaml</span><a class="headerlink" href="#id9" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-yaml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nt">footprint</span><span class="p">:</span> <span class="p p-Indicator">[[</span><span class="nv">0.2</span><span class="p p-Indicator">,</span> <span class="nv">0.2</span><span class="p p-Indicator">],</span> <span class="p p-Indicator">[</span><span class="nv">0.2</span><span class="p p-Indicator">,</span> <span class="nv">-0.2</span><span class="p p-Indicator">],</span> <span class="p p-Indicator">[</span><span class="nv">-0.2</span><span class="p p-Indicator">,</span> <span class="nv">-0.2</span><span class="p p-Indicator">],</span> <span class="p p-Indicator">[</span><span class="nv">-0.2</span><span class="p p-Indicator">,</span> <span class="nv">0.2</span><span class="p p-Indicator">]]</span>
+<span class="nt">inflation_radius</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
+
+<span class="nt">observation_sources</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">laser_scan_sensor</span>
+
+<span class="nt">obstacle_range</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5</span>
+<span class="nt">laser_scan_sensor</span><span class="p">:</span> <span class="p p-Indicator">{</span>
+<span class="nt">    sensor_frame</span><span class="p">:</span> <span class="nv">camera_depth_frame</span><span class="p p-Indicator">,</span>
+<span class="nt">    data_type</span><span class="p">:</span> <span class="nv">LaserScan</span><span class="p p-Indicator">,</span>
+<span class="nt">    topic</span><span class="p">:</span> <span class="nv">/scan</span><span class="p p-Indicator">,</span>
+<span class="nt">    marking</span><span class="p">:</span> <span class="nv">true</span>
+  <span class="p p-Indicator">}</span>
+
+<span class="nt">global_frame</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">odom</span>
+<span class="nt">robot_base_frame</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">base_link</span>
+<span class="nt">update_frequency</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5.0</span>
+<span class="nt">publish_frequency</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">2.0</span>
+<span class="nt">static_map</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="nt">rolling_window</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="nt">width</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">50.0</span>
+<span class="nt">height</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">50.0</span>
+<span class="nt">resolution</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.05</span>
+<span class="nt">origin_x</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">-12</span>
+<span class="nt">origin_y</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<p>大部分は前章で解説しているので説明は省きますが、以下の点に注意してください。</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">inflation_raduis</span></code></dt><dd><p>障害物から、この値の距離だけ離れた場所までコストを付加します。これは、ロボットの形状をコストマップに反映するためのものですが、今回は地図を生成したいので、0に設定します。</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">publish_frequency</span></code></dt><dd><p>地図の表示用に情報をパブリッシュする周波数を設定しています。デフォルトでは0になっており、表示されないので注意してください。</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">global_frame</span></code></dt><dd><p>今回はTurtlebotのホイールオドメトリを自己位置として用いるので、 <code class="docutils literal notranslate"><span class="pre">odom</span></code> に設定しています。</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">laser_scan_sensor</span></code></dt><dd><p>今回使用するTurtlebotのノードは、RGBDカメラのDepth画像を擬似的なレーザースキャンとしてパブリッシュします。そのフレームが <code class="docutils literal notranslate"><span class="pre">camera_depth_frame</span></code> 、トピックが <code class="docutils literal notranslate"><span class="pre">/scan</span></code> なので、それぞれ変更します。</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">obstacle_range</span></code></dt><dd><p>この値の距離以下にある障害物のみが地図に反映されます。今回は地図作成の速度を向上させるために5 mにしてあります。</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">rolling_window</span></code></dt><dd><p>生成される地図の領域を固定するために <code class="docutils literal notranslate"><span class="pre">false</span></code> に設定しています。 <code class="docutils literal notranslate"><span class="pre">true</span></code> にした場合にはロボットが移動すると地図の領域も一緒に移動します。また、willow_garage.world内の建物が地図の領域内に収まるように <code class="docutils literal notranslate"><span class="pre">origin_x</span></code> と <code class="docutils literal notranslate"><span class="pre">origin_y</span></code> も変更しています。</p>
+</dd>
+</dl>
+<p>地図の大きさが足りない場合は <code class="docutils literal notranslate"><span class="pre">width</span></code> 及び <code class="docutils literal notranslate"><span class="pre">height</span></code> パラメータを変更してください。</p>
+</div>
+<div class="section" id="id2">
+<h3>必要なノードを起動する<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>今回はGazebo内のモデルの地図を作成するので、シミュレータを起動します.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch turtlebot_gazebo turtlebot_world.launch world_file:<span class="o">=</span><span class="nv">$HOME</span>/catkin_ws/src/px4_sim_pkg/worlds/willow_garage.world
+</pre></div>
+</div>
+<p>Teleopノードを起動します。
+使用するコントローラに適したLaunchファイルを使ってください。
+キーボードを使うときはkeyboard_teleop.launchファイルを使います。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch turtlebot_teleop logitech.launch
+</pre></div>
+</div>
+<p>地図作成用のノードを起動します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch px4_sim_pkg map_builder.launch
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h3>地図を保存する<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>コントローラを使用する場合は <a class="reference external" href="https://ja.wikipedia.org/wiki/%E3%83%87%E3%83%83%E3%83%89%E3%83%9E%E3%83%B3%E8%A3%85%E7%BD%AE">デッドマンスイッチ</a> に割り当てられたボタンを押しながらスティックを動かしてTurtlebotを操作します。</p>
+<p>デッドマンスイッチは大抵LBボタンに割り当てられていますが、そうでない場合は <a class="reference internal" href="#deadman"><span class="std std-ref">補足: デッドマンスイッチを確認する</span></a> の手順で確認します。</p>
+<p>Rvizで作成される地図を確認しながら作業を行うと良いでしょう。
+今回は <code class="docutils literal notranslate"><span class="pre">odom</span></code> フレームが地図のベースフレームなので、Fixed Frameを <code class="docutils literal notranslate"><span class="pre">odom</span></code> に設定して地図を表示させます。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rviz
+</pre></div>
+</div>
+<img alt="../_images/costmap.gif" src="../_images/costmap.gif" />
+<p>Turtlebotを走らせて一通り地図ができたら、<a class="reference external" href="http://wiki.ros.org/map_server">map_server</a> を使って地図を保存します。
+以下のコマンドを実行するとホームディレクトリ以下に次の２つのファイルが生成されます。</p>
+<dl class="simple">
+<dt>my_map.pgm</dt><dd><p>グリッドの占有状態を示す画像ファイル</p>
+</dd>
+<dt>my_map.yaml</dt><dd><p>マップのメタデータが記述されているファイル</p>
+</dd>
+</dl>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rosrun map_server map_saver -f ~/my_map
+</pre></div>
+</div>
+<p>マップファイルのフォーマットについては <a class="reference external" href="http://wiki.ros.org/map_server">Map Format</a> を参照してください。</p>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>さいごに<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>今回はTurtlebotのホイールオドメトリを用いて地図を作成しました。
+本来はスリップや外乱などの影響で自己位置に誤差が生じるのですが、今回のようなシミュレーションの場合は無視できるので、このような方法で地図を作成することができます。
+誤差が無視できない場合に、より高精度に自己位置を推定するために、次章で使うAMCLやカルマンフィルタなどの手法を使います。
+また、これらの自己位置推定の手法と地図生成を同時に行うことをSimultaneous Localization and Mapping(SLAM) と言います。</p>
+</div>
+<div class="section" id="deadman">
+<span id="id6"></span><h2>補足: デッドマンスイッチを確認する<a class="headerlink" href="#deadman" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="joy">
+<h3><code class="docutils literal notranslate"><span class="pre">/joy</span></code> トピック<a class="headerlink" href="#joy" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>teleopノードを起動すると、 <code class="docutils literal notranslate"><span class="pre">/joy</span></code> トピックにジョイスティックの入力値がパブリッシュされます。</p>
+<p>axesがスティックの入力、buttonsがボタンの入力です。
+それぞれインデックスは0から始まるので注意してください。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ rostopic echo /joy
+header:
+  seq: 2
+  stamp:
+    secs: 1543249966
+    nsecs: 586445147
+  frame_id: &#39;&#39;
+axes: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+buttons: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+---
+header:
+  seq: 3
+  stamp:
+    secs: 1543249966
+    nsecs: 734398094
+  frame_id: &#39;&#39;
+axes: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+buttons: [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0]
+---
+</pre></div>
+</div>
+<p>このように、<code class="docutils literal notranslate"><span class="pre">/joy</span></code> トピックを確認しながらジョイスティックを操作することでどのようにボタンやスティックがマッピングされているかを確認できます。</p>
+</div>
+<div class="section" id="logitech-launch">
+<h3>logitech.launchを使う場合<a class="headerlink" href="#logitech-launch" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>logitech.launchを使う場合には、デッドマンスイッチは4番のIDを持つボタンに固定されています。
+上記の手順でボタンのIDを確認して使用しましょう。</p>
+</div>
+<div class="section" id="ps3-teleop-launchxbox360-teleop-launch">
+<h3>ps3_teleop.launchもしくはxbox360_teleop.launch<a class="headerlink" href="#ps3-teleop-launchxbox360-teleop-launch" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>これらのLaunchファイルを使う場合には、 <code class="docutils literal notranslate"><span class="pre">axis_deadman</span></code> パラメータにデッドマンスイッチのIDが格納されています。
+以下のコマンドを使えば現在の設定値が確認できます。
+パラメータの名前は環境によって異なる場合があるので適宜変更してください。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rosparam get /turtlebot_teleop_joystick/axis_deadman
+</pre></div>
+</div>
+<p>このようにして確認したIDがどのボタンにマッピングされているかを上記の手順で確認しても良いですし、以下のコマンドを使って自分の好きなIDに設定することもできます。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rosparam <span class="nb">set</span> /turtlebot_teleop_joystick/axis_deadman <span class="m">4</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id7">
+<h2>参考<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<dl class="simple">
+<dt><a class="reference external" href="https://ja.coursera.org/lecture/robotics-learning/3-2-1-occupancy-grid-map-0QuFW">3.2.1. Occupancy Grid Map</a></dt><dd><p>CourseraのRoboticsコース</p>
+</dd>
+<dt><a class="reference external" href="https://myenigma.hatenablog.com/entry/20140714/1405343128">自律移動ロボットのためのグリッドマップ作成MATLAB, Pythonサンプルプログラム</a></dt><dd><p>グリッドマップのアルゴリズムとプログラム例</p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../teleop/teleop.html" class="btn btn-neutral float-right" title="ゲームパッドを使ってドローンを操作する" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="gps_nav.html" class="btn btn-neutral float-left" title="GPSを用いた自律飛行" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2018, Takaki Ueno.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
